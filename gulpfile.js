@@ -41,7 +41,7 @@ gulp.task('default', (cb) => {
 	 serveStatic: ['./public']
 	});
 	// SET UP WATCJERS TO LISTEN TO CHANGES IN FILES
-	gulp.watch(['./src/*','./src/**/*.js','./src/components/**/**/*'], gulp.task('js-watch')).on('change', reload);;
+	gulp.watch(['./src/*','./src/**/*.js','./src/components/**/**/*', './src/pages/**/**/*'], gulp.task('js-watch')).on('change', reload);;
 	// LISTEN FOR WHEN TO RELOAD PAGES
 	gulp
 		.watch([
@@ -52,7 +52,17 @@ gulp.task('default', (cb) => {
 		cb()
 });
 
-
+gulp.task('submit', (cb) => {
+	exec('git add -A && git commit -m \'Made a minor change\' && git push origin main', (err, success) => {
+		if(err){
+			console.log(err)
+			cb(err)
+		} else {
+			console.log(success)
+			cb(err)
+		}
+	})
+})
 
 // Explanation for Students ---- This is for the development build
 gulp.task('webpack', cb => {
