@@ -13,6 +13,13 @@
     border: none;
     font-size: 2rem;
     color: white;
+    background-color: var(--btn-color);
+    border-top-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.button:hover {
+    cursor: pointer;
 }
 
 .btnAnimation {
