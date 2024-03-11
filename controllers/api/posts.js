@@ -22,7 +22,8 @@ function jsonPosts(_, res) {
 // Create
 async function create(req, res, next) {
     try {
-        const { _id: userId } = req.body // grabing the id from the req body
+        // grabing the id from the req body
+        const { _id: userId } = req.body 
         const post = await Post.create(req.body)
         console.log(post)
 
