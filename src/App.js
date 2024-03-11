@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
-import TodoList from './components/TodoList/TodoList'
 import styles from './App.module.scss'
+import { Route, Routes } from 'react-router-dom'
+import AuthPage from './pages/AuthPage/AuthPage'
+import HomePage from './pages/HomePage/HomePage'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
 
 
 export default function App(){
@@ -93,20 +96,24 @@ export default function App(){
     }, [])
     return(
         <>
-			
-            <div className={styles.banner}>
-                <h1>The World Famous Big Poppa Code React Starter Kit</h1>
-              <img src='https://i.imgur.com/5WXigZL.jpg'/>
-            </div>
-            <TodoList
-            newTodo={newTodo}
-            setNewTodo={setNewTodo}
-            createTodo={createTodo}
-            todos={todos}
-            moveToCompleted={moveToCompleted}
-            completedTodos={completedTodos}
-            deleteTodo={deleteTodo}
-            />
-        </>
+        <div className={styles.App}>
+            <Routes>
+                <Route 
+                path='/auth' 
+                element= {<AuthPage 
+                />}></Route>
+
+                <Route 
+                path='/' 
+                element={<HomePage 
+                />}></Route>
+
+                <Route 
+                path='/profile' 
+                element={<ProfilePage 
+                />}></Route>
+            </Routes>
+        </div>
+    </>
     )
 }
