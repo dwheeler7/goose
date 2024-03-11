@@ -22,8 +22,13 @@ function jsonPosts(_, res) {
 // Create
 async function create(req, res, next) {
     try {
+        const { _id: userId } = req.body // grabing the id from the req body
         const post = await Post.create(req.body)
         console.log(post)
+
+        // Updating user's post array
+        await User.findByIdAndUpdate( userId, { $push: { posts: post._id} })
+
         res.locals.data.post = post
         next()
     } catch (error) {
@@ -67,6 +72,9 @@ async function update(req,res, next) {
 async function destroy(req, res, next) {
     try {
         const post = await Post.findByIdAndDelete(req.params.id)
+
+        // Remove post from user's posts array
+        await User.updateOne({ posts: req.params.id }, { $pull: { posts: req.params.id } })
         res.locals.data.post = post
         next()
     } catch (error) {
