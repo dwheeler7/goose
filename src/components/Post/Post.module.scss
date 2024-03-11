@@ -1,0 +1,15 @@
+.Post {
+    width: 100%;
+    padding: 2rem;
+    min-height: 25vh;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    color: var(--text-red);
+}
+
+.title {
+    font-size: 2rem;
+}
