@@ -8,7 +8,9 @@ module.exports = {
     update,
     destroy,
     jsonPost,
-    jsonPosts
+    jsonPosts,
+    likePost,
+    unlikePost
 }
 
 function jsonPost(_, res) {
@@ -80,5 +82,54 @@ async function destroy(req, res, next) {
         next()
     } catch (error) {
         res.status(400).json({ msg: error.message })
+    }
+}
+
+// Like Post
+async function likePost(req, res, next) {
+    try {
+        const postId = req.params.id
+        const userId = req.user.id
+        const post = await Post.findById(postId)
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        // Check if the user has already liked the post
+        if (post.likes.includes(userId)) {
+            return res.status(400).json({ message: 'Post already liked by the user' })
+        }
+
+        // Add user's ID to the likes array of the post
+        post.likes.push(userId)
+        await post.save()
+    } catch (error) {
+        console.error("Error liking post:", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+async function unlikePost(req, res, next) {
+    try {
+        const postId = req.params.id
+        const userId = req.user.id
+        const post = await Post.findById(postId)
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        // Check if the user has already liked the post
+        if (post.likes.includes(userId)) {
+            return res.status(400).json({ message: 'Post already liked by the user' })
+        }
+
+        // Remove user's ID from the likes array of the post
+        post.likes = post.likes.filter(like => like !== userId)
+        await post.save()
+    } catch (error) {
+        console.error("Error liking post:", error)
+        res.status(500).json({ message: "Internal server error" })
     }
 }
