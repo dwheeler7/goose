@@ -89,47 +89,54 @@ async function destroy(req, res, next) {
 async function likePost(req, res, next) {
     try {
         const postId = req.params.id
-        const userId = req.user.id
         const post = await Post.findById(postId)
 
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
         }
 
-        // Check if the user has already liked the post
-        if (post.likes.includes(userId)) {
-            return res.status(400).json({ message: 'Post already liked by the user' })
+        // Add post to likedPosts array of the user if not already present
+        if (!req.user.likedPosts.includes(post._id)) {
+            req.user.likedPosts.push(post._id)
+            await req.user.save()
         }
 
-        // Add user's ID to the likes array of the post
-        post.likes.push(userId)
-        await post.save()
+        // Add user to likes array of the post if not already present
+        if (!post.likes.includes(req.user._id)) {
+            post.likes.push(req.user._id)
+            await post.save()
+        }
+
+        res.locals.data.post = post
+        next()
     } catch (error) {
         console.error("Error liking post:", error)
         res.status(500).json({ message: "Internal server error" })
     }
 }
 
+// Unlike Post
 async function unlikePost(req, res, next) {
     try {
         const postId = req.params.id
-        const userId = req.user.id
         const post = await Post.findById(postId)
 
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
         }
 
-        // Check if the user has already liked the post
-        if (post.likes.includes(userId)) {
-            return res.status(400).json({ message: 'Post already liked by the user' })
-        }
+        // Remove post from likedPosts array of the user
+        req.user.likedPosts = req.user.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())
+        await req.user.save()
 
-        // Remove user's ID from the likes array of the post
-        post.likes = post.likes.filter(like => like !== userId)
+        // Remove user from likes array of the post
+        post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString())
         await post.save()
+
+        res.locals.data.post = post
+        next()
     } catch (error) {
-        console.error("Error liking post:", error)
+        console.error("Error unliking post:", error)
         res.status(500).json({ message: "Internal server error" })
     }
 }
