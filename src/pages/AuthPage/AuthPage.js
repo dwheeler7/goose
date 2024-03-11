@@ -1,7 +1,11 @@
 import styles from './AuthPage.module.scss'
+import NavBar from '../../components/NavBar/NavBar'
 
 export default function AuthPage(){
     return (
-        <h1>This is the AuthPage</h1>
+        <>
+            <NavBar />
+            <h1>This is the AuthPage</h1>
+        </>
     )
 }
