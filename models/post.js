@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 
 const postSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    githublink: {type: String, required: true },
-    content: { type: String, required: true }
-    // likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    // lets add likes and update models in one push
+    name: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    githublink: {type: String },
+    description: { type: String, required: true },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    image: { type: String },
+    createdAt: { type: Date, default: Date.now }
 }, {
     timestamps: true
 })
