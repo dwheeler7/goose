@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const postCtrl = require('../../controllers/posts')
+const postCtrl = require('../../controllers/api/posts')
 
 // create
 router.post('/', postCtrl.create)
