@@ -88,8 +88,8 @@ async function destroy(req, res, next) {
 // Like Post
 async function likePost(req, res, next) {
     try {
-        const postId = req.params.id
-        const post = await Post.findById(postId)
+        const userId = req.user._id
+        const post = await Post.findById(req.params.id)
 
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
@@ -99,11 +99,13 @@ async function likePost(req, res, next) {
         if (!req.user.likedPosts.includes(post._id)) {
             req.user.likedPosts.push(post._id)
             await req.user.save()
+        } else {
+            throw new Error('Post already liked by the user')
         }
 
         // Add user to likes array of the post if not already present
-        if (!post.likes.includes(req.user._id)) {
-            post.likes.push(req.user._id)
+        if (!post.likes.includes(userId)) {
+            post.likes.push(userId)
             await post.save()
         }
 
@@ -118,11 +120,20 @@ async function likePost(req, res, next) {
 // Unlike Post
 async function unlikePost(req, res, next) {
     try {
-        const postId = req.params.id
-        const post = await Post.findById(postId)
+        const post = await Post.findById(req.params.id)
 
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
+        }
+
+        // Check if the post ID is present in the likedPosts array of the user
+        if (!req.user.likedPosts.includes(post._id)) {
+            throw new Error('Post is not liked by the user')
+        }
+
+        // Check if the user ID is present in the likes array of the post
+        if (!post.likes.includes(req.user._id)) {
+            throw new Error('User has not liked the post')
         }
 
         // Remove post from likedPosts array of the user
