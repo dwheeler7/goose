@@ -1,11 +1,25 @@
-import styles from './AuthPage.module.scss'
-import NavBar from '../../components/NavBar/NavBar'
+import { useState } from 'react';
+import styles from './AuthPage.module.scss';
+import NavBar from '../../components/NavBar/NavBar';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
-export default function AuthPage(){
-    return (
-        <>
-            <NavBar />
-            <h1>This is the AuthPage</h1>
-        </>
-    )
+export default function AuthPage({ setUser }) {
+  const [showLogin, setShowLogin] = useState(true);
+
+  return (
+    <main className={styles.AuthPage}>
+      <div className={styles.logo}></div>
+      <div className={styles.credentialsContainer}>
+        {showLogin ? (
+          <LoginForm setUser={setUser} setShowLogin={setShowLogin} />
+        ) : (
+          <SignUpForm setUser={setUser} setShowLogin={setShowLogin} />
+        )}
+      </div>
+      {/* <h3 className={styles.switchButton} onClick={() => setShowLogin(!showLogin)}>
+        {showLogin ? 'SIGN UP' : 'LOG IN'}
+      </h3> */}
+    </main>
+  );
 }
