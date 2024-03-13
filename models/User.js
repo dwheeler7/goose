@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs'); // we are using bcrypt
+const bcryptjs = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const GOLDEN_EGGS = 12;

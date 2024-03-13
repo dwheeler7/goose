@@ -17,9 +17,6 @@ export default function AuthPage({ setUser }) {
           <SignUpForm setUser={setUser} setShowLogin={setShowLogin} />
         )}
       </div>
-      {/* <h3 className={styles.switchButton} onClick={() => setShowLogin(!showLogin)}>
-        {showLogin ? 'SIGN UP' : 'LOG IN'}
-      </h3> */}
     </main>
   );
 }
