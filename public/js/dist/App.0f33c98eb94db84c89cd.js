@@ -247,7 +247,10 @@ function NavBar() {
 /* harmony export */ });
 /* harmony import */ var _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post.module.scss */ "./src/components/Post/Post.module.scss");
 /* harmony import */ var _LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../LikeBtn/LikeBtn */ "./src/components/LikeBtn/LikeBtn.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 
 function Post(_ref) {
@@ -262,9 +265,52 @@ function Post(_ref) {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].infoContainer
   }, /*#__PURE__*/React.createElement("h3", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].title
-  }, "Title"), /*#__PURE__*/React.createElement("h4", {
+  }, "Apple iPhone"), /*#__PURE__*/React.createElement("a", {
+    href: "",
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].user
-  }, "User Name")), /*#__PURE__*/React.createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  }, "Steve Jobs"), /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].description
+  }, "Caption the user inputs when creating the post.")), /*#__PURE__*/React.createElement("div", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].imageContainer
+  }, /*#__PURE__*/React.createElement("img", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].image,
+    src: "https://via.placeholder.com/225",
+    alt: "placeholder"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentContainer
+  }, /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentTitle
+  }, "User Comments"), /*#__PURE__*/React.createElement("ul", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentList
+  }, /*#__PURE__*/React.createElement("li", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "",
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
+  }, "Bill Gates"), /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
+  }, "This is another comment.")), /*#__PURE__*/React.createElement("li", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "",
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
+  }, "Elon Musk"), /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
+  }, "This is another comment.")), /*#__PURE__*/React.createElement("li", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "",
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
+  }, "Elon Musk"), /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
+  }, "This is another comment.")), /*#__PURE__*/React.createElement("li", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "",
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
+  }, "Elon Musk"), /*#__PURE__*/React.createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
+  }, "This is another comment.")))), /*#__PURE__*/React.createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 }
 
 /***/ }),
@@ -282,6 +328,21 @@ function Post(_ref) {
 /* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Post/Post */ "./src/components/Post/Post.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+
+
+// export default function PostList({ posts }) {
+//     const items = posts.map(item =>
+//       <Post
+//         key={item._id}
+//         post={item}
+//       />
+//     )
+//     return (
+//       <main className={styles.PostList}>
+//         {items}
+//       </main>
+//     )
+//   }
 
 function PostList() {
   return /*#__PURE__*/React.createElement("div", {
@@ -697,21 +758,100 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.kQzjKpTiHJLJ5WNNtTAD {
   width: 100%;
   padding: 2rem;
   min-height: 25vh;
-  border: 1px solid black;
+  border: 0.1rem solid rgba(51, 86, 51, 0.3);
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
   background-color: white;
-  color: var(--text-red);
+  color: black;
+  box-shadow: 0 0 0.3rem var(--text-green);
 }
 
 .cxO_ngSGPeT7TF8HthZe {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text-green);
+  letter-spacing: 1px;
+  padding-bottom: 0.5rem;
+}
+
+._ibScGpDo_0RxtdWctb4 {
+  font-size: 2.3rem;
+  color: black;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.ycpCjprELliy8RQqWAsq {
+  font-size: 1.5rem;
+  color: black;
+  padding-top: 8rem;
+  max-width: 75%;
+  letter-spacing: 2px;
+}
+
+.BHR4ILMA2bTJlnREoS18 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.SuF_dAcgeZB1bump5Fdx {
+  max-width: 100%;
+}
+
+.O3jgDHbJ9tZ0Yr13DdOR {
   font-size: 2rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;EACA,gBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,uBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,eAAA;AACJ","sourcesContent":[".Post {\n    width: 100%;\n    padding: 2rem;\n    min-height: 25vh;\n    border: 1px solid black;\n    border-radius: 20px;\n    display: flex;\n    justify-content: space-between;\n    background-color: white;\n    color: var(--text-red);\n}\n\n.title {\n    font-size: 2rem;\n}"],"sourceRoot":""}]);
+  color: var(--text-green);
+  letter-spacing: 2px;
+  padding-top: 2rem;
+  text-align: center;
+  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
+}
+
+.Jm1CrKrnnLmI3tpHd5FQ {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.M9ng3FAWz7rCK1MVAYd3 {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.jqZeDSni34ZwXDjnAtMB {
+  font-size: 1.5rem;
+  color: black;
+  letter-spacing: 1px;
+  padding-top: 1rem;
+  list-style: none;
+  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
+}
+
+.G4pBnH9zNzeuZyBPuuto {
+  display: inline-block;
+  padding: 1rem;
+}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;EACA,gBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,uBAAA;EACA,YAAA;EACA,wCAAA;AACJ;;AAEA;EACI,eAAA;EACA,iBAAA;EACA,wBAAA;EACA,mBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,qBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,cAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,eAAA;AACJ;;AAEA;EACI,eAAA;AACJ;;AAEA;EACI,eAAA;EACA,wBAAA;EACA,mBAAA;EACA,iBAAA;EACA,kBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;AACJ","sourcesContent":[".Post {\n    width: 100%;\n    padding: 2rem;\n    min-height: 25vh;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    display: flex;\n    justify-content: space-between;\n    background-color: white;\n    color: black;\n    box-shadow: 0 0 .3rem var(--text-green);\n}\n\n.title {\n    font-size: 3rem;\n    font-weight: bold;\n    color: var(--text-green);\n    letter-spacing: 1px;\n    padding-bottom: .5rem; \n}\n\n.user {\n    font-size: 2.3rem;\n    color: black;\n    letter-spacing: 2px;\n    text-decoration: none;\n}\n\n.description {\n    font-size: 1.5rem;\n    color: black;\n    padding-top: 8rem;\n    max-width: 75%;\n    letter-spacing: 2px;\n}\n\n.imageContainer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    max-width: 100%;\n}\n\n.commentContainer {\n    max-width: 100%;\n}\n\n.commentTitle {\n    font-size: 2rem;\n    color: var(--text-green);\n    letter-spacing: 2px;\n    padding-top: 2rem;\n    text-align: center;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: .5rem;\n}\n\n.commentUser {\n    font-size: 1.2rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Post": `kQzjKpTiHJLJ5WNNtTAD`,
-	"title": `cxO_ngSGPeT7TF8HthZe`
+	"title": `cxO_ngSGPeT7TF8HthZe`,
+	"user": `_ibScGpDo_0RxtdWctb4`,
+	"description": `ycpCjprELliy8RQqWAsq`,
+	"imageContainer": `BHR4ILMA2bTJlnREoS18`,
+	"commentContainer": `SuF_dAcgeZB1bump5Fdx`,
+	"commentTitle": `O3jgDHbJ9tZ0Yr13DdOR`,
+	"commentList": `Jm1CrKrnnLmI3tpHd5FQ`,
+	"commentUser": `M9ng3FAWz7rCK1MVAYd3`,
+	"commentItem": `jqZeDSni34ZwXDjnAtMB`,
+	"comment": `G4pBnH9zNzeuZyBPuuto`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -767,6 +907,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap);"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `:root {
   --heading-color: rgb(237, 100, 100);
@@ -776,6 +917,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
   --input-color: rgb(87, 8, 8);
   --nav-border: rgba(219, 171, 171, 0.3);
   --text-red: rgb(237, 100, 100);
+  --text-green: rgb(51, 86, 51);
 }
 
 * {
@@ -783,12 +925,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
   margin: 0;
   padding: 0;
   font-size: 10px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Nunito", Verdana, Tahoma, sans-serif;
 }
 
 body {
   background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAAA;EACI,mCAAA;EACA,mBAAA;EACA,+BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,eAAA;EACA,gDAAA;AACJ;;AAEA;EACI,iCAAA;AACJ","sourcesContent":[":root {\n    --heading-color: rgb(237, 100, 100);\n    --bg-color: #f4f3ef;\n    --btn-color: rgb(237, 100, 100);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-size: 10px;\n    font-family: Verdana, Geneva, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,mCAAA;EACA,mBAAA;EACA,+BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,eAAA;EACA,kDAAA;AAAJ;;AAGA;EACI,iCAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n\n:root {\n    --heading-color: rgb(237, 100, 100);\n    --bg-color: #f4f3ef;\n    --btn-color: rgb(237, 100, 100);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-size: 10px;\n    font-family: 'Nunito', Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -1604,4 +1746,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.ac9c7823d3d0dc27391d27cf2771a497.js.map
+//# sourceMappingURL=App.9acec4859579b13a6392c0e355e9aee7.js.map
