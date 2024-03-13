@@ -1,7 +1,20 @@
 h1 {
     font-size: 7vmin;
-    color: var(--heading-color);
+    color: var(--text-dark);
     text-shadow: 1px 1px 2px black;
+}
+
+h2 {
+    font-size: 2vw;
+    color: var(--text-dark);
+}
+
+h3 {
+    font-size: 1.3vw;
+}
+
+p {
+    font-size: .8vw;
 }
 
 input {
