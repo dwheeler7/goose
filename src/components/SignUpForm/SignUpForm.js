@@ -1,57 +1,69 @@
-import React, { Component } from "react"
-import { signUp } from '../../utilities/users-service'
+import React, { useState } from 'react';
+import { signUp } from '../../utilities/users-service';
+import styles from './SignUpForm.module.scss';
 
-export default class SignUpForm extends Component {
-  state = {
-    name: '',
+export default function SignUpForm({ setUser, setShowLogin }) {
+  const [formData, setFormData] = useState({
+    username: '',
     email: '',
     password: '',
-    confirm: '',
-    error: ''
+    userType: '', // Added userType field
+  });
+  const [error, setError] = useState('');
+
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    setError('');
   }
 
-  handleChange = (evt) => {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-      error: ''
-    })
-  }
-
-  handleSubmit = async (evt) => {
-    evt.preventDefault()
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
     try {
-      const formData = { ...this.state }
-      delete formData.confirm
-      delete formData.error
-
-      const user = await signUp(formData)
-      this.props.setUser(user)
+      const user = await signUp(formData);
+      setUser(user);
     } catch {
-      this.setState({ error: 'Sign Up Failed - Try Again' })
+      setError('Sign Up Failed - Try Again');
     }
   }
 
-  render() {
-    const { name, email, password, confirm, error } = this.state
-    const disable = password !== confirm || !name || !email || !password || !confirm
+  const { username, email, password, userType } = formData;
+  const disable = !username || !email || !password || !userType; // Adjusted to include userType
 
-    return (
-      <div>
-        <div className="form-container">
-          <form autoComplete="off" onSubmit={this.handleSubmit}>
-            <label>Name</label>
-            <input type="text" name="name" value={name} onChange={this.handleChange} required />
-            <label>Email</label>
-            <input type="email" name="email" value={email} onChange={this.handleChange} required />
-            <label>Password</label>
-            <input type="password" name="password" value={password} onChange={this.handleChange} required />
-            <label>Confirm Password</label>
-            <input type="password" name="confirm" value={confirm} onChange={this.handleChange} required />
-            <button type="submit" disabled={disable}>Sign Up</button>
-          </form>
-        </div>
-        {error && <p className="error-message">{error}</p>}
+  return (
+    <div className={styles.body}>
+      <div className={styles.title}>
+        <h1>TipDivide</h1>
+        <h4>Tip/Catering Splits Made Easy</h4>
       </div>
-    )
-  }
+      <div className={styles.boxc}>
+        <form onSubmit={handleSubmit}>
+          <h1>Register</h1>
+          <div className={styles.inputbox}>
+            <input type="text" name="username" value={username} onChange={handleChange} required />
+            <label>Username</label>
+          </div>
+          <div className={styles.inputbox}>
+            <input type="email" name="email" value={email} onChange={handleChange} required />
+            <label>Email</label>
+          </div>
+          <div className={styles.inputbox}>
+            <input type="password" name="password" value={password} onChange={handleChange} required />
+            <label>Password</label>
+          </div>
+          <div className={styles.inputbox}>
+            <select name="userType" value={userType} onChange={handleChange} required>
+              <option value="" disabled>Select Registration Type</option>
+              <option value="developer">Developer</option>
+              <option value="employer">Employer</option>
+            </select>
+          </div>
+          <button type="submit" disabled={disable}>Register</button>
+          <div className={styles.login}>
+            <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Login</p>
+          </div>
+        </form>
+      </div>
+      {error && <p className={styles.errorMessage}>{error}</p>}
+    </div>
+  );
 }
