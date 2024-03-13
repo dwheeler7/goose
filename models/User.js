@@ -23,6 +23,7 @@ const userSchema = new Schema({
     picture: { type: String },
     userType: { type: String, enum: ['developer', 'employer'], required: true },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+    bio: { type: String },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }] // Fixed typo here
 }, {
     timestamps: true,
