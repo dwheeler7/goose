@@ -17,4 +17,9 @@ router.put('/:id', postCtrl.update)
 // delete
 router.delete('/:id', postCtrl.destroy)
 
+// Like a post
+router.post('/:id/like', postCtrl.likePost)
+// Unlike a post
+router.post('/:id/unlike', postCtrl.unlikePost)
+
 module.exports = router
