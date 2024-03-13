@@ -23,7 +23,9 @@ const userSchema = new Schema({
     picture: { type: String },
     userType: { type: String, enum: ['developer', 'employer'], required: true },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }] // Fixed typo here
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here
+    likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }], //i added likes to user
+    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }] //added notification
 }, {
     timestamps: true,
     toJSON: {
