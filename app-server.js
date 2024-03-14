@@ -6,7 +6,7 @@ const logger = require('morgan');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const commentsRouter = require('./routes/api/comments');
-// const checkTokenMiddleware = require('./config/checkToken');
+const checkTokenMiddleware = require('./config/checkToken');
 // const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(favicon(path.join(__dirname, 'public', 'img', 'logo.png')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// app.use(checkTokenMiddleware);
+app.use(checkTokenMiddleware);
 app.use('/api/users', usersRouter);
 
 // app.use(ensureLoggedInMiddleware);

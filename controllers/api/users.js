@@ -3,11 +3,18 @@ const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
 function createJWT(user) {
-    return jwt.sign(
+    // return jwt.sign(
+    //     { user },
+    //     process.env.SECRET,
+    //     { expiresIn: '24h' }
+    // );    
+    const jwtToken = jwt.sign( // logging for postman test
         { user },
         process.env.SECRET,
         { expiresIn: '24h' }
     );
+    console.log(jwtToken)
+    return jwtToken
 }
 
 const checkToken = (req, res) => {
@@ -19,7 +26,7 @@ const dataController = {
     async createUser(req, res, next) { 
         try {
             const user = await User.create(req.body);
-            console.log(req.body);
+            console.log(user);
             const token = createJWT(user);
             res.locals.data = { user, token };
             next();
@@ -32,7 +39,7 @@ const dataController = {
         try {
             const user = await User.findOne({ email: req.body.email });
             if (!user) throw new Error('User not found');
-            const match = await bcrypt.compare(req.body.password, user.password);
+            const match = await bcryptjs.compare(req.body.password, user.password);
             if (!match) throw new Error('Invalid password');
             const token = createJWT(user);
             res.locals.data = { user, token };
