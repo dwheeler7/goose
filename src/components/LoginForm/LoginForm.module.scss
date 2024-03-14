@@ -61,6 +61,10 @@ input:valid ~ label {
     top: -5px;
 }
 
+.errorSign {
+  display: block;
+}
+
 .inputbox input {
     width: 100%;
     height: 60px;

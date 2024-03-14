@@ -4,7 +4,7 @@ import styles from './SignUpForm.module.scss';
 
 export default function SignUpForm({ setUser, setShowLogin }) {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     userType: '', // Added userType field
@@ -26,24 +26,24 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     }
   }
 
-  const { username, email, password, userType } = formData;
-  const disable = !username || !email || !password || !userType; // Adjusted to include userType
+  const { name, email, password, userType } = formData;
+  const disable = !name || !email || !password || !userType; // Adjusted to include userType
 
   return (
     <div className={styles.body}>
       <div className={styles.title}>
-        <h1>TipDivide</h1>
-        <h4>Tip/Catering Splits Made Easy</h4>
+        <h1>Welcome</h1>
+        <h4>To Our Project</h4>
       </div>
       <div className={styles.boxc}>
         <form onSubmit={handleSubmit}>
           <h1>Register</h1>
           <div className={styles.inputbox}>
-            <input type="text" name="username" value={username} onChange={handleChange} required />
-            <label>Username</label>
+            <input type="text" name="name" value={name} onChange={handleChange} required />
+            <label>Name</label>
           </div>
           <div className={styles.inputbox}>
-            <input type="email" name="email" value={email} onChange={handleChange} required />
+            <input type="text" name="email" value={email} onChange={handleChange} required />
             <label>Email</label>
           </div>
           <div className={styles.inputbox}>
