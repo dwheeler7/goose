@@ -6,10 +6,21 @@ export async function signUp(userData) {
   return getUser();
 }
 
-export async function login(credentials) {
-  const token = await usersAPI.login(credentials);
-  localStorage.setItem('token', token);
-  return getUser();
+export async function login(credentials, navigate) {
+  try {
+    const token = await usersAPI.login(credentials);
+    localStorage.setItem('token', token);
+    const user = getUser();
+    console.log("User:", user);
+    
+    // Redirect to homepage upon successful login
+    navigate('/');  // Replace '/' with the path of your homepage
+
+    return user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw error;
+  }
 }
 
 export function getToken() {
@@ -25,7 +36,14 @@ export function getToken() {
 
 export function getUser() {
   const token = getToken();
-  return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+  if (!token) return null; // Return null if token is missing
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.user; // Return user object from token payload
+  } catch (error) {
+    console.error("Error parsing user from token:", error);
+    return null; // Return null if there's an error parsing the token
+  }
 }
 
 export function logOut() {

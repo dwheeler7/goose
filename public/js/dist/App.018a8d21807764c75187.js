@@ -202,7 +202,8 @@ function LikeBtn() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginForm.module.scss */ "./src/components/LoginForm/LoginForm.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -211,6 +212,7 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
+ // Import useNavigate hook
 
 
 function LoginForm(_ref) {
@@ -218,6 +220,7 @@ function LoginForm(_ref) {
     setUser,
     setShowLogin
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Initialize useNavigate hook
   const [credentials, setCredentials] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: '',
     password: ''
@@ -227,7 +230,7 @@ function LoginForm(_ref) {
     password: ''
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  function handleChange(evt) {
+  const handleChange = evt => {
     const {
       name,
       value
@@ -238,16 +241,15 @@ function LoginForm(_ref) {
     setError('');
     setErrors(prevErrors => _objectSpread(_objectSpread({}, prevErrors), {}, {
       [name]: ''
-    })); // Clear the corresponding error when the user starts typing again
-
-    const inputContainer = evt.target.parentElement; // Add a class to the input container when the input is not empty
+    }));
+    const inputContainer = evt.target.parentElement;
     if (value.trim()) {
       inputContainer.classList.add(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
     } else {
       inputContainer.classList.remove(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
     }
-  }
-  async function handleSubmit(evt) {
+  };
+  const handleSubmit = async evt => {
     evt.preventDefault();
     const emailError = validateEmail(credentials.email);
     const passwordError = validatePassword(credentials.password);
@@ -255,24 +257,25 @@ function LoginForm(_ref) {
       setErrors({
         email: emailError,
         password: passwordError
-      }); // If there are errors, set them in the state and return 
+      });
       setError('Please fix the errors in the form.');
       return;
     }
     try {
-      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.login(credentials);
+      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login(credentials, navigate); // Pass navigate function to login function
       setUser(user);
+      navigate('/'); // Redirect to root route on successful login
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
-  }
-  function validateEmail(email) {
+  };
+  const validateEmail = email => {
     if (!email) return 'Email is required';
-    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format'; // Basic email error message format
-  }
-  function validatePassword(password) {
+    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format';
+  };
+  const validatePassword = password => {
     return password.length < 8 ? 'Password must be at least 8 characters long' : '';
-  }
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
   }, /*#__PURE__*/React.createElement("h1", null, "Welcome"), /*#__PURE__*/React.createElement("h4", null, "To Our Group Project")), /*#__PURE__*/React.createElement("div", {
@@ -726,10 +729,21 @@ async function signUp(userData) {
   localStorage.setItem('token', token);
   return getUser();
 }
-async function login(credentials) {
-  const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(credentials);
-  localStorage.setItem('token', token);
-  return getUser();
+async function login(credentials, navigate) {
+  try {
+    const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(credentials);
+    localStorage.setItem('token', token);
+    const user = getUser();
+    console.log("User:", user);
+
+    // Redirect to homepage upon successful login
+    navigate('/'); // Replace '/' with the path of your homepage
+
+    return user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw error;
+  }
 }
 function getToken() {
   const token = localStorage.getItem('token');
@@ -743,7 +757,14 @@ function getToken() {
 }
 function getUser() {
   const token = getToken();
-  return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+  if (!token) return null; // Return null if token is missing
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.user; // Return user object from token payload
+  } catch (error) {
+    console.error("Error parsing user from token:", error);
+    return null; // Return null if there's an error parsing the token
+  }
 }
 function logOut() {
   localStorage.removeItem('token');
@@ -2460,4 +2481,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.934870d662a37afe77f56ca1b0f387b2.js.map
+//# sourceMappingURL=App.ea18bc2916f9ca9f8f728e203beb7fa7.js.map
