@@ -7,7 +7,7 @@ const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const commentsRouter = require('./routes/api/comments');
 const checkTokenMiddleware = require('./config/checkToken');
-// const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
+const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(checkTokenMiddleware);
 app.use('/api/users', usersRouter);
 
-// app.use(ensureLoggedInMiddleware);
+app.use(ensureLoggedInMiddleware);
 app.use('/api/posts', postsRouter);
 app.use('/api/comments', commentsRouter);
 
