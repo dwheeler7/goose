@@ -6,9 +6,10 @@ export async function signUp(userData) {
   return getUser();
 }
 
-export async function login(credentials, navigate) {
+export async function login(credentials, rememberMe, navigate) {
   try {
-    const token = await usersAPI.login(credentials);
+    // Pass credentials and rememberMe option to the API call
+    const token = await usersAPI.login({ ...credentials, rememberMe });
     localStorage.setItem('token', token);
     const user = getUser();
     console.log("User:", user);

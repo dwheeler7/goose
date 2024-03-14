@@ -14,6 +14,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
     password: ''
   });
   const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false); // State to track "Remember Me" checkbox
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -28,6 +29,12 @@ export default function LoginForm({ setUser, setShowLogin }) {
     }
   };
 
+  const handleRememberMeChange = (evt) => {
+    const isChecked = evt.target.checked;
+    console.log('Remember Me checked:', isChecked);
+    setRememberMe(isChecked);
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const emailError = validateEmail(credentials.email);
@@ -40,7 +47,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
     }
     
     try {
-      const user = await usersService.login(credentials, navigate); // Pass navigate function to login function
+      const user = await usersService.login(credentials, rememberMe, navigate);
       setUser(user);
       navigate('/'); // Redirect to root route on successful login
     } catch {
@@ -78,7 +85,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
           </div>
           <div className={styles.lost}>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
               Remember Me
             </label>
             <a href="No IDEA YET">Forgot Password</a>
