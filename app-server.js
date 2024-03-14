@@ -24,9 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(checkTokenMiddleware);
 app.use('/api/users', usersRouter);
 
-// app.use(ensureLoggedInMiddleware);
-// app.use('/api/posts', postsRouter);
-// app.use('/api/comments', commentsRouter);
+app.use(ensureLoggedInMiddleware);
+app.use('/api/posts', postsRouter);
+app.use('/api/comments', commentsRouter);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
