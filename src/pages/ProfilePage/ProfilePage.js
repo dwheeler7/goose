@@ -1,8 +1,47 @@
-import styles from './ProfilePage.module.scss'
-import NavBar from '../../components/NavBar/NavBar'
-import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import NavBar from '../../components/NavBar/NavBar';
+import ProfileImage from '../../components/ProfileImage/ProfileImage';
 
-export default function ProfilePage(){
+export default function ProfilePage(props){
+    const [posts, setPosts] = useState([]);
+    const [showCreate, setShowCreate] = useState(false);
+    const { id } = useParams(); // Retrieve the id parameter from the URL
+
+    useEffect(() => {
+        // Fetch user data based on the id parameter
+        const fetchUser = async () => {
+            try {
+                const userData = await props.getIndividualUser(id);
+                // Update state with user data
+                props.setUser(userData.user);
+                // Fetch user's posts
+                const postData = await props.getAllPosts();
+                setPosts(postData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchUser();
+    }, [id, props]);
+
+    useEffect(() => {
+        // Check if token exists in localStorage and set it in state
+        if (localStorage.token && !props.token) {
+            props.setToken(localStorage.getItem('token'));
+            setShowCreate(true);
+        }
+        // Check if user exists in localStorage and set it in state
+        if (localStorage.token && localStorage.user && !props.user) {
+            props.setUser(JSON.parse(localStorage.getItem('user')));
+        }
+        // Check if token exists in props and set showCreate
+        if (props.token) {
+            setShowCreate(true);
+        }
+    }, [props.token, props.user]);
+
     return (
         <>
             <NavBar />
@@ -37,6 +76,11 @@ export default function ProfilePage(){
                     </div>
                 </div>
                 <div className={styles.ProjectItems}>
+                    <div>
+                        {props.user? <h1 className={styles.h1}>Welcome Back, {props.user.name.charAt(0).toUpperCase() + props.user.name.slice(1)}!</h1> : <h1>Welcome to Liberty posts!</h1>}
+                        { showCreate ? <CreateForm user={props.user} createPost={props.createPost} token={props.token} /> : <></> }
+                        { posts.length ? <Posts posts={posts} /> : 'Sorry, no posts yet!'}
+                    </div>
                     <div className={styles.imgContainer}>
                         <h3>Project Title</h3>
                         <img className={styles.image} src="https://i.imgur.com/wb7FT8b.jpg"/>
