@@ -13,17 +13,14 @@
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/AuthPage/AuthPage */ "./src/pages/AuthPage/AuthPage.js");
 /* harmony import */ var _pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage/HomePage */ "./src/pages/HomePage/HomePage.js");
 /* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -31,104 +28,196 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 function App() {
-  const [todos, setTodos] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [completedTodos, setCompletedTodos] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [newTodo, setNewTodo] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    title: '',
-    completed: false
-  });
+  // Default state for user is null
+  // Default state for token is an empty string
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
 
-  //createTodos
-  const createTodo = async () => {
-    const body = _objectSpread({}, newTodo);
+  // Create a signUp fn that connects to the backend
+  const signUp = async credentials => {
     try {
-      const response = await fetch('/api/todos', {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        // Headers that will be set in PostMan
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // Turn the body into a readable JavaScript object 
+        body: JSON.stringify(credentials)
+      });
+      // Turn response back into a JavaScript object
+      const data = await response.json();
+      // From the "data" response received, pull out the user object and set the user state
+      setUser(data.user);
+      // From the "data" response received, pull out the token object and set the token state
+      setToken(data.token);
+      // Store the token && user in localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // This function will need to be a prop passed to the LoginForm via AuthPage
+  const login = async credentials => {
+    try {
+      // https://i.imgur.com/3quZxs4.png
+      // Step 1 is complete here once someone fills out the loginForm
+      const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(credentials)
       });
-      const createdTodo = await response.json();
-      const todosCopy = [createdTodo, ...todos];
-      setTodos(todosCopy);
-      setNewTodo({
-        title: '',
-        completed: false
-      });
+      const data = await response.json();
+      // Step 3
+      const tokenData = data.token;
+      localStorage.setItem('token', tokenData);
+      // The below code is additional to the core features of authentication
+      // You need to decide what additional things you would like to accomplish when you
+      // set up your stuff
+      const userData = data.user;
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
     } catch (error) {
       console.error(error);
     }
   };
-  //deleteTodos
-  const deleteTodo = async id => {
+
+  // CreatePost
+  // We need token authentication in order to verify that someone can make a post
+  // Now that we have the token from the signup/login above, we will pass it into the following functions for authentication
+  const createPost = async (postData, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
+    if (!token) {
+      return;
+    }
     try {
-      const index = completedTodos.findIndex(todo => todo._id === id);
-      const completedTodosCopy = [...completedTodos];
-      const response = await fetch("/api/todos/".concat(id), {
-        method: 'DELETE',
+      const response = await fetch('/api/posts', {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
+          // Tell it that we're sending JSON data
+          'Content-Type': 'application/json',
+          // Tell it that we have a user token
+          'Authorization': "Bearer ".concat(token)
+        },
+        body: JSON.stringify(postData)
       });
-      await response.json();
-      completedTodosCopy.splice(index, 1);
-      setCompletedTodos(completedTodosCopy);
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error);
     }
   };
-  //moveToCompleted
-  const moveToCompleted = async id => {
+
+  // ReadPost - we don't need authentication
+  const getAllPosts = async () => {
     try {
-      const index = todos.findIndex(todo => todo._id === id);
-      const todosCopy = [...todos];
-      const subject = todosCopy[index];
-      subject.completed = true;
-      const response = await fetch("/api/todos/".concat(id), {
+      const response = await fetch('/api/posts');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Show and individual post - no need for authentication
+  const getIndividualPost = async id => {
+    try {
+      const response = await fetch("/api/posts/".concat(id));
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // UpdatePost
+  const updatePost = async (newPostData, id, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
+    if (!token) {
+      return;
+    }
+    try {
+      const response = await fetch("/api/posts/".concat(id), {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
+          // Tell it that we're sending JSON data
+          'Content-Type': 'application/json',
+          // Tell it that we have a user token
+          'Authorization': "Bearer ".concat(token)
         },
-        body: JSON.stringify(subject)
+        body: JSON.stringify(newPostData)
       });
-      const updatedTodo = await response.json();
-      const completedTDsCopy = [updatedTodo, ...completedTodos];
-      setCompletedTodos(completedTDsCopy);
-      todosCopy.splice(index, 1);
-      setTodos(todosCopy);
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error);
     }
   };
-  //getTodos
-  const getTodos = async () => {
+
+  // DeletePost
+  const deletePost = async (id, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
+    if (!token) {
+      return;
+    }
     try {
-      const response = await fetch('/api/todos');
-      const foundTodos = await response.json();
-      setTodos(foundTodos.reverse());
-      console.log('hey');
-      const responseTwo = await fetch('/api/todos/completed');
-      const foundCompletedTodos = await responseTwo.json();
-      setCompletedTodos(foundCompletedTodos.reverse());
+      const response = await fetch("/api/posts/".concat(id), {
+        method: 'DELETE',
+        headers: {
+          // Don't need content-type because we are not sending any data
+          'Authorization': "Bearer ".concat(token)
+        }
+      });
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error);
     }
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    getTodos();
-  }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
-  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-    path: "/auth",
-    element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
     path: "/",
-    element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-    path: "/profile",
-    element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_4__["default"], null)
+    element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"]
+    // Pass user, token, && setToken props down to HomePage
+    , {
+      user: user,
+      token: token
+      // nameOfTheProp={nameOfTheFunction}
+      ,
+      setToken: setToken,
+      setUser: setUser,
+      createPost: createPost,
+      getAllPosts: getAllPosts
+    })
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    path: "/auth",
+    element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__["default"]
+    // Pass setUser, setToken && signUp props down to AuthPage
+    , {
+      setUser: setUser,
+      setToken: setToken,
+      signUp: signUp,
+      login: login
+    })
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    path: "/profile/:id",
+    element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      user: user,
+      token: token,
+      setToken: setToken,
+      setUser: setUser,
+      getIndividualPost: getIndividualPost,
+      deletePost: deletePost,
+      updatePost: updatePost
+    })
   }))));
 }
 
@@ -268,7 +357,8 @@ function LikeBtn() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginForm.module.scss */ "./src/components/LoginForm/LoginForm.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -277,6 +367,7 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
+ // Import useNavigate hook
 
 
 function LoginForm(_ref) {
@@ -284,26 +375,69 @@ function LoginForm(_ref) {
     setUser,
     setShowLogin
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Initialize useNavigate hook
   const [credentials, setCredentials] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: '',
     password: ''
   });
+  const [errors, setErrors] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: '',
+    password: ''
+  });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  function handleChange(evt) {
+  const [rememberMe, setRememberMe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track "Remember Me" checkbox
+
+  const handleChange = evt => {
+    const {
+      name,
+      value
+    } = evt.target;
     setCredentials(_objectSpread(_objectSpread({}, credentials), {}, {
-      [evt.target.name]: evt.target.value
+      [name]: value
     }));
     setError('');
-  }
-  async function handleSubmit(evt) {
+    setErrors(prevErrors => _objectSpread(_objectSpread({}, prevErrors), {}, {
+      [name]: ''
+    }));
+    const inputContainer = evt.target.parentElement;
+    if (value.trim()) {
+      inputContainer.classList.add(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
+    } else {
+      inputContainer.classList.remove(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
+    }
+  };
+  const handleRememberMeChange = evt => {
+    const isChecked = evt.target.checked;
+    console.log('Remember Me checked:', isChecked);
+    setRememberMe(isChecked);
+  };
+  const handleSubmit = async evt => {
     evt.preventDefault();
+    const emailError = validateEmail(credentials.email);
+    const passwordError = validatePassword(credentials.password);
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError,
+        password: passwordError
+      });
+      setError('Please fix the errors in the form.');
+      return;
+    }
     try {
-      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.login(credentials);
+      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login(credentials, rememberMe, navigate);
       setUser(user);
+      navigate('/'); // Redirect to root route on successful login
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
-  }
+  };
+  const validateEmail = email => {
+    if (!email) return 'Email is required';
+    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format';
+  };
+  const validatePassword = password => {
+    return password.length < 8 ? 'Password must be at least 8 characters long' : '';
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
   }, /*#__PURE__*/React.createElement("h1", null, "Welcome"), /*#__PURE__*/React.createElement("h4", null, "To Our Group Project")), /*#__PURE__*/React.createElement("div", {
@@ -312,25 +446,31 @@ function LoginForm(_ref) {
     autoComplete: "off",
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("h1", null, "Login"), /*#__PURE__*/React.createElement("div", {
-    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
+    className: "".concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox, " ").concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled)
   }, /*#__PURE__*/React.createElement("input", {
-    type: "email",
+    type: "text",
     name: "email",
     value: credentials.email,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/React.createElement("label", null, "Email")), /*#__PURE__*/React.createElement("div", {
-    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
+  }), /*#__PURE__*/React.createElement("label", null, "Email"), errors.email && /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorSign
+  }, "\u274C", errors.email)), /*#__PURE__*/React.createElement("div", {
+    className: "".concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox, " ").concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled)
   }, /*#__PURE__*/React.createElement("input", {
     type: "password",
     name: "password",
     value: credentials.password,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/React.createElement("label", null, "Password")), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("label", null, "Password"), errors.password && /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorSign
+  }, "\u274C", errors.password)), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lost
   }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox"
+    type: "checkbox",
+    checked: rememberMe,
+    onChange: handleRememberMeChange
   }), "Remember Me"), /*#__PURE__*/React.createElement("a", {
     href: "No IDEA YET"
   }, "Forgot Password")), /*#__PURE__*/React.createElement("button", {
@@ -527,7 +667,7 @@ function SignUpForm(_ref) {
     setShowLogin
   } = _ref;
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    username: '',
+    name: '',
     email: '',
     password: '',
     userType: '' // Added userType field
@@ -549,18 +689,18 @@ function SignUpForm(_ref) {
     }
   };
   const {
-    username,
+    name,
     email,
     password,
     userType
   } = formData;
-  const disable = !username || !email || !password || !userType; // Adjusted to include userType
+  const disable = !name || !email || !password || !userType; // Adjusted to include userType
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].body
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "TipDivide"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Tip/Catering Splits Made Easy")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "To Our Project")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].boxc
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
@@ -568,14 +708,14 @@ function SignUpForm(_ref) {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    name: "username",
-    value: username,
+    name: "name",
+    value: name,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Username")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "email",
+    type: "text",
     name: "email",
     value: email,
     onChange: handleChange,
@@ -718,124 +858,172 @@ function HomePage() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ProfilePage)
 /* harmony export */ });
-/* harmony import */ var _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfilePage.module.scss */ "./src/pages/ProfilePage/ProfilePage.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
 
-function ProfilePage() {
+
+function ProfilePage(props) {
+  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [showCreate, setShowCreate] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const {
+    id
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)(); // Retrieve the id parameter from the URL
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // Fetch user data based on the id parameter
+    const fetchUser = async () => {
+      try {
+        const userData = await props.getIndividualUser(id);
+        // Update state with user data
+        props.setUser(userData.user);
+        // Fetch user's posts
+        const postData = await props.getAllPosts();
+        setPosts(postData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchUser();
+  }, [id, props]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // Check if token exists in localStorage and set it in state
+    if (localStorage.token && !props.token) {
+      props.setToken(localStorage.getItem('token'));
+      setShowCreate(true);
+    }
+    // Check if user exists in localStorage and set it in state
+    if (localStorage.token && localStorage.user && !props.user) {
+      props.setUser(JSON.parse(localStorage.getItem('user')));
+    }
+    // Check if token exists in props and set showCreate
+    if (props.token) {
+      setShowCreate(true);
+    }
+  }, [props.token, props.user]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProfilePage
+    className: styles.ProfilePage
   }, /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].topContainer
+    className: styles.topContainer
   }, /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userContainer
+    className: styles.userContainer
   }, /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userHeading
+    className: styles.userHeading
   }, /*#__PURE__*/React.createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProfileImage
+    className: styles.ProfileImage
   }), /*#__PURE__*/React.createElement("h2", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userName
+    className: styles.userName
   }, "Tyler Pierson")), /*#__PURE__*/React.createElement("p", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userBio
+    className: styles.userBio
   }, "Donec consequat pharetra enim. Maecenas cursus erat at semper ultricies. Proin rhoncus posuere laoreet. Etiam pulvinar, magna id viverra ullamcorper, dolor purus tincidunt libero, at feugiat purus felis eu quam. Praesent ultrices, sem vel tristique pellentesque, enim urna convallis est, nec bibendum lectus nibh sed sapien. Quisque vel blandit lectus.")), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].employers
+    className: styles.employers
   }, /*#__PURE__*/React.createElement("h3", null, "Employers"), /*#__PURE__*/React.createElement("ul", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ul
+    className: styles.ul
   }, /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer")), /*#__PURE__*/React.createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].a,
+    className: styles.a,
     href: "#"
   }, /*#__PURE__*/React.createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].li
+    className: styles.li
   }, "This would be an employer"))))), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProjectItems
-  }, /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].imgContainer
+    className: styles.ProjectItems
+  }, /*#__PURE__*/React.createElement("div", null, props.user ? /*#__PURE__*/React.createElement("h1", {
+    className: styles.h1
+  }, "Welcome Back, ", props.user.name.charAt(0).toUpperCase() + props.user.name.slice(1), "!") : /*#__PURE__*/React.createElement("h1", null, "Welcome to Liberty posts!"), showCreate ? /*#__PURE__*/React.createElement(CreateForm, {
+    user: props.user,
+    createPost: props.createPost,
+    token: props.token
+  }) : /*#__PURE__*/React.createElement(React.Fragment, null), posts.length ? /*#__PURE__*/React.createElement(Posts, {
+    posts: posts
+  }) : 'Sorry, no posts yet!'), /*#__PURE__*/React.createElement("div", {
+    className: styles.imgContainer
   }, /*#__PURE__*/React.createElement("h3", null, "Project Title"), /*#__PURE__*/React.createElement("img", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].image,
+    className: styles.image,
     src: "https://i.imgur.com/wb7FT8b.jpg"
   })), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].projectDescription
+    className: styles.projectDescription
   }, /*#__PURE__*/React.createElement("p", null, "Donec consequat pharetra enim. Maecenas cursus erat at semper ultricies. Proin rhoncus posuere laoreet. Etiam pulvinar, magna id viverra ullamcorper, dolor purus tincidunt libero, at feugiat purus felis eu quam. Praesent ultrices, sem vel tristique pellentesque, enim urna convallis est, nec bibendum lectus nibh sed sapien. Quisque vel blandit lectus.")), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].iconContainer
+    className: styles.iconContainer
   }, /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+    className: styles.icon
   }), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+    className: styles.icon
   }), /*#__PURE__*/React.createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+    className: styles.icon
   })))));
 }
 
@@ -911,16 +1099,35 @@ function login(credentials) {
 /* harmony export */ });
 /* unused harmony exports getUser, logOut */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 async function signUp(userData) {
   const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.signUp(userData);
   localStorage.setItem('token', token);
   return getUser();
 }
-async function login(credentials) {
-  const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(credentials);
-  localStorage.setItem('token', token);
-  return getUser();
+async function login(credentials, rememberMe, navigate) {
+  try {
+    // Pass credentials and rememberMe option to the API call
+    const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(_objectSpread(_objectSpread({}, credentials), {}, {
+      rememberMe
+    }));
+    localStorage.setItem('token', token);
+    const user = getUser();
+    console.log("User:", user);
+
+    // Redirect to homepage upon successful login
+    navigate('/'); // Replace '/' with the path of your homepage
+
+    return user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw error;
+  }
 }
 function getToken() {
   const token = localStorage.getItem('token');
@@ -934,7 +1141,14 @@ function getToken() {
 }
 function getUser() {
   const token = getToken();
-  return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+  if (!token) return null; // Return null if token is missing
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.user; // Return user object from token payload
+  } catch (error) {
+    console.error("Error parsing user from token:", error);
+    return null; // Return null if there's an error parsing the token
+  }
 }
 function logOut() {
   localStorage.removeItem('token');
@@ -1344,6 +1558,10 @@ input:valid ~ label {
   top: -5px;
 }
 
+.PWpsrepqIxsSicJWBQv9 {
+  display: block;
+}
+
 .slJPwttFXbjZj3iK5tpD input {
   width: 100%;
   height: 60px;
@@ -1373,6 +1591,7 @@ input:valid ~ label {
 
 .JAm91a8tmBcEN_9D7mVL label input {
   margin-right: 5px; /* Increase the margin for better spacing */
+  cursor: pointer;
 }
 
 .JAm91a8tmBcEN_9D7mVL a {
@@ -1427,12 +1646,13 @@ button:hover {
 .YtX40q4kPgyY1kLWHR5i p a:hover {
   /* font-size: large; */
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n    width: 100%;\n    text-align: center;\n    color: #fff;\n    padding: 10px; \n  }\n\n.boxc {\n    min-width: 25vh;\n    max-width: 700px;\n    position: relative;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 2rem 3rem;\n}\n\nh1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n}\n\n.inputbox {\n    position: relative;\n    margin: 30px 0;\n    min-width: 27vh;\n    max-width: 35vh;\n    border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n}\n\n/*ANIMATION */\ninput:focus ~ label, \ninput:valid ~ label {\n    top: -5px;\n}\n\n.inputbox input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n}\n\n.lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center; /* Center items vertically */\n  }\n  \n  .lost label {\n    font-size: 1.5rem;\n    display: flex;\n    align-items: center;\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\n  }\n  \n  .lost label input {\n    margin-right: 5px; /* Increase the margin for better spacing */\n  }\n  \n  .lost a {\n    font-size: 1.5rem;\n    color: #fff;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.3s ease; /* Smooth transition for color change */\n  }\n  \n  .lost a:hover {\n    text-decoration: underline;\n    color: #ccc; /* Change color on hover for better feedback */\n  }\n  \n  .register:hover {\n    text-decoration: underline;\n    cursor: pointer;\n  }\n\nbutton {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(255, 255,255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 1rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgb(255, 255,255, 0.5);\n}\n\n.register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n}\n\n.register p a {\n    text-decoration: none;\n    color: #fff;\n    font-weight: 600;\n}\n\n.register p a:hover {\n    /* font-size: large; */\n    text-decoration: underline;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACE,cAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;EACA,eAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n    width: 100%;\n    text-align: center;\n    color: #fff;\n    padding: 10px; \n  }\n\n.boxc {\n    min-width: 25vh;\n    max-width: 700px;\n    position: relative;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 2rem 3rem;\n}\n\nh1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n}\n\n.inputbox {\n    position: relative;\n    margin: 30px 0;\n    min-width: 27vh;\n    max-width: 35vh;\n    border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n}\n\n/*ANIMATION */\ninput:focus ~ label, \ninput:valid ~ label {\n    top: -5px;\n}\n\n.errorSign {\n  display: block;\n}\n\n.inputbox input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n}\n\n.lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center; /* Center items vertically */\n  }\n  \n  .lost label {\n    font-size: 1.5rem;\n    display: flex;\n    align-items: center;\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\n  }\n  \n  .lost label input {\n    margin-right: 5px; /* Increase the margin for better spacing */\n    cursor: pointer;\n  }\n  \n  .lost a {\n    font-size: 1.5rem;\n    color: #fff;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.3s ease; /* Smooth transition for color change */\n  }\n  \n  .lost a:hover {\n    text-decoration: underline;\n    color: #ccc; /* Change color on hover for better feedback */\n  }\n  \n  .register:hover {\n    text-decoration: underline;\n    cursor: pointer;\n  }\n\nbutton {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(255, 255,255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 1rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgb(255, 255,255, 0.5);\n}\n\n.register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n}\n\n.register p a {\n    text-decoration: none;\n    color: #fff;\n    font-weight: 600;\n}\n\n.register p a:hover {\n    /* font-size: large; */\n    text-decoration: underline;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `duhWcPoiFKzflZYTW6qA`,
 	"boxc": `mdJKUsO6IVB_KHxsorxg`,
 	"inputbox": `slJPwttFXbjZj3iK5tpD`,
+	"errorSign": `PWpsrepqIxsSicJWBQv9`,
 	"lost": `JAm91a8tmBcEN_9D7mVL`,
 	"register": `YtX40q4kPgyY1kLWHR5i`
 };
@@ -1748,7 +1968,8 @@ h1 {
   color: #fff; /* Text color for options */
 }
 
-input:focus ~ label, input:valid ~ label {
+.G5WQETTTkTlRpPef5KUY input:focus ~ label,
+.G5WQETTTkTlRpPef5KUY input:valid ~ label {
   top: -5px;
 }
 
@@ -1835,7 +2056,7 @@ option {
 
 .JtQI_Hm4R0_7b5aQ1Jdw p a:hover {
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAAJ;;AAGA;EACE,SAAA;AAAF;;AAGA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAAF;;AAGA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAAF;;AAGA;EACI,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAF;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAAF;;AAGA;EACE,eAAA;AAAF;;AAGA;EACE,YAAA;AAAF;;AAGA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAAF;;AAGA;EACE,0BAAA;AAAF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n}\n\nh1 {\n  font-size: 2rem;\n  color: #fff;\n  text-align: center;\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\ninput:focus ~ label, input:valid ~ label {\n  top: -5px;\n}\n\n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  font-size: 2rem;\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAAJ;;AAGE;;EAEE,SAAA;AAAJ;;AAGA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAAF;;AAGA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAAF;;AAGA;EACI,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAF;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAAF;;AAGA;EACE,eAAA;AAAF;;AAGA;EACE,YAAA;AAAF;;AAGA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAAF;;AAGA;EACE,0BAAA;AAAF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n}\n\nh1 {\n  font-size: 2rem;\n  color: #fff;\n  text-align: center;\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  font-size: 2rem;\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `G2ijX8bHTJbg8fG7Xvdl`,
@@ -1949,159 +2170,12 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ProfilePage/ProfilePage.module.scss":
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ProfilePage/ProfilePage.module.scss ***!
-  \**********************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
-  margin: 0 auto;
-  width: 80%;
-  height: 100%;
-  padding: 5rem 10rem;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-height: 50rem;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H {
-  display: flex;
-  flex-direction: column;
-  width: 55%;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .NRctD9g76e7H9oiALbUB {
-  display: flex;
-  align-items: center;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .NRctD9g76e7H9oiALbUB .E7m1DCMGe7wijfUz4dz4 {
-  margin-left: 3rem;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .dbIMdhqIGQg9JtZeKmrK {
-  margin-top: 2rem;
-  height: 15vh;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .rVeGBLkFOVLb3YRYHtkD {
-  width: 40%;
-  background-color: white;
-  border-radius: 1rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: scroll;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .rVeGBLkFOVLb3YRYHtkD .zo0CasRbfQfmRe38b4aj .eKY3aNtgkP774wXuYTKp {
-  list-style-type: none;
-  margin-bottom: 1rem;
-  font-size: 0.7vw;
-}
-.z1XFB0qbBjHblp8c_F5M .zowTklKEZfFcKeeFo5Sg {
-  margin-top: 3rem;
-  background-color: white;
-  width: 100%;
-  min-height: 60rem;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE {
-  margin-top: 3rem;
-  background-color: white;
-  width: 100%;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .syKW9dLz4EwS_wpHk6_0 .OL0obsY1jLzxOMQofgqg {
-  max-height: 40rem;
-  border-radius: 1rem;
-  border: 0.2rem solid lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .hdJjjfobrjNtuXuHoWvD {
-  padding: 1rem;
-  margin-left: 1rem;
-  min-height: 50rem;
-  border: 1px solid lightgrey;
-  display: flex;
-  width: 50%;
-  border-radius: 1rem;
-  background-color: var(--bg-color);
-  box-shadow: 0 0 1rem lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .HpdY59jXxbNFIVYNHJs_ {
-  width: 20%;
-  min-height: 50rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .HpdY59jXxbNFIVYNHJs_ .JbkEVmhIVjZPQk4slpHs {
-  width: 9rem;
-  height: 9rem;
-  border-radius: 100%;
-  background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,mBAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAFY;EACI,gBAAA;EACA,YAAA;AAIhB;AADQ;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,qBAAA;EACA,mBAAA;EACA,gBAAA;AAIhB;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAER;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AAAY;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEhB;AACQ;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACZ;AACQ;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACZ;AAAY;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEhB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 80%;\n    height: 100%;\n    padding: 5rem 10rem;\n    .topContainer {\n        display: flex;\n        justify-content: space-between;\n        width: 100%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            width: 55%;\n            background-color: white;\n            border-radius: 1rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            .userHeading {\n                display: flex;\n                align-items: center;\n                .userName {\n                    margin-left: 3rem;\n                }\n            }\n            .userBio {\n                margin-top: 2rem;\n                height: 15vh;\n            }\n        }\n        .employers {\n            width: 40%;\n            background-color: white;\n            border-radius: 1rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            padding: 3rem;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            overflow-y: scroll;\n            .ul .li {\n                list-style-type: none;\n                margin-bottom: 1rem;\n                font-size: .7vw;\n            }\n        }\n    }\n    .ProjectContainer {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        min-height: 60rem;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n    }\n    .ProjectItems {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .imgContainer {\n            .image {\n                max-height: 40rem;\n                border-radius: 1rem;\n                border: .2rem solid lightgrey;\n            }\n        }\n        .projectDescription {\n            padding: 1rem;\n            margin-left: 1rem;\n            min-height: 50rem;\n            border: 1px solid lightgrey;\n            display: flex;\n            width: 50%;\n            border-radius: 1rem;\n            background-color: var(--bg-color);\n            box-shadow: 0 0 1rem lightgrey;\n        }\n        .iconContainer {\n            width: 20%;\n            min-height: 50rem;\n            display: flex;\n            flex-direction: column;\n            justify-content: space-evenly;\n            align-items: center;\n            .icon {\n                width: 9rem;\n                height: 9rem;\n                border-radius: 100%;\n                background-color: var(--bg-color);\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
-	"topContainer": `Fn3Y8z6cyE3sFTgZXhsg`,
-	"userContainer": `C3y4TdU4vKMpvL4_wj8H`,
-	"userHeading": `NRctD9g76e7H9oiALbUB`,
-	"userName": `E7m1DCMGe7wijfUz4dz4`,
-	"userBio": `dbIMdhqIGQg9JtZeKmrK`,
-	"employers": `rVeGBLkFOVLb3YRYHtkD`,
-	"ul": `zo0CasRbfQfmRe38b4aj`,
-	"li": `eKY3aNtgkP774wXuYTKp`,
-	"ProjectContainer": `zowTklKEZfFcKeeFo5Sg`,
-	"ProjectItems": `ReekN20SjAkhmHnhtIrE`,
-	"imgContainer": `syKW9dLz4EwS_wpHk6_0`,
-	"image": `OL0obsY1jLzxOMQofgqg`,
-	"projectDescription": `hdJjjfobrjNtuXuHoWvD`,
-	"iconContainer": `HpdY59jXxbNFIVYNHJs_`,
-	"icon": `JbkEVmhIVjZPQk4slpHs`
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./src/App.module.scss":
 /*!*****************************!*\
   !*** ./src/App.module.scss ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
@@ -2141,7 +2215,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -2774,59 +2848,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
        /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_HomePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_HomePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_HomePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
-/***/ }),
-
-/***/ "./src/pages/ProfilePage/ProfilePage.module.scss":
-/*!*******************************************************!*\
-  !*** ./src/pages/ProfilePage/ProfilePage.module.scss ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ProfilePage.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ProfilePage/ProfilePage.module.scss");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
-
-
 /***/ })
 
 /******/ 	});
@@ -3041,4 +3062,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.64f7ea65093a559eb9390ad91eb55b8a.js.map
+//# sourceMappingURL=App.efe09ff30994da7ff68cd8789b9dfbee.js.map
