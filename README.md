@@ -58,3 +58,24 @@
 - Present the project, emphasizing the collaborative effort between functionality and design.
 - Showcase the application's features with a focus on the enhanced user experience.
 - Explain the motivation behind the app and encourage classmates to sign up.
+
+## API Documentation
+
+### Users
+The Users API.
+
+#### Create User
+- Method: `POST`
+- URL: `/api/posts/
+  
+##### Required req data
+- ... (from the models)
+- ...
+- ...
+- ...
+
+##### Response data
+- ...
+- ...
+- ...
+- ...
