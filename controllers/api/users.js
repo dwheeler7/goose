@@ -1,7 +1,6 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
-
 function createJWT(user, rememberMe) {
     let expiresIn = '24h'; // Default expiration time (24 hours)
     if (rememberMe) {
@@ -12,6 +11,8 @@ function createJWT(user, rememberMe) {
         process.env.SECRET,
         { expiresIn }
     );
+    console.log(jwtToken)
+    return jwtToken
 }
 
 const checkToken = (req, res) => {
