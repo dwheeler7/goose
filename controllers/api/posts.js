@@ -56,16 +56,6 @@ async function create(req, res) {
     }
 }
 
-
-        res.locals.data.post = post;
-        console.log("Created post:", post);
-        res.status(201).json({ message: "Post created successfully", post });
-    } catch (error) {
-        console.error("Error creating post:", error);
-        res.status(400).json({ msg: error.message });
-    }
-}
-
 // Read
 async function index(_, res) {
     try {
