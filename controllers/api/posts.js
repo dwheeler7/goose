@@ -1,5 +1,6 @@
-const Post = require('../../models/Post');
-const User = require('../../models/User');
+const Post = require('../../models/Post')
+const User = require('../../models/User')
+const { fetchReadmeContent } = require('../../services/githubAPI')
 
 module.exports = {
     create,
@@ -25,10 +26,22 @@ function jsonPosts(_, res) {
 async function create(req, res, next) {
     try {
         // Grabbing the id from the req body
-        const { _id: userId } = req.body;
-        const post = await Post.create(req.body);
+        const { _id: userId, githublink, useReadmeAsDescription } = req.body
+        let description = req.body.description // Initialize description with the provided description
 
-        // Updating user's post array
+        // If GitHub link is provided and user wants to use README content as description
+        if (githublink && useReadmeAsDescription) {
+            // Extract owner and repo name from the GitHub link
+            const [_, owner, repo] = githublink.split('/');
+            // Fetch README content from GitHub repository
+            const readmeContent = await fetchReadmeContent(owner, repo);
+            description = readmeContent; // Update description with README content
+        }
+
+        // Create post with the updated description
+        const post = await Post.create({ ...req.body, description });
+
+        // Update user's post array
         await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
 
         res.locals.data.post = post;
