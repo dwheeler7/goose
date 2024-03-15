@@ -49,6 +49,16 @@ const dataController = {
             res.status(400).json({ message: error.message || 'Bad Credentials' });
         }
     }, 
+    async showUser(req, res) {
+        try {
+            const user = await User.findById(req.params.id)
+            res.locals.data.user = user
+            next()
+        } catch (error) {
+            res.status(400).json({ msg: error.message })
+        }
+    },
+
     async updateUser(req, res) {
         try {
             const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
