@@ -1,3 +1,5 @@
+// THIS IS TO TEST THE PURPOSE OF JWT TOKENS HOW LONG THEY LAST UNTIL EXPIRATION //
+
 const token = ''; // Put Token in here to test the tokens exp length
 
 // Decode JWT token
