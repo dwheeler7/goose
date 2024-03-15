@@ -1,5 +1,6 @@
 import styles from './Post.module.scss'
 import LikeBtn from '../LikeBtn/LikeBtn'
+import CommentForm from '../CommentForm/CommentForm'
 import { useState, userRef } from 'react'
 
 
@@ -14,27 +15,7 @@ export default function Post({ post, buttonAction, buttonText}){
             <div className={styles.imageContainer}>
             <img className={styles.image} src="https://via.placeholder.com/225" alt="placeholder" />
             </div>
-            <div className={styles.commentContainer}>
-                <p className={styles.commentTitle}>User Comments</p>
-                <ul className={styles.commentList}>
-                    <li className={styles.commentItem}>
-                        <a href='' className={styles.commentUser}>Bill Gates</a>
-                        <p className={styles.comment}>This is another comment.</p>
-                    </li>
-                    <li className={styles.commentItem}>
-                        <a href='' className={styles.commentUser}>Elon Musk</a>
-                        <p className={styles.comment}>This is another comment.</p>
-                    </li>
-                    <li className={styles.commentItem}>
-                        <a href='' className={styles.commentUser}>Elon Musk</a>
-                        <p className={styles.comment}>This is another comment.</p>
-                    </li>
-                    <li className={styles.commentItem}>
-                        <a href='' className={styles.commentUser}>Elon Musk</a>
-                        <p className={styles.comment}>This is another comment.</p>
-                    </li>
-                </ul>
-            </div>
+           <CommentForm />
             <LikeBtn />
         </div>
     )
