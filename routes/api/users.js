@@ -6,6 +6,9 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn');
 // Import User model
 const User = require('../../models/User');
 
+// GET /api/users/:id
+router.get('/:id', dataController.showUser, apiController.authenticate)
+
 // Post /api/users
 router.post('/', dataController.createUser, apiController.authenticate);
 
