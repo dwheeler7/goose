@@ -120,8 +120,7 @@ async function likePost(req, res) {
         }
         // Add post to likedPosts array of the user if not already present
         if (!req.user.likedPosts.includes(post._id)) {
-            req.user.likedPosts.push(post._id)
-            await req.user.save()
+            req.user.likedPosts.push(post._id)            
         } else {
             throw new Error('Post already liked by the user')
         }
@@ -155,8 +154,7 @@ async function unlikePost(req, res) {
             throw new Error('User has not liked the post')
         }
         // Remove post from likedPosts array of the user
-        req.user.likedPosts = req.user.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())
-        await req.user.save()
+        req.user.likedPosts = req.user.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())        
         // Remove user from likes array of the post
         post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString())
         await post.save()

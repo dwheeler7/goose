@@ -6,7 +6,7 @@ function createJWT(user, rememberMe) {
     if (rememberMe) {
         expiresIn = '30d'; // 30 days expiration if rememberMe is true
     }
-    return jwt.sign(
+    const jwtToken = jwt.sign(
         { user },
         process.env.SECRET,
         { expiresIn }
