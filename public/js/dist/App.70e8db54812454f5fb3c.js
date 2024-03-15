@@ -202,7 +202,8 @@ function LikeBtn() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginForm.module.scss */ "./src/components/LoginForm/LoginForm.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -211,6 +212,7 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
+ // Import useNavigate hook
 
 
 function LoginForm(_ref) {
@@ -218,6 +220,7 @@ function LoginForm(_ref) {
     setUser,
     setShowLogin
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Initialize useNavigate hook
   const [credentials, setCredentials] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: '',
     password: ''
@@ -227,7 +230,9 @@ function LoginForm(_ref) {
     password: ''
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  function handleChange(evt) {
+  const [rememberMe, setRememberMe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track "Remember Me" checkbox
+
+  const handleChange = evt => {
     const {
       name,
       value
@@ -238,16 +243,20 @@ function LoginForm(_ref) {
     setError('');
     setErrors(prevErrors => _objectSpread(_objectSpread({}, prevErrors), {}, {
       [name]: ''
-    })); // Clear the corresponding error when the user starts typing again
-
-    const inputContainer = evt.target.parentElement; // Add a class to the input container when the input is not empty
+    }));
+    const inputContainer = evt.target.parentElement;
     if (value.trim()) {
       inputContainer.classList.add(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
     } else {
       inputContainer.classList.remove(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
     }
-  }
-  async function handleSubmit(evt) {
+  };
+  const handleRememberMeChange = evt => {
+    const isChecked = evt.target.checked;
+    console.log('Remember Me checked:', isChecked);
+    setRememberMe(isChecked);
+  };
+  const handleSubmit = async evt => {
     evt.preventDefault();
     const emailError = validateEmail(credentials.email);
     const passwordError = validatePassword(credentials.password);
@@ -255,24 +264,25 @@ function LoginForm(_ref) {
       setErrors({
         email: emailError,
         password: passwordError
-      }); // If there are errors, set them in the state and return 
+      });
       setError('Please fix the errors in the form.');
       return;
     }
     try {
-      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.login(credentials);
+      const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login(credentials, rememberMe, navigate);
       setUser(user);
+      navigate('/'); // Redirect to root route on successful login
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
-  }
-  function validateEmail(email) {
+  };
+  const validateEmail = email => {
     if (!email) return 'Email is required';
-    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format'; // Basic email error message format
-  }
-  function validatePassword(password) {
+    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format';
+  };
+  const validatePassword = password => {
     return password.length < 8 ? 'Password must be at least 8 characters long' : '';
-  }
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
   }, /*#__PURE__*/React.createElement("h1", null, "Welcome"), /*#__PURE__*/React.createElement("h4", null, "To Our Group Project")), /*#__PURE__*/React.createElement("div", {
@@ -303,7 +313,9 @@ function LoginForm(_ref) {
   }, "\u274C", errors.password)), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lost
   }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox"
+    type: "checkbox",
+    checked: rememberMe,
+    onChange: handleRememberMeChange
   }), "Remember Me"), /*#__PURE__*/React.createElement("a", {
     href: "No IDEA YET"
   }, "Forgot Password")), /*#__PURE__*/React.createElement("button", {
@@ -720,16 +732,35 @@ function login(credentials) {
 /* harmony export */ });
 /* unused harmony exports getUser, logOut */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 async function signUp(userData) {
   const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.signUp(userData);
   localStorage.setItem('token', token);
   return getUser();
 }
-async function login(credentials) {
-  const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(credentials);
-  localStorage.setItem('token', token);
-  return getUser();
+async function login(credentials, rememberMe, navigate) {
+  try {
+    // Pass credentials and rememberMe option to the API call
+    const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(_objectSpread(_objectSpread({}, credentials), {}, {
+      rememberMe
+    }));
+    localStorage.setItem('token', token);
+    const user = getUser();
+    console.log("User:", user);
+
+    // Redirect to homepage upon successful login
+    navigate('/'); // Replace '/' with the path of your homepage
+
+    return user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw error;
+  }
 }
 function getToken() {
   const token = localStorage.getItem('token');
@@ -743,7 +774,14 @@ function getToken() {
 }
 function getUser() {
   const token = getToken();
-  return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+  if (!token) return null; // Return null if token is missing
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.user; // Return user object from token payload
+  } catch (error) {
+    console.error("Error parsing user from token:", error);
+    return null; // Return null if there's an error parsing the token
+  }
 }
 function logOut() {
   localStorage.removeItem('token');
@@ -1087,6 +1125,7 @@ input:valid ~ label {
 
 .JAm91a8tmBcEN_9D7mVL label input {
   margin-right: 5px; /* Increase the margin for better spacing */
+  cursor: pointer;
 }
 
 .JAm91a8tmBcEN_9D7mVL a {
@@ -1141,7 +1180,7 @@ button:hover {
 .YtX40q4kPgyY1kLWHR5i p a:hover {
   /* font-size: large; */
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACE,cAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\r\n\r\nbody {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  min-height: 100vh;\r\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\r\n  background-repeat: no-repeat;\r\n  background-position: center;\r\n  background-size: cover;\r\n}\r\n\r\n.title {\r\n    width: 100%;\r\n    text-align: center;\r\n    color: #fff;\r\n    padding: 10px; \r\n  }\r\n\r\n.boxc {\r\n    min-width: 25vh;\r\n    max-width: 700px;\r\n    position: relative;\r\n    border: 2px solid rgba(255, 255, 255, 0.5);\r\n    border-radius: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    padding: 2rem 3rem;\r\n}\r\n\r\nh1 {\r\n    font-size: 2rem;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n\r\n.inputbox {\r\n    position: relative;\r\n    margin: 30px 0;\r\n    min-width: 27vh;\r\n    max-width: 35vh;\r\n    border-bottom: 2px solid #fff;\r\n}\r\n\r\n.inputbox label {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 5px;\r\n    transform: translateY(-50%);\r\n    color: #fff;\r\n    font-size: 1rem;\r\n    pointer-events: none;\r\n    transition: all 0.5s ease-in-out;\r\n}\r\n\r\n/*ANIMATION */\r\ninput:focus ~ label, \r\ninput:valid ~ label {\r\n    top: -5px;\r\n}\r\n\r\n.errorSign {\r\n  display: block;\r\n}\r\n\r\n.inputbox input {\r\n    width: 100%;\r\n    height: 60px;\r\n    background: transparent;\r\n    border: none;\r\n    outline: none;\r\n    font-size: 1rem;\r\n    padding: 0 35px 0 5px;\r\n    color: #fff;\r\n}\r\n\r\n.lost {\r\n    margin: 35px 0;\r\n    font-size: 0.85rem;\r\n    color: #fff;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center; /* Center items vertically */\r\n  }\r\n  \r\n  .lost label {\r\n    font-size: 1.5rem;\r\n    display: flex;\r\n    align-items: center;\r\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\r\n  }\r\n  \r\n  .lost label input {\r\n    margin-right: 5px; /* Increase the margin for better spacing */\r\n  }\r\n  \r\n  .lost a {\r\n    font-size: 1.5rem;\r\n    color: #fff;\r\n    text-decoration: none;\r\n    font-weight: 600;\r\n    transition: color 0.3s ease; /* Smooth transition for color change */\r\n  }\r\n  \r\n  .lost a:hover {\r\n    text-decoration: underline;\r\n    color: #ccc; /* Change color on hover for better feedback */\r\n  }\r\n  \r\n  .register:hover {\r\n    text-decoration: underline;\r\n    cursor: pointer;\r\n  }\r\n\r\nbutton {\r\n    color: black;\r\n    width: 100%;\r\n    height: 40px;\r\n    border-radius: 40px;\r\n    background-color: rgb(255, 255,255, 1);\r\n    border: none;\r\n    outline: none;\r\n    cursor: pointer;\r\n    font-size: 1rem;\r\n    font-weight: 600;\r\n    transition: all 0.4s ease;\r\n}\r\n\r\nbutton:hover {\r\n  background-color: rgb(255, 255,255, 0.5);\r\n}\r\n\r\n.register {\r\n    font-size: 0.9rem;\r\n    color: #fff;\r\n    text-align: center;\r\n    margin: 25px 0 10px;\r\n}\r\n\r\n.register p a {\r\n    text-decoration: none;\r\n    color: #fff;\r\n    font-weight: 600;\r\n}\r\n\r\n.register p a:hover {\r\n    /* font-size: large; */\r\n    text-decoration: underline;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACE,cAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;EACA,eAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\r\n\r\nbody {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  min-height: 100vh;\r\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\r\n  background-repeat: no-repeat;\r\n  background-position: center;\r\n  background-size: cover;\r\n}\r\n\r\n.title {\r\n    width: 100%;\r\n    text-align: center;\r\n    color: #fff;\r\n    padding: 10px; \r\n  }\r\n\r\n.boxc {\r\n    min-width: 25vh;\r\n    max-width: 700px;\r\n    position: relative;\r\n    border: 2px solid rgba(255, 255, 255, 0.5);\r\n    border-radius: 20px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    padding: 2rem 3rem;\r\n}\r\n\r\nh1 {\r\n    font-size: 2rem;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n\r\n.inputbox {\r\n    position: relative;\r\n    margin: 30px 0;\r\n    min-width: 27vh;\r\n    max-width: 35vh;\r\n    border-bottom: 2px solid #fff;\r\n}\r\n\r\n.inputbox label {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 5px;\r\n    transform: translateY(-50%);\r\n    color: #fff;\r\n    font-size: 1rem;\r\n    pointer-events: none;\r\n    transition: all 0.5s ease-in-out;\r\n}\r\n\r\n/*ANIMATION */\r\ninput:focus ~ label, \r\ninput:valid ~ label {\r\n    top: -5px;\r\n}\r\n\r\n.errorSign {\r\n  display: block;\r\n}\r\n\r\n.inputbox input {\r\n    width: 100%;\r\n    height: 60px;\r\n    background: transparent;\r\n    border: none;\r\n    outline: none;\r\n    font-size: 1rem;\r\n    padding: 0 35px 0 5px;\r\n    color: #fff;\r\n}\r\n\r\n.lost {\r\n    margin: 35px 0;\r\n    font-size: 0.85rem;\r\n    color: #fff;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center; /* Center items vertically */\r\n  }\r\n  \r\n  .lost label {\r\n    font-size: 1.5rem;\r\n    display: flex;\r\n    align-items: center;\r\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\r\n  }\r\n  \r\n  .lost label input {\r\n    margin-right: 5px; /* Increase the margin for better spacing */\r\n    cursor: pointer;\r\n  }\r\n  \r\n  .lost a {\r\n    font-size: 1.5rem;\r\n    color: #fff;\r\n    text-decoration: none;\r\n    font-weight: 600;\r\n    transition: color 0.3s ease; /* Smooth transition for color change */\r\n  }\r\n  \r\n  .lost a:hover {\r\n    text-decoration: underline;\r\n    color: #ccc; /* Change color on hover for better feedback */\r\n  }\r\n  \r\n  .register:hover {\r\n    text-decoration: underline;\r\n    cursor: pointer;\r\n  }\r\n\r\nbutton {\r\n    color: black;\r\n    width: 100%;\r\n    height: 40px;\r\n    border-radius: 40px;\r\n    background-color: rgb(255, 255,255, 1);\r\n    border: none;\r\n    outline: none;\r\n    cursor: pointer;\r\n    font-size: 1rem;\r\n    font-weight: 600;\r\n    transition: all 0.4s ease;\r\n}\r\n\r\nbutton:hover {\r\n  background-color: rgb(255, 255,255, 0.5);\r\n}\r\n\r\n.register {\r\n    font-size: 0.9rem;\r\n    color: #fff;\r\n    text-align: center;\r\n    margin: 25px 0 10px;\r\n}\r\n\r\n.register p a {\r\n    text-decoration: none;\r\n    color: #fff;\r\n    font-weight: 600;\r\n}\r\n\r\n.register p a:hover {\r\n    /* font-size: large; */\r\n    text-decoration: underline;\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `duhWcPoiFKzflZYTW6qA`,
@@ -2460,4 +2499,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.934870d662a37afe77f56ca1b0f387b2.js.map
+//# sourceMappingURL=App.fe4f094036a452e658180f2f34dc2c36.js.map
