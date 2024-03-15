@@ -1,5 +1,6 @@
-const Post = require('../../models/Post');
-const User = require('../../models/User');
+const Post = require('../../models/Post')
+const User = require('../../models/User')
+const { fetchReadmeContent } = require('../../services/githubAPI')
 
 module.exports = {
     create,
@@ -27,10 +28,34 @@ async function create(req, res) {
         // Save user ID to req.body.user
         req.body.user = req.user._id;
 
-        const post = await Post.create(req.body);
+        // Grabbing the id from the req body
+        const { _id: userId, githublink, useReadmeAsDescription } = req.body;
+        let description = req.body.description; // Initialize description with the provided description
 
-        // Updating user's post array
-        await User.findByIdAndUpdate(req.user._id, { $push: { posts: post._id } });
+        // If GitHub link is provided and user wants to use README content as description
+        if (githublink && useReadmeAsDescription) {
+            // Extract owner and repo name from the GitHub link
+            const [_, owner, repo] = githublink.split('/');
+            // Fetch README content from GitHub repository
+            const readmeContent = await fetchReadmeContent(owner, repo);
+            description = readmeContent; // Update description with README content
+        }
+
+        // Create post with the updated description
+        const post = await Post.create({ ...req.body, description });
+
+        // Update user's post array
+        await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
+
+        res.locals.data.post = post;
+        console.log("Created post:", post);
+        res.status(201).json({ message: "Post created successfully", post });
+    } catch (error) {
+        console.error("Error creating post:", error);
+        res.status(400).json({ msg: error.message });
+    }
+}
+
 
         res.locals.data.post = post;
         console.log("Created post:", post);
