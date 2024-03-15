@@ -18,6 +18,7 @@ router.get('/check-token', ensureLoggedIn, (req, res) => {
 });
 
 // Put /api/users/:id
+// router.put('/:id', dataController.updateUser);
 router.put('/:id', ensureLoggedIn, dataController.updateUser);
 
 module.exports = router;

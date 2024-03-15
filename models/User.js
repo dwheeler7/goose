@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const GOLDEN_EGGS = 12;
@@ -21,11 +21,12 @@ const userSchema = new Schema({
         required: true
     },
     picture: { type: String },
-    userType: { type: String, enum: ['developer', 'employer'], required: true },
+    userType: { type: String, enum: ['developer', 'employer'], required: true, default: 'developer' },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here
+    likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }], //i added likes to user
     likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    bio: { type: String }
+    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }] //added notification
 }, {
     timestamps: true,
     toJSON: {
