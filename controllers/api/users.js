@@ -1,6 +1,6 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 function createJWT(user) {
     // return jwt.sign(
@@ -39,7 +39,7 @@ const dataController = {
         try {
             const user = await User.findOne({ email: req.body.email });
             if (!user) throw new Error('User not found');
-            const match = await bcryptjs.compare(req.body.password, user.password);
+            const match = await bcrypt.compare(req.body.password, user.password);
             if (!match) throw new Error('Invalid password');
             const token = createJWT(user);
             res.locals.data = { user, token };

@@ -1,7 +1,7 @@
 import styles from './Post.module.scss'
 import LikeBtn from '../LikeBtn/LikeBtn'
 import CommentForm from '../CommentForm/CommentForm'
-import { useState, userRef } from 'react'
+import { useState, useRef } from 'react'
 
 
 export default function Post({ post, buttonAction, buttonText}){

@@ -288,21 +288,56 @@ function LoginForm(_ref) {
     email: '',
     password: ''
   });
+  const [errors, setErrors] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: '',
+    password: ''
+  });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   function handleChange(evt) {
+    const {
+      name,
+      value
+    } = evt.target;
     setCredentials(_objectSpread(_objectSpread({}, credentials), {}, {
-      [evt.target.name]: evt.target.value
+      [name]: value
     }));
     setError('');
+    setErrors(prevErrors => _objectSpread(_objectSpread({}, prevErrors), {}, {
+      [name]: ''
+    })); // Clear the corresponding error when the user starts typing again
+
+    const inputContainer = evt.target.parentElement; // Add a class to the input container when the input is not empty
+    if (value.trim()) {
+      inputContainer.classList.add(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
+    } else {
+      inputContainer.classList.remove(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled);
+    }
   }
   async function handleSubmit(evt) {
     evt.preventDefault();
+    const emailError = validateEmail(credentials.email);
+    const passwordError = validatePassword(credentials.password);
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError,
+        password: passwordError
+      }); // If there are errors, set them in the state and return 
+      setError('Please fix the errors in the form.');
+      return;
+    }
     try {
       const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.login(credentials);
       setUser(user);
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
+  }
+  function validateEmail(email) {
+    if (!email) return 'Email is required';
+    return /^\S+@\S+\.\S+$/.test(email) ? '' : 'Invalid email format'; // Basic email error message format
+  }
+  function validatePassword(password) {
+    return password.length < 8 ? 'Password must be at least 8 characters long' : '';
   }
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
@@ -312,22 +347,26 @@ function LoginForm(_ref) {
     autoComplete: "off",
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("h1", null, "Login"), /*#__PURE__*/React.createElement("div", {
-    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
+    className: "".concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox, " ").concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled)
   }, /*#__PURE__*/React.createElement("input", {
-    type: "email",
+    type: "text",
     name: "email",
     value: credentials.email,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/React.createElement("label", null, "Email")), /*#__PURE__*/React.createElement("div", {
-    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
+  }), /*#__PURE__*/React.createElement("label", null, "Email"), errors.email && /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorSign
+  }, "\u274C", errors.email)), /*#__PURE__*/React.createElement("div", {
+    className: "".concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox, " ").concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled)
   }, /*#__PURE__*/React.createElement("input", {
     type: "password",
     name: "password",
     value: credentials.password,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/React.createElement("label", null, "Password")), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("label", null, "Password"), errors.password && /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorSign
+  }, "\u274C", errors.password)), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lost
   }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("input", {
     type: "checkbox"
@@ -527,7 +566,7 @@ function SignUpForm(_ref) {
     setShowLogin
   } = _ref;
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    username: '',
+    name: '',
     email: '',
     password: '',
     userType: '' // Added userType field
@@ -549,18 +588,18 @@ function SignUpForm(_ref) {
     }
   };
   const {
-    username,
+    name,
     email,
     password,
     userType
   } = formData;
-  const disable = !username || !email || !password || !userType; // Adjusted to include userType
+  const disable = !name || !email || !password || !userType; // Adjusted to include userType
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].body
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "TipDivide"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Tip/Catering Splits Made Easy")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "To Our Project")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].boxc
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
@@ -568,14 +607,14 @@ function SignUpForm(_ref) {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    name: "username",
-    value: username,
+    name: "name",
+    value: name,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Username")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "email",
+    type: "text",
     name: "email",
     value: email,
     onChange: handleChange,
@@ -1344,6 +1383,10 @@ input:valid ~ label {
   top: -5px;
 }
 
+.PWpsrepqIxsSicJWBQv9 {
+  display: block;
+}
+
 .slJPwttFXbjZj3iK5tpD input {
   width: 100%;
   height: 60px;
@@ -1427,12 +1470,13 @@ button:hover {
 .YtX40q4kPgyY1kLWHR5i p a:hover {
   /* font-size: large; */
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n    width: 100%;\n    text-align: center;\n    color: #fff;\n    padding: 10px; \n  }\n\n.boxc {\n    min-width: 25vh;\n    max-width: 700px;\n    position: relative;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 2rem 3rem;\n}\n\nh1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n}\n\n.inputbox {\n    position: relative;\n    margin: 30px 0;\n    min-width: 27vh;\n    max-width: 35vh;\n    border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n}\n\n/*ANIMATION */\ninput:focus ~ label, \ninput:valid ~ label {\n    top: -5px;\n}\n\n.inputbox input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n}\n\n.lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center; /* Center items vertically */\n  }\n  \n  .lost label {\n    font-size: 1.5rem;\n    display: flex;\n    align-items: center;\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\n  }\n  \n  .lost label input {\n    margin-right: 5px; /* Increase the margin for better spacing */\n  }\n  \n  .lost a {\n    font-size: 1.5rem;\n    color: #fff;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.3s ease; /* Smooth transition for color change */\n  }\n  \n  .lost a:hover {\n    text-decoration: underline;\n    color: #ccc; /* Change color on hover for better feedback */\n  }\n  \n  .register:hover {\n    text-decoration: underline;\n    cursor: pointer;\n  }\n\nbutton {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(255, 255,255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 1rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgb(255, 255,255, 0.5);\n}\n\n.register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n}\n\n.register p a {\n    text-decoration: none;\n    color: #fff;\n    font-weight: 600;\n}\n\n.register p a:hover {\n    /* font-size: large; */\n    text-decoration: underline;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACE,cAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n    width: 100%;\n    text-align: center;\n    color: #fff;\n    padding: 10px; \n  }\n\n.boxc {\n    min-width: 25vh;\n    max-width: 700px;\n    position: relative;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 2rem 3rem;\n}\n\nh1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n}\n\n.inputbox {\n    position: relative;\n    margin: 30px 0;\n    min-width: 27vh;\n    max-width: 35vh;\n    border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n}\n\n/*ANIMATION */\ninput:focus ~ label, \ninput:valid ~ label {\n    top: -5px;\n}\n\n.errorSign {\n  display: block;\n}\n\n.inputbox input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n}\n\n.lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center; /* Center items vertically */\n  }\n  \n  .lost label {\n    font-size: 1.5rem;\n    display: flex;\n    align-items: center;\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\n  }\n  \n  .lost label input {\n    margin-right: 5px; /* Increase the margin for better spacing */\n  }\n  \n  .lost a {\n    font-size: 1.5rem;\n    color: #fff;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.3s ease; /* Smooth transition for color change */\n  }\n  \n  .lost a:hover {\n    text-decoration: underline;\n    color: #ccc; /* Change color on hover for better feedback */\n  }\n  \n  .register:hover {\n    text-decoration: underline;\n    cursor: pointer;\n  }\n\nbutton {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(255, 255,255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 1rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgb(255, 255,255, 0.5);\n}\n\n.register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n}\n\n.register p a {\n    text-decoration: none;\n    color: #fff;\n    font-weight: 600;\n}\n\n.register p a:hover {\n    /* font-size: large; */\n    text-decoration: underline;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `duhWcPoiFKzflZYTW6qA`,
 	"boxc": `mdJKUsO6IVB_KHxsorxg`,
 	"inputbox": `slJPwttFXbjZj3iK5tpD`,
+	"errorSign": `PWpsrepqIxsSicJWBQv9`,
 	"lost": `JAm91a8tmBcEN_9D7mVL`,
 	"register": `YtX40q4kPgyY1kLWHR5i`
 };
@@ -1748,7 +1792,8 @@ h1 {
   color: #fff; /* Text color for options */
 }
 
-input:focus ~ label, input:valid ~ label {
+.G5WQETTTkTlRpPef5KUY input:focus ~ label,
+.G5WQETTTkTlRpPef5KUY input:valid ~ label {
   top: -5px;
 }
 
@@ -1835,7 +1880,7 @@ option {
 
 .JtQI_Hm4R0_7b5aQ1Jdw p a:hover {
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAAJ;;AAGA;EACE,SAAA;AAAF;;AAGA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAAF;;AAGA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAAF;;AAGA;EACI,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAF;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAAF;;AAGA;EACE,eAAA;AAAF;;AAGA;EACE,YAAA;AAAF;;AAGA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAAF;;AAGA;EACE,0BAAA;AAAF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n}\n\nh1 {\n  font-size: 2rem;\n  color: #fff;\n  text-align: center;\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\ninput:focus ~ label, input:valid ~ label {\n  top: -5px;\n}\n\n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  font-size: 2rem;\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAAJ;;AAGE;;EAEE,SAAA;AAAJ;;AAGA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAAF;;AAGA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAAF;;AAGA;EACI,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAF;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAAF;;AAGA;EACE,eAAA;AAAF;;AAGA;EACE,YAAA;AAAF;;AAGA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAAF;;AAGA;EACE,0BAAA;AAAF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n}\n\nh1 {\n  font-size: 2rem;\n  color: #fff;\n  text-align: center;\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  font-size: 2rem;\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `G2ijX8bHTJbg8fG7Xvdl`,
@@ -3041,4 +3086,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.64f7ea65093a559eb9390ad91eb55b8a.js.map
+//# sourceMappingURL=App.d1f63ad6d6bc7e774dcb95977fc8a61d.js.map
