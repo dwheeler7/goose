@@ -23,6 +23,9 @@ router.get('/check-token', ensureLoggedIn, (req, res) => {
 // PUT /api/users/:id
 router.put('/:id', ensureLoggedIn, dataController.updateUser);
 
+// willy's reset route 
+router.post('/reset-password', dataController.resetPassword, apiController.authenticate);
+
 // POST /api/users/follow
 router.post('/follow', ensureLoggedIn, dataController.followDeveloper);
 
