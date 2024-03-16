@@ -51,6 +51,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@octokit/rest": "^20.0.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
