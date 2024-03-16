@@ -1,8 +1,25 @@
+
+@keyframes labelCheckedAnimation {
+  0% {
+    color: #c3ffb3; 
+    transform: scale(1);
+  }
+  50% {
+    color: #98fb98; 
+    transform: scale(1.1);
+  }
+  100% {
+    color: #c3ffb3;
+    transform: scale(1);
+  }
+}
+
 .LoginForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 /* Body styles */
@@ -11,7 +28,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #D8F3DC, #081C15);
+  background: linear-gradient(to bottom right, #7bbd86, #16523c);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -25,10 +42,10 @@ h4 {
 .inputbox {
   position: relative;
   margin: 30px 0;
-  min-width: 27vh;
-  max-width: 35vh;
+  min-width: 30vh;
+  max-width: 40vh;
   border-bottom: 2px solid #fff;
-  &:hover {
+  &:focus-within {
     border-bottom-color: gold !important; /* Change border color on focus */
   }
 
@@ -38,7 +55,7 @@ h4 {
     left: 5px;
     transform: translateY(-50%);
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.25rem;
     pointer-events: none;
     transition: all 0.5s ease-in-out;
   }
@@ -49,7 +66,8 @@ h4 {
     background: transparent;
     border: none;
     outline: none;
-    font-size: 2rem;
+    font-size: 1.25rem;
+    font-weight: bolder;
     padding: 0 35px 0 5px;
     color: #fff;
 
@@ -67,6 +85,7 @@ h4 {
   text-align: center;
   color: #fff;
   padding: 10px;
+  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
 }
 
 .boxc {
@@ -99,19 +118,29 @@ h4 {
     align-items: center;
 
     label {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       display: flex;
       align-items: center;
+      padding: .1rem;
       cursor: pointer;
+      
+      &:has(input:checked) {
+        color: darkgreen;
+        font-weight: bolder;
+        animation: labelCheckedAnimation 0.5s ease forwards;
+      }
+
 
       input {
         margin-right: 5px;
         cursor: pointer;
       }
+
+      
     }
 
-    a {
-      font-size: 1.5rem;
+    .forgotPassword {
+      font-size: 1.25rem;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
@@ -120,10 +149,12 @@ h4 {
       &:hover {
         text-decoration: underline;
         color: #ccc;
+        cursor: pointer;
       }
     }
   }
 
+  
   .register {
     font-size: 0.9rem;
     color: #fff;
@@ -136,7 +167,7 @@ h4 {
     }
 
     p {
-      a {
+      .forgotPassword {
         text-decoration: none;
         color: #fff;
         font-weight: 600;
@@ -149,11 +180,11 @@ h4 {
   }
 
   button {
-    color: black;
+    color: white;
     width: 100%;
     height: 40px;
     border-radius: 40px;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(87, 163, 115);
     border: none;
     outline: none;
     cursor: pointer;
@@ -170,7 +201,7 @@ h4 {
     position: absolute;
     right: 10px;
     top: 50%;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     transform: translateY(-50%);
     cursor: pointer;
     color: #ccc;
