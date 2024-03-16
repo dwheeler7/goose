@@ -25,8 +25,7 @@ function jsonPosts(_, res) {
 // Create
 async function create(req, res) {
     try {
-        // Save user ID to req.body.user
-        // req.body.user = req.user._id;
+        // Save user ID to req.body.user        
         const userId = req.user._id
 
         // Grabbing the id from the req body
@@ -44,8 +43,7 @@ async function create(req, res) {
 
         // Create post with the updated description
         const post = await Post.create({ user: userId, ...req.body, description });        
-        // Update user's post array
-        // const foundUser = await User.findOne({ _id: userId })
+        // Update user's post array        
         const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;
         res.locals.data.user = foundUser;        
