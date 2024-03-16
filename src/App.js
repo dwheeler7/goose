@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
 
 import styles from './App.module.scss'
+import * as userService from './utilities/users-service';
 
 export default function App(){
     // Default state for user is null
@@ -166,9 +167,40 @@ export default function App(){
         }
     }
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Fetch user data from your backend
+                const response = await fetch('/api/user-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+                    }
+                });
+    
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser(userData); // Update the user state with the fetched data
+                } else {
+                    // Handle error
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+    
+        // Call the fetchUserData function when the component mounts
+        fetchUserData();
+    }, [token]);
+
     return (
         <>
-            <div>
+            <div className={styles.App}>
+            <NavBar 
+                token={token} 
+                setUser={setUser}
+                user={user} // Pass the user prop to NavBar
+                setToken={setToken}
+            />
                 <Routes>
                     {/* What is needed on this page:
                         Get all Post posts when the component mounts 

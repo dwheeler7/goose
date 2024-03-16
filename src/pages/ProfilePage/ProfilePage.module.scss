@@ -11,26 +11,60 @@
         .userContainer {
             display: flex;
             flex-direction: column;
-            width: 55%;
+            width: 25%;
             background-color: white;
             border-radius: 1rem;
             padding: 2rem;
             border: .1rem solid lightgrey;
             box-shadow: 0 0 1rem lightgrey;
-            .userHeading {
+            .imgAndEditContainer {
                 display: flex;
+                flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                .userName {
-                    margin-left: 3rem;
+                width: 15rem;
+                .editBtn {
+                    font-size: 1.2rem;
+                    &:hover {
+                        color: blue;
+                        text-decoration: underline;
+                        transition: none;
+                    }
                 }
             }
             .userBio {
-                margin-top: 2rem;
-                height: 15vh;
+                color: black;
+            }
+            .userLinks {
+                width: 15rem;
+                display: flex;
+                justify-content: space-evenly;
+                margin-bottom: 1.5rem;
+                .ghLogo {
+                    background-color: lightgrey;
+                    border-radius: 100%;
+                    width: 4rem;
+                    transition: .3s ease;
+                    &:hover {
+                        background-color: green;
+                        transition: .3s ease;
+                    }
+                }
+                .portfolioLogo {
+                    background-color: lightgrey;
+                    border-radius: 100%;
+                    width: 4rem;
+                    padding: 1rem;
+                    transition: .3s ease;
+                    &:hover {
+                        background-color: green;
+                        transition: .3s ease;
+                    }
+                }
             }
         }
         .employers {
-            width: 40%;
+            width: 73%;
             background-color: white;
             border-radius: 1rem;
             border: .1rem solid lightgrey;
@@ -102,3 +136,4 @@
         }
     }
 }
+
