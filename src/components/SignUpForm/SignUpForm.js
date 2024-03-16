@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../utilities/users-service';
 import styles from './SignUpForm.module.scss';
 
@@ -10,6 +11,8 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     userType: '', // Added userType field
   });
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const navigate = useNavigate(); // Corrected
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -21,9 +24,14 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     try {
       const user = await signUp(formData);
       setUser(user);
+      navigate(`/profile/${user._id}`); // Corrected
     } catch {
       setError('Sign Up Failed - Try Again');
     }
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   }
 
   const { name, email, password, userType } = formData;
@@ -47,8 +55,17 @@ export default function SignUpForm({ setUser, setShowLogin }) {
             <label>Email</label>
           </div>
           <div className={styles.inputbox}>
-            <input type="password" name="password" value={password} onChange={handleChange} required />
+            <input 
+              type={showPassword ? 'text' : 'password'} 
+              name="password" 
+              value={password} 
+              onChange={handleChange} 
+              required 
+            />
             <label>Password</label>
+            <span className={styles.showPasswordIcon} onClick={togglePasswordVisibility}>
+              {showPassword ? '🔑' : '🛡️'}
+            </span>
           </div>
           <div className={styles.inputbox}>
             <select name="userType" value={userType} onChange={handleChange} required>

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import * as usersService from '../../utilities/users-service';
 import styles from './LoginForm.module.scss';
 
 export default function LoginForm({ setUser, setShowLogin }) {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -14,7 +14,8 @@ export default function LoginForm({ setUser, setShowLogin }) {
     password: ''
   });
   const [error, setError] = useState('');
-  const [rememberMe, setRememberMe] = useState(false); // State to track "Remember Me" checkbox
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -31,7 +32,6 @@ export default function LoginForm({ setUser, setShowLogin }) {
 
   const handleRememberMeChange = (evt) => {
     const isChecked = evt.target.checked;
-    console.log('Remember Me checked:', isChecked);
     setRememberMe(isChecked);
   };
 
@@ -49,7 +49,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
     try {
       const user = await usersService.login(credentials, rememberMe, navigate);
       setUser(user);
-      navigate('/'); // Redirect to root route on successful login
+      navigate('/');
     } catch {
       setError('Log In Failed - Try Again');
     }
@@ -79,8 +79,20 @@ export default function LoginForm({ setUser, setShowLogin }) {
             {errors.email && <span className={styles.errorSign}>❌{errors.email}</span>}
           </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
-            <input type="password" name="password" value={credentials.password} onChange={handleChange} required />
+            <input 
+              type={showPassword ? 'text' : 'password'} 
+              name="password" 
+              value={credentials.password} 
+              onChange={handleChange} 
+              required 
+            />
             <label>Password</label>
+            <span 
+              className={styles.showPasswordIcon} 
+              onClick={() => setShowPassword(!showPassword)}
+            >
+            {showPassword ? '🔑' : '🛡️'}
+            </span>
             {errors.password && <span className={styles.errorSign}>❌{errors.password}</span>}
           </div>
           <div className={styles.lost}>
