@@ -38,49 +38,51 @@ export default function SignUpForm({ setUser, setShowLogin }) {
   const disable = !name || !email || !password || !userType; // Adjusted to include userType
 
   return (
-    <div className={styles.body}>
-      <div className={styles.title}>
-        <h1>Welcome</h1>
-        <h4>To Our Project</h4>
+    <div className={styles.SignUpForm}>
+      <div className={styles.body}>
+        <div className={styles.title}>
+          <h1>Welcome</h1>
+          <h4>To Our Project</h4>
+        </div>
+        <div className={styles.boxc}>
+          <form onSubmit={handleSubmit}>
+            <h1>Register</h1>
+            <div className={styles.inputbox}>
+              <input type="text" name="name" value={name} onChange={handleChange} required />
+              <label>Name</label>
+            </div>
+            <div className={styles.inputbox}>
+              <input type="text" name="email" value={email} onChange={handleChange} required />
+              <label>Email</label>
+            </div>
+            <div className={styles.inputbox}>
+              <input 
+                type={showPassword ? 'text' : 'password'} 
+                name="password" 
+                value={password} 
+                onChange={handleChange} 
+                required 
+              />
+              <label>Password</label>
+              <span className={styles.showPasswordIcon} onClick={togglePasswordVisibility}>
+                {showPassword ? '🔑' : '🛡️'}
+              </span>
+            </div>
+            <div className={styles.inputbox}>
+              <select name="userType" value={userType} onChange={handleChange} required>
+                <option value="" disabled>Select Registration Type</option>
+                <option value="developer">Developer</option>
+                <option value="employer">Employer</option>
+              </select>
+            </div>
+            <button type="submit" disabled={disable}>Register</button>
+            <div className={styles.login}>
+              <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Login</p>
+            </div>
+          </form>
+        </div>
+        {error && <p className={styles.errorMessage}>{error}</p>}
       </div>
-      <div className={styles.boxc}>
-        <form onSubmit={handleSubmit}>
-          <h1>Register</h1>
-          <div className={styles.inputbox}>
-            <input type="text" name="name" value={name} onChange={handleChange} required />
-            <label>Name</label>
-          </div>
-          <div className={styles.inputbox}>
-            <input type="text" name="email" value={email} onChange={handleChange} required />
-            <label>Email</label>
-          </div>
-          <div className={styles.inputbox}>
-            <input 
-              type={showPassword ? 'text' : 'password'} 
-              name="password" 
-              value={password} 
-              onChange={handleChange} 
-              required 
-            />
-            <label>Password</label>
-            <span className={styles.showPasswordIcon} onClick={togglePasswordVisibility}>
-              {showPassword ? '🔑' : '🛡️'}
-            </span>
-          </div>
-          <div className={styles.inputbox}>
-            <select name="userType" value={userType} onChange={handleChange} required>
-              <option value="" disabled>Select Registration Type</option>
-              <option value="developer">Developer</option>
-              <option value="employer">Employer</option>
-            </select>
-          </div>
-          <button type="submit" disabled={disable}>Register</button>
-          <div className={styles.login}>
-            <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Login</p>
-          </div>
-        </form>
-      </div>
-      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 }
