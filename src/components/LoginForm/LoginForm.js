@@ -66,7 +66,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
   };
 
   return (
-    <div>
+    <div className={styles.LoginForm}>
       <div className={styles.title}>
         <h1>Welcome</h1>
         <h4>To Our Group Project</h4>
