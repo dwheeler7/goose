@@ -196,6 +196,80 @@ Check the validity of the authentication token.
     }
     ```
 
+### Follow a User
+
+Allows a user to follow another user.
+
+- **URL**: `/api/users/:userId/follow`
+- **Method**: `POST`
+- **Authentication required**: Yes
+- **Request Parameters**:
+  - `userId` (String, required): The ID of the user to follow.
+  - `developerId` (String, required): The ID of the developer to follow.
+- **Response**:
+  - `user`: Updated user object after following.
+  - `developer`: Updated developer object after being followed.
+
+#### Example Request
+```json
+{
+    "userId": "6123456789abcdef1234567",
+    "developerId": "6123456789abcdef1234568"
+}
+```
+#### Example Response
+```json
+{
+    "user": {
+        "_id": "6123456789abcdef1234567",
+        "name": "User Name",
+        "followedDevelopers": ["6123456789abcdef1234568"],
+    },
+    "developer": {
+        "_id": "6123456789abcdef1234568",
+        "name": "Developer Name",
+        "usersThatFollowThisDeveloper": ["6123456789abcdef1234567"],
+    }
+}
+
+```
+### Unfollow a User
+
+Allows a user to unfollow another user.
+
+- **URL**: `/api/users/:userId/unfollow`
+- **Method** : `POST`
+- **Authentication required**: Yes
+- **Request Parameters:
+    - `userId` (String, required): The ID of the user to unfollow.
+    - `developerId` (String, required): The ID of the developer to unfollow.
+- **Response**:
+    - `user`:Updated user object after unfollowing.
+    - `developer`:Updated developer object after being unfollowed.
+#### Example Request
+```json
+{
+    "userId": "6123456789abcdef1234567",
+    "developerId": "6123456789abcdef1234568"
+}
+```
+#### Example Response
+```json
+{
+    "user": {
+        "_id": "6123456789abcdef1234567",
+        "name": "User Name",
+        "followedDevelopers": [],
+    },
+    "developer": {
+        "_id": "6123456789abcdef1234568",
+        "name": "Developer Name",
+        "usersThatFollowThisDeveloper": [],
+    }
+}
+
+```
+
 ## Posts
 
 ### Create Post
