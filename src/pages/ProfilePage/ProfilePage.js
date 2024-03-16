@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import { getUser } from '../../utilities/users-service';
-import styles from './ProfilePage.module.scss'
+import styles from './ProfilePage.module.scss';
+
+// Function to ensure the link starts with 'https://'
+const ensureHttps = (url) => {
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return 'https://' + url;
+  }
+  return url;
+};
 
 export default function ProfilePage() {
     const [user, setUser] = useState(null);
@@ -10,6 +18,7 @@ export default function ProfilePage() {
         const fetchUserData = async () => {
             try {
                 const userData = await getUser();
+                console.log('User Data:', userData);
                 setUser(userData);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -35,27 +44,33 @@ export default function ProfilePage() {
                                     user ? <button className={styles.editBtn}>Edit User Information</button> : ''
                                 }
                             </div>
+                            <div className={styles.userLinks}>
+                                {user && (
+                                    <a className={styles.ghLink} href={user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'}>
+                                        <img className={styles.ghLogo} src='https://i.imgur.com/F796Bnt.png' />
+                                    </a>
+                                )}
+                                {user && (
+                                    <a className={styles.portfolioLink} href={user.portfolioLink ? ensureHttps(user.portfolioLink) : '#'}>
+                                        <img className={styles.portfolioLogo} src='https://i.imgur.com/FZvlk3y.png' />
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                        <p>{user ? user.bio : 'No Bio at this time.'}</p>
+                        {user && user.bio && (
+                            <p className={styles.userBio}>{user.bio}</p>
+                        )}
+                        {!user || !user.bio && (
+                            <p className={styles.userBio}>No Bio at this time.</p>
+                        )}
                     </div>
                     <div className={styles.employers}>
-                        <h3>Employers</h3>
+                        {user && user.userType === 'employer' ? <h3>Following</h3> : <h3>Employers</h3>}
                         <ul className={styles.ul}>
                             <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
                             <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
                             <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
-                            <a className={styles.a} href="#"><li className={styles.li}>This would be an employer</li></a>
+                            {/* Add more list items as needed */}
                         </ul>
                     </div>
                 </div>

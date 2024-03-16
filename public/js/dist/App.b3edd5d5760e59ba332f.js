@@ -756,6 +756,7 @@ function SignUpForm(_ref) {
       const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
       setUser(user);
       navigate("/profile/".concat(user._id)); // Corrected
+      window.location.reload();
     } catch (_unused) {
       setError('Sign Up Failed - Try Again');
     }
@@ -947,12 +948,21 @@ function HomePage() {
 
 
 
+
+// Function to ensure the link starts with 'https://'
+const ensureHttps = url => {
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return 'https://' + url;
+  }
+  return url;
+};
 function ProfilePage() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchUserData = async () => {
       try {
         const userData = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.getUser)();
+        console.log('User Data:', userData);
         setUser(userData);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -977,71 +987,29 @@ function ProfilePage() {
     user: user
   }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].editBtn
-  }, "Edit User Information") : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, user ? user.bio : 'No Bio at this time.')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Edit User Information") : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userLinks
+  }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ghLink,
+    href: user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ghLogo,
+    src: "https://i.imgur.com/F796Bnt.png"
+  })), user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].portfolioLink,
+    href: user.portfolioLink ? ensureHttps(user.portfolioLink) : '#'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].portfolioLogo,
+    src: "https://i.imgur.com/FZvlk3y.png"
+  })))), user && user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
+  }, user.bio), !user || !user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
+  }, "No Bio at this time.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].employers
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Employers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+  }, user && user.userType === 'employer' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Following") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Employers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ul
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
     href: "#"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -2278,7 +2246,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H {
   display: flex;
   flex-direction: column;
-  width: 55%;
+  width: 25%;
   background-color: white;
   border-radius: 1rem;
   padding: 2rem;
@@ -2300,8 +2268,38 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   text-decoration: underline;
   transition: none;
 }
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .dbIMdhqIGQg9JtZeKmrK {
+  color: black;
+}
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH {
+  width: 15rem;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 1.5rem;
+}
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .VTiGYB_vr7yJA7Vk5uTj {
+  background-color: lightgrey;
+  border-radius: 100%;
+  width: 4rem;
+  transition: 0.3s ease;
+}
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .VTiGYB_vr7yJA7Vk5uTj:hover {
+  background-color: green;
+  transition: 0.3s ease;
+}
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw {
+  background-color: lightgrey;
+  border-radius: 100%;
+  width: 4rem;
+  padding: 1rem;
+  transition: 0.3s ease;
+}
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
+  background-color: green;
+  transition: 0.3s ease;
+}
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .rVeGBLkFOVLb3YRYHtkD {
-  width: 40%;
+  width: 73%;
   background-color: white;
   border-radius: 1rem;
   border: 0.1rem solid lightgrey;
@@ -2368,7 +2366,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   height: 9rem;
   border-radius: 100%;
   background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAJoB;EACI,WAAA;EACA,0BAAA;EACA,gBAAA;AAMxB;AADQ;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,qBAAA;EACA,mBAAA;EACA,gBAAA;AAIhB;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAER;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AAAY;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEhB;AACQ;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACZ;AACQ;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACZ;AAAY;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEhB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 80%;\n    height: 100%;\n    padding: 5rem 10rem;\n    .topContainer {\n        display: flex;\n        justify-content: space-between;\n        width: 100%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            width: 55%;\n            background-color: white;\n            border-radius: 1rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            .imgAndEditContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n                .editBtn {\n                    font-size: 1.2rem;\n                    &:hover {\n                        color: blue;\n                        text-decoration: underline;\n                        transition: none;\n                    }\n                }\n            }\n        }\n        .employers {\n            width: 40%;\n            background-color: white;\n            border-radius: 1rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            padding: 3rem;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            overflow-y: scroll;\n            .ul .li {\n                list-style-type: none;\n                margin-bottom: 1rem;\n                font-size: .7vw;\n            }\n        }\n    }\n    .ProjectContainer {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        min-height: 60rem;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n    }\n    .ProjectItems {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .imgContainer {\n            .image {\n                max-height: 40rem;\n                border-radius: 1rem;\n                border: .2rem solid lightgrey;\n            }\n        }\n        .projectDescription {\n            padding: 1rem;\n            margin-left: 1rem;\n            min-height: 50rem;\n            border: 1px solid lightgrey;\n            display: flex;\n            width: 50%;\n            border-radius: 1rem;\n            background-color: var(--bg-color);\n            box-shadow: 0 0 1rem lightgrey;\n        }\n        .iconContainer {\n            width: 20%;\n            min-height: 50rem;\n            display: flex;\n            flex-direction: column;\n            justify-content: space-evenly;\n            align-items: center;\n            .icon {\n                width: 9rem;\n                height: 9rem;\n                border-radius: 100%;\n                background-color: var(--bg-color);\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAJoB;EACI,WAAA;EACA,0BAAA;EACA,gBAAA;AAMxB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AADQ;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,qBAAA;EACA,mBAAA;EACA,gBAAA;AAIhB;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAER;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AAAY;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEhB;AACQ;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACZ;AACQ;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACZ;AAAY;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEhB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 80%;\n    height: 100%;\n    padding: 5rem 10rem;\n    .topContainer {\n        display: flex;\n        justify-content: space-between;\n        width: 100%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            width: 25%;\n            background-color: white;\n            border-radius: 1rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            .imgAndEditContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n                .editBtn {\n                    font-size: 1.2rem;\n                    &:hover {\n                        color: blue;\n                        text-decoration: underline;\n                        transition: none;\n                    }\n                }\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n        .employers {\n            width: 73%;\n            background-color: white;\n            border-radius: 1rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            padding: 3rem;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            overflow-y: scroll;\n            .ul .li {\n                list-style-type: none;\n                margin-bottom: 1rem;\n                font-size: .7vw;\n            }\n        }\n    }\n    .ProjectContainer {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        min-height: 60rem;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n    }\n    .ProjectItems {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .imgContainer {\n            .image {\n                max-height: 40rem;\n                border-radius: 1rem;\n                border: .2rem solid lightgrey;\n            }\n        }\n        .projectDescription {\n            padding: 1rem;\n            margin-left: 1rem;\n            min-height: 50rem;\n            border: 1px solid lightgrey;\n            display: flex;\n            width: 50%;\n            border-radius: 1rem;\n            background-color: var(--bg-color);\n            box-shadow: 0 0 1rem lightgrey;\n        }\n        .iconContainer {\n            width: 20%;\n            min-height: 50rem;\n            display: flex;\n            flex-direction: column;\n            justify-content: space-evenly;\n            align-items: center;\n            .icon {\n                width: 9rem;\n                height: 9rem;\n                border-radius: 100%;\n                background-color: var(--bg-color);\n            }\n        }\n    }\n}\n\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
@@ -2376,6 +2374,10 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"userContainer": `C3y4TdU4vKMpvL4_wj8H`,
 	"imgAndEditContainer": `uK8D5va6yweSFDp9V9EA`,
 	"editBtn": `XLulKpjU3oXLNW5wNTQy`,
+	"userBio": `dbIMdhqIGQg9JtZeKmrK`,
+	"userLinks": `LG29adQOef4sgu1x7iuH`,
+	"ghLogo": `VTiGYB_vr7yJA7Vk5uTj`,
+	"portfolioLogo": `f9PniY17HdeQBxVJqbhw`,
 	"employers": `rVeGBLkFOVLb3YRYHtkD`,
 	"ul": `zo0CasRbfQfmRe38b4aj`,
 	"li": `eKY3aNtgkP774wXuYTKp`,
@@ -3340,4 +3342,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.e6a1203066ef112efd19f2c57aeb822c.js.map
+//# sourceMappingURL=App.df360ef299a8ab5a7025ede86b48856e.js.map
