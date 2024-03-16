@@ -16,15 +16,19 @@
 /* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/AuthPage/AuthPage */ "./src/pages/AuthPage/AuthPage.js");
 /* harmony import */ var _pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage/HomePage */ "./src/pages/HomePage/HomePage.js");
-/* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
+/* harmony import */ var _pages_ForgotPassword_ForgotPassword__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ForgotPassword/ForgotPassword */ "./src/pages/ForgotPassword/ForgotPassword.js");
+/* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
 
 
 
+
+
+// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
 
 
 
@@ -208,14 +212,14 @@ function App() {
     fetchUserData();
   }, [token]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_5__["default"].App
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].App
   }, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
     token: token,
     setUser: setUser,
     user: user // Pass the user prop to NavBar
     ,
     setToken: setToken
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"]
     // Pass user, token, && setToken props down to HomePage
@@ -229,7 +233,7 @@ function App() {
       createPost: createPost,
       getAllPosts: getAllPosts
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     path: "/auth",
     element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__["default"]
     // Pass setUser, setToken && signUp props down to AuthPage
@@ -239,9 +243,17 @@ function App() {
       signUp: signUp,
       login: login
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+    path: "/auth/forgot-password",
+    element: /*#__PURE__*/React.createElement(_pages_ForgotPassword_ForgotPassword__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      setUser: setUser,
+      setToken: setToken,
+      signUp: signUp,
+      login: login
+    })
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     path: "/profile/:id",
-    element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_5__["default"], {
       user: user,
       token: token,
       setToken: setToken,
@@ -389,6 +401,92 @@ function FollowList(user) {
 
 /***/ }),
 
+/***/ "./src/components/ForgotPasswordForm/ForgotPasswordForm.js":
+/*!*****************************************************************!*\
+  !*** ./src/components/ForgotPasswordForm/ForgotPasswordForm.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ForgotPasswordForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ForgotPasswordForm.module.scss */ "./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+function ForgotPasswordForm() {
+  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [successMessage, setSuccessMessage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  const handleSubmit = async evt => {
+    evt.preventDefault();
+    // Validate email
+    if (!email) {
+      setError('Email is required');
+      return;
+    }
+    try {
+      // Call your backend API to initiate password reset
+      const response = await fetch('/api/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({
+          email
+        })
+      });
+
+      // Check if request was successful
+      if (response.ok) {
+        // Reset form and display success message
+        setEmail('');
+        setError('');
+        setSuccessMessage('Password reset email sent');
+      } else {
+        // Display error message based on response status
+        const data = await response.json();
+        setError(data.error || 'Failed to reset password');
+        setSuccessMessage('');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      setError('Failed to reset password');
+      setSuccessMessage('');
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].container
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
+  }, "Forgot Password"), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].formGroup
+  }, /*#__PURE__*/React.createElement("label", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].label
+  }, "Email:"), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].input
+  })), error && /*#__PURE__*/React.createElement("div", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].error
+  }, error), successMessage && /*#__PURE__*/React.createElement("div", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].success
+  }, successMessage), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Reset Password")), /*#__PURE__*/React.createElement("span", {
+    className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].link,
+    onClick: () => navigate('/auth')
+  }, "I know my password"));
+}
+
+/***/ }),
+
 /***/ "./src/components/LikeBtn/LikeBtn.js":
 /*!*******************************************!*\
   !*** ./src/components/LikeBtn/LikeBtn.js ***!
@@ -514,11 +612,14 @@ function LoginForm(_ref) {
   const validatePassword = password => {
     return password.length < 8 ? 'Password must be at least 8 characters long' : '';
   };
+  const handleForgotPasswordClick = () => {
+    navigate('/auth/forgot-password');
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LoginForm
   }, /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
-  }, /*#__PURE__*/React.createElement("h1", null, "Welcome"), /*#__PURE__*/React.createElement("h4", null, "To Our Group Project")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h1", null, "DevHive"), /*#__PURE__*/React.createElement("h4", null, "A Group Project")), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].boxc
   }, /*#__PURE__*/React.createElement("form", {
     autoComplete: "off",
@@ -552,17 +653,18 @@ function LoginForm(_ref) {
     type: "checkbox",
     checked: rememberMe,
     onChange: handleRememberMeChange
-  }), "Remember Me"), /*#__PURE__*/React.createElement("a", {
-    href: "No IDEA YET"
+  }), "Remember Me"), /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].forgotPassword,
+    onClick: handleForgotPasswordClick
   }, "Forgot Password")), /*#__PURE__*/React.createElement("button", {
     type: "submit"
-  }, "Log in"), /*#__PURE__*/React.createElement("div", {
+  }, "Log In"), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].register
   }, /*#__PURE__*/React.createElement("p", {
     onClick: () => setShowLogin(false)
   }, "Don't have an account? ", /*#__PURE__*/React.createElement("span", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].registerLink
-  }, "Register"))))), /*#__PURE__*/React.createElement("p", {
+  }, "Sign Up"))))), /*#__PURE__*/React.createElement("p", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage
   }, error));
 }
@@ -677,9 +779,7 @@ function PortfolioProjectList() {
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Post)
-/* harmony export */ });
+/* unused harmony export default */
 /* harmony import */ var _Post_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post.module.scss */ "./src/components/Post/Post.module.scss");
 /* harmony import */ var _LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../LikeBtn/LikeBtn */ "./src/components/LikeBtn/LikeBtn.js");
 /* harmony import */ var _CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../CommentForm/CommentForm */ "./src/components/CommentForm/CommentForm.js");
@@ -729,28 +829,85 @@ function Post(_ref) {
 /* harmony export */ });
 /* harmony import */ var _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostList.module.scss */ "./src/components/PostList/PostList.module.scss");
 /* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Post/Post */ "./src/components/Post/Post.js");
-/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
-// export default function PostList({ posts }) {
-//     const items = posts.map(item =>
-//       <Post
-//         key={item._id}
-//         post={item}
-//       />
-//     )
-//     return (
-//       <main className={styles.PostList}>
-//         {items}
-//       </main>
-//     )
-//   }
-
-function PostList() {
-  return /*#__PURE__*/React.createElement("div", {
-    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].PostList
-  }, /*#__PURE__*/React.createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+function PostList(props) {
+  const [postData, setPostData] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    title: '',
+    description: '',
+    gitHubLink: '',
+    image: null
+  });
+  const handleChange = e => {
+    const {
+      name,
+      value,
+      files
+    } = e.target;
+    if (name === 'image') {
+      setPostData(_objectSpread(_objectSpread({}, postData), {}, {
+        [name]: files[0]
+      }));
+    } else {
+      setPostData(_objectSpread(_objectSpread({}, postData), {}, {
+        [name]: value
+      }));
+    }
+  };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      await props.createPost(postData, props.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("form", {
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].post,
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("h2", {
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].heading
+  }, "Upload A New Post ", props.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("input", {
+    type: "text",
+    name: "title",
+    value: postData.title,
+    onChange: handleChange,
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].input,
+    placeholder: "Title",
+    required: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("input", {
+    type: "text",
+    name: "description",
+    value: postData.description,
+    onChange: handleChange,
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].input,
+    placeholder: "Description",
+    required: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("input", {
+    type: "text",
+    name: "gitHubLink",
+    value: postData.gitHubLink,
+    onChange: handleChange,
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].input,
+    placeholder: "GitHub Link",
+    required: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("input", {
+    type: "file",
+    name: "image",
+    onChange: handleChange,
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].input
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("button", {
+    type: "submit",
+    className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].submitBtn
+  }, "Post"));
 }
 
 /***/ }),
@@ -835,7 +992,6 @@ function SignUpForm(_ref) {
       const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
       setUser(user);
       navigate("/profile/".concat(user._id)); // Corrected
-      window.location.reload();
     } catch (_unused) {
       setError('Sign Up Failed - Try Again');
     }
@@ -852,8 +1008,6 @@ function SignUpForm(_ref) {
   const disable = !name || !email || !password || !userType; // Adjusted to include userType
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].SignUpForm
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].body
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title
@@ -861,7 +1015,7 @@ function SignUpForm(_ref) {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].boxc
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Register"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
@@ -898,21 +1052,21 @@ function SignUpForm(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "",
     disabled: true
-  }, "Select Registration Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+  }, "Select User Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "developer"
   }, "Developer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "employer"
   }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     disabled: disable
-  }, "Register"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     onClick: () => setShowLogin(true),
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].loginLink
   }, "Already have an account? Login")))), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage
-  }, error)));
+  }, error));
 }
 
 /***/ }),
@@ -951,12 +1105,14 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuthPage.module.scss */ "./src/pages/AuthPage/AuthPage.module.scss");
 /* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/LoginForm/LoginForm */ "./src/components/LoginForm/LoginForm.js");
 /* harmony import */ var _components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/SignUpForm/SignUpForm */ "./src/components/SignUpForm/SignUpForm.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+ // Import useNavigate from react-router-dom
 
 
 
@@ -966,19 +1122,56 @@ function AuthPage(_ref) {
     setUser
   } = _ref;
   const [showLogin, setShowLogin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)(); // Initialize the useNavigate hook
+
   return /*#__PURE__*/React.createElement("main", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AuthPage
   }, /*#__PURE__*/React.createElement("div", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logo
   }), /*#__PURE__*/React.createElement("div", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].credentialsContainer
-  }, showLogin ? /*#__PURE__*/React.createElement(_components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, showLogin ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     setUser: setUser,
     setShowLogin: setShowLogin
-  }) : /*#__PURE__*/React.createElement(_components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  })) : /*#__PURE__*/React.createElement(_components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     setUser: setUser,
     setShowLogin: setShowLogin
   })));
+}
+
+/***/ }),
+
+/***/ "./src/pages/ForgotPassword/ForgotPassword.js":
+/*!****************************************************!*\
+  !*** ./src/pages/ForgotPassword/ForgotPassword.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ForgotPasswordPage)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _components_ForgotPasswordForm_ForgotPasswordForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ForgotPasswordForm/ForgotPasswordForm */ "./src/components/ForgotPasswordForm/ForgotPasswordForm.js");
+/* harmony import */ var _ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ForgotPassword.module.scss */ "./src/pages/ForgotPassword/ForgotPassword.module.scss");
+
+
+ // Adjust the import path as needed
+ // Adjust the import path as needed
+
+function ForgotPasswordPage(_ref) {
+  let {
+    setUser
+  } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].container
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+    className: _ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].title
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ForgotPasswordForm_ForgotPasswordForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    setUser: setUser
+  }));
 }
 
 /***/ }),
@@ -1138,6 +1331,7 @@ async function sendRequest(url) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   login: () => (/* binding */ login),
+/* harmony export */   resetPassword: () => (/* binding */ resetPassword),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
@@ -1148,6 +1342,9 @@ function signUp(userData) {
 }
 function login(credentials) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/login"), 'POST', credentials);
+}
+function resetPassword(emailData) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/reset-password"), 'POST', emailData);
 }
 
 /***/ }),
@@ -1165,6 +1362,7 @@ function login(credentials) {
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
+/* unused harmony export resetPassword */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -1219,6 +1417,16 @@ function getUser() {
 }
 function logOut() {
   localStorage.removeItem('token');
+}
+async function resetPassword(emailData) {
+  try {
+    // Call the resetPassword function from usersAPI
+    await _users_api__WEBPACK_IMPORTED_MODULE_0__.resetPassword(emailData);
+    return true; // Password reset successful
+  } catch (error) {
+    console.error("Password Reset Error:", error);
+    throw error;
+  }
 }
 
 /***/ }),
@@ -1502,6 +1710,120 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.IFrs_wH6ZfFHkHIS8B6M {
+  max-width: 40vh;
+  margin: auto;
+  padding: 20px;
+  background-color: transparent;
+  border-bottom: 2px solid #ccc;
+  box-shadow: none;
+}
+.IFrs_wH6ZfFHkHIS8B6M .UTc0JEGiUZqz7lXpMPGP {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.IFrs_wH6ZfFHkHIS8B6M .nBEjfZACLKijxcoaL9J7 {
+  margin-bottom: 20px;
+}
+.IFrs_wH6ZfFHkHIS8B6M .nBEjfZACLKijxcoaL9J7 .zRVbsS04lV0e_b5a7FRh {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+.IFrs_wH6ZfFHkHIS8B6M .nBEjfZACLKijxcoaL9J7 .xofrtecfoEYsMc4ph_4G {
+  min-width: 20vw;
+  max-width: 26vw;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  height: 3.5rem;
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 0;
+  color: var(--input-color);
+  transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */
+}
+.IFrs_wH6ZfFHkHIS8B6M .nBEjfZACLKijxcoaL9J7 .xofrtecfoEYsMc4ph_4G:focus {
+  border-bottom-color: gold; /* Change border-bottom color on focus */
+}
+.IFrs_wH6ZfFHkHIS8B6M .wqDD0RnwvlD8OebalB57 {
+  color: #ff0000;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+.IFrs_wH6ZfFHkHIS8B6M .dkaYBCIu5vx4QlxGCyHi {
+  color: #00cc00;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+.IFrs_wH6ZfFHkHIS8B6M .SQ6pFGLe9fdptuyzihAv {
+  width: 15vh; /* Set width to auto */
+  padding: 8px 16px; /* Adjust padding */
+  font-size: 1rem; /* Adjust font-size */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.IFrs_wH6ZfFHkHIS8B6M .SQ6pFGLe9fdptuyzihAv:hover {
+  background-color: #0056b3;
+}
+.IFrs_wH6ZfFHkHIS8B6M ._uR7x4NFZTbsc3UtpAtZ {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  width: 15vh; /* Set width to auto */
+  color: #007bff;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+  text-transform: capitalize;
+}
+.IFrs_wH6ZfFHkHIS8B6M ._uR7x4NFZTbsc3UtpAtZ:hover {
+  text-decoration: underline;
+  color: #0056b3;
+  background-color: #e2e6ea;
+}`, "",{"version":3,"sources":["webpack://./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;EACA,YAAA;EACA,aAAA;EACA,6BAAA;EACA,6BAAA;EACA,gBAAA;AACJ;AACI;EACE,eAAA;EACA,kBAAA;EACA,mBAAA;AACN;AAEI;EACE,mBAAA;AAAN;AAEM;EACE,iBAAA;EACA,kBAAA;AAAR;AAGM;EACE,eAAA;EACA,eAAA;EACA,uBAAA;EACA,YAAA;EACA,8BAAA;EACA,cAAA;EACA,iBAAA;EACA,iBAAA;EACA,aAAA;EACA,gBAAA;EACA,yBAAA;EACA,yCAAA,EAAA,2CAAA;AADR;AAIM;EACE,yBAAA,EAAA,wCAAA;AAFR;AAMI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AAJN;AAOI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AALN;AAQI;EACE,WAAA,EAAA,sBAAA;EACA,iBAAA,EAAA,mBAAA;EACA,eAAA,EAAA,qBAAA;EACA,yBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;AANN;AAQM;EACE,yBAAA;AANR;AAUI;EACE,cAAA;EACA,kBAAA;EACA,gBAAA;EACA,WAAA,EAAA,sBAAA;EACA,cAAA;EACA,eAAA;EACA,iBAAA;EACA,kBAAA;EACA,yBAAA;EACA,sCAAA;EACA,0BAAA;AARN;AAUM;EACE,0BAAA;EACA,cAAA;EACA,yBAAA;AARR","sourcesContent":[".container {\n    max-width: 40vh;\n    margin: auto;\n    padding: 20px;\n    background-color: transparent;\n    border-bottom: 2px solid #ccc;\n    box-shadow: none;\n  \n    .title {\n      font-size: 2rem;\n      text-align: center;\n      margin-bottom: 20px;\n    }\n  \n    .formGroup {\n      margin-bottom: 20px;\n  \n      .label {\n        font-size: 1.2rem;\n        margin-bottom: 5px;\n      }\n  \n      .input {\n        min-width: 20vw;\n        max-width: 26vw;\n        background: transparent;\n        border: none;\n        border-bottom: 1px solid black;\n        height: 3.5rem;\n        margin-left: 1rem;\n        font-size: 1.2rem;\n        padding: 1rem;\n        border-radius: 0;\n        color: var(--input-color);\n        transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */\n      }\n  \n      .input:focus {\n        border-bottom-color: gold; /* Change border-bottom color on focus */\n      }\n    }\n  \n    .error {\n      color: #ff0000;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .success {\n      color: #00cc00;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .button {\n      width: 15vh; /* Set width to auto */\n      padding: 8px 16px; /* Adjust padding */\n      font-size: 1rem; /* Adjust font-size */\n      background-color: #007bff;\n      color: #fff;\n      border: none;\n      border-radius: 5px;\n      cursor: pointer;\n      transition: background-color 0.3s ease;\n  \n      &:hover {\n        background-color: #0056b3;\n      }\n    }\n  \n    .link {\n      display: block;\n      text-align: center;\n      margin-top: 20px;\n      width: 15vh; /* Set width to auto */\n      color: #007bff;\n      cursor: pointer;\n      padding: 8px 16px;\n      border-radius: 4px;\n      background-color: #f8f9fa;\n      transition: background-color 0.3s ease;\n      text-transform: capitalize;\n  \n      &:hover {\n        text-decoration: underline;\n        color: #0056b3;\n        background-color: #e2e6ea;\n      }\n    }\n  }\n  "],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"container": `IFrs_wH6ZfFHkHIS8B6M`,
+	"title": `UTc0JEGiUZqz7lXpMPGP`,
+	"formGroup": `nBEjfZACLKijxcoaL9J7`,
+	"label": `zRVbsS04lV0e_b5a7FRh`,
+	"input": `xofrtecfoEYsMc4ph_4G`,
+	"error": `wqDD0RnwvlD8OebalB57`,
+	"success": `dkaYBCIu5vx4QlxGCyHi`,
+	"button": `SQ6pFGLe9fdptuyzihAv`,
+	"link": `_uR7x4NFZTbsc3UtpAtZ`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/LikeBtn/LikeBtn.module.scss":
 /*!*******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/LikeBtn/LikeBtn.module.scss ***!
@@ -1626,7 +1948,21 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.aOctDy4BV7cS3A3FgdnO {
+___CSS_LOADER_EXPORT___.push([module.id, `@keyframes iB4SfQWGw0ZOCqRfypCd {
+  0% {
+    color: #c3ffb3;
+    transform: scale(1);
+  }
+  50% {
+    color: #98fb98;
+    transform: scale(1.1);
+  }
+  100% {
+    color: #c3ffb3;
+    transform: scale(1);
+  }
+}
+.aOctDy4BV7cS3A3FgdnO {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1639,7 +1975,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #D8F3DC, #081C15);
+  background: linear-gradient(to bottom right, #7bbd86, #16523c);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -1653,11 +1989,11 @@ h4 {
 .slJPwttFXbjZj3iK5tpD {
   position: relative;
   margin: 30px 0;
-  min-width: 27vh;
-  max-width: 35vh;
+  min-width: 30vh;
+  max-width: 40vh;
   border-bottom: 2px solid #fff;
 }
-.slJPwttFXbjZj3iK5tpD:hover {
+.slJPwttFXbjZj3iK5tpD:focus-within {
   border-bottom-color: gold !important; /* Change border color on focus */
 }
 .slJPwttFXbjZj3iK5tpD label {
@@ -1666,7 +2002,7 @@ h4 {
   left: 5px;
   transform: translateY(-50%);
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.25rem;
   pointer-events: none;
   transition: all 0.5s ease-in-out;
 }
@@ -1676,7 +2012,8 @@ h4 {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 2rem;
+  font-size: 1.25rem;
+  font-weight: bolder;
   padding: 0 35px 0 5px;
   color: #fff;
 }
@@ -1691,6 +2028,7 @@ h4 {
   text-align: center;
   color: #fff;
   padding: 10px;
+  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
 }
 
 .mdJKUsO6IVB_KHxsorxg {
@@ -1721,25 +2059,32 @@ h4 {
   align-items: center;
 }
 .mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL label {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
+  padding: 0.1rem;
   cursor: pointer;
+}
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL label:has(input:checked) {
+  color: darkgreen;
+  font-weight: bolder;
+  animation: iB4SfQWGw0ZOCqRfypCd 0.5s ease forwards;
 }
 .mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL label input {
   margin-right: 5px;
   cursor: pointer;
 }
-.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL a {
-  font-size: 1.5rem;
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL .j6uBnf0W_ruy9sK_SIO4 {
+  font-size: 1.25rem;
   color: #fff;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
-.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL a:hover {
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL .j6uBnf0W_ruy9sK_SIO4:hover {
   text-decoration: underline;
   color: #ccc;
+  cursor: pointer;
 }
 .mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i {
   font-size: 0.9rem;
@@ -1751,20 +2096,20 @@ h4 {
   text-decoration: underline;
   cursor: pointer;
 }
-.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p a {
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p .j6uBnf0W_ruy9sK_SIO4 {
   text-decoration: none;
   color: #fff;
   font-weight: 600;
 }
-.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p a:hover {
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p .j6uBnf0W_ruy9sK_SIO4:hover {
   text-decoration: underline;
 }
 .mdJKUsO6IVB_KHxsorxg button {
-  color: black;
+  color: white;
   width: 100%;
   height: 40px;
   border-radius: 40px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(87, 163, 115);
   border: none;
   outline: none;
   cursor: pointer;
@@ -1779,11 +2124,11 @@ h4 {
   position: absolute;
   right: 10px;
   top: 50%;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc;
-}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AACF;;AAEA,gBAAA;AACA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA,oBAAA;AACA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AACF;AAAE;EACE,oCAAA,EAAA,iCAAA;AAEJ;AACE;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AACJ;AAEE;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;AAEI;EAEE,gBAAA;EACA,SAAA;AADN;;AAMA,uBAAA;AACA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAHF;;AAMA;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAHF;AAKE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAHJ;AAME;EACE,cAAA;AAJJ;AAOE;EACE,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AALJ;AAOI;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA;AALN;AAOM;EACE,iBAAA;EACA,eAAA;AALR;AASI;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA;AAPN;AASM;EACE,0BAAA;EACA,WAAA;AAPR;AAYE;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAVJ;AAYI;EACE,0BAAA;EACA,eAAA;AAVN;AAcM;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAZR;AAcQ;EACE,0BAAA;AAZV;AAkBE;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAhBJ;AAkBI;EACE,0CAAA;AAhBN;AAoBE;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,kBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAlBJ","sourcesContent":[".LoginForm {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n/* Body styles */\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\nh4 {\n  font-size: 3rem;\n}\n\n/* Inputbox styles */\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n  &:hover {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n\n  label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 2rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n  }\n\n  input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n\n    &:focus ~ label,\n    &:valid ~ label {\n      color: lightgray;\n      top: -5px;\n    }\n  }\n}\n\n/* Rest of the styles */\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh;\n  max-width: 700px;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 3rem;\n    color: #fff;\n    text-align: center;\n  }\n\n  .errorSign {\n    display: block;\n  }\n\n  .lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n\n    label {\n      font-size: 1.5rem;\n      display: flex;\n      align-items: center;\n      cursor: pointer;\n\n      input {\n        margin-right: 5px;\n        cursor: pointer;\n      }\n    }\n\n    a {\n      font-size: 1.5rem;\n      color: #fff;\n      text-decoration: none;\n      font-weight: 600;\n      transition: color 0.3s ease;\n\n      &:hover {\n        text-decoration: underline;\n        color: #ccc;\n      }\n    }\n  }\n\n  .register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n\n    &:hover {\n      text-decoration: underline;\n      cursor: pointer;\n    }\n\n    p {\n      a {\n        text-decoration: none;\n        color: #fff;\n        font-weight: 600;\n\n        &:hover {\n          text-decoration: underline;\n        }\n      }\n    }\n  }\n\n  button {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgba(255, 255, 255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 2rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n\n    &:hover {\n      background-color: rgba(255, 255, 255, 0.5);\n    }\n  }\n\n  .showPasswordIcon {\n    position: absolute;\n    right: 10px;\n    top: 50%;\n    font-size: 1.75rem;\n    transform: translateY(-50%);\n    cursor: pointer;\n    color: #ccc;\n  }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AACA;EACE;IACE,cAAA;IACA,mBAAA;EAAF;EAEA;IACE,cAAA;IACA,qBAAA;EAAF;EAEA;IACE,cAAA;IACA,mBAAA;EAAF;AACF;AAGA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AADF;;AAKA,gBAAA;AACA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAFF;;AAKA;EACE,eAAA;AAFF;;AAKA,oBAAA;AACA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAFF;AAGE;EACE,oCAAA,EAAA,iCAAA;AADJ;AAIE;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;EACA,gCAAA;AAFJ;AAKE;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,mBAAA;EACA,qBAAA;EACA,WAAA;AAHJ;AAKI;EAEE,gBAAA;EACA,SAAA;AAJN;;AASA,uBAAA;AACA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8CAAA;AANF;;AASA;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AANF;AAQE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AANJ;AASE;EACE,cAAA;AAPJ;AAUE;EACE,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AARJ;AAUI;EACE,kBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA;EACA,eAAA;AARN;AAUM;EACE,gBAAA;EACA,mBAAA;EACA,kDAAA;AARR;AAYM;EACE,iBAAA;EACA,eAAA;AAVR;AAgBI;EACE,kBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA;AAdN;AAgBM;EACE,0BAAA;EACA,WAAA;EACA,eAAA;AAdR;AAoBE;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAlBJ;AAoBI;EACE,0BAAA;EACA,eAAA;AAlBN;AAsBM;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AApBR;AAsBQ;EACE,0BAAA;AApBV;AA0BE;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAxBJ;AA0BI;EACE,0CAAA;AAxBN;AA4BE;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,iBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AA1BJ","sourcesContent":["\n@keyframes labelCheckedAnimation {\n  0% {\n    color: #c3ffb3; \n    transform: scale(1);\n  }\n  50% {\n    color: #98fb98; \n    transform: scale(1.1);\n  }\n  100% {\n    color: #c3ffb3;\n    transform: scale(1);\n  }\n}\n\n.LoginForm {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n\n}\n\n/* Body styles */\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #7bbd86, #16523c);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\nh4 {\n  font-size: 3rem;\n}\n\n/* Inputbox styles */\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  max-width: 40vh;\n  border-bottom: 2px solid #fff;\n  &:focus-within {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n\n  label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1.25rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n  }\n\n  input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    font-weight: bolder;\n    padding: 0 35px 0 5px;\n    color: #fff;\n\n    &:focus ~ label,\n    &:valid ~ label {\n      color: lightgray;\n      top: -5px;\n    }\n  }\n}\n\n/* Rest of the styles */\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);\n}\n\n.boxc {\n  min-width: 25vh;\n  max-width: 700px;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 3rem;\n    color: #fff;\n    text-align: center;\n  }\n\n  .errorSign {\n    display: block;\n  }\n\n  .lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n\n    label {\n      font-size: 1.25rem;\n      display: flex;\n      align-items: center;\n      padding: .1rem;\n      cursor: pointer;\n      \n      &:has(input:checked) {\n        color: darkgreen;\n        font-weight: bolder;\n        animation: labelCheckedAnimation 0.5s ease forwards;\n      }\n\n\n      input {\n        margin-right: 5px;\n        cursor: pointer;\n      }\n\n      \n    }\n\n    .forgotPassword {\n      font-size: 1.25rem;\n      color: #fff;\n      text-decoration: none;\n      font-weight: 600;\n      transition: color 0.3s ease;\n\n      &:hover {\n        text-decoration: underline;\n        color: #ccc;\n        cursor: pointer;\n      }\n    }\n  }\n\n  \n  .register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n\n    &:hover {\n      text-decoration: underline;\n      cursor: pointer;\n    }\n\n    p {\n      .forgotPassword {\n        text-decoration: none;\n        color: #fff;\n        font-weight: 600;\n\n        &:hover {\n          text-decoration: underline;\n        }\n      }\n    }\n  }\n\n  button {\n    color: white;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(87, 163, 115);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 2rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n\n    &:hover {\n      background-color: rgba(255, 255, 255, 0.5);\n    }\n  }\n\n  .showPasswordIcon {\n    position: absolute;\n    right: 10px;\n    top: 50%;\n    font-size: 1.5rem;\n    transform: translateY(-50%);\n    cursor: pointer;\n    color: #ccc;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"LoginForm": `aOctDy4BV7cS3A3FgdnO`,
@@ -1792,6 +2137,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"boxc": `mdJKUsO6IVB_KHxsorxg`,
 	"errorSign": `PWpsrepqIxsSicJWBQv9`,
 	"lost": `JAm91a8tmBcEN_9D7mVL`,
+	"labelCheckedAnimation": `iB4SfQWGw0ZOCqRfypCd`,
+	"forgotPassword": `j6uBnf0W_ruy9sK_SIO4`,
 	"register": `YtX40q4kPgyY1kLWHR5i`,
 	"showPasswordIcon": `ZUKc8FFOJWWao8EDdobQ`
 };
@@ -2119,7 +2466,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.AZyVy8LqmhkdEsCxUMdf {
+___CSS_LOADER_EXPORT___.push([module.id, `/* Body styles */
+.AZyVy8LqmhkdEsCxUMdf {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2131,7 +2479,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #D8F3DC, #081C15);
+  background: linear-gradient(to bottom right, #7bbd86, #16523c);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -2142,6 +2490,7 @@ body {
   text-align: center;
   color: #fff;
   padding: 10px;
+  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
 }
 
 .O3kJQXyeVBVPoVbc0TQA {
@@ -2156,7 +2505,7 @@ body {
   padding: 2rem 3rem;
 }
 .O3kJQXyeVBVPoVbc0TQA h1 {
-  font-size: 2rem;
+  font-size: 3rem; /* Match the font size here */
   color: #fff;
   text-align: center;
 }
@@ -2164,11 +2513,11 @@ body {
 .G5WQETTTkTlRpPef5KUY {
   position: relative;
   margin: 30px 0;
-  min-width: 27vh;
-  max-width: 35vh;
+  min-width: 30vh;
+  max-width: 40vh;
   border-bottom: 2px solid #fff;
 }
-.G5WQETTTkTlRpPef5KUY:hover {
+.G5WQETTTkTlRpPef5KUY:focus-within {
   border-bottom-color: gold !important; /* Change border color on focus */
 }
 
@@ -2178,7 +2527,7 @@ body {
   left: 5px;
   transform: translateY(-50%);
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.25rem; /* Match the font size here */
   pointer-events: none;
   transition: all 0.5s ease-in-out;
 }
@@ -2189,13 +2538,13 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 2rem;
+  font-size: 1.25rem;
   padding: 0 35px 0 5px;
   color: #fff;
 }
 
 .G5WQETTTkTlRpPef5KUY select option {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   background-color: #081C15; /* Background color for options */
   border-radius: 2px;
   color: #fff; /* Text color for options */
@@ -2213,7 +2562,7 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 2rem;
+  font-size: 1.25rem; /* Match the font size here */
   padding: 0 35px 0 5px;
   color: #fff;
 }
@@ -2238,15 +2587,15 @@ body {
 }
 
 button {
-  color: black;
+  color: white;
   width: 100%;
   height: 40px;
   border-radius: 40px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(87, 163, 115);
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   transition: all 0.4s ease;
 }
@@ -2261,7 +2610,7 @@ button:hover {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 2rem;
+  font-size: 1.25rem;
   padding: 0 5px;
   color: #fff;
 }
@@ -2275,7 +2624,7 @@ option {
 }
 
 .JtQI_Hm4R0_7b5aQ1Jdw {
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   color: #fff;
   text-align: center;
   margin: 25px 0 10px;
@@ -2299,7 +2648,7 @@ option {
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;AAEE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAIA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AADF;AAGE;EACE,oCAAA,EAAA,iCAAA;AADJ;;AAMA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAHF;;AAMA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAHJ;;AAME;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAHJ;;AAME;;EAEE,gBAAA;EACA,SAAA;AAHJ;;AAMA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAHF;;AAMA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAHF;;AAMA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAHF;;AAMA;EACI,0BAAA;EACA,eAAA;AAHJ;;AAMA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAHF;;AAMA;EACE,0CAAA;AAHF;;AAMA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAHF;;AAMA;EACE,eAAA;AAHF;;AAMA;EACE,YAAA;AAHF;;AAMA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAHF;;AAMA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAHF;;AAMA;EACE,0BAAA;AAHF;;AAMA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,kBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAHF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n.SignUpForm {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n\n  &:hover {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 2rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 2rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 2rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 2rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.75rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAGA,gBAAA;AACA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AADF;;AAGA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8CAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;AAEE;EACE,eAAA,EAAA,6BAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAIA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AADF;AAGE;EACE,oCAAA,EAAA,iCAAA;AADJ;;AAKA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA,EAAA,6BAAA;EACA,oBAAA;EACA,gCAAA;AAFF;;AAKA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,qBAAA;EACA,WAAA;AAFJ;;AAKE;EACE,kBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAFJ;;AAKE;;EAEE,gBAAA;EACA,SAAA;AAFJ;;AAKA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA,EAAA,6BAAA;EACA,qBAAA;EACA,WAAA;AAFF;;AAKA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAFF;;AAKA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAFF;;AAKA;EACI,0BAAA;EACA,eAAA;AAFJ;;AAKA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AAFF;;AAKA;EACE,0CAAA;AAFF;;AAKA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,cAAA;EACA,WAAA;AAFF;;AAKA;EACE,eAAA;AAFF;;AAKA;EACE,YAAA;AAFF;;AAKA;EACE,kBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAFF;;AAKA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAFF;;AAKA;EACE,0BAAA;AAFF;;AAKA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,kBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAFF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n\n/* Body styles */\n.SignUpForm {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #7bbd86, #16523c);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 3rem; /* Match the font size here */\n    color: #fff;\n    text-align: center;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  max-width: 40vh;\n  border-bottom: 2px solid #fff;\n\n  &:focus-within {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1.25rem; /* Match the font size here */\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.25rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem; /* Match the font size here */\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 1.25rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.75rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"SignUpForm": `AZyVy8LqmhkdEsCxUMdf`,
@@ -2333,18 +2682,28 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap);"]);
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `* {
-  font-size: 10px;
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+  --heading-color: rgb(78, 91, 49);
+  --bg-color: rgb(244, 246, 240);
+  --btn-animation: rgba(219, 171, 171, 0.3);
+  --input-color: rgb(87, 8, 8);
+  --nav-border: rgba(219, 171, 171, 0.3);
+  --text-red: rgb(237, 100, 100);
+  --text-green: rgb(51, 86, 51);
+}
+
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Nunito", Verdana, Tahoma, sans-serif;
+  font-family: "Inter Tight", Verdana, Tahoma, sans-serif;
 }
 
 body {
   background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,eAAA;EACA,sBAAA;EACA,SAAA;EACA,UAAA;EACA,kDAAA;AAAJ;;AAGA;EACI,iCAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n\n* {\n    font-size: 10px;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: 'Nunito', Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,uDAAA;AACJ;;AAEA;EACI,iCAAA;AACJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: \"Inter Tight\", Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -2356,6 +2715,32 @@ ___CSS_LOADER_EXPORT___.locals = {};
 /*!****************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/AuthPage/AuthPage.module.scss ***!
   \****************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ForgotPassword/ForgotPassword.module.scss":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ForgotPassword/ForgotPassword.module.scss ***!
+  \****************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2714,6 +3099,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss":
+/*!**************************************************************************!*\
+  !*** ./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ForgotPasswordForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3245,6 +3683,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/pages/ForgotPassword/ForgotPassword.module.scss":
+/*!*************************************************************!*\
+  !*** ./src/pages/ForgotPassword/ForgotPassword.module.scss ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ForgotPassword.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/pages/ForgotPassword/ForgotPassword.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/pages/HomePage/HomePage.module.scss":
 /*!*************************************************!*\
   !*** ./src/pages/HomePage/HomePage.module.scss ***!
@@ -3560,4 +4051,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.91b8a577bf76a570805d1b99162a1b5d.js.map
+//# sourceMappingURL=App.fdfe13d7f770aa397f8e69d5de63b3ed.js.map
