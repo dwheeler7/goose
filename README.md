@@ -77,6 +77,8 @@ Create a new user.
     - `password` (required): Password for the user
     - `userType` (optional): Type of user (developer or employer)
     - `picture` (optional): URL to the user's profile picture
+    - `bio` (optional): user bio
+    - `location` (optional): user location
 
 - **Response**
   - Status Code: `200 OK`
