@@ -25,6 +25,7 @@ export default function SignUpForm({ setUser, setShowLogin }) {
       const user = await signUp(formData);
       setUser(user);
       navigate(`/profile/${user._id}`); // Corrected
+      window.location.reload()
     } catch {
       setError('Sign Up Failed - Try Again');
     }
