@@ -59,23 +59,303 @@
 - Showcase the application's features with a focus on the enhanced user experience.
 - Explain the motivation behind the app and encourage classmates to sign up.
 
-## API Documentation
+# API Documentation
 
-### Users
-The Users API.
+## Users
 
-#### Create User
-- Method: `POST`
-- URL: `/api/posts/
-  
-##### Required req data
-- ... (from the models)
-- ...
-- ...
-- ...
+### Create User
 
-##### Response data
-- ...
-- ...
-- ...
-- ...
+Create a new user.
+
+- **Request**
+  - Method: `POST`
+  - Endpoint: `/api/users`
+  - Headers: None
+  - Body:
+    - `name` (required): Name of the user
+    - `email` (required): Email address of the user
+    - `password` (required): Password for the user
+    - `userType` (optional): Type of user (developer or employer)
+    - `picture` (optional): URL to the user's profile picture
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the newly created user and authentication token
+  - Example:
+    ```json
+    {
+      "user": {
+        "_id": "65f50499a42ef6a2b817768d",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "userType": "developer",
+        "picture": "https://example.com/profile.jpg",
+        "createdAt": "2024-03-10T12:00:00.000Z",
+        "updatedAt": "2024-03-10T12:00:00.000Z"
+      },
+      "token": "<authentication_token>"
+    }
+    ```
+
+### User Login
+
+Authenticate an existing user.
+
+- **Request**
+  - Method: `POST`
+  - Endpoint: `/api/users/login`
+  - Headers: None
+  - Body:
+    - `email` (required): Email address of the user
+    - `password` (required): Password for the user
+    - `rememberMe` (optional): Boolean indicating whether to remember the user's session
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the authenticated user and authentication token (same format as the "Create User" response)
+
+### Get User Profile
+
+Retrieve user profile information by ID.
+
+- **Request**
+  - Method: `GET`
+  - Endpoint: `/api/users/:id`
+  - Headers: None
+  - Parameters:
+    - `id` (required): ID of the user
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the user profile information
+  - Example:
+    ```json
+    {
+      "_id": "65f50499a42ef6a2b817768d",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "userType": "developer",
+      "picture": "https://example.com/profile.jpg",
+      "createdAt": "2024-03-10T12:00:00.000Z",
+      "updatedAt": "2024-03-10T12:00:00.000Z"
+    }
+    ```
+
+### Update User Profile
+
+Update user profile information.
+
+- **Request**
+  - Method: `PUT`
+  - Endpoint: `/api/users/:id`
+  - Headers: None
+  - Parameters:
+    - `id` (required): ID of the user
+  - Body (fields to update):
+    - `name`: New name of the user
+    - `email`: New email address of the user
+    - `password`: New password for the user
+    - `userType`: New type of user (developer or employer)
+    - `picture`: New URL to the user's profile picture
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the updated user profile information
+  - Example:
+    ```json
+    {
+      "_id": "65f50499a42ef6a2b817768d",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "userType": "employer",
+      "picture": "https://example.com/new-profile.jpg",
+      "createdAt": "2024-03-10T12:00:00.000Z",
+      "updatedAt": "2024-03-11T08:00:00.000Z"
+    }
+    ```
+
+### Check Token
+
+Check the validity of the authentication token.
+
+- **Request**
+  - Method: `GET`
+  - Endpoint: `/api/users/check-token`
+  - Headers:
+    - `Authorization`: Bearer token
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object with a message indicating the token is valid
+  - Example:
+    ```json
+    {
+      "message": "Token is valid"
+    }
+    ```
+
+## Posts
+
+### Create Post
+
+Create a new post.
+
+- **Request**
+  - Method: `POST`
+  - Endpoint: `/api/posts`
+  - Headers:
+    - Authorization: Bearer {token}
+  - Body:
+    - `githubLink` (required): Link to the GitHub repository
+    - `content` (required): Content of the post
+    - `projectTitle` (required): Title of the project
+    - `projectDescription` (required): Description of the project
+    - `image` (required): URL of an image related to the project
+
+- **Response**
+  - Status Code: `201 Created`
+  - Body: JSON object containing the newly created post
+  - Example:
+    ```json
+    {
+        "_id": "<Post_ID>",
+        "user": "<User_ID>",
+        "githubLink": "<GitHub_Link>",
+        "content": "<Post_Content>",
+        "projectTitle": "<Project_Title>",
+        "projectDescription": "<Project_Description>",
+        "image": "<Image_URL>",
+        "likes": [],
+        "comments": [],
+        "createdAt": "<Creation_Date>",
+        "updatedAt": "<Update_Date>",
+        "__v": 0
+    }
+    ```
+
+### Get All Posts
+
+Retrieve all posts.
+
+- **Request**
+  - Method: `GET`
+  - Endpoint: `/api/posts`
+  - Headers: None
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON array containing all posts
+  - Example:
+    ```json
+    [
+        {
+            "_id": "<Post_ID_1>",
+            "user": "<User_ID_1>",
+            "githubLink": "<GitHub_Link_1>",
+            "content": "<Post_Content_1>",
+            "projectTitle": "<Project_Title_1>",
+            "projectDescription": "<Project_Description_1>",
+            "image": "<Image_URL_1>",
+            "likes": [],
+            "comments": [],
+            "createdAt": "<Creation_Date_1>",
+            "updatedAt": "<Update_Date_1>",
+            "__v": 0
+        },
+        {
+            "_id": "<Post_ID_2>",
+            "user": "<User_ID_2>",
+            "githubLink": "<GitHub_Link_2>",
+            "content": "<Post_Content_2>",
+            "projectTitle": "<Project_Title_2>",
+            "projectDescription": "<Project_Description_2>",
+            "image": "<Image_URL_2>",
+            "likes": [],
+            "comments": [],
+            "createdAt": "<Creation_Date_2>",
+            "updatedAt": "<Update_Date_2>",
+            "__v": 0
+        },
+    ]
+    ```
+
+### Get Post by ID
+
+Retrieve a specific post by its ID.
+
+- **Request**
+  - Method: `GET`
+  - Endpoint: `/api/posts/:id`
+  - Headers: None
+  - Parameters:
+    - `id` (required): ID of the post
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the post with the specified ID (same format as the "Create Post" response)
+
+### Update Post
+
+Update an existing post.
+
+- **Request**
+  - Method: `PUT`
+  - Endpoint: `/api/posts/:id`
+  - Headers:
+    - Authorization: Bearer {token}
+  - Parameters:
+    - `id` (required): ID of the post to update
+  - Body (fields to update):
+    - Any of the fields mentioned in the "Create Post" request body
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the updated post (same format as the "Create Post" response)
+
+### Delete Post
+
+Delete an existing post.
+
+- **Request**
+  - Method: `DELETE`
+  - Endpoint: `/api/posts/:id`
+  - Headers:
+    - Authorization: Bearer {token}
+  - Parameters:
+    - `id` (required): ID of the post to delete
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the deleted post (same format as the "Create Post" response)
+
+### Like Post
+
+Like a post.
+
+- **Request**
+  - Method: `POST`
+  - Endpoint: `/api/posts/:id/like`
+  - Headers:
+    - Authorization: Bearer {token}
+  - Parameters:
+    - `id` (required): ID of the post to like
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the updated post with the user's like added
+
+### Unlike Post
+
+Remove a like from a post.
+
+- **Request**
+  - Method: `POST`
+  - Endpoint: `/api/posts/:id/unlike`
+  - Headers:
+    - Authorization: Bearer {token}
+  - Parameters:
+    - `id` (required): ID of the post to unlike
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON object containing the updated post with the user's like removed

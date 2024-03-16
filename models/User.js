@@ -26,7 +26,8 @@ const userSchema = new Schema({
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here
     likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }], //i added likes to user
     likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }] //added notification
+    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }], //added notification
+    bio: {type: String}
 }, {
     timestamps: true,
     toJSON: {
