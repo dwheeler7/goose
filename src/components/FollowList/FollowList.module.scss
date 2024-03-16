@@ -1,0 +1,26 @@
+.followsContainer {
+    width: 73%;
+    background-color: white;
+    border-radius: 1rem;
+    border: .1rem solid lightgrey;
+    box-shadow: 0 0 1rem lightgrey;
+    padding: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    overflow-y: scroll;
+    .follows {
+        display: flex;
+        flex-wrap: wrap;
+        .followsContent {
+            display: flex;
+            align-items: center;
+            margin-right: 2rem;
+            .followImg {
+                width: 8rem;
+                border-radius: 1rem;
+                margin-right: 2rem;
+            }
+        }
+    }
+}

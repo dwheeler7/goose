@@ -345,6 +345,50 @@ function CommentForm() {
 
 /***/ }),
 
+/***/ "./src/components/FollowList/FollowList.js":
+/*!*************************************************!*\
+  !*** ./src/components/FollowList/FollowList.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FollowList)
+/* harmony export */ });
+/* harmony import */ var _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FollowList.module.scss */ "./src/components/FollowList/FollowList.module.scss");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function FollowList(user) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContainer
+  }, user && user.userType === 'employer' ? /*#__PURE__*/React.createElement("h3", null, "Following") : /*#__PURE__*/React.createElement("h3", null, "Employers"), /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].follows
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContent
+  }, /*#__PURE__*/React.createElement("img", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followImg,
+    src: "https://i.imgur.com/C2VpXHd.png"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userInfo
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followName
+  }, "User's Name"), /*#__PURE__*/React.createElement("h5", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followCompany
+  }, "User's Company"))), /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContent
+  }, /*#__PURE__*/React.createElement("img", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followImg,
+    src: "https://i.imgur.com/C2VpXHd.png"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userInfo
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followName
+  }, "User's Name"), /*#__PURE__*/React.createElement("h5", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followCompany
+  }, "User's Company")))));
+}
+
+/***/ }),
+
 /***/ "./src/components/LikeBtn/LikeBtn.js":
 /*!*******************************************!*\
   !*** ./src/components/LikeBtn/LikeBtn.js ***!
@@ -588,6 +632,41 @@ function NavBar(props) {
       window.location.reload();
     }
   }, "Logout"))))));
+}
+
+/***/ }),
+
+/***/ "./src/components/PortfolioProjectList/PortfolioProjectList.js":
+/*!*********************************************************************!*\
+  !*** ./src/components/PortfolioProjectList/PortfolioProjectList.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PortfolioProjectList)
+/* harmony export */ });
+/* harmony import */ var _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PortfolioProjectList.module.scss */ "./src/components/PortfolioProjectList/PortfolioProjectList.module.scss");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function PortfolioProjectList() {
+  return /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProjectItems
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].imgContainer
+  }, /*#__PURE__*/React.createElement("h3", null, "Project Title"), /*#__PURE__*/React.createElement("img", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].image,
+    src: "https://i.imgur.com/wb7FT8b.jpg"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].projectDescription
+  }, /*#__PURE__*/React.createElement("p", null, "Donec consequat pharetra enim. Maecenas cursus erat at semper ultricies. Proin rhoncus posuere laoreet. Etiam pulvinar, magna id viverra ullamcorper, dolor purus tincidunt libero, at feugiat purus felis eu quam. Praesent ultrices, sem vel tristique pellentesque, enim urna convallis est, nec bibendum lectus nibh sed sapien. Quisque vel blandit lectus.")), /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].iconContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+  }), /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+  }), /*#__PURE__*/React.createElement("div", {
+    className: _PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].icon
+  })));
 }
 
 /***/ }),
@@ -942,8 +1021,12 @@ function HomePage() {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProfilePage.module.scss */ "./src/pages/ProfilePage/ProfilePage.module.scss");
+/* harmony import */ var _components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FollowList/FollowList */ "./src/components/FollowList/FollowList.js");
+/* harmony import */ var _components_PortfolioProjectList_PortfolioProjectList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/PortfolioProjectList/PortfolioProjectList */ "./src/components/PortfolioProjectList/PortfolioProjectList.js");
+
+
 
 
 
@@ -961,7 +1044,7 @@ function ProfilePage() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.getUser)();
+        const userData = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.getUser)();
         console.log('User Data:', userData);
         setUser(userData);
       } catch (error) {
@@ -1005,43 +1088,9 @@ function ProfilePage() {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
   }, user.bio), !user || !user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
-  }, "No Bio at this time.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].employers
-  }, user && user.userType === 'employer' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Following") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Employers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ul
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].li
-  }, "This would be an employer"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ProjectItems
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].imgContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Project Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].image,
-    src: "https://i.imgur.com/wb7FT8b.jpg"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].projectDescription
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Donec consequat pharetra enim. Maecenas cursus erat at semper ultricies. Proin rhoncus posuere laoreet. Etiam pulvinar, magna id viverra ullamcorper, dolor purus tincidunt libero, at feugiat purus felis eu quam. Praesent ultrices, sem vel tristique pellentesque, enim urna convallis est, nec bibendum lectus nibh sed sapien. Quisque vel blandit lectus.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].iconContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].icon
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].icon
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].icon
-  })))));
+  }, "No Bio at this time.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    user: user
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PortfolioProjectList_PortfolioProjectList__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
 }
 
 /***/ }),
@@ -1391,6 +1440,62 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"commentUser": `QvFakg437pTadoWQ9VWn`,
 	"commentItem": `fiIfKwBY3LvKFZZZTlgZ`,
 	"comment": `bgdqfVbpMVFmuf6aDJAS`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/FollowList/FollowList.module.scss":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/FollowList/FollowList.module.scss ***!
+  \*************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.AtSg2EkPDp6jd9QVI35I {
+  width: 73%;
+  background-color: white;
+  border-radius: 1rem;
+  border: 0.1rem solid lightgrey;
+  box-shadow: 0 0 1rem lightgrey;
+  padding: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK {
+  display: flex;
+  flex-wrap: wrap;
+}
+.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK .OJbXhQxC3pJ5M1ose013 {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK .OJbXhQxC3pJ5M1ose013 .hPv7IuPVo2GvSQG1SWo6 {
+  width: 8rem;
+  border-radius: 1rem;
+  margin-right: 2rem;
+}`, "",{"version":3,"sources":["webpack://./src/components/FollowList/FollowList.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,sBAAA;EACA,kBAAA;AACJ;AAAI;EACI,aAAA;EACA,eAAA;AAER;AADQ;EACI,aAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,WAAA;EACA,mBAAA;EACA,kBAAA;AAIhB","sourcesContent":[".followsContainer {\n    width: 73%;\n    background-color: white;\n    border-radius: 1rem;\n    border: .1rem solid lightgrey;\n    box-shadow: 0 0 1rem lightgrey;\n    padding: 3rem;\n    display: flex;\n    flex-wrap: wrap;\n    flex-direction: column;\n    overflow-y: scroll;\n    .follows {\n        display: flex;\n        flex-wrap: wrap;\n        .followsContent {\n            display: flex;\n            align-items: center;\n            margin-right: 2rem;\n            .followImg {\n                width: 8rem;\n                border-radius: 1rem;\n                margin-right: 2rem;\n            }\n        }\n    }\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"followsContainer": `AtSg2EkPDp6jd9QVI35I`,
+	"follows": `Tsfcc0AYSwPzVwCzw7NK`,
+	"followsContent": `OJbXhQxC3pJ5M1ose013`,
+	"followImg": `hPv7IuPVo2GvSQG1SWo6`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1760,6 +1865,92 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"ul": `VhefOyE6KqL2INmTvax_`,
 	"navItem": `Vi729QB0vR8fTZ0UgVAQ`,
 	"listItem": `XmTS1C8VIV547MbqjHFC`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/PortfolioProjectList/PortfolioProjectList.module.scss":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/PortfolioProjectList/PortfolioProjectList.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.C73IYwSI_f3PxuLPcE5e {
+  margin-top: 3rem;
+  background-color: white;
+  width: 100%;
+  min-height: 60rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 0.1rem solid lightgrey;
+  box-shadow: 0 0 1rem lightgrey;
+}
+
+.yf6GUOwPy5pGwH1WYfJb {
+  margin-top: 3rem;
+  background-color: white;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 0.1rem solid lightgrey;
+  box-shadow: 0 0 1rem lightgrey;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.yf6GUOwPy5pGwH1WYfJb .QWcdnbhFuGEIX9RunDzv ._KOg18OE3atkYHRQLw4A {
+  max-height: 40rem;
+  border-radius: 1rem;
+  border: 0.2rem solid lightgrey;
+}
+.yf6GUOwPy5pGwH1WYfJb .WggKMUPCH1cgKaoyOjle {
+  padding: 1rem;
+  margin-left: 1rem;
+  min-height: 50rem;
+  border: 1px solid lightgrey;
+  display: flex;
+  width: 50%;
+  border-radius: 1rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 0 1rem lightgrey;
+}
+.yf6GUOwPy5pGwH1WYfJb .NfM8lqY8IPSzOzWy3laz {
+  width: 20%;
+  min-height: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.yf6GUOwPy5pGwH1WYfJb .NfM8lqY8IPSzOzWy3laz .ZKHrAd7_f52gqTwjAvkL {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 100%;
+  background-color: var(--bg-color);
+}`, "",{"version":3,"sources":["webpack://./src/components/PortfolioProjectList/PortfolioProjectList.module.scss"],"names":[],"mappings":"AAAA;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AACJ;;AACA;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAQ;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEZ;AACI;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACR;AACI;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACR;AAAQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEZ","sourcesContent":[".ProjectContainer {\n    margin-top: 3rem;\n    background-color: white;\n    width: 100%;\n    min-height: 60rem;\n    border-radius: 1rem;\n    padding: 2rem;\n    border: .1rem solid lightgrey;\n    box-shadow: 0 0 1rem lightgrey;\n}\n.ProjectItems {\n    margin-top: 3rem;\n    background-color: white;\n    width: 100%;\n    border-radius: 1rem;\n    padding: 2rem;\n    border: .1rem solid lightgrey;\n    box-shadow: 0 0 1rem lightgrey;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    .imgContainer {\n        .image {\n            max-height: 40rem;\n            border-radius: 1rem;\n            border: .2rem solid lightgrey;\n        }\n    }\n    .projectDescription {\n        padding: 1rem;\n        margin-left: 1rem;\n        min-height: 50rem;\n        border: 1px solid lightgrey;\n        display: flex;\n        width: 50%;\n        border-radius: 1rem;\n        background-color: var(--bg-color);\n        box-shadow: 0 0 1rem lightgrey;\n    }\n    .iconContainer {\n        width: 20%;\n        min-height: 50rem;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-evenly;\n        align-items: center;\n        .icon {\n            width: 9rem;\n            height: 9rem;\n            border-radius: 100%;\n            background-color: var(--bg-color);\n        }\n    }\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"ProjectContainer": `C73IYwSI_f3PxuLPcE5e`,
+	"ProjectItems": `yf6GUOwPy5pGwH1WYfJb`,
+	"imgContainer": `QWcdnbhFuGEIX9RunDzv`,
+	"image": `_KOg18OE3atkYHRQLw4A`,
+	"projectDescription": `WggKMUPCH1cgKaoyOjle`,
+	"iconContainer": `NfM8lqY8IPSzOzWy3laz`,
+	"icon": `ZKHrAd7_f52gqTwjAvkL`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2297,76 +2488,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
   background-color: green;
   transition: 0.3s ease;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .rVeGBLkFOVLb3YRYHtkD {
-  width: 73%;
-  background-color: white;
-  border-radius: 1rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: scroll;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .rVeGBLkFOVLb3YRYHtkD .zo0CasRbfQfmRe38b4aj .eKY3aNtgkP774wXuYTKp {
-  list-style-type: none;
-  margin-bottom: 1rem;
-  font-size: 0.7vw;
-}
-.z1XFB0qbBjHblp8c_F5M .zowTklKEZfFcKeeFo5Sg {
-  margin-top: 3rem;
-  background-color: white;
-  width: 100%;
-  min-height: 60rem;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE {
-  margin-top: 3rem;
-  background-color: white;
-  width: 100%;
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .syKW9dLz4EwS_wpHk6_0 .OL0obsY1jLzxOMQofgqg {
-  max-height: 40rem;
-  border-radius: 1rem;
-  border: 0.2rem solid lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .hdJjjfobrjNtuXuHoWvD {
-  padding: 1rem;
-  margin-left: 1rem;
-  min-height: 50rem;
-  border: 1px solid lightgrey;
-  display: flex;
-  width: 50%;
-  border-radius: 1rem;
-  background-color: var(--bg-color);
-  box-shadow: 0 0 1rem lightgrey;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .HpdY59jXxbNFIVYNHJs_ {
-  width: 20%;
-  min-height: 50rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-.z1XFB0qbBjHblp8c_F5M .ReekN20SjAkhmHnhtIrE .HpdY59jXxbNFIVYNHJs_ .JbkEVmhIVjZPQk4slpHs {
-  width: 9rem;
-  height: 9rem;
-  border-radius: 100%;
-  background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAJoB;EACI,WAAA;EACA,0BAAA;EACA,gBAAA;AAMxB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AADQ;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,qBAAA;EACA,mBAAA;EACA,gBAAA;AAIhB;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAER;AAAI;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AAAY;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEhB;AACQ;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACZ;AACQ;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACZ;AAAY;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEhB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 80%;\n    height: 100%;\n    padding: 5rem 10rem;\n    .topContainer {\n        display: flex;\n        justify-content: space-between;\n        width: 100%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            width: 25%;\n            background-color: white;\n            border-radius: 1rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            .imgAndEditContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n                .editBtn {\n                    font-size: 1.2rem;\n                    &:hover {\n                        color: blue;\n                        text-decoration: underline;\n                        transition: none;\n                    }\n                }\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n        .employers {\n            width: 73%;\n            background-color: white;\n            border-radius: 1rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            padding: 3rem;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            overflow-y: scroll;\n            .ul .li {\n                list-style-type: none;\n                margin-bottom: 1rem;\n                font-size: .7vw;\n            }\n        }\n    }\n    .ProjectContainer {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        min-height: 60rem;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n    }\n    .ProjectItems {\n        margin-top: 3rem;\n        background-color: white;\n        width: 100%;\n        border-radius: 1rem;\n        padding: 2rem;\n        border: .1rem solid lightgrey;\n        box-shadow: 0 0 1rem lightgrey;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .imgContainer {\n            .image {\n                max-height: 40rem;\n                border-radius: 1rem;\n                border: .2rem solid lightgrey;\n            }\n        }\n        .projectDescription {\n            padding: 1rem;\n            margin-left: 1rem;\n            min-height: 50rem;\n            border: 1px solid lightgrey;\n            display: flex;\n            width: 50%;\n            border-radius: 1rem;\n            background-color: var(--bg-color);\n            box-shadow: 0 0 1rem lightgrey;\n        }\n        .iconContainer {\n            width: 20%;\n            min-height: 50rem;\n            display: flex;\n            flex-direction: column;\n            justify-content: space-evenly;\n            align-items: center;\n            .icon {\n                width: 9rem;\n                height: 9rem;\n                border-radius: 100%;\n                background-color: var(--bg-color);\n            }\n        }\n    }\n}\n\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAJoB;EACI,WAAA;EACA,0BAAA;EACA,gBAAA;AAMxB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 80%;\n    height: 100%;\n    padding: 5rem 10rem;\n    .topContainer {\n        display: flex;\n        justify-content: space-between;\n        width: 100%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            width: 25%;\n            background-color: white;\n            border-radius: 1rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 1rem lightgrey;\n            .imgAndEditContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n                .editBtn {\n                    font-size: 1.2rem;\n                    &:hover {\n                        color: blue;\n                        text-decoration: underline;\n                        transition: none;\n                    }\n                }\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        background-color: green;\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}\n\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
@@ -2377,17 +2499,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"userBio": `dbIMdhqIGQg9JtZeKmrK`,
 	"userLinks": `LG29adQOef4sgu1x7iuH`,
 	"ghLogo": `VTiGYB_vr7yJA7Vk5uTj`,
-	"portfolioLogo": `f9PniY17HdeQBxVJqbhw`,
-	"employers": `rVeGBLkFOVLb3YRYHtkD`,
-	"ul": `zo0CasRbfQfmRe38b4aj`,
-	"li": `eKY3aNtgkP774wXuYTKp`,
-	"ProjectContainer": `zowTklKEZfFcKeeFo5Sg`,
-	"ProjectItems": `ReekN20SjAkhmHnhtIrE`,
-	"imgContainer": `syKW9dLz4EwS_wpHk6_0`,
-	"image": `OL0obsY1jLzxOMQofgqg`,
-	"projectDescription": `hdJjjfobrjNtuXuHoWvD`,
-	"iconContainer": `HpdY59jXxbNFIVYNHJs_`,
-	"icon": `JbkEVmhIVjZPQk4slpHs`
+	"portfolioLogo": `f9PniY17HdeQBxVJqbhw`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2553,6 +2665,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/FollowList/FollowList.module.scss":
+/*!**********************************************************!*\
+  !*** ./src/components/FollowList/FollowList.module.scss ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./FollowList.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/FollowList/FollowList.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_FollowList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/LikeBtn/LikeBtn.module.scss":
 /*!****************************************************!*\
   !*** ./src/components/LikeBtn/LikeBtn.module.scss ***!
@@ -2708,6 +2873,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/PortfolioProjectList/PortfolioProjectList.module.scss":
+/*!******************************************************************************!*\
+  !*** ./src/components/PortfolioProjectList/PortfolioProjectList.module.scss ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./PortfolioProjectList.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/PortfolioProjectList/PortfolioProjectList.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_PortfolioProjectList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3342,4 +3560,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.df360ef299a8ab5a7025ede86b48856e.js.map
+//# sourceMappingURL=App.91b8a577bf76a570805d1b99162a1b5d.js.map
