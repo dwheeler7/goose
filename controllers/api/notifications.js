@@ -7,9 +7,8 @@ exports.emitNotification = async (_, res, next) => {
         console.log('testing emit notification')
         // set notification type        
         const localNotification = res.locals.data.notification                
-        const foundFromUser = await User.findOne({ _id: localNotification.fromUser })
-        // const foundToUser = await User.findOne({ _id: localNotification.toUser })
-        
+        const foundFromUser = await User.findOne({ _id: localNotification.fromUser })        
+
         // create notification
         const notification = await Notification.create({
             type: localNotification.type,
@@ -18,7 +17,6 @@ exports.emitNotification = async (_, res, next) => {
             post: localNotification.post
         })        
         if (!notification) throw new Error('could not create notification')                
-
         await User.findByIdAndUpdate(localNotification.toUser, { $push: { notifications: notification._id } });
         next()
     } catch (err){
@@ -28,7 +26,7 @@ exports.emitNotification = async (_, res, next) => {
 
 exports.getNotifications = async (req, res) => {
     try {
-        const notifications = await Notification.find({ user: req.user._id }).populate('post').exec()
+        const notifications = await Notification.find({ toUser: req.user._id }).populate('post').populate('fromUser').exec()            
         res.json(notifications)
     } catch (error) {
         res.status(500).json({ message: error.message })
