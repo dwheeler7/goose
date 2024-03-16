@@ -94,10 +94,7 @@ const dataController = {
             console.error('Error resetting password', error);
             res.status(400).json({ message: 'Error resetting password' });
         }
-    } 
-
-    }, 
-
+    },
     async followDeveloper(req, res) {
         try {
             const { userId, developerId } = req.body;
@@ -120,9 +117,9 @@ const dataController = {
             console.error('Error unfollowing developer', error);
             res.status(500).json({ message: 'Internal server error' });
         }
-    }
+    } 
+}
 
-};
 
 const apiController = {
     authenticate(req, res) {
