@@ -17,16 +17,20 @@
             padding: 2rem;
             border: .1rem solid lightgrey;
             box-shadow: 0 0 1rem lightgrey;
-            .userHeading {
+            .imgAndEditContainer {
                 display: flex;
+                flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                .userName {
-                    margin-left: 3rem;
+                width: 15rem;
+                .editBtn {
+                    font-size: 1.2rem;
+                    &:hover {
+                        color: blue;
+                        text-decoration: underline;
+                        transition: none;
+                    }
                 }
-            }
-            .userBio {
-                margin-top: 2rem;
-                height: 15vh;
             }
         }
         .employers {

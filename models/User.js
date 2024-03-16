@@ -21,7 +21,6 @@ const userSchema = new Schema({
         required: true
     },
     picture: { type: String },
-  
     userType: { type: String, enum: ['developer', 'employer'], required: true, default: 'developer' },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here

@@ -50,6 +50,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
       const user = await usersService.login(credentials, rememberMe, navigate);
       setUser(user);
       navigate('/');
+      window.location.reload()
     } catch {
       setError('Log In Failed - Try Again');
     }
