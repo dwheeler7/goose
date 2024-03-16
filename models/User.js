@@ -21,7 +21,6 @@ const userSchema = new Schema({
         required: true
     },
     picture: { type: String },
-  
     userType: { type: String, enum: ['developer', 'employer'], required: true, default: 'developer' },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here
@@ -29,7 +28,12 @@ const userSchema = new Schema({
     likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }], //added notification
     followedDevelopers: [{ type: Schema.Types.ObjectId, ref: 'User'}],
-    usersThatFollowThisDeveloper: [{ type: Schema.Types.ObjectId, ref: 'User'}]
+    usersThatFollowThisDeveloper: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    bio: {type: String},
+    gitHubLink: {type: String},
+    portfolioLink: {type: String},
+    location: {type: String}
+
 }, {
     timestamps: true,
     toJSON: {
