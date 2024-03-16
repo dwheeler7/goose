@@ -45,7 +45,7 @@ export default function SignUpForm({ setUser, setShowLogin }) {
       </div>
       <div className={styles.boxc}>
         <form onSubmit={handleSubmit}>
-          <h1>Register</h1>
+          <h1>Sign Up</h1>
           <div className={styles.inputbox}>
             <input type="text" name="name" value={name} onChange={handleChange} required />
             <label>Name</label>
@@ -69,12 +69,12 @@ export default function SignUpForm({ setUser, setShowLogin }) {
           </div>
           <div className={styles.inputbox}>
             <select name="userType" value={userType} onChange={handleChange} required>
-              <option value="" disabled>Select Registration Type</option>
+              <option value="" disabled>Select User Type</option>
               <option value="developer">Developer</option>
               <option value="employer">Employer</option>
             </select>
           </div>
-          <button type="submit" disabled={disable}>Register</button>
+          <button type="submit" disabled={disable}>Sign Up</button>
           <div className={styles.login}>
             <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Login</p>
           </div>

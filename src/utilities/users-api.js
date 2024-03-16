@@ -9,3 +9,7 @@ export function signUp(userData) {
 export function login(credentials) {
   return sendRequest(`${BASE_URL}/login`, 'POST', credentials);
 }
+
+export function resetPassword(emailData) {
+  return sendRequest(`${BASE_URL}/reset-password`, 'POST', emailData);
+}
