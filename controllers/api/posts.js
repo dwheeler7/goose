@@ -23,11 +23,14 @@ function jsonPosts(_, res) {
 }
 
 // Create
-async function create(req, res, next) {
+async function create(req, res) {
     try {
+        // Save user ID to req.body.user        
+        const userId = req.user._id
+
         // Grabbing the id from the req body
-        const { _id: userId, githublink, useReadmeAsDescription } = req.body
-        let description = req.body.description // Initialize description with the provided description
+        const { githublink, useReadmeAsDescription } = req.body;
+        let description = req.body.description; // Initialize description with the provided description
 
         // If GitHub link is provided and user wants to use README content as description
         if (githublink && useReadmeAsDescription) {
@@ -39,66 +42,74 @@ async function create(req, res, next) {
         }
 
         // Create post with the updated description
-        const post = await Post.create({ ...req.body, description });
-
-        // Update user's post array
-        await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
-
+        const post = await Post.create({ user: userId, ...req.body, description });        
+        // Update user's post array        
+        const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;
-        next();
+        res.locals.data.user = foundUser;        
+        res.status(201).json({ message: "Post created successfully", post });
     } catch (error) {
+        console.error("Error creating post:", error);
         res.status(400).json({ msg: error.message });
     }
 }
 
 // Read
-async function index(_, res, next) {
+async function index(_, res) {
     try {
         const posts = await Post.find();
         res.locals.data.posts = posts;
-        next();
+        console.log("Retrieved posts:", posts);
+        res.json(posts);
     } catch (error) {
+        console.error("Error retrieving posts:", error);
         res.status(400).json({ msg: error.message });
     }
 }
 
-async function show(req, res, next) {
+async function show(req, res) {
     try {
         const post = await Post.findById(req.params.id);
         res.locals.data.post = post;
-        next();
+        console.log("Retrieved post:", post);
+        res.json(post);
     } catch (error) {
+        console.error("Error retrieving post:", error);
         res.status(400).json({ msg: error.message });
     }
 }
 
 // Update
-async function update(req, res, next) {
+async function update(req, res) {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.locals.data.post = post;
-        next();
+        console.log("Updated post:", post);
+        res.json(post);
     } catch (error) {
+        console.error("Error updating post:", error);
         res.status(400).json({ msg: error.message });
     }
 }
 
 // Delete
-async function destroy(req, res, next) {
+async function destroy(req, res) {
     try {
         const post = await Post.findByIdAndDelete(req.params.id);
 
         // Remove post from user's posts array
         await User.updateOne({ posts: req.params.id }, { $pull: { posts: req.params.id } });
         res.locals.data.post = post;
-        next();
+        console.log("Deleted post:", post);
+        res.json(post);
     } catch (error) {
+        console.error("Error deleting post:", error);
         res.status(400).json({ msg: error.message });
     }
 }
 
 // Like Post
-async function likePost(req, res, next) {
+async function likePost(req, res) {
     try {
         const userId = req.user._id
         const post = await Post.findById(req.params.id)
@@ -108,7 +119,7 @@ async function likePost(req, res, next) {
         // Add post to likedPosts array of the user if not already present
         if (!req.user.likedPosts.includes(post._id)) {
             req.user.likedPosts.push(post._id)
-            await req.user.save()
+            await User.findByIdAndUpdate(userId, { $push: { likedPosts: post._id } })
         } else {
             throw new Error('Post already liked by the user')
         }
@@ -117,36 +128,42 @@ async function likePost(req, res, next) {
             post.likes.push(userId)
             await post.save()
         }
-        res.locals.data.post = post
-        next()
+        // res.locals.data.post = post
+        console.log(post, req.user);
+        res.json(post);
     } catch (error) {
         console.error("Error liking post:", error)
         res.status(500).json({ message: "Internal server error" })
     }
 }
+
 // Unlike Post
-async function unlikePost(req, res, next) {
-    try {
+async function unlikePost(req, res) {
+    try {        
+        
         const post = await Post.findById(req.params.id)
+        const foundUser = await User.findOne({ _id: req.user._id })
+        
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
-        }
-        // Check if the post ID is present in the likedPosts array of the user
-        if (!req.user.likedPosts.includes(post._id)) {
+        }        
+        
+        if (!foundUser.likedPosts.includes(post._id)) {
             throw new Error('Post is not liked by the user')
         }
-        // Check if the user ID is present in the likes array of the post
+        
         if (!post.likes.includes(req.user._id)) {
             throw new Error('User has not liked the post')
         }
-        // Remove post from likedPosts array of the user
-        req.user.likedPosts = req.user.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())
-        await req.user.save()
-        // Remove user from likes array of the post
+        foundUser.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())        
+        await foundUser.save()
+        
         post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString())
         await post.save()
+
         res.locals.data.post = post
-        next()
+
+        res.json(post);
     } catch (error) {
         console.error("Error unliking post:", error)
         res.status(500).json({ message: "Internal server error" })
