@@ -50,3 +50,14 @@ export function getUser() {
 export function logOut() {
   localStorage.removeItem('token');
 }
+
+export async function resetPassword(emailData) {
+  try {
+    // Call the resetPassword function from usersAPI
+    await usersAPI.resetPassword(emailData);
+    return true; // Password reset successful
+  } catch (error) {
+    console.error("Password Reset Error:", error);
+    throw error;
+  }
+}

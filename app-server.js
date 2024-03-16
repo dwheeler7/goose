@@ -6,6 +6,7 @@ const logger = require('morgan');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const commentsRouter = require('./routes/api/comments');
+const notificationsRouter = require('./routes/api/notifications');
 const checkTokenMiddleware = require('./config/checkToken');
 const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
 
@@ -27,6 +28,7 @@ app.use('/api/users', usersRouter);
 // app.use(ensureLoggedInMiddleware);
 app.use('/api/posts', postsRouter);
 app.use('/api/comments', commentsRouter);
+app.use('/api/notifications', notificationsRouter);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

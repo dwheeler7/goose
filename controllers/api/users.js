@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+
 function createJWT(user, rememberMe) {
     let expiresIn = '24h'; // Default expiration time (24 hours)
     if (rememberMe) {
@@ -51,7 +52,7 @@ const dataController = {
             res.status(400).json({ message: error.message || 'Bad Credentials' });
         }
     }, 
-    async showUser(req, res) {
+    async showUser(req, res, next) {
         try {
             const user = await User.findById(req.params.id)
             res.locals.data.user = user
@@ -69,8 +70,56 @@ const dataController = {
             console.error('Error updating user', error);
             res.status(400).json({ message: 'Error updating user' });
         }
+    },
+    async resetPassword(req, res) {
+        try {
+            // Implement password reset logic here
+            // For example, generate a temporary password, send it to the user's email, and update the password in the database
+            // You can use libraries like nodemailer to send emails
+            
+            // Placeholder implementation: generate a random password
+            const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character temporary password
+            
+            // Update the user's password in the database with the temporary password
+            const user = await User.findOneAndUpdate(
+                { email: req.body.email }, // Find the user by their email
+                { password: temporaryPassword }, // Update the password
+                { new: true } // Return the updated user object
+            );
+
+            // You can also send an email to the user with the temporary password here
+            
+            res.status(200).json({ message: 'Password reset successful. Check your email for the temporary password.' });
+        } catch (error) {
+            console.error('Error resetting password', error);
+            res.status(400).json({ message: 'Error resetting password' });
+        }
+    },
+    async followDeveloper(req, res) {
+        try {
+            const { userId, developerId } = req.body;
+            const user = await User.findByIdAndUpdate(userId, { $addToSet: { followedDevelopers: developerId } }, { new: true });
+            const developer = await User.findByIdAndUpdate(developerId, { $addToSet: { usersThatFollowThisDeveloper: userId } }, { new: true });
+            res.json({ user, developer });
+        } catch (error) {
+            console.error('Error following developer', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+
+    async unfollowDeveloper(req, res) {
+        try {
+            const { userId, developerId } = req.body;
+            const user = await User.findByIdAndUpdate(userId, { $pull: { followedDevelopers: developerId } }, { new: true });
+            const developer = await User.findByIdAndUpdate(developerId, { $pull: { usersThatFollowThisDeveloper: userId } }, { new: true });
+            res.json({ user, developer });
+        } catch (error) {
+            console.error('Error unfollowing developer', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
     } 
-};
+}
+
 
 const apiController = {
     authenticate(req, res) {

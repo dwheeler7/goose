@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const postCtrl = require('../../controllers/api/posts')
+const notificationsCtrl = require('../../controllers/api/notifications')
 
 // create
-router.post('/', postCtrl.create)
+router.post('/', postCtrl.create, postCtrl.jsonPost)
 
 // index
 router.get('/', postCtrl.index)
@@ -18,7 +19,8 @@ router.put('/:id', postCtrl.update)
 router.delete('/:id', postCtrl.destroy)
 
 // Like a post
-router.post('/:id/like', postCtrl.likePost)
+router.post('/:id/like', postCtrl.likePost, notificationsCtrl.emitNotification, postCtrl.jsonPost)
+
 // Unlike a post
 router.post('/:id/unlike', postCtrl.unlikePost)
 
