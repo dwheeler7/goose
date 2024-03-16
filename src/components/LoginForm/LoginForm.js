@@ -50,6 +50,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
       const user = await usersService.login(credentials, rememberMe, navigate);
       setUser(user);
       navigate('/');
+      window.location.reload()
     } catch {
       setError('Log In Failed - Try Again');
     }
@@ -69,7 +70,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
   };
 
   return (
-    <div>
+    <div className={styles.LoginForm}>
       <div className={styles.title}>
         <h1>DevHive</h1>
         <h4>A Group Project</h4>

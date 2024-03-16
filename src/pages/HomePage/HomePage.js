@@ -6,7 +6,6 @@ import PostList from '../../components/PostList/PostList'
 export default function HomePage(){
     return (
         <>
-        <NavBar />
         <h1>This is the HomePage</h1>
         <PostList />
         <form>
