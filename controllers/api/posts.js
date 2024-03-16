@@ -112,14 +112,17 @@ async function destroy(req, res) {
 async function likePost(req, res) {
     try {
         const userId = req.user._id
+        const foundUser = await User.findOne({ _id: userId })
         const post = await Post.findById(req.params.id)
         if (!post) {
             return res.status(404).json({ message: 'Post not found' })
         }
         // Add post to likedPosts array of the user if not already present
-        if (!req.user.likedPosts.includes(post._id)) {
-            req.user.likedPosts.push(post._id)
-            await User.findByIdAndUpdate(userId, { $push: { likedPosts: post._id } })
+        if (!foundUser.likedPosts.includes(post._id)) {
+            // req.user.likedPosts.push(post._id)
+            // await User.findByIdAndUpdate(userId, { $push: { likedPosts: post._id } })
+            foundUser.likedPosts.push(post._id)
+            await foundUser.save()
         } else {
             throw new Error('Post already liked by the user')
         }
@@ -129,7 +132,7 @@ async function likePost(req, res) {
             await post.save()
         }
         // res.locals.data.post = post
-        console.log(post, req.user);
+        // console.log(post, req.user);
         res.json(post);
     } catch (error) {
         console.error("Error liking post:", error)
@@ -140,30 +143,70 @@ async function likePost(req, res) {
 // Unlike Post
 async function unlikePost(req, res) {
     try {        
-        
-        const post = await Post.findById(req.params.id)
-        const foundUser = await User.findOne({ _id: req.user._id })
-        
-        if (!post) {
-            return res.status(404).json({ message: 'Post not found' })
-        }        
-        
-        if (!foundUser.likedPosts.includes(post._id)) {
-            throw new Error('Post is not liked by the user')
-        }
-        
-        if (!post.likes.includes(req.user._id)) {
-            throw new Error('User has not liked the post')
-        }
-        foundUser.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())        
-        await foundUser.save()
-        
-        post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString())
+        // save user
+        const user = await User.findOne({ _id: req.user._id })
+        console.log(user)
+        // save post
+        const post = await Post.findOne({ _id: req.params.id })
+
+        // remove post from user.likedPosts arr
+        // save liked post index
+        console.log(user.likedPosts)
+        const likedPostIdx = user.likedPosts.indexOf(post._id)
+        console.log(`liked post index: ${likedPostIdx}`)
+        console.log(`user likedPosts: ${user.likedPosts}`)
+
+        // splice
+        user.likedPosts.splice(likedPostIdx,1)
+        // console.log(user)    
+
+        // save
+        await user.save()
+
+        // remove user from post.likes arr
+        const postLikesIdx = post.likes.indexOf(user._id)
+
+        // splice
+        post.likes.splice(postLikesIdx, 1)
+
+        // save
         await post.save()
 
-        res.locals.data.post = post
+        res.json({post, user})
 
-        res.json(post);
+
+        // remove user from post.likes arr
+        // save both
+        // send json
+
+
+
+        
+        // const post = await Post.findById(req.params.id)
+        // const foundUser = await User.findOne({ _id: req.user._id })
+        
+        // if (!post) {
+        //     return res.status(404).json({ message: 'Post not found' })
+        // }        
+        
+        // if (!foundUser.likedPosts.includes(post._id)) {
+        //     throw new Error('Post is not liked by the user')
+        // }
+        
+        // if (!post.likes.includes(req.user._id)) {
+        //     throw new Error('User has not liked the post')
+        // }        
+
+        // foundUser.likedPosts = foundUser.likedPosts.filter(likedPostId => likedPostId.toString() !== post._id.toString())
+        // await foundUser.save()
+        // console.log(`Updated user likedPost arr: ${foundUser.likedPosts}`)
+        
+        // post.likes = post.likes.filter(like => like.toString() !== req.user._id.toString())
+        // await post.save()
+
+        // res.locals.data.post = post
+
+        // res.json({post, foundUser});
     } catch (error) {
         console.error("Error unliking post:", error)
         res.status(500).json({ message: "Internal server error" })
