@@ -966,7 +966,7 @@ function ProfilePage() {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userHeading
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userName
-  }, "Tyler Pierson"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user && user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].imgAndEditContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ProfileImage,
@@ -3320,4 +3320,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.fa1d498c8d3758ea80001f5376bdc9e4.js.map
+//# sourceMappingURL=App.7b32f525f99075d671cfedb621524f8f.js.map

@@ -25,7 +25,7 @@ export default function ProfilePage() {
                 <div className={styles.topContainer}>
                     <div className={styles.userContainer}>
                         <div className={styles.userHeading}>
-                            <h2 className={styles.userName}>Tyler Pierson</h2>
+                            <h2 className={styles.userName}>{user && user.name}</h2>
                             <div className={styles.imgAndEditContainer}>
                                 <ProfileImage 
                                     className={styles.ProfileImage}
