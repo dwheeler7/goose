@@ -26,10 +26,11 @@ function jsonPosts(_, res) {
 async function create(req, res) {
     try {
         // Save user ID to req.body.user
-        req.body.user = req.user._id;
+        // req.body.user = req.user._id;
+        const userId = req.user._id
 
         // Grabbing the id from the req body
-        const { _id: userId, githublink, useReadmeAsDescription } = req.body;
+        const { githublink, useReadmeAsDescription } = req.body;
         let description = req.body.description; // Initialize description with the provided description
 
         // If GitHub link is provided and user wants to use README content as description
@@ -42,13 +43,12 @@ async function create(req, res) {
         }
 
         // Create post with the updated description
-        const post = await Post.create({ ...req.body, description });
-
+        const post = await Post.create({ user: userId, ...req.body, description });        
         // Update user's post array
-        await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
-
+        // const foundUser = await User.findOne({ _id: userId })
+        const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;
-        console.log("Created post:", post);
+        res.locals.data.user = foundUser;        
         res.status(201).json({ message: "Post created successfully", post });
     } catch (error) {
         console.error("Error creating post:", error);
