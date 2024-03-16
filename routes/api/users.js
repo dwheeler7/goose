@@ -7,7 +7,7 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn');
 const User = require('../../models/User');
 
 // GET /api/users/:id
-router.get('/:id', dataController.showUser, apiController.authenticate)
+router.get('/:id', dataController.showUser, apiController.authenticate);
 
 // Post /api/users
 router.post('/', dataController.createUser, apiController.authenticate);
