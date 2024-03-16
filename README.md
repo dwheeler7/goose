@@ -206,7 +206,6 @@ Create a new post.
   - Headers:
     - Authorization: Bearer {token}
   - Body:
-    - `user` (required): ID of the user creating the post
     - `githubLink` (required): Link to the GitHub repository
     - `content` (required): Content of the post
     - `projectTitle` (required): Title of the project
