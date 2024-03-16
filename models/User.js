@@ -28,6 +28,8 @@ const userSchema = new Schema({
     likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }], //added notification
     bio: {type: String},
+    gitHubLink: {type: String},
+    portfolioLink: {type: String},
     location: {type: String}
 }, {
     timestamps: true,
