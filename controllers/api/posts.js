@@ -22,31 +22,27 @@ function jsonPosts(_, res) {
     res.json(res.locals.data.posts);
 }
 
+
 // Create
 async function create(req, res, next) {
     try {
-        // Save user ID to req.body.user        
-        const userId = req.user._id
+        const userId = req.user._id;
+        const { githubLink, useReadmeAsDescription, projectDescription } = req.body;
 
-        // Grabbing the id from the req body
-        const { githublink, useReadmeAsDescription } = req.body;
-        let description = req.body.description; // Initialize description with the provided description
-
+        let description = projectDescription; // Initialize with provided projectDescription
         // If GitHub link is provided and user wants to use README content as description
-        if (githublink && useReadmeAsDescription) {
+        if (githubLink && useReadmeAsDescription) {
             // Extract owner and repo name from the GitHub link
-            const [_, owner, repo] = githublink.split('/');
-            // Fetch README content from GitHub repository
+            const [_, owner, repo] = githubLink.split('/');
+             // Fetch README content from GitHub repository
             const readmeContent = await fetchReadmeContent(owner, repo);
-            description = readmeContent; // Update description with README content
-        }
+            req.body.projectDescription = readmeContent; // Update projectDescription with README content
+}
 
-        // Create post with the updated description
-        const post = await Post.create({ user: userId, ...req.body, description });        
-        // Update user's post array        
+
+        const post = await Post.create({ user: userId, ...req.body, description });
         const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
-        res.locals.data.post = post;
-        res.locals.data.user = foundUser;           
+        res.locals.data.post = post;           
         next()
     } catch (error) {
         console.error("Error creating post:", error);
