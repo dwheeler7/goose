@@ -171,6 +171,31 @@ export default function App(){
     }
 
     useEffect(() => {
+        fetchPosts()
+      }, [])
+      
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch('/api/posts', {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          const data = await response.json();
+          setPosts(data.posts)
+        } catch (error) {
+          console.error('There was an error!', error)
+        }
+    }
+    
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Fetch user data from your backend
+                const response = await fetch('/api/user-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
         if (token) {                    
             const fetchUserData = async () => {
                 console.log('fetching user data')
