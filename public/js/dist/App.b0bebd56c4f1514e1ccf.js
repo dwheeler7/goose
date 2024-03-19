@@ -192,27 +192,30 @@ function App() {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const fetchUserData = async () => {
-      try {
-        // Fetch user data from your backend
-        const response = await fetch('/api/user-data', {
-          headers: {
-            Authorization: "Bearer ".concat(token) // Assuming you're passing token as a prop
+    if (token) {
+      const fetchUserData = async () => {
+        console.log('fetching user data');
+        try {
+          // Fetch user data from your backend
+          const response = await fetch('/api/user-data', {
+            headers: {
+              Authorization: "Bearer ".concat(token) // Assuming you're passing token as a prop
+            }
+          });
+          if (response.ok) {
+            const userData = await response.json();
+            setUser(userData); // Update the user state with the fetched data
+          } else {
+            // Handle error
+            throw new Error('response failed');
           }
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData); // Update the user state with the fetched data
-        } else {
-          // Handle error
+        } catch (error) {
+          console.error('Error fetching user data:', error);
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    // Call the fetchUserData function when the component mounts
-    fetchUserData();
+      };
+      // Call the fetchUserData function when the component mounts
+      fetchUserData();
+    }
   }, [token]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].App
@@ -3613,4 +3616,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.bb739ecb26544caf7f93bb8efa47ba9e.js.map
+//# sourceMappingURL=App.f67af2f9635dde0be262481db14e2ecc.js.map
