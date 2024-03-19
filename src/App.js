@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react'
 import NavBar from './components/NavBar/NavBar'
 import AuthPage from './pages/AuthPage/AuthPage'
 import HomePage from './pages/HomePage/HomePage'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
+// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
+
 import styles from './App.module.scss'
+import * as userService from './utilities/users-service';
 
 export default function App(){
     // Default state for user is null
     // Default state for token is an empty string
     const [user, setUser] = useState(null)
+    const [post, setPost] = useState(null)
     const [token, setToken] = useState('')
 
     // Create a signUp fn that connects to the backend
@@ -87,6 +92,8 @@ export default function App(){
                 body: JSON.stringify(postData)
             })
             const data = await response.json()
+            localStorage.setItem('post', JSON.stringify(postData))
+            setPost(postData)
             return data
         } catch (error) {
             console.error(error)
@@ -163,9 +170,58 @@ export default function App(){
         }
     }
 
+    useEffect(() => {
+        fetchPosts()
+      }, [])
+      
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch('/api/posts', {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          const data = await response.json();
+          setPosts(data.posts)
+        } catch (error) {
+          console.error('There was an error!', error)
+        }
+      }
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Fetch user data from your backend
+                const response = await fetch('/api/user-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+                    }
+                });
+    
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser(userData); // Update the user state with the fetched data
+                } else {
+                    // Handle error
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+    
+        // Call the fetchUserData function when the component mounts
+        fetchUserData();
+    }, [token]);
+
     return (
         <>
-            <div>
+            <div className={styles.App}>
+            <NavBar 
+                token={token} 
+                setUser={setUser}
+                user={user} // Pass the user prop to NavBar
+                setToken={setToken}
+            />
                 <Routes>
                     {/* What is needed on this page:
                         Get all Post posts when the component mounts 
@@ -180,6 +236,8 @@ export default function App(){
                         setToken={setToken}
                         setUser={setUser}
                         createPost={createPost}
+                        setPost={setPost}
+                        post={post}
                         getAllPosts={getAllPosts}
                     />}></Route>
 
@@ -195,7 +253,11 @@ export default function App(){
                         signUp={signUp}
                         login={login}
                     />}></Route>
-
+                    <Route path="/auth/forgot-password" element={<ForgotPassword 
+                     setUser={setUser}
+                     setToken={setToken}
+                     signUp={signUp}
+                     login={login} />}></Route>
                     {/* What is needed on this page:
                         Be able to GET an individual post
                         Be able to UPDATE post

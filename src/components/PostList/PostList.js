@@ -1,24 +1,13 @@
 import styles from './PostList.module.scss'
 import Post from '../Post/Post'
- 
-// export default function PostList({ posts }) {
-//     const items = posts.map(item =>
-//       <Post
-//         key={item._id}
-//         post={item}
-//       />
-//     )
-//     return (
-//       <main className={styles.PostList}>
-//         {items}
-//       </main>
-//     )
-//   }
+import React from 'react'
 
-export default function PostList(){ 
-    return(
-        <div className={styles.PostList}>
-            <Post />
+export default function PostList({ post }) {
+    return (
+        <div className={styles.postList}>
+            {post && post.map((postData, index) => (
+                <Post key={index} postData={postData} />
+            ))}
         </div>
     )
 }

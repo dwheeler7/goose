@@ -50,6 +50,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
       const user = await usersService.login(credentials, rememberMe, navigate);
       setUser(user);
       navigate('/');
+      window.location.reload()
     } catch {
       setError('Log In Failed - Try Again');
     }
@@ -64,11 +65,15 @@ export default function LoginForm({ setUser, setShowLogin }) {
     return password.length < 8 ? 'Password must be at least 8 characters long' : ''; 
   };
 
+  const handleForgotPasswordClick = () => {
+    navigate('/auth/forgot-password');
+  };
+
   return (
-    <div>
+    <div className={styles.LoginForm}>
       <div className={styles.title}>
-        <h1>Welcome</h1>
-        <h4>To Our Group Project</h4>
+        <h1>DevHive</h1>
+        <h4>A Group Project</h4>
       </div>
       <div className={styles.boxc}>
         <form autoComplete="off" onSubmit={handleSubmit}>
@@ -100,11 +105,12 @@ export default function LoginForm({ setUser, setShowLogin }) {
               <input type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
               Remember Me
             </label>
-            <a href="No IDEA YET">Forgot Password</a>
+            {/* Replace the anchor tag with a span and attach onClick event handler */}
+            <span className={styles.forgotPassword} onClick={handleForgotPasswordClick}>Forgot Password</span>
           </div>
-          <button type="submit">Log in</button>
+          <button type="submit">Log In</button>
           <div className={styles.register}>
-            <p onClick={() => setShowLogin(false)}>Don't have an account? <span className={styles.registerLink}>Register</span></p>
+            <p onClick={() => setShowLogin(false)}>Don't have an account? <span className={styles.registerLink}>Sign Up</span></p>
           </div>
         </form>
       </div>
