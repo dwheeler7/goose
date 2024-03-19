@@ -1,13 +1,21 @@
-import styles from './PostList.module.scss'
-import Post from '../Post/Post'
-import React from 'react'
+import React from 'react';
+import styles from './PostList.module.scss';
+import Post from '../Post/Post';
 
-export default function PostList({ post }) {
+const EmptyState = () => (
+    <div className={styles.emptyState}>No posts available.</div>
+);
+
+function PostList({ posts }) {
+    if (posts.length === 0) {
+        return <EmptyState />;
+    }
+
     return (
         <div className={styles.postList}>
-            {post && post.map((postData, index) => (
-                <Post key={index} postData={postData} />
-            ))}
+            {posts.map(postData => <Post key={postData.id} {...postData} />)}
         </div>
-    )
+    );
 }
+
+export default PostList;
