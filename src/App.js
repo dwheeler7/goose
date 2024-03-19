@@ -14,6 +14,7 @@ export default function App(){
     // Default state for user is null
     // Default state for token is an empty string
     const [user, setUser] = useState(null)
+    const [post, setPost] = useState(null)
     const [token, setToken] = useState('')
 
     // Create a signUp fn that connects to the backend
@@ -91,6 +92,8 @@ export default function App(){
                 body: JSON.stringify(postData)
             })
             const data = await response.json()
+            localStorage.setItem('post', JSON.stringify(postData))
+            setPost(postData)
             return data
         } catch (error) {
             console.error(error)
@@ -215,6 +218,8 @@ export default function App(){
                         setToken={setToken}
                         setUser={setUser}
                         createPost={createPost}
+                        setPost={setPost}
+                        post={post}
                         getAllPosts={getAllPosts}
                     />}></Route>
 
