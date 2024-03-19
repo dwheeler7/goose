@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+
 function createJWT(user, rememberMe) {
     let expiresIn = '24h'; // Default expiration time (24 hours)
     if (rememberMe) {
@@ -39,7 +40,7 @@ const dataController = {
             console.log('Request body:', req.body); // Log entire request body
             console.log('Remember Me from frontend:', req.body.rememberMe); // Log the value of rememberMe
             if (!user) throw new Error('User not found');
-            const match = await bcrypt.compare(req.body.password, user.password);
+            const match = await bcryptjs.compare(req.body.password, user.password);
             if (!match) throw new Error('Invalid password');
 
             // Assuming "rememberMe" is sent in the request body
