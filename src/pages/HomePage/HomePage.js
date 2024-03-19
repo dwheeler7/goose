@@ -1,28 +1,77 @@
-import styles from './HomePage.module.scss'
-import Button from '../../components/Button/Button'
-import PostList from '../../components/PostList/PostList'
+import React, { useState, useEffect } from 'react';
+import styles from './HomePage.module.scss';
+import PostList from '../../components/PostList/PostList';
 
-export default function HomePage({ user, createPost, post }) {
+export default function HomePage() {
+    const [posts, setPosts] = useState([]);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [gitHubLink, setGitHubLink] = useState('');
+
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/posts');
+            const data = await response.json();
+            setPosts(data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const createPost = async (postData) => {
+        const response = await fetch('http://localhost:3000/api/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        });
+        return response.json();
+    };
+
+    const handleCreatePost = async (event) => {
+        event.preventDefault();
+        const postData = { title, description, gitHubLink };
+        
+        try {
+            const newPost = await createPost(postData);
+            setPosts(currentPosts => [newPost, ...currentPosts]);
+            setTitle('');
+            setDescription('');
+            setGitHubLink('');
+        } catch (error) {
+            console.error('Error creating post:', error);
+        }
+    };
+
     return (
-        <>
+        <div className={styles.homePage}>
             <h1>This is the HomePage</h1>
-            <PostList
-                user={user}
-                createPost={createPost}
-                post={post}
-            />
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                // Call createPost function when the form is submitted
-                createPost({ title: e.target.title.value, description: e.target.description.value, gitHubLink: e.target.gitHubLink.value, image: e.target.image.files[0] });
-            }}>
-                <label>Title<input type="text" name="title" required /></label>
-                <label>Description<input type="text" name="description" required /></label>
-                <label>GitHub Link<input type="text" name="gitHubLink" required /></label>
-                <input type="file" name="image" />
-                <button type="submit">Create Post</button>
+            <form onSubmit={handleCreatePost}>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Title"
+                />
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Description"
+                />
+                <input
+                    type="text"
+                    value={gitHubLink}
+                    onChange={(e) => setGitHubLink(e.target.value)}
+                    placeholder="GitHub Link"
+                />
+                <button type="submit">Post</button>
             </form>
-            <Button />
-        </>
-    )
+            <PostList posts={posts} />
+        </div>
+    );
 }
