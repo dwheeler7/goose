@@ -24,4 +24,4 @@ router.post('/:id/like', postCtrl.likePost, notificationsCtrl.emitNotification, 
 // Unlike a post
 router.post('/:id/unlike', postCtrl.unlikePost)
 
-module.exports = router
+module.exports = router 
