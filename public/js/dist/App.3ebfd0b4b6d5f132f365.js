@@ -367,7 +367,7 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
- // Import useNavigate hook
+
 
 
 function LoginForm(_ref) {
@@ -375,7 +375,7 @@ function LoginForm(_ref) {
     setUser,
     setShowLogin
   } = _ref;
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Initialize useNavigate hook
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   const [credentials, setCredentials] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: '',
     password: ''
@@ -385,8 +385,8 @@ function LoginForm(_ref) {
     password: ''
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [rememberMe, setRememberMe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track "Remember Me" checkbox
-
+  const [rememberMe, setRememberMe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const handleChange = evt => {
     const {
       name,
@@ -408,7 +408,6 @@ function LoginForm(_ref) {
   };
   const handleRememberMeChange = evt => {
     const isChecked = evt.target.checked;
-    console.log('Remember Me checked:', isChecked);
     setRememberMe(isChecked);
   };
   const handleSubmit = async evt => {
@@ -426,7 +425,7 @@ function LoginForm(_ref) {
     try {
       const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login(credentials, rememberMe, navigate);
       setUser(user);
-      navigate('/'); // Redirect to root route on successful login
+      navigate('/');
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
@@ -458,12 +457,15 @@ function LoginForm(_ref) {
   }, "\u274C", errors.email)), /*#__PURE__*/React.createElement("div", {
     className: "".concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox, " ").concat(_LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputFilled)
   }, /*#__PURE__*/React.createElement("input", {
-    type: "password",
+    type: showPassword ? 'text' : 'password',
     name: "password",
     value: credentials.password,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/React.createElement("label", null, "Password"), errors.password && /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("label", null, "Password"), /*#__PURE__*/React.createElement("span", {
+    className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].showPasswordIcon,
+    onClick: () => setShowPassword(!showPassword)
+  }, showPassword ? '🔑' : '🛡️'), errors.password && /*#__PURE__*/React.createElement("span", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorSign
   }, "\u274C", errors.password)), /*#__PURE__*/React.createElement("div", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lost
@@ -578,6 +580,25 @@ function Post(_ref) {
   })), /*#__PURE__*/React.createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/React.createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 }
 
+/*
+export default function Post({ post, buttonAction, buttonText }){
+    return(
+        <div className={styles.Post}>
+            <div className={styles.infoContainer}>
+                <h3 className={styles.title}>{post.projectTitle}</h3>
+                <a href='' className={styles.user}>{post.user}</a>
+                <p className={styles.description}>{post.projectDescription}</p>
+            </div>
+            <div className={styles.imageContainer}>
+                <img className={styles.image} src={post.image || "https://via.placeholder.com/225"} alt="placeholder" />
+            </div>
+           <CommentForm />
+            <LikeBtn />
+        </div>
+    )
+}
+*/
+
 /***/ }),
 
 /***/ "./src/components/PostList/PostList.js":
@@ -651,13 +672,15 @@ function ProfileImage() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignUpForm.module.scss */ "./src/components/SignUpForm/SignUpForm.module.scss");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -673,6 +696,9 @@ function SignUpForm(_ref) {
     userType: '' // Added userType field
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track password visibility
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Corrected
+
   const handleChange = evt => {
     setFormData(_objectSpread(_objectSpread({}, formData), {}, {
       [evt.target.name]: evt.target.value
@@ -682,11 +708,15 @@ function SignUpForm(_ref) {
   const handleSubmit = async evt => {
     evt.preventDefault();
     try {
-      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.signUp)(formData);
+      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
       setUser(user);
+      navigate("/profile/".concat(user._id)); // Corrected
     } catch (_unused) {
       setError('Sign Up Failed - Try Again');
     }
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
   const {
     name,
@@ -723,12 +753,15 @@ function SignUpForm(_ref) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Email")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "password",
+    type: showPassword ? 'text' : 'password',
     name: "password",
     value: password,
     onChange: handleChange,
     required: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Password")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].showPasswordIcon,
+    onClick: togglePasswordVisibility
+  }, showPassword ? '🔑' : '🛡️')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
     name: "userType",
@@ -1495,9 +1528,9 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `body {
+___CSS_LOADER_EXPORT___.push([module.id, `/* Body styles */
+body {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1508,6 +1541,47 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
   background-size: cover;
 }
 
+h4 {
+  font-size: 3rem;
+}
+
+/* Inputbox styles */
+.slJPwttFXbjZj3iK5tpD {
+  position: relative;
+  margin: 30px 0;
+  min-width: 27vh;
+  max-width: 35vh;
+  border-bottom: 2px solid #fff;
+}
+.slJPwttFXbjZj3iK5tpD:hover {
+  border-bottom-color: gold !important; /* Change border color on focus */
+}
+.slJPwttFXbjZj3iK5tpD label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 2rem;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+.slJPwttFXbjZj3iK5tpD input {
+  width: 100%;
+  height: 60px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  padding: 0 35px 0 5px;
+  color: #fff;
+}
+.slJPwttFXbjZj3iK5tpD input:focus ~ label, .slJPwttFXbjZj3iK5tpD input:valid ~ label {
+  color: lightgray;
+  top: -5px;
+}
+
+/* Rest of the styles */
 .duhWcPoiFKzflZYTW6qA {
   width: 100%;
   text-align: center;
@@ -1526,93 +1600,62 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
   align-items: center;
   padding: 2rem 3rem;
 }
-
-h1 {
-  font-size: 2rem;
+.mdJKUsO6IVB_KHxsorxg h1 {
+  font-size: 3rem;
   color: #fff;
   text-align: center;
 }
-
-.slJPwttFXbjZj3iK5tpD {
-  position: relative;
-  margin: 30px 0;
-  min-width: 27vh;
-  max-width: 35vh;
-  border-bottom: 2px solid #fff;
-}
-
-.slJPwttFXbjZj3iK5tpD label {
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
-  color: #fff;
-  font-size: 1rem;
-  pointer-events: none;
-  transition: all 0.5s ease-in-out;
-}
-
-/*ANIMATION */
-input:focus ~ label,
-input:valid ~ label {
-  top: -5px;
-}
-
-.PWpsrepqIxsSicJWBQv9 {
+.mdJKUsO6IVB_KHxsorxg .PWpsrepqIxsSicJWBQv9 {
   display: block;
 }
-
-.slJPwttFXbjZj3iK5tpD input {
-  width: 100%;
-  height: 60px;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  padding: 0 35px 0 5px;
-  color: #fff;
-}
-
-.JAm91a8tmBcEN_9D7mVL {
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL {
   margin: 35px 0;
   font-size: 0.85rem;
   color: #fff;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Center items vertically */
+  align-items: center;
 }
-
-.JAm91a8tmBcEN_9D7mVL label {
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL label {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  cursor: pointer; /* Change cursor to pointer when hovering over the label */
-}
-
-.JAm91a8tmBcEN_9D7mVL label input {
-  margin-right: 5px; /* Increase the margin for better spacing */
   cursor: pointer;
 }
-
-.JAm91a8tmBcEN_9D7mVL a {
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL label input {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL a {
   font-size: 1.5rem;
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.3s ease; /* Smooth transition for color change */
+  transition: color 0.3s ease;
 }
-
-.JAm91a8tmBcEN_9D7mVL a:hover {
+.mdJKUsO6IVB_KHxsorxg .JAm91a8tmBcEN_9D7mVL a:hover {
   text-decoration: underline;
-  color: #ccc; /* Change color on hover for better feedback */
+  color: #ccc;
 }
-
-.YtX40q4kPgyY1kLWHR5i:hover {
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i {
+  font-size: 0.9rem;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-
-button {
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+.mdJKUsO6IVB_KHxsorxg .YtX40q4kPgyY1kLWHR5i p a:hover {
+  text-decoration: underline;
+}
+.mdJKUsO6IVB_KHxsorxg button {
   color: black;
   width: 100%;
   height: 40px;
@@ -1621,40 +1664,31 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
   transition: all 0.4s ease;
 }
-
-button:hover {
+.mdJKUsO6IVB_KHxsorxg button:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-
-.YtX40q4kPgyY1kLWHR5i {
-  font-size: 0.9rem;
-  color: #fff;
-  text-align: center;
-  margin: 25px 0 10px;
-}
-
-.YtX40q4kPgyY1kLWHR5i p a {
-  text-decoration: none;
-  color: #fff;
-  font-weight: 600;
-}
-
-.YtX40q4kPgyY1kLWHR5i p a:hover {
-  /* font-size: large; */
-  text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACI,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAJ;;AAGA;EACI,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAJ;;AAGA,aAAA;AACA;;EAEI,SAAA;AAAJ;;AAGA;EACE,cAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGA;EACI,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA,EAAA,4BAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA,EAAA,0DAAA;AAAJ;;AAGE;EACE,iBAAA,EAAA,2CAAA;EACA,eAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA,EAAA,uCAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,WAAA,EAAA,8CAAA;AAAJ;;AAGE;EACE,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACI,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAJ;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACI,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,qBAAA;EACA,WAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,0BAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n    width: 100%;\n    text-align: center;\n    color: #fff;\n    padding: 10px; \n  }\n\n.boxc {\n    min-width: 25vh;\n    max-width: 700px;\n    position: relative;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 2rem 3rem;\n}\n\nh1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n}\n\n.inputbox {\n    position: relative;\n    margin: 30px 0;\n    min-width: 27vh;\n    max-width: 35vh;\n    border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 1rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n}\n\n/*ANIMATION */\ninput:focus ~ label, \ninput:valid ~ label {\n    top: -5px;\n}\n\n.errorSign {\n  display: block;\n}\n\n.inputbox input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n}\n\n.lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center; /* Center items vertically */\n  }\n  \n  .lost label {\n    font-size: 1.5rem;\n    display: flex;\n    align-items: center;\n    cursor: pointer; /* Change cursor to pointer when hovering over the label */\n  }\n  \n  .lost label input {\n    margin-right: 5px; /* Increase the margin for better spacing */\n    cursor: pointer;\n  }\n  \n  .lost a {\n    font-size: 1.5rem;\n    color: #fff;\n    text-decoration: none;\n    font-weight: 600;\n    transition: color 0.3s ease; /* Smooth transition for color change */\n  }\n  \n  .lost a:hover {\n    text-decoration: underline;\n    color: #ccc; /* Change color on hover for better feedback */\n  }\n  \n  .register:hover {\n    text-decoration: underline;\n    cursor: pointer;\n  }\n\nbutton {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgb(255, 255,255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 1rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgb(255, 255,255, 0.5);\n}\n\n.register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n}\n\n.register p a {\n    text-decoration: none;\n    color: #fff;\n    font-weight: 600;\n}\n\n.register p a:hover {\n    /* font-size: large; */\n    text-decoration: underline;\n}"],"sourceRoot":""}]);
+.mdJKUsO6IVB_KHxsorxg .ZUKc8FFOJWWao8EDdobQ {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  font-size: 1.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+}`, "",{"version":3,"sources":["webpack://./src/components/LoginForm/LoginForm.module.scss"],"names":[],"mappings":"AAAA,gBAAA;AACA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA,oBAAA;AACA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AACF;AAAE;EACE,oCAAA,EAAA,iCAAA;AAEJ;AACE;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AACJ;AAEE;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;AAEI;EAEE,gBAAA;EACA,SAAA;AADN;;AAMA,uBAAA;AACA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAHF;;AAMA;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAHF;AAKE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAHJ;AAME;EACE,cAAA;AAJJ;AAOE;EACE,cAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AALJ;AAOI;EACE,iBAAA;EACA,aAAA;EACA,mBAAA;EACA,eAAA;AALN;AAOM;EACE,iBAAA;EACA,eAAA;AALR;AASI;EACE,iBAAA;EACA,WAAA;EACA,qBAAA;EACA,gBAAA;EACA,2BAAA;AAPN;AASM;EACE,0BAAA;EACA,WAAA;AAPR;AAYE;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAVJ;AAYI;EACE,0BAAA;EACA,eAAA;AAVN;AAcM;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAZR;AAcQ;EACE,0BAAA;AAZV;AAkBE;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAhBJ;AAkBI;EACE,0CAAA;AAhBN;AAoBE;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,kBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAlBJ","sourcesContent":["/* Body styles */\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\nh4 {\n  font-size: 3rem;\n}\n\n/* Inputbox styles */\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n  &:hover {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n\n  label {\n    position: absolute;\n    top: 50%;\n    left: 5px;\n    transform: translateY(-50%);\n    color: #fff;\n    font-size: 2rem;\n    pointer-events: none;\n    transition: all 0.5s ease-in-out;\n  }\n\n  input {\n    width: 100%;\n    height: 60px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n\n    &:focus ~ label,\n    &:valid ~ label {\n      color: lightgray;\n      top: -5px;\n    }\n  }\n}\n\n/* Rest of the styles */\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh;\n  max-width: 700px;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 3rem;\n    color: #fff;\n    text-align: center;\n  }\n\n  .errorSign {\n    display: block;\n  }\n\n  .lost {\n    margin: 35px 0;\n    font-size: 0.85rem;\n    color: #fff;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n\n    label {\n      font-size: 1.5rem;\n      display: flex;\n      align-items: center;\n      cursor: pointer;\n\n      input {\n        margin-right: 5px;\n        cursor: pointer;\n      }\n    }\n\n    a {\n      font-size: 1.5rem;\n      color: #fff;\n      text-decoration: none;\n      font-weight: 600;\n      transition: color 0.3s ease;\n\n      &:hover {\n        text-decoration: underline;\n        color: #ccc;\n      }\n    }\n  }\n\n  .register {\n    font-size: 0.9rem;\n    color: #fff;\n    text-align: center;\n    margin: 25px 0 10px;\n\n    &:hover {\n      text-decoration: underline;\n      cursor: pointer;\n    }\n\n    p {\n      a {\n        text-decoration: none;\n        color: #fff;\n        font-weight: 600;\n\n        &:hover {\n          text-decoration: underline;\n        }\n      }\n    }\n  }\n\n  button {\n    color: black;\n    width: 100%;\n    height: 40px;\n    border-radius: 40px;\n    background-color: rgba(255, 255, 255, 1);\n    border: none;\n    outline: none;\n    cursor: pointer;\n    font-size: 2rem;\n    font-weight: 600;\n    transition: all 0.4s ease;\n\n    &:hover {\n      background-color: rgba(255, 255, 255, 0.5);\n    }\n  }\n\n  .showPasswordIcon {\n    position: absolute;\n    right: 10px;\n    top: 50%;\n    font-size: 1.75rem;\n    transform: translateY(-50%);\n    cursor: pointer;\n    color: #ccc;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
+	"inputbox": `slJPwttFXbjZj3iK5tpD`,
 	"title": `duhWcPoiFKzflZYTW6qA`,
 	"boxc": `mdJKUsO6IVB_KHxsorxg`,
-	"inputbox": `slJPwttFXbjZj3iK5tpD`,
 	"errorSign": `PWpsrepqIxsSicJWBQv9`,
 	"lost": `JAm91a8tmBcEN_9D7mVL`,
-	"register": `YtX40q4kPgyY1kLWHR5i`
+	"register": `YtX40q4kPgyY1kLWHR5i`,
+	"showPasswordIcon": `ZUKc8FFOJWWao8EDdobQ`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1924,8 +1958,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
   align-items: center;
   padding: 2rem 3rem;
 }
-
-h1 {
+.O3kJQXyeVBVPoVbc0TQA h1 {
   font-size: 2rem;
   color: #fff;
   text-align: center;
@@ -1938,6 +1971,9 @@ h1 {
   max-width: 35vh;
   border-bottom: 2px solid #fff;
 }
+.G5WQETTTkTlRpPef5KUY:hover {
+  border-bottom-color: gold !important; /* Change border color on focus */
+}
 
 .G5WQETTTkTlRpPef5KUY label {
   position: absolute;
@@ -1945,7 +1981,7 @@ h1 {
   left: 5px;
   transform: translateY(-50%);
   color: #fff;
-  font-size: 1rem;
+  font-size: 2rem;
   pointer-events: none;
   transition: all 0.5s ease-in-out;
 }
@@ -1970,6 +2006,7 @@ h1 {
 
 .G5WQETTTkTlRpPef5KUY input:focus ~ label,
 .G5WQETTTkTlRpPef5KUY input:valid ~ label {
+  color: lightgray;
   top: -5px;
 }
 
@@ -1979,7 +2016,7 @@ h1 {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 2rem;
   padding: 0 35px 0 5px;
   color: #fff;
 }
@@ -2012,7 +2049,7 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
   transition: all 0.4s ease;
 }
@@ -2022,13 +2059,12 @@ button:hover {
 }
 
 .G5WQETTTkTlRpPef5KUY select {
-  font-size: 2rem;
   width: 100%;
   height: 60px;
   background: transparent;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 2rem;
   padding: 0 5px;
   color: #fff;
 }
@@ -2056,14 +2092,25 @@ option {
 
 .JtQI_Hm4R0_7b5aQ1Jdw p a:hover {
   text-decoration: underline;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAAF;;AAGA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAJ;;AAGE;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAAJ;;AAGE;;EAEE,SAAA;AAAJ;;AAGA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAAF;;AAGA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAAF;;AAGA;EACI,0BAAA;EACA,eAAA;AAAJ;;AAGA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAAF;;AAGA;EACE,0CAAA;AAAF;;AAGA;EACE,eAAA;EACA,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAAF;;AAGA;EACE,eAAA;AAAF;;AAGA;EACE,YAAA;AAAF;;AAGA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAAF;;AAGA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAAF;;AAGA;EACE,0BAAA;AAAF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n}\n\nh1 {\n  font-size: 2rem;\n  color: #fff;\n  text-align: center;\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 1rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  font-size: 2rem;\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n"],"sourceRoot":""}]);
+}
+
+.XEq2Dm2tfurQtGWxCT44 {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  font-size: 1.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AAAF;;AAGA;EACE,WAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;AAAF;;AAGA;EACE,eAAA,EAAA,qBAAA;EACA,gBAAA,EAAA,qBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;AAAF;AAEE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;AAAJ;;AAIA;EACE,kBAAA;EACA,cAAA;EACA,eAAA;EACA,eAAA;EACA,6BAAA;AADF;AAGE;EACE,oCAAA,EAAA,iCAAA;AADJ;;AAMA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,2BAAA;EACA,WAAA;EACA,eAAA;EACA,oBAAA;EACA,gCAAA;AAHF;;AAMA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAHJ;;AAME;EACE,iBAAA;EACA,yBAAA,EAAA,iCAAA;EACA,kBAAA;EACA,WAAA,EAAA,2BAAA;AAHJ;;AAME;;EAEE,gBAAA;EACA,SAAA;AAHJ;;AAMA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,qBAAA;EACA,WAAA;AAHF;;AAMA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAHF;;AAMA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAHF;;AAMA;EACI,0BAAA;EACA,eAAA;AAHJ;;AAMA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,oCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;EACA,yBAAA;AAHF;;AAMA;EACE,0CAAA;AAHF;;AAMA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,cAAA;EACA,WAAA;AAHF;;AAMA;EACE,eAAA;AAHF;;AAMA;EACE,YAAA;AAHF;;AAMA;EACE,iBAAA;EACA,WAAA;EACA,kBAAA;EACA,mBAAA;AAHF;;AAMA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAHF;;AAMA;EACE,0BAAA;AAHF;;AAMA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,kBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAHF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #D8F3DC, #081C15);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.title {\n  width: 100%;\n  text-align: center;\n  color: #fff;\n  padding: 10px;\n}\n\n.boxc {\n  min-width: 25vh; /* Adjust as needed */\n  max-width: 700px; /* Adjust as needed */\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n\n  h1 {\n    font-size: 2rem;\n    color: #fff;\n    text-align: center;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  min-width: 27vh;\n  max-width: 35vh;\n  border-bottom: 2px solid #fff;\n\n  &:hover {\n    border-bottom-color: gold !important; /* Change border color on focus */\n  }\n\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  left: 5px;\n  transform: translateY(-50%);\n  color: #fff;\n  font-size: 2rem;\n  pointer-events: none;\n  transition: all 0.5s ease-in-out;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 2rem;\n    padding: 0 35px 0 5px;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.5rem;\n    background-color: #081C15; /* Background color for options */\n    border-radius: 2px;\n    color: #fff; /* Text color for options */\n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 2rem;\n  padding: 0 35px 0 5px;\n  color: #fff;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: black;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgba(255, 255, 255, 1);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 2rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 2rem;\n  padding: 0 5px;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 0.9rem;\n  color: #fff;\n  text-align: center;\n  margin: 25px 0 10px;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.75rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"title": `G2ijX8bHTJbg8fG7Xvdl`,
 	"boxc": `O3kJQXyeVBVPoVbc0TQA`,
 	"inputbox": `G5WQETTTkTlRpPef5KUY`,
 	"login": `emIz9U5VSVFVmZPhEvKw`,
-	"register": `JtQI_Hm4R0_7b5aQ1Jdw`
+	"register": `JtQI_Hm4R0_7b5aQ1Jdw`,
+	"showPasswordIcon": `XEq2Dm2tfurQtGWxCT44`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2090,27 +2137,27 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap);"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `:root {
-  --heading-color: rgb(78, 91, 49);
-  --bg-color: rgb(244, 246, 240);
-  --btn-color: rgb(78, 91, 49);
-  --btn-animation: rgba(219, 171, 171, 0.3);
-  --input-color: rgb(87, 8, 8);
-  --nav-border: rgba(219, 171, 171, 0.3);
-  --text-red: rgb(237, 100, 100);
-  --text-green: rgb(51, 86, 51);
+  /* --heading-color: rgb(78, 91, 49);
+   --bg-color: rgb(244, 246, 240);
+   --btn-color: rgb(78, 91, 49);
+   --btn-animation: rgba(219, 171, 171, 0.3);
+   --input-color: rgb(87, 8, 8);
+   --nav-border: rgba(219, 171, 171, 0.3);
+   --text-red: rgb(237, 100, 100);
+   --text-green: rgb(51, 86, 51); */
 }
 
 * {
+  font-size: 10px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 10px;
   font-family: "Nunito", Verdana, Tahoma, sans-serif;
 }
 
 body {
   background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,4BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AAAJ;;AAGA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,eAAA;EACA,kDAAA;AAAJ;;AAGA;EACI,iCAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-color: rgb(78, 91, 49);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-size: 10px;\n    font-family: 'Nunito', Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACG;;;;;;;mCAAA;AAOH;;AAGA;EACI,eAAA;EACA,sBAAA;EACA,SAAA;EACA,UAAA;EACA,kDAAA;AAAJ;;AAGA;EACI,iCAAA;AAAJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n\n:root {\n   /* --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-color: rgb(78, 91, 49);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51); */\n}\n\n* {\n    font-size: 10px;\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: 'Nunito', Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -3062,4 +3109,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.01e4896a4cee4c467c87d6e52d698529.js.map
+//# sourceMappingURL=App.42b82693b9fd664d2a8386bb161b2e8d.js.map
