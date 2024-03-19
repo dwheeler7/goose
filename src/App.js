@@ -186,7 +186,8 @@ export default function App(){
         } catch (error) {
           console.error('There was an error!', error)
         }
-      }
+    }
+    
 
     useEffect(() => {
         const fetchUserData = async () => {
