@@ -51,13 +51,34 @@ export function logOut() {
   localStorage.removeItem('token');
 }
 
+// Password reset functions
 export async function resetPassword(emailData) {
   try {
-    // Call the resetPassword function from usersAPI
     await usersAPI.resetPassword(emailData);
-    return true; // Password reset successful
+    return true;
   } catch (error) {
     console.error("Password Reset Error:", error);
-    throw error;
+    throw new Error("Failed to reset password. Please try again later.");
+  }
+}
+
+export async function updatePasswordWithToken(token, passwordData) {
+  try {
+    const response = await fetch(`/api/users/reset-password/${token}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(passwordData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update password');
+    }
+
+    return true; // Password update successful
+  } catch (error) {
+    console.error('Password Update Error:', error);
+    throw new Error('Failed to update password. Please try again later.');
   }
 }

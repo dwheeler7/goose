@@ -13,3 +13,11 @@ export function login(credentials) {
 export function resetPassword(emailData) {
   return sendRequest(`${BASE_URL}/reset-password`, 'POST', emailData);
 }
+
+
+// export function updatePasswordWithToken(token, newPassword) {
+//   const url = `${BASE_URL}/reset-password/${token}`;
+//   const passwordData = { newPassword }; 
+
+//   return sendRequest(url, 'PUT', passwordData);
+// }

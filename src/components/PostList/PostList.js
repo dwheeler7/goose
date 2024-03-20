@@ -22,6 +22,7 @@ export default function PostList({ posts }) {
                     image={postData.image} 
                 />
             ))}
+            {posts.map(postData => <Post key={postData._id} {...postData} />)}
         </div>
     );
 }
