@@ -1,20 +1,20 @@
 import React from 'react';
-import styles from './PostList.module.scss';
-import Post from '../Post/Post';
+import styles from './ProfilePostList.module.scss';
+import ProfilePost from '../ProfilePost/ProfilePost';
 
 const EmptyState = () => (
     <div className={styles.emptyState}>No posts available.</div>
 );
 
-export default function PostList({ posts }) {
-    if (posts.length === 0) {
+export default function ProfilePostList({ user }) {
+    if (!user || !user.posts || user.posts.length === 0) {
         return <EmptyState />;
     }
 
     return (
         <div className={styles.postList}>
-            {posts.map(postData => (
-                <Post 
+            {user.posts.map(postData => (
+                <ProfilePost 
                     key={postData._id} 
                     projectTitle={postData.projectTitle} 
                     projectDescription={postData.projectDescription} 
