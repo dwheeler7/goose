@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router()
 const postCtrl = require('../../controllers/api/posts')
 const notificationsCtrl = require('../../controllers/api/notifications')
+const checkToken = require('../../config/checkToken')
 
 // create
-router.post('/', postCtrl.create, postCtrl.jsonPost)
+router.post('/', checkToken, postCtrl.create, postCtrl.jsonPost)
 
 // index
 router.get('/', postCtrl.index)

@@ -13,7 +13,7 @@ function PostList({ posts }) {
 
     return (
         <div className={styles.postList}>
-            {posts.map(postData => <Post key={postData.id} {...postData} />)}
+            {posts.map(postData => <Post key={postData._id} {...postData} />)}
         </div>
     );
 }

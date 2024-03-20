@@ -9,20 +9,37 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     email: '',
     password: '',
     userType: '', // Added userType field
+    picture: '', // Added picture field
   });
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to track password visibility
   const navigate = useNavigate(); // Corrected
 
   const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
     setError('');
+  }
+
+  const handlePictureChange = (evt) => {
+    const file = evt.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setFormData({ ...formData, picture: reader.result });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   }
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const user = await signUp(formData);
+      // Omit userType from formData when calling signUp function
+      const { userType, ...userData } = formData;
+      const user = await signUp(userData);
       setUser(user);
       navigate(`/profile/${user._id}`); // Corrected
     } catch {
@@ -34,8 +51,8 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     setShowPassword(!showPassword);
   }
 
-  const { name, email, password, userType } = formData;
-  const disable = !name || !email || !password || !userType; // Adjusted to include userType
+  const { name, email, password, userType, picture } = formData;
+  const disable = !name || !email || !password || !userType;
 
   return (
     <div className={styles.body}>
@@ -70,6 +87,13 @@ export default function SignUpForm({ setUser, setShowLogin }) {
               <option value="employer">Employer</option>
             </select>
           </div>
+          <div className={styles.inputbox}>
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handlePictureChange} 
+            />
+          </div>
           <button type="submit" disabled={disable}>Sign Up</button>
           <div className={styles.login}>
             <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Log In</p>
@@ -77,6 +101,7 @@ export default function SignUpForm({ setUser, setShowLogin }) {
         </form>
       </div>
       {error && <p className={styles.errorMessage}>{error}</p>}
+      {picture && <img src={picture} alt="User" className={styles.previewImage} />}
     </div>
   );
 }

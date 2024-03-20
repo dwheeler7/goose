@@ -4,9 +4,11 @@ import PostList from '../../components/PostList/PostList';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [projectTitle, setProjectTitle] = useState('');
+    const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     const fetchPosts = async () => {
         try {
@@ -27,6 +29,7 @@ export default function HomePage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(postData),
         });
@@ -35,17 +38,25 @@ export default function HomePage() {
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { title, description, gitHubLink };
+        const postData = { projectTitle, projectDescription, gitHubLink };
         
         try {
             const newPost = await createPost(postData);
             setPosts(currentPosts => [newPost, ...currentPosts]);
-            setTitle('');
-            setDescription('');
+            setProjectTitle('');
+            setProjectDescription('');
             setGitHubLink('');
         } catch (error) {
             console.error('Error creating post:', error);
         }
+    };
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        // Implement your search logic here
+        // For example, you can filter the posts array based on the query
+        const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+        setSearchResults(filteredPosts);
     };
 
     return (
@@ -54,13 +65,13 @@ export default function HomePage() {
             <form onSubmit={handleCreatePost}>
                 <input
                     type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
                     placeholder="Title"
                 />
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={projectDescription}
+                    onChange={(e) => setProjectDescription(e.target.value)}
                     placeholder="Description"
                 />
                 <input
@@ -71,6 +82,19 @@ export default function HomePage() {
                 />
                 <button type="submit">Post</button>
             </form>
+            <div>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    placeholder="Search for users"
+                />
+                <ul>
+                    {searchResults.map(post => (
+                        <li key={post.id}>{post.title}</li>
+                    ))}
+                </ul>
+            </div>
             <PostList posts={posts} />
         </div>
     );
