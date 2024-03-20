@@ -2,8 +2,10 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
     let token = req.get('Authorization')
-    if(token){
+    // console.log(token)
+    if(token){        
         token = token.split(' ')[1]
+        // console.log(token)
         jwt.verify(token, process.env.SECRET, (err, decoded) => {
             req.user = err ? null : decoded.user
             req.exp = err ? null : new Date(decoded.exp * 1000)

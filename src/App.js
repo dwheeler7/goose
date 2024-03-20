@@ -3,6 +3,7 @@ import NavBar from './components/NavBar/NavBar'
 import AuthPage from './pages/AuthPage/AuthPage'
 import HomePage from './pages/HomePage/HomePage'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Route, Routes } from 'react-router-dom'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
@@ -14,6 +15,7 @@ export default function App(){
     // Default state for user is null
     // Default state for token is an empty string
     const [user, setUser] = useState(null)
+    const [post, setPost] = useState(null)
     const [token, setToken] = useState('')
 
     // Create a signUp fn that connects to the backend
@@ -91,6 +93,8 @@ export default function App(){
                 body: JSON.stringify(postData)
             })
             const data = await response.json()
+            localStorage.setItem('post', JSON.stringify(postData))
+            setPost(postData)
             return data
         } catch (error) {
             console.error(error)
@@ -168,29 +172,34 @@ export default function App(){
     }
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                // Fetch user data from your backend
-                const response = await fetch('/api/user-data', {
-                    headers: {
-                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+        if (token) {                    
+            const fetchUserData = async () => {
+                console.log('fetching user data')
+                try {
+                    // Fetch user data from your backend
+                    const response = await fetch('/api/user-data', {
+                        headers: {
+                            Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+                        }
+                    });
+        
+                    if (response.ok) {
+                        const userData = await response.json();
+                        setUser(userData); // Update the user state with the fetched data
+                    } else {
+                        // Handle error
+                        throw new Error('response failed')
                     }
-                });
-    
-                if (response.ok) {
-                    const userData = await response.json();
-                    setUser(userData); // Update the user state with the fetched data
-                } else {
-                    // Handle error
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-    
-        // Call the fetchUserData function when the component mounts
-        fetchUserData();
-    }, [token]);
+            };    
+            // Call the fetchUserData function when the component mounts
+            fetchUserData();
+        }
+    }, [token])
+
+   
 
     return (
         <>
@@ -215,6 +224,8 @@ export default function App(){
                         setToken={setToken}
                         setUser={setUser}
                         createPost={createPost}
+                        setPost={setPost}
+                        post={post}
                         getAllPosts={getAllPosts}
                     />}></Route>
 
@@ -235,6 +246,16 @@ export default function App(){
                      setToken={setToken}
                      signUp={signUp}
                      login={login} />}></Route>
+                   <Route
+                        path="/reset-password/:token"
+                        element={  // Pass user, token, and setUser props down to ResetPassword
+                            <ResetPassword 
+                            user={user} 
+                            token={token} 
+                            setUser={setUser} 
+                        />
+                        }
+                     />
                     {/* What is needed on this page:
                         Be able to GET an individual post
                         Be able to UPDATE post

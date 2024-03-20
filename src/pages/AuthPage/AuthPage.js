@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
-export default function AuthPage({ setUser }) {
+export default function AuthPage({ setUser, user, setToken, token }) {
   const [showLogin, setShowLogin] = useState(true);
   const navigate = useNavigate(); // Initialize the useNavigate hook
 

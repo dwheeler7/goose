@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../utilities/users-service';
 import styles from './SignUpForm.module.scss';
 
-export default function SignUpForm({ setUser, setShowLogin }) {
+export default function SignUpForm({ setUser, setShowLogin, setToken, token, user }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -28,8 +28,8 @@ body {
 }
 
 .boxc {
-  min-width: 25vh; /* Adjust as needed */
-  max-width: 700px; /* Adjust as needed */
+  min-width: 25vh; 
+  max-width: 560px; 
   position: relative;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
@@ -37,6 +37,8 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem 3rem;
+  margin: auto;
+  user-select: none;
 
   h1 {
     font-size: 3rem; /* Match the font size here */
