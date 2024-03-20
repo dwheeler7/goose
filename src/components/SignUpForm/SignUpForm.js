@@ -8,7 +8,7 @@ export default function SignUpForm({ setUser, setShowLogin }) {
     name: '',
     email: '',
     password: '',
-    userType: '', // Added userType field
+    userType: '', 
   });
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to track password visibility
