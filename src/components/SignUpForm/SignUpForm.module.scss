@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
+@keyframes shine {
+  0%, 100% {
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+
 body {
   display: flex;
   align-items: center;
@@ -24,9 +43,11 @@ body {
   margin-top: 10rem;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden; 
+  animation: shine 5s infinite linear;
 
   h1 {
-    font-size: 3rem; /* Match the font size here */
+    font-size: 3rem; 
     color: #fff;
     text-align: center;
     padding-top: .64rem;
@@ -44,7 +65,7 @@ body {
   border-bottom: 2px solid #fff;
   
   &:focus-within {
-    border-bottom-color: gold !important; /* Change border color on focus */
+    border-bottom-color: gold !important; 
   }
 }
 
@@ -53,7 +74,7 @@ body {
   top: 50%;
   transform: translateY(-40%);
   color: #fff;
-  font-size: 1.25rem; /* Match the font size here */
+  font-size: 1.25rem; 
   pointer-events: none;
   transition: all 0.3s ease-in-out;
   user-select: none;
@@ -71,9 +92,9 @@ body {
   
   .inputbox select option {
     font-size: 1.25rem;
-    background-color: #081C15; /* Background color for options */
+    background-color: #081C15; 
     border-radius: 2px;
-    color: #fff; /* Text color for options */
+    color: #fff; 
   }
 
   .inputbox input:focus ~ label,
@@ -88,7 +109,7 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 1.25rem; /* Match the font size here */
+  font-size: 1.25rem;
   color: #fff;
   font-weight: bolder;
   padding: 0;
