@@ -71,13 +71,11 @@ export default function LoginForm({ setUser, setShowLogin }) {
 
   return (
     <div className={styles.LoginForm}>
-      <div className={styles.title}>
-        <h1>DevHive</h1>
-        <h4>A Group Project</h4>
-      </div>
       <div className={styles.boxc}>
         <form autoComplete="off" onSubmit={handleSubmit}>
-          <h1>Login</h1>
+          <div className={styles.title}>
+            <h1>DevHive</h1>
+          </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
             <input type="text" name="email" value={credentials.email} onChange={handleChange} required />
             <label>Email</label>
