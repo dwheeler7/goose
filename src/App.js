@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
-import { Route, Routes } from 'react-router-dom'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
 
 import styles from './App.module.scss';
@@ -349,7 +348,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             post={post}
                             getAllPosts={getAllPosts}
                         />
-                    }></Route>
+                    } />
 
                     <Route path='/auth' element={
                         <AuthPage
@@ -358,12 +357,12 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             signUp={signUp}
                             login={login}
                         />
-                    }></Route>
+                    }/>
                     <Route path="/auth/forgot-password" element={<ForgotPassword 
                      setUser={setUser}
                      setToken={setToken}
                      signUp={signUp}
-                     login={login} />}></Route>
+                     login={login} />} />
                    <Route
                         path="/reset-password/:token"
                         element={  // Pass user, token, and setUser props down to ResetPassword
@@ -373,7 +372,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             setUser={setUser} 
                         />
                         }
-                     /></Route>
+                     />
                     <Route path='/profile/:id' element={
                         <ProfilePage
                             user={user}
@@ -384,7 +383,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             deletePost={deletePost}
                             updatePost={updatePost}
                         />
-                    }></Route>
+                    } />
                 </Routes>
             </div>
         </>
