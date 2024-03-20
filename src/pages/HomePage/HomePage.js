@@ -4,14 +4,18 @@ import PostList from '../../components/PostList/PostList';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [projectTitle, setProjectTitle] = useState('');
+    const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
+    const [image, setImage] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost:3000/posts');
+            const response = await fetch('/api/posts');
             const data = await response.json();
+            console.log('Post Data:', data);
             setPosts(data);
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -23,29 +27,49 @@ export default function HomePage() {
     }, []);
 
     const createPost = async (postData) => {
-        const response = await fetch('http://localhost:3000/api/posts', {
+        const response = await fetch('/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(postData),
         });
         return response.json();
     };
 
+    const getAllPosts = async () => {
+        try {
+            const response = await fetch('/api/posts')
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error(error)            
+        }
+    }
+
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { title, description, gitHubLink };
+        const postData = { projectTitle, projectDescription, gitHubLink, image };
         
         try {
             const newPost = await createPost(postData);
             setPosts(currentPosts => [newPost, ...currentPosts]);
-            setTitle('');
-            setDescription('');
+            setProjectTitle('');
+            setProjectDescription('');
             setGitHubLink('');
+            setImage('');
         } catch (error) {
             console.error('Error creating post:', error);
         }
+    };
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        // Implement your search logic here
+        // For example, you can filter the posts array based on the query
+        const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+        setSearchResults(filteredPosts);
     };
 
     return (
@@ -54,13 +78,13 @@ export default function HomePage() {
             <form onSubmit={handleCreatePost}>
                 <input
                     type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
                     placeholder="Title"
                 />
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={projectDescription}
+                    onChange={(e) => setProjectDescription(e.target.value)}
                     placeholder="Description"
                 />
                 <input
@@ -69,8 +93,31 @@ export default function HomePage() {
                     onChange={(e) => setGitHubLink(e.target.value)}
                     placeholder="GitHub Link"
                 />
+                <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="Image URL"
+                />
                 <button type="submit">Post</button>
             </form>
+            <PostList 
+                getAllPosts={getAllPosts}
+                posts={posts} 
+            />
+            <div>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    placeholder="Search for users"
+                />
+                <ul>
+                    {searchResults.map(post => (
+                        <li key={post.id}>{post.title}</li>
+                    ))}
+                </ul>
+            </div>
             <PostList posts={posts} />
         </div>
     );

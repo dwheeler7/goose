@@ -9,12 +9,15 @@ const PostImage = ({ src, alt }) => (
     src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
 );
 
-const Post = ({ title, description, gitHubLink, image }) => (
+const Post = ({ projectTitle, projectDescription, gitHubLink, image }) => (
     <div className={styles.post}>
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <h3>{projectTitle}</h3>
+        <p>{projectDescription}</p>
         <GitHubLink url={gitHubLink} />
-        <PostImage src={image} alt={title} />
+        <PostImage src={image} alt={image} />
+        {
+            Post.image ? <img src={image}/> : ''
+        }
     </div>
 );
  

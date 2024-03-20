@@ -4,7 +4,9 @@ import NavBar from './components/NavBar/NavBar';
 import AuthPage from './pages/AuthPage/AuthPage';
 import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
+import ResetPassword from './components/ResetPassword/ResetPassword'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
+// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
 
 import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
@@ -76,23 +78,39 @@ export default function App() {
             return
         }
         try {
+            // Ensure required fields are present
+            if (!postData.content || !postData.projectTitle) {
+                throw new Error('Content and project title are required'); // Throw error if required fields are missing
+            }
+    
+            // If githubLink is provided, ensure required fields for GitHub integration are present
+            if (postData.githubLink) {
+                if (typeof postData.useReadmeAsDescription !== 'boolean') {
+                    throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
+                }
+                // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
+                if (postData.useReadmeAsDescription && postData.projectDescription) {
+                    throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
+                }
+            }
+    
             const response = await fetch('/api/posts', {
                 method: 'POST',
                 headers: {
-                    // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
-                    // Tell it that we're sending JSON data
                     'Content-Type': 'application/json',
-                    // Tell it that we have a user token
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(postData)
-            })
-            const data = await response.json()
-            localStorage.setItem('post', JSON.stringify(postData))
-            setPost(postData)
-            return data
+            });
+    
+            const data = await response.json();
+            localStorage.setItem('post', JSON.stringify(postData));
+            // Assuming setPost is a function to update the UI with the new post data
+            setPost(postData);
+            return data;
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            // Handle error as needed
         }
     }
 
@@ -117,6 +135,24 @@ export default function App() {
             console.error(error)
         }
     }
+
+    useEffect(() => {
+        fetchPosts()
+      }, [])
+      
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch('/api/posts', {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          const data = await response.json()
+          setPost(data.posts)
+        } catch (error) {
+          console.error('There was an error!', error)
+        }
+      };
 
     // UpdatePost
     const updatePost = async (newPostData, id, token) => {
@@ -194,8 +230,98 @@ export default function App() {
         }
     }, [token])
 
-   
 //added global functionality to not display nav bar on whichever page youd like
+
+    // Like a post
+const likePost = async (postId, token) => {
+    try {
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch(`/api/posts/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Unlike a post
+const unlikePost = async (postId, token) => {
+    try {
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch(`/api/posts/${postId}/unlike`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+   // Follow a developer
+const followDeveloper = async (userId, developerId, token) => {
+    try {
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch('/api/follow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ userId, developerId })
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Unfollow a developer
+const unfollowDeveloper = async (userId, developerId, token) => {
+    try {
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch('/api/unfollow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ userId, developerId })
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
     return (
         <>
             <div className={styles.App}>
@@ -204,9 +330,12 @@ export default function App() {
                         token={token}
                         setUser={setUser}
                         user={user} // Pass the user prop to NavBar
-                        setToken={setToken}
-                    />
-                )}
+                        setToken={setToken}                        
+                        getIndividualPost={getIndividualPost}
+                        deletePost={deletePost}
+                        updatePost={updatePost}
+                        post={post}
+                    />)}                
                 <Routes>
                     <Route path='/' element={
                         <HomePage
@@ -219,7 +348,7 @@ export default function App() {
                             post={post}
                             getAllPosts={getAllPosts}
                         />
-                    }></Route>
+                    } />
 
                     <Route path='/auth' element={
                         <AuthPage
@@ -228,26 +357,33 @@ export default function App() {
                             signUp={signUp}
                             login={login}
                         />
-                    }></Route>
-                    <Route path="/auth/forgot-password" element={
-                        <ForgotPassword
-                            setUser={setUser}
-                            setToken={setToken}
-                            signUp={signUp}
-                            login={login}
+                    }/>
+                    <Route path="/auth/forgot-password" element={<ForgotPassword 
+                     setUser={setUser}
+                     setToken={setToken}
+                     signUp={signUp}
+                     login={login} />} />
+                   <Route
+                        path="/reset-password/:token"
+                        element={  // Pass user, token, and setUser props down to ResetPassword
+                            <ResetPassword 
+                            user={user} 
+                            token={token} 
+                            setUser={setUser} 
                         />
-                    }></Route>
-                    <Route path='/profile/:id' element={
-                        <ProfilePage
-                            user={user}
-                            token={token}
-                            setToken={setToken}
-                            setUser={setUser}
-                            getIndividualPost={getIndividualPost}
-                            deletePost={deletePost}
-                            updatePost={updatePost}
-                        />
-                    }></Route>
+                        }
+                     />
+                    <Route path='/profile/:userId' 
+                    element={<ProfilePage 
+                        user={user} 
+                        token={token} 
+                        setToken={setToken}
+                        setUser={setUser}
+                        getIndividualPost={getIndividualPost}
+                        deletePost={deletePost}
+                        updatePost={updatePost}
+                        post={post}
+                    />} />
                 </Routes>
             </div>
         </>

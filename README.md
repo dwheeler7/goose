@@ -116,6 +116,44 @@ Authenticate an existing user.
   - Status Code: `200 OK`
   - Body: JSON object containing the authenticated user and authentication token (same format as the "Create User" response)
 
+
+
+
+## Nodemailer must be installed
+1. #### npm i nodemailer
+2. #### in your own .env file replace GMAIL=(GMAIL LOGIN GOES HERE)
+3. #### Create a gmail app pass in security settings to then replace GMAILPASS=(APP PASS KEY IN HERE) in .env.
+##
+### User Password Reset  
+Authenticate an existing user.
+   **Request**
+  - Method: `POST`
+  - Endpoint: `/api/users/reset-password`
+  - Headers: None
+  - Body:
+    - `email` (required): Email address of the user
+    - `temporaryPassword` (Created and sent in the email)
+    - `temporaryToken` (Created and sent to email expires in 30 minutes)
+
+- **Response**
+  - A email sent using the npm package nodemailer
+  - Status Code: `200 OK`
+  - Body: JSON object containing Password reset successful. Check your email for the temporary password and token
+
+### User Password Reset  
+   **Request**
+  - Method: `PUT`
+  - Endpoint: `/api/users/reset-password/:token`
+  - Headers: None
+  - Body:
+    - `newPassword`: (required): new password using the JWT token created sent to the email.
+    - `token`: (required): The Link sent to the email will have the token, and the page will know to grab it to fill the value.
+
+- **Response**
+  - A email sent using the npm package nodemailer
+  - Status Code: `200 OK`
+  - Body: JSON object containing Password updated successfully.
+
 ### Get User Profile
 
 Retrieve user profile information by ID.
