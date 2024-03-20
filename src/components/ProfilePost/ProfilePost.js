@@ -1,5 +1,11 @@
-export default function ProfilePost(){
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+export default function ProfilePost(props) {
+    const { userId } = useParams();
+
     return (
-        <h1>ProfilePost</h1>
-    )
+        props.user === userId ?
+        <h1>{props.projectTitle}</h1> : null
+    );
 }

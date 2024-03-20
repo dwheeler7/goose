@@ -373,17 +373,17 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         />
                         }
                      />
-                    <Route path='/profile/:id' element={
-                        <ProfilePage
-                            user={user}
-                            token={token}
-                            setToken={setToken}
-                            setUser={setUser}
-                            getIndividualPost={getIndividualPost}
-                            deletePost={deletePost}
-                            updatePost={updatePost}
-                        />
-                    } />
+                    <Route path='/profile/:userId' 
+                    element={<ProfilePage 
+                        user={user} 
+                        token={token} 
+                        setToken={setToken}
+                        setUser={setUser}
+                        getIndividualPost={getIndividualPost}
+                        deletePost={deletePost}
+                        updatePost={updatePost}
+                        post={post}
+                    />} />
                 </Routes>
             </div>
         </>

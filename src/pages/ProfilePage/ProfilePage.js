@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import styles from './ProfilePage.module.scss'
+import { useParams } from 'react-router-dom';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
-import { getUser } from '../../utilities/users-service';
-import styles from './ProfilePage.module.scss';
 import FollowList from '../../components/FollowList/FollowList';
 import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
+import { getUser } from '../../utilities/users-service';
 
-// Function to ensure the link starts with 'https://'
 const ensureHttps = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     return 'https://' + url;
@@ -17,21 +16,25 @@ const ensureHttps = (url) => {
 export default function ProfilePage() {
     const { id } = useParams();
     const [user, setUser] = useState(null);
-
-    const fetchPosts = async () => {
-        try {
-            const response = await fetch('/api/posts');
-            const data = await response.json();
-            console.log('Post Data:', data);
-            setPosts(data);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        }
-    };
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetchPosts();
-    }, []);
+        async function fetchData() {
+            try {
+                // Fetch user data using getUser function
+                const fetchedUser = await getUser(id);
+                setUser(fetchedUser);
+
+                // Fetch all posts
+                const fetchedPosts = await getAllPosts();
+                setPosts(fetchedPosts);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData(); // Call fetchData function
+    }, [id]); // Add id to dependency array to re-fetch data when id changes
 
     const getAllPosts = async () => {
         try {
@@ -78,16 +81,13 @@ export default function ProfilePage() {
                         {!user || !user.bio && (
                             <p className={styles.userBio}>No Bio at this time.</p>
                         )}
-                        {user && user.posts && (
-                            <p className={styles.userBio}>{user.posts}</p>
-                        )}
                     </div>
                     <FollowList 
                         user={user}
                     />
                 </div>
                 <ProfilePostList 
-                    getAllPosts={getAllPosts}
+                    posts={posts}
                 />
             </div>
         </>
