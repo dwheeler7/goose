@@ -154,7 +154,7 @@ function App() {
         }
       });
       const data = await response.json();
-      setPosts(data.posts);
+      setPost(data.posts);
     } catch (error) {
       console.error('There was an error!', error);
     }
@@ -1048,8 +1048,8 @@ function ForgotPasswordPage(_ref) {
 
 function HomePage() {
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [title, setTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [description, setDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [projectTitle, setProjectTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const fetchPosts = async () => {
     try {
@@ -1067,7 +1067,8 @@ function HomePage() {
     const response = await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer ".concat(localStorage.getItem('token'))
       },
       body: JSON.stringify(postData)
     });
@@ -1076,15 +1077,15 @@ function HomePage() {
   const handleCreatePost = async event => {
     event.preventDefault();
     const postData = {
-      title,
-      description,
+      projectTitle,
+      projectDescription,
       gitHubLink
     };
     try {
       const newPost = await createPost(postData);
       setPosts(currentPosts => [newPost, ...currentPosts]);
-      setTitle('');
-      setDescription('');
+      setProjectTitle('');
+      setProjectDescription('');
       setGitHubLink('');
     } catch (error) {
       console.error('Error creating post:', error);
@@ -1096,12 +1097,12 @@ function HomePage() {
     onSubmit: handleCreatePost
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    value: title,
-    onChange: e => setTitle(e.target.value),
+    value: projectTitle,
+    onChange: e => setProjectTitle(e.target.value),
     placeholder: "Title"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    value: description,
-    onChange: e => setDescription(e.target.value),
+    value: projectDescription,
+    onChange: e => setProjectDescription(e.target.value),
     placeholder: "Description"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
@@ -3551,4 +3552,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.a70d0129ba207b08b13160b03ab2b699.js.map
+//# sourceMappingURL=App.3a59119d4e795c4f10dcc9b0a2ec017f.js.map

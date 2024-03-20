@@ -4,8 +4,8 @@ import PostList from '../../components/PostList/PostList';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [projectTitle, setProjectTitle] = useState('');
+    const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
 
     const fetchPosts = async () => {
@@ -27,6 +27,7 @@ export default function HomePage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(postData),
         });
@@ -35,13 +36,13 @@ export default function HomePage() {
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { title, description, gitHubLink };
+        const postData = { projectTitle, projectDescription, gitHubLink };
         
         try {
             const newPost = await createPost(postData);
             setPosts(currentPosts => [newPost, ...currentPosts]);
-            setTitle('');
-            setDescription('');
+            setProjectTitle('');
+            setProjectDescription('');
             setGitHubLink('');
         } catch (error) {
             console.error('Error creating post:', error);
@@ -54,13 +55,13 @@ export default function HomePage() {
             <form onSubmit={handleCreatePost}>
                 <input
                     type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
                     placeholder="Title"
                 />
                 <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={projectDescription}
+                    onChange={(e) => setProjectDescription(e.target.value)}
                     placeholder="Description"
                 />
                 <input

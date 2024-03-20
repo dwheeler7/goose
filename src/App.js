@@ -134,7 +134,7 @@ export default function App(){
             }
           });
           const data = await response.json()
-          setPosts(data.posts)
+          setPost(data.posts)
         } catch (error) {
           console.error('There was an error!', error)
         }
