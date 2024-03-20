@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './PostList.module.scss';
-import Post from '../Post/Post';
+import styles from './ProfilePostList.module.scss';
+import Post from '../ProfilePost/ProfilePost';
 
 const EmptyState = () => (
     <div className={styles.emptyState}>No posts available.</div>
@@ -22,7 +22,6 @@ export default function PostList({ posts }) {
                     image={postData.image} 
                 />
             ))}
-            {posts.map(postData => <Post key={postData._id} {...postData} />)}
         </div>
     );
 }

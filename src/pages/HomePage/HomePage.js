@@ -7,13 +7,15 @@ export default function HomePage() {
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
+    const [image, setImage] = useState('')
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost:3000/posts');
+            const response = await fetch('/api/posts');
             const data = await response.json();
+            console.log('Post Data:', data);
             setPosts(data);
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -25,7 +27,7 @@ export default function HomePage() {
     }, []);
 
     const createPost = async (postData) => {
-        const response = await fetch('http://localhost:3000/api/posts', {
+        const response = await fetch('/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,9 +38,19 @@ export default function HomePage() {
         return response.json();
     };
 
+    const getAllPosts = async () => {
+        try {
+            const response = await fetch('/api/posts')
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error(error)            
+        }
+    }
+
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { projectTitle, projectDescription, gitHubLink };
+        const postData = { projectTitle, projectDescription, gitHubLink, image };
         
         try {
             const newPost = await createPost(postData);
@@ -46,6 +58,7 @@ export default function HomePage() {
             setProjectTitle('');
             setProjectDescription('');
             setGitHubLink('');
+            setImage('');
         } catch (error) {
             console.error('Error creating post:', error);
         }
@@ -80,8 +93,18 @@ export default function HomePage() {
                     onChange={(e) => setGitHubLink(e.target.value)}
                     placeholder="GitHub Link"
                 />
+                <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="Image URL"
+                />
                 <button type="submit">Post</button>
             </form>
+            <PostList 
+                getAllPosts={getAllPosts}
+                posts={posts} 
+            />
             <div>
                 <input
                     type="text"
