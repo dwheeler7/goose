@@ -36,7 +36,7 @@ async function create(req, res, next) {
             const [_, owner, repo] = githubLink.split('/');
              // Fetch README content from GitHub repository
             const readmeContent = await fetchReadmeContent(owner, repo);
-            req.body.projectDescription = readmeContent; // Update projectDescription with README content
+            req.body.description = readmeContent; // Update projectDescription with README content
 }
 
 

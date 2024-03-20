@@ -332,6 +332,12 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         setUser={setUser}
                         user={user} // Pass the user prop to NavBar
                         setToken={setToken}
+                        setUser={setUser}
+                        getIndividualPost={getIndividualPost}
+                        deletePost={deletePost}
+                        updatePost={updatePost}
+                        post={post}
+                    />}></Route>
                     />
                 )}
                 <Routes>
