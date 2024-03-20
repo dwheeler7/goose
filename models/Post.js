@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     githubLink: { type: String },
-    content: { type: String, required: true },
+    content: { type: String },
     projectTitle: { type: String, required: true },
     projectDescription: { type: String },
     image: { type: String },

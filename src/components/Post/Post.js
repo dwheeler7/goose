@@ -1,13 +1,24 @@
-import styles from './Post.module.scss'
-import React from 'react'
+import React from 'react';
+import styles from './Post.module.scss';
 
-export default function Post({ postData }) {
-    return (
-        <div className={styles.post}>
-            <h2>{postData.title}</h2>
-            <p>{postData.description}</p>
-            <a href={postData.gitHubLink}>GitHub Link</a>
-            {postData.image && <img src={URL.createObjectURL(postData.image)} alt="Post" />}
-        </div>
-    );
-}
+const GitHubLink = ({ url }) => (
+    url ? <a href={url} target="_blank" rel="noopener noreferrer">GitHub Link</a> : null
+);
+
+const PostImage = ({ src, alt }) => (
+    src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
+);
+
+const Post = ({ projectTitle, projectDescription, gitHubLink, image }) => (
+    <div className={styles.post}>
+        <h3>{projectTitle}</h3>
+        <p>{projectDescription}</p>
+        <GitHubLink url={gitHubLink} />
+        <PostImage src={image} alt={image} />
+        {
+            Post.image ? <img src={image}/> : ''
+        }
+    </div>
+);
+ 
+export default React.memo(Post);

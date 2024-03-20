@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-
-/* Body styles */
-.SignUpForm {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 body {
   display: flex;
   align-items: center;
@@ -19,17 +11,9 @@ body {
   background-size: cover;
 }
 
-.title {
-  width: 100%;
-  text-align: center;
-  color: #fff;
-  padding: 10px;
-  text-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
-}
-
 .boxc {
-  min-width: 25vh; 
-  max-width: 560px; 
+  min-width: 30vh;
+  max-width: 43.3vh;
   position: relative;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
@@ -37,23 +21,28 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem 3rem;
-  margin: auto;
-  user-select: none;
+  margin-top: 10rem;
+  margin-left: auto;
+  margin-right: auto;
 
   h1 {
     font-size: 3rem; /* Match the font size here */
     color: #fff;
     text-align: center;
+    padding-top: .64rem;
   }
 }
 
 .inputbox {
   position: relative;
   margin: 30px 0;
-  min-width: 30vh;
-  max-width: 40vh;
   border-bottom: 2px solid #fff;
-
+  position: relative;
+  margin: 30px 0;
+  min-width: 30vh;
+  width: 30vh;
+  border-bottom: 2px solid #fff;
+  
   &:focus-within {
     border-bottom-color: gold !important; /* Change border color on focus */
   }
@@ -62,12 +51,12 @@ body {
 .inputbox label {
   position: absolute;
   top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
+  transform: translateY(-40%);
   color: #fff;
   font-size: 1.25rem; /* Match the font size here */
   pointer-events: none;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  user-select: none;
 }
 
 .inputbox select {
@@ -77,7 +66,6 @@ body {
     border: none;
     outline: none;
     font-size: 1.25rem;
-    padding: 0 35px 0 5px;
     color: #fff;
   }
   
@@ -101,8 +89,9 @@ body {
   border: none;
   outline: none;
   font-size: 1.25rem; /* Match the font size here */
-  padding: 0 35px 0 5px;
   color: #fff;
+  font-weight: bolder;
+  padding: 0;
 }
 
 .login {
@@ -149,7 +138,6 @@ button:hover {
   border: none;
   outline: none;
   font-size: 1.25rem;
-  padding: 0 5px;
   color: #fff;
 }
 
@@ -165,7 +153,6 @@ option {
   font-size: 1.25rem;
   color: #fff;
   text-align: center;
-  margin: 25px 0 10px;
 }
 
 .register p a {
@@ -182,7 +169,7 @@ option {
   position: absolute;
   right: 10px;
   top: 50%;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc;
