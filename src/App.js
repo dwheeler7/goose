@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react'
-import NavBar from './components/NavBar/NavBar'
-import AuthPage from './pages/AuthPage/AuthPage'
-import HomePage from './pages/HomePage/HomePage'
+import { useState, useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
+import NavBar from './components/NavBar/NavBar';
+import AuthPage from './pages/AuthPage/AuthPage';
+import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
-import ProfilePage from './pages/ProfilePage/ProfilePage'
-import { Route, Routes } from 'react-router-dom'
-// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
-import styles from './App.module.scss'
+import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
 
-export default function App(){
-    // Default state for user is null
-    // Default state for token is an empty string
-    const [user, setUser] = useState(null)
-    const [post, setPost] = useState(null)
-    const [token, setToken] = useState('')
+export default function App() {
+    const [user, setUser] = useState(null);
+    const [post, setPost] = useState(null);
+    const [token, setToken] = useState('');
+//added global functionality to not display nav bar on whichever page youd like
+    const location = useLocation();
+    const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
 
     // Create a signUp fn that connects to the backend
     const signUp = async(credentials) => {
@@ -29,13 +29,9 @@ export default function App(){
                 // Turn the body into a readable JavaScript object 
                 body: JSON.stringify(credentials)
             })
-            // Turn response back into a JavaScript object
             const data = await response.json()
-            // From the "data" response received, pull out the user object and set the user state
             setUser(data.user)
-            // From the "data" response received, pull out the token object and set the token state
             setToken(data.token)
-            // Store the token && user in localStorage
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
         } catch (error) {
@@ -199,69 +195,61 @@ export default function App(){
     }, [token])
 
    
-
+//added global functionality to not display nav bar on whichever page youd like
     return (
         <>
             <div className={styles.App}>
-            <NavBar 
-                token={token} 
-                setUser={setUser}
-                user={user} // Pass the user prop to NavBar
-                setToken={setToken}
-            />
+                {shouldNotDisplayNavBar && (
+                    <NavBar
+                        token={token}
+                        setUser={setUser}
+                        user={user} // Pass the user prop to NavBar
+                        setToken={setToken}
+                    />
+                )}
                 <Routes>
-                    {/* What is needed on this page:
-                        Get all Post posts when the component mounts 
-                        Create an individual Post post
-                    */}
-                    <Route path='/' 
-                    element={<HomePage 
-                    // Pass user, token, && setToken props down to HomePage
-                        user={user} 
-                        token={token} 
-                        // nameOfTheProp={nameOfTheFunction}
-                        setToken={setToken}
-                        setUser={setUser}
-                        createPost={createPost}
-                        setPost={setPost}
-                        post={post}
-                        getAllPosts={getAllPosts}
-                    />}></Route>
+                    <Route path='/' element={
+                        <HomePage
+                            user={user} 
+                            token={token}
+                            setToken={setToken}
+                            setUser={setUser}
+                            createPost={createPost}
+                            setPost={setPost}
+                            post={post}
+                            getAllPosts={getAllPosts}
+                        />
+                    }></Route>
 
-                    {/* What is needed on this page:
-                        User needs to be able to signUp
-                        User needs to be able to Login
-                    */}
-                    <Route path='/auth' 
-                    element={<AuthPage 
-                    // Pass setUser, setToken && signUp props down to AuthPage
-                        setUser={setUser}
-                        setToken={setToken}
-                        signUp={signUp}
-                        login={login}
-                    />}></Route>
-                    <Route path="/auth/forgot-password" element={<ForgotPassword 
-                     setUser={setUser}
-                     setToken={setToken}
-                     signUp={signUp}
-                     login={login} />}></Route>
-                    {/* What is needed on this page:
-                        Be able to GET an individual post
-                        Be able to UPDATE post
-                        Be able to DELETE post
-                    */}
-                    <Route path='/profile/:id' 
-                    element={<ProfilePage 
-                        user={user} 
-                        token={token} 
-                        setToken={setToken}
-                        setUser={setUser}
-                        getIndividualPost={getIndividualPost}
-                        deletePost={deletePost}
-                        updatePost={updatePost}
-                    />}></Route>
+                    <Route path='/auth' element={
+                        <AuthPage
+                            setUser={setUser}
+                            setToken={setToken}
+                            signUp={signUp}
+                            login={login}
+                        />
+                    }></Route>
+                    <Route path="/auth/forgot-password" element={
+                        <ForgotPassword
+                            setUser={setUser}
+                            setToken={setToken}
+                            signUp={signUp}
+                            login={login}
+                        />
+                    }></Route>
+                    <Route path='/profile/:id' element={
+                        <ProfilePage
+                            user={user}
+                            token={token}
+                            setToken={setToken}
+                            setUser={setUser}
+                            getIndividualPost={getIndividualPost}
+                            deletePost={deletePost}
+                            updatePost={updatePost}
+                        />
+                    }></Route>
                 </Routes>
             </div>
         </>
-    )
+    );
 }

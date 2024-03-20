@@ -42,7 +42,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Forgot Password</h1>
+      <h1 className={styles.title}>Forgot Password?</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label className={styles.label}>Email:</label>
@@ -51,8 +51,8 @@ export default function ForgotPasswordForm() {
         {error && <div className={styles.error}>{error}</div>}
         {successMessage && <div className={styles.success}>{successMessage}</div>}
         <button type="submit" className={styles.button}>Reset Password</button>
+        <span className={styles.link} onClick={() => navigate('/auth')}>Back To Log In</span>
       </form>
-      <span className={styles.link} onClick={() => navigate('/auth')}>I know my password</span>
     </div>
   );
 }
