@@ -8,6 +8,7 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
   }
   const token = getToken();
   if (token) {
+    // Ensure options.headers is initialized if it doesn't exist
     options.headers = options.headers || {};
     options.headers.Authorization = `Bearer ${token}`;
   }

@@ -4,7 +4,10 @@ import NavBar from './components/NavBar/NavBar';
 import AuthPage from './pages/AuthPage/AuthPage';
 import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
+import ResetPassword from './components/ResetPassword/ResetPassword'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
+import { Route, Routes } from 'react-router-dom'
+// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
 
 import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
@@ -228,8 +231,6 @@ export default function App() {
         }
     }, [token])
 
-
-   
 //added global functionality to not display nav bar on whichever page youd like
 
     // Like a post
@@ -322,7 +323,6 @@ const unfollowDeveloper = async (userId, developerId, token) => {
     }
 };
 
-
     return (
         <>
             <div className={styles.App}>
@@ -359,14 +359,21 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             login={login}
                         />
                     }></Route>
-                    <Route path="/auth/forgot-password" element={
-                        <ForgotPassword
-                            setUser={setUser}
-                            setToken={setToken}
-                            signUp={signUp}
-                            login={login}
+                    <Route path="/auth/forgot-password" element={<ForgotPassword 
+                     setUser={setUser}
+                     setToken={setToken}
+                     signUp={signUp}
+                     login={login} />}></Route>
+                   <Route
+                        path="/reset-password/:token"
+                        element={  // Pass user, token, and setUser props down to ResetPassword
+                            <ResetPassword 
+                            user={user} 
+                            token={token} 
+                            setUser={setUser} 
                         />
-                    }></Route>
+                        }
+                     /></Route>
                     <Route path='/profile/:id' element={
                         <ProfilePage
                             user={user}
