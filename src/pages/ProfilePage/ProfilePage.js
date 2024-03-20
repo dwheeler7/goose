@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import { getUser } from '../../utilities/users-service';
 import styles from './ProfilePage.module.scss';
@@ -14,21 +15,33 @@ const ensureHttps = (url) => {
 };
 
 export default function ProfilePage() {
+    const { id } = useParams();
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData = await getUser();
-                console.log('User Data:', userData);
-                setUser(userData);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('/api/posts');
+            const data = await response.json();
+            console.log('Post Data:', data);
+            setPosts(data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
 
-        fetchUserData();
+    useEffect(() => {
+        fetchPosts();
     }, []);
+
+    const getAllPosts = async () => {
+        try {
+            const response = await fetch('/api/posts')
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error(error)            
+        }
+    }
 
     return (
         <>
@@ -65,13 +78,16 @@ export default function ProfilePage() {
                         {!user || !user.bio && (
                             <p className={styles.userBio}>No Bio at this time.</p>
                         )}
+                        {user && user.posts && (
+                            <p className={styles.userBio}>{user.posts}</p>
+                        )}
                     </div>
                     <FollowList 
                         user={user}
                     />
                 </div>
                 <ProfilePostList 
-                    user={user}
+                    getAllPosts={getAllPosts}
                 />
             </div>
         </>

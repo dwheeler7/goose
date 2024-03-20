@@ -13,6 +13,7 @@ export default function HomePage() {
         try {
             const response = await fetch('/api/posts');
             const data = await response.json();
+            console.log('Post Data:', data);
             setPosts(data);
         } catch (error) {
             console.error('Error fetching posts:', error);

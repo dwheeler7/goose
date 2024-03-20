@@ -277,6 +277,7 @@ export default function App(){
                         getIndividualPost={getIndividualPost}
                         deletePost={deletePost}
                         updatePost={updatePost}
+                        post={post}
                     />}></Route>
                 </Routes>
             </div>
