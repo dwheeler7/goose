@@ -97,23 +97,37 @@ function App() {
       return;
     }
     try {
+      // Ensure required fields are present
+      if (!postData.content || !postData.projectTitle) {
+        throw new Error('Content and project title are required'); // Throw error if required fields are missing
+      }
+
+      // If githubLink is provided, ensure required fields for GitHub integration are present
+      if (postData.githubLink) {
+        if (typeof postData.useReadmeAsDescription !== 'boolean') {
+          throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
+        }
+        // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
+        if (postData.useReadmeAsDescription && postData.projectDescription) {
+          throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
+        }
+      }
       const response = await fetch('/api/posts', {
         method: 'POST',
         headers: {
-          // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
-          // Tell it that we're sending JSON data
           'Content-Type': 'application/json',
-          // Tell it that we have a user token
           'Authorization': "Bearer ".concat(token)
         },
         body: JSON.stringify(postData)
       });
       const data = await response.json();
       localStorage.setItem('post', JSON.stringify(postData));
+      // Assuming setPost is a function to update the UI with the new post data
       setPost(postData);
       return data;
     } catch (error) {
       console.error(error);
+      // Handle error as needed
     }
   };
 
@@ -136,6 +150,22 @@ function App() {
       return data;
     } catch (error) {
       console.error(error);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchPosts();
+  }, []);
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('/api/posts', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      setPost(data.posts);
+    } catch (error) {
+      console.error('There was an error!', error);
     }
   };
 
@@ -214,6 +244,94 @@ function App() {
   }, [token]);
 
   //added global functionality to not display nav bar on whichever page youd like
+
+  // Like a post
+  const likePost = async (postId, token) => {
+    try {
+      if (!token) {
+        return;
+      }
+      const response = await fetch("/api/posts/".concat(postId, "/like"), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Unlike a post
+  const unlikePost = async (postId, token) => {
+    try {
+      if (!token) {
+        return;
+      }
+      const response = await fetch("/api/posts/".concat(postId, "/unlike"), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Follow a developer
+  const followDeveloper = async (userId, developerId, token) => {
+    try {
+      if (!token) {
+        return;
+      }
+      const response = await fetch('/api/follow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        },
+        body: JSON.stringify({
+          userId,
+          developerId
+        })
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Unfollow a developer
+  const unfollowDeveloper = async (userId, developerId, token) => {
+    try {
+      if (!token) {
+        return;
+      }
+      const response = await fetch('/api/unfollow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        },
+        body: JSON.stringify({
+          userId,
+          developerId
+        })
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].App
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -734,7 +852,7 @@ function PostList(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-    key: postData.id
+    key: postData._id
   }, postData))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PostList);
@@ -785,6 +903,9 @@ function ProfileImage(_ref) {
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignUpForm.module.scss */ "./src/components/SignUpForm/SignUpForm.module.scss");
+const _excluded = ["userType"];
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -803,22 +924,45 @@ function SignUpForm(_ref) {
     name: '',
     email: '',
     password: '',
-    userType: '' // Added userType field
+    userType: '',
+    // Added userType field
+    picture: '' // Added picture field
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track password visibility
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Corrected
 
   const handleChange = evt => {
+    const {
+      name,
+      value
+    } = evt.target;
     setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-      [evt.target.name]: evt.target.value
+      [name]: value
     }));
     setError('');
+  };
+  const handlePictureChange = evt => {
+    const file = evt.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+        picture: reader.result
+      }));
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
   const handleSubmit = async evt => {
     evt.preventDefault();
     try {
-      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
+      // Omit userType from formData when calling signUp function
+      const {
+          userType
+        } = formData,
+        userData = _objectWithoutProperties(formData, _excluded);
+      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(userData);
       setUser(user);
       navigate("/profile/".concat(user._id)); // Corrected
     } catch (_unused) {
@@ -832,10 +976,10 @@ function SignUpForm(_ref) {
     name,
     email,
     password,
-    userType
+    userType,
+    picture
   } = formData;
-  const disable = !name || !email || !password || !userType; // Adjusted to include userType
-
+  const disable = !name || !email || !password || !userType;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].body
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -883,7 +1027,13 @@ function SignUpForm(_ref) {
     value: "developer"
   }, "Developer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "employer"
-  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "file",
+    accept: "image/*",
+    onChange: handlePictureChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     disabled: disable
   }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -893,7 +1043,11 @@ function SignUpForm(_ref) {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].loginLink
   }, "Already have an account? Log In")))), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorMessage
-  }, error));
+  }, error), picture && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: picture,
+    alt: "User",
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].previewImage
+  }));
 }
 
 /***/ }),
@@ -1021,9 +1175,11 @@ function ForgotPasswordPage(_ref) {
 
 function HomePage() {
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [title, setTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [description, setDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [projectTitle, setProjectTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const fetchPosts = async () => {
     try {
       const response = await fetch('http://localhost:3000/posts');
@@ -1040,7 +1196,8 @@ function HomePage() {
     const response = await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer ".concat(localStorage.getItem('token'))
       },
       body: JSON.stringify(postData)
     });
@@ -1049,19 +1206,26 @@ function HomePage() {
   const handleCreatePost = async event => {
     event.preventDefault();
     const postData = {
-      title,
-      description,
+      projectTitle,
+      projectDescription,
       gitHubLink
     };
     try {
       const newPost = await createPost(postData);
       setPosts(currentPosts => [newPost, ...currentPosts]);
-      setTitle('');
-      setDescription('');
+      setProjectTitle('');
+      setProjectDescription('');
       setGitHubLink('');
     } catch (error) {
       console.error('Error creating post:', error);
     }
+  };
+  const handleSearch = query => {
+    setSearchQuery(query);
+    // Implement your search logic here
+    // For example, you can filter the posts array based on the query
+    const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+    setSearchResults(filteredPosts);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
@@ -1069,12 +1233,12 @@ function HomePage() {
     onSubmit: handleCreatePost
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    value: title,
-    onChange: e => setTitle(e.target.value),
+    value: projectTitle,
+    onChange: e => setProjectTitle(e.target.value),
     placeholder: "Title"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    value: description,
-    onChange: e => setDescription(e.target.value),
+    value: projectDescription,
+    onChange: e => setProjectDescription(e.target.value),
     placeholder: "Description"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
@@ -1083,7 +1247,14 @@ function HomePage() {
     placeholder: "GitHub Link"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
-  }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    value: searchQuery,
+    onChange: e => handleSearch(e.target.value),
+    placeholder: "Search for users"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, searchResults.map(post => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+    key: post.id
+  }, post.title)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     posts: posts
   }));
 }
@@ -3543,4 +3714,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.2c4310749abfd953bedbbcd966df683b.js.map
+//# sourceMappingURL=App.90c8b722b5e5e3dede9325a5a4344c9d.js.map
