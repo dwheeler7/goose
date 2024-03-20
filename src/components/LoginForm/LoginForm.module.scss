@@ -13,6 +13,25 @@
   }
 }
 
+@keyframes shine {
+  0%, 100% {
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), 
+                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), 
+                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .LoginForm {
   display: flex;
   flex-direction: column;
@@ -92,6 +111,8 @@ h4 {
   padding: 2rem 3rem;
   user-select: none;
   margin-top: 10rem;
+  overflow: hidden;
+  animation: shine 5s infinite linear;
 
   .title {
     width: 100%;
