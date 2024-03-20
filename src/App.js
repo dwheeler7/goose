@@ -268,7 +268,7 @@ export default function App(){
                         Be able to UPDATE post
                         Be able to DELETE post
                     */}
-                    <Route path='/profile/:id' 
+                    <Route path='/profile/:userId' 
                     element={<ProfilePage 
                         user={user} 
                         token={token} 

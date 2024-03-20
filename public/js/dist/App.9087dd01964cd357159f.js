@@ -276,7 +276,7 @@ function App() {
       login: login
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
-    path: "/profile/:id",
+    path: "/profile/:userId",
     element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_5__["default"], {
       user: user,
       token: token,
@@ -775,9 +775,16 @@ function ProfileImage(_ref) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ProfilePost)
 /* harmony export */ });
-/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function ProfilePost() {
-  return /*#__PURE__*/React.createElement("h1", null, "ProfilePost");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+
+
+function ProfilePost(props) {
+  const {
+    userId
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)();
+  return props.user === userId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, props.projectTitle) : null;
 }
 
 /***/ }),
@@ -789,7 +796,7 @@ function ProfilePost() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PostList)
+/* harmony export */   "default": () => (/* binding */ ProfilePostList)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -801,10 +808,11 @@ function ProfilePost() {
 const EmptyState = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
   className: _ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].emptyState
 }, "No posts available.");
-function PostList(_ref) {
+function ProfilePostList(_ref) {
   let {
     posts
   } = _ref;
+  // Check if posts array is empty
   if (posts.length === 0) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(EmptyState, null);
   }
@@ -812,6 +820,7 @@ function PostList(_ref) {
     className: _ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProfilePost_ProfilePost__WEBPACK_IMPORTED_MODULE_2__["default"], {
     key: postData._id,
+    user: postData.user,
     projectTitle: postData.projectTitle,
     projectDescription: postData.projectDescription,
     gitHubLink: postData.gitHubLink,
@@ -1173,11 +1182,12 @@ function HomePage() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfilePage.module.scss */ "./src/pages/ProfilePage/ProfilePage.module.scss");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
-/* harmony import */ var _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProfilePage.module.scss */ "./src/pages/ProfilePage/ProfilePage.module.scss");
+/* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
 /* harmony import */ var _components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FollowList/FollowList */ "./src/components/FollowList/FollowList.js");
 /* harmony import */ var _components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProfilePostList/ProfilePostList */ "./src/components/ProfilePostList/ProfilePostList.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 
 
 
@@ -1185,8 +1195,6 @@ function HomePage() {
 
 
 
-
-// Function to ensure the link starts with 'https://'
 const ensureHttps = url => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     return 'https://' + url;
@@ -1198,19 +1206,24 @@ function ProfilePage() {
     id
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      console.log('Post Data:', data);
-      setPosts(data);
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-    }
-  };
+  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchPosts();
-  }, []);
+    async function fetchData() {
+      try {
+        // Fetch user data using getUser function
+        const fetchedUser = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_6__.getUser)(id);
+        setUser(fetchedUser);
+
+        // Fetch all posts
+        const fetchedPosts = await getAllPosts();
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData(); // Call fetchData function
+  }, [id]); // Add id to dependency array to re-fetch data when id changes
+
   const getAllPosts = async () => {
     try {
       const response = await fetch('/api/posts');
@@ -1221,46 +1234,44 @@ function ProfilePage() {
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ProfilePage
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfilePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].topContainer
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].topContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userContainer
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userHeading
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userHeading
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userName
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userName
   }, user && user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].imgAndEditContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ProfileImage,
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgAndEditContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
     user: user
   }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].editBtn
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].editBtn
   }, "Edit User Information") : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userLinks
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
   }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ghLink,
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLink,
     href: user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].ghLogo,
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLogo,
     src: "https://i.imgur.com/F796Bnt.png"
   })), user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].portfolioLink,
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLink,
     href: user.portfolioLink ? ensureHttps(user.portfolioLink) : '#'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].portfolioLogo,
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLogo,
     src: "https://i.imgur.com/FZvlk3y.png"
   })))), user && user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
   }, user.bio), !user || !user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
-  }, "No Bio at this time."), user && user.posts && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].userBio
-  }, user.posts)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
+  }, "No Bio at this time.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
     user: user
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    getAllPosts: getAllPosts
+    posts: posts
   })));
 }
 
@@ -3614,4 +3625,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.68ff03c196a9201708e728afefb3e21b.js.map
+//# sourceMappingURL=App.c5dc43c72932299f186808e3ca3aad6e.js.map
