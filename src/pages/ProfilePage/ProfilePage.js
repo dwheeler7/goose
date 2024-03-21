@@ -83,7 +83,7 @@ export default function ProfilePage() {
                         )}
                     </div>
                     <FollowList 
-                        user={user}
+                        posts={posts}
                     />
                 </div>
                 <ProfilePostList 
