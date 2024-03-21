@@ -8,6 +8,8 @@ export default function HomePage() {
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
     const [image, setImage] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     const fetchPosts = async () => {
         try {
@@ -62,6 +64,14 @@ export default function HomePage() {
         }
     };
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        // Implement your search logic here
+        // For example, you can filter the posts array based on the query
+        const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+        setSearchResults(filteredPosts);
+    };
+
     return (
         <div className={styles.homePage}>
             <h1>This is the HomePage</h1>
@@ -95,6 +105,20 @@ export default function HomePage() {
                 getAllPosts={getAllPosts}
                 posts={posts} 
             />
+            <div>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    placeholder="Search for users"
+                />
+                <ul>
+                    {searchResults.map(post => (
+                        <li key={post.id}>{post.title}</li>
+                    ))}
+                </ul>
+            </div>
+            <PostList posts={posts} />
         </div>
     );
 }

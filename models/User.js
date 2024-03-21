@@ -32,6 +32,7 @@ const userSchema = new Schema({
     bio: {type: String},
     gitHubLink: {type: String},
     portfolioLink: {type: String},
+    passwordResetToken: {type: String},
     location: {type: String}
 
 }, {
