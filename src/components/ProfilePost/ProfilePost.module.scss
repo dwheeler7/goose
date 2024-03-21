@@ -1,0 +1,27 @@
+.ProfilePost {
+    display: flex;
+    min-height: 30rem;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    border: .1rem solid lightgrey;
+    box-shadow: 0 0 1rem lightgrey;
+    position: relative;
+    .ProjectImage {
+        width: 45rem;
+    }
+    .ProjectTitle {
+
+    }
+    .ProjectDescription {
+
+    }
+    .ProjectLogo {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 5rem;
+    }
+}
