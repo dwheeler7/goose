@@ -93,7 +93,7 @@ export default function HomePage() {
     };
 
     const handleUserClick = (user) => {
-        navigate(`/profile/${user.id}`);
+        navigate(`/profile/${user._id}`);
     };
 
     return (

@@ -10,7 +10,7 @@ const UserList = ({ users, onUserClick }) => {
     <div>
       <h2>Found Users</h2>
       {users.map((user, index) => {
-        const key = user.id || user.username || index; // Use id, username, or index as the key
+        const key = user._id || user.username || index; // Use id, username, or index as the key
         return (
           <div key={key} onClick={() => handleUserClick(user)}>
             <User user={user} />
