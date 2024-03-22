@@ -9,10 +9,15 @@ export default function HomePage() {
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
+    const [image, setImage] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    // Fetch user data and post data
+    useEffect(() => {
+        fetchUserData();
+        fetchPosts();
+    }, []);
+
     const fetchUserData = async () => {
         try {
             const [postsResponse, usersResponse] = await Promise.all([
@@ -31,10 +36,16 @@ export default function HomePage() {
             console.error('Error fetching data:', error);
         }
     };
-    
-    useEffect(() => {
-        fetchUserData();
-    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('/api/posts');
+            const data = await response.json();
+            setPosts(data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
 
     const createPost = async (postData) => {
         try {
@@ -55,14 +66,15 @@ export default function HomePage() {
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { projectTitle, projectDescription, gitHubLink };
-        
+        const postData = { projectTitle, projectDescription, gitHubLink, image };
+
         try {
             const newPost = await createPost(postData);
             setPosts(currentPosts => [newPost, ...currentPosts]);
             setProjectTitle('');
             setProjectDescription('');
             setGitHubLink('');
+            setImage('');
         } catch (error) {
             console.error('Error creating post:', error);
         }
@@ -88,7 +100,30 @@ export default function HomePage() {
         <div className={styles.homePage}>
             <h1>This is the HomePage</h1>
             <form onSubmit={handleCreatePost}>
-                {/* Input fields for creating a new post */}
+                <input
+                    type="text"
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
+                    placeholder="Title"
+                />
+                <textarea
+                    value={projectDescription}
+                    onChange={(e) => setProjectDescription(e.target.value)}
+                    placeholder="Description"
+                />
+                <input
+                    type="text"
+                    value={gitHubLink}
+                    onChange={(e) => setGitHubLink(e.target.value)}
+                    placeholder="GitHub Link"
+                />
+                <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="Image URL"
+                />
+                <button type="submit">Post</button>
             </form>
             <input
                 type="text"
@@ -96,7 +131,6 @@ export default function HomePage() {
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Search for users"
             />
-            {/* Render UserList only when there are search results */}
             {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>

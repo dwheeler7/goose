@@ -23,6 +23,7 @@
 /* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+ // Import useLocation
 
 
 
@@ -37,20 +38,20 @@ function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
   //added global functionality to not display nav bar on whichever page youd like
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useLocation)();
-========
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useLocation)();
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
+
+  // Create a signUp fn that connects to the backend
   const signUp = async credentials => {
     try {
       const response = await fetch('/api/users', {
         method: 'POST',
+        // Headers that will be set in PostMan
         headers: {
           'Content-Type': 'application/json'
         },
+        // Turn the body into a readable JavaScript object 
         body: JSON.stringify(credentials)
       });
       const data = await response.json();
@@ -62,8 +63,12 @@ function App() {
       console.error(error);
     }
   };
+
+  // This function will need to be a prop passed to the LoginForm via AuthPage
   const login = async credentials => {
     try {
+      // https://i.imgur.com/3quZxs4.png
+      // Step 1 is complete here once someone fills out the loginForm
       const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
@@ -72,8 +77,12 @@ function App() {
         body: JSON.stringify(credentials)
       });
       const data = await response.json();
+      // Step 3
       const tokenData = data.token;
       localStorage.setItem('token', tokenData);
+      // The below code is additional to the core features of authentication
+      // You need to decide what additional things you would like to accomplish when you
+      // set up your stuff
       const userData = data.user;
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
@@ -81,20 +90,30 @@ function App() {
       console.error(error);
     }
   };
+
+  // CreatePost
+  // We need token authentication in order to verify that someone can make a post
+  // Now that we have the token from the signup/login above, we will pass it into the following functions for authentication
   const createPost = async (postData, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
     if (!token) {
       return;
     }
     try {
+      // Ensure required fields are present
       if (!postData.content || !postData.projectTitle) {
-        throw new Error('Content and project title are required');
+        throw new Error('Content and project title are required'); // Throw error if required fields are missing
       }
+
+      // If githubLink is provided, ensure required fields for GitHub integration are present
       if (postData.githubLink) {
         if (typeof postData.useReadmeAsDescription !== 'boolean') {
-          throw new Error('Invalid useReadmeAsDescription value');
+          throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
         }
+        // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
         if (postData.useReadmeAsDescription && postData.projectDescription) {
-          throw new Error('Project description should not be provided when using README');
+          throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
         }
       }
       const response = await fetch('/api/posts', {
@@ -107,12 +126,16 @@ function App() {
       });
       const data = await response.json();
       localStorage.setItem('post', JSON.stringify(postData));
+      // Assuming setPost is a function to update the UI with the new post data
       setPost(postData);
       return data;
     } catch (error) {
       console.error(error);
+      // Handle error as needed
     }
   };
+
+  // ReadPost - we don't need authentication
   const getAllPosts = async () => {
     try {
       const response = await fetch('/api/posts');
@@ -122,6 +145,8 @@ function App() {
       console.error(error);
     }
   };
+
+  // Show and individual post - no need for authentication
   const getIndividualPost = async id => {
     try {
       const response = await fetch("/api/posts/".concat(id));
@@ -147,7 +172,11 @@ function App() {
       console.error('There was an error!', error);
     }
   };
+
+  // UpdatePost
   const updatePost = async (newPostData, id, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
     if (!token) {
       return;
     }
@@ -155,7 +184,10 @@ function App() {
       const response = await fetch("/api/posts/".concat(id), {
         method: 'PUT',
         headers: {
+          // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
+          // Tell it that we're sending JSON data
           'Content-Type': 'application/json',
+          // Tell it that we have a user token
           'Authorization': "Bearer ".concat(token)
         },
         body: JSON.stringify(newPostData)
@@ -166,7 +198,11 @@ function App() {
       console.error(error);
     }
   };
+
+  // DeletePost
   const deletePost = async (id, token) => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
     if (!token) {
       return;
     }
@@ -174,6 +210,7 @@ function App() {
       const response = await fetch("/api/posts/".concat(id), {
         method: 'DELETE',
         headers: {
+          // Don't need content-type because we are not sending any data
           'Authorization': "Bearer ".concat(token)
         }
       });
@@ -188,24 +225,31 @@ function App() {
       const fetchUserData = async () => {
         console.log('fetching user data');
         try {
+          // Fetch user data from your backend
           const response = await fetch('/api/user-data', {
             headers: {
-              Authorization: "Bearer ".concat(token)
+              Authorization: "Bearer ".concat(token) // Assuming you're passing token as a prop
             }
           });
           if (response.ok) {
             const userData = await response.json();
-            setUser(userData);
+            setUser(userData); // Update the user state with the fetched data
           } else {
+            // Handle error
             throw new Error('response failed');
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
       };
+      // Call the fetchUserData function when the component mounts
       fetchUserData();
     }
   }, [token]);
+
+  //added global functionality to not display nav bar on whichever page youd like
+
+  // Like a post
   const likePost = async (postId, token) => {
     try {
       if (!token) {
@@ -224,6 +268,8 @@ function App() {
       console.error(error);
     }
   };
+
+  // Unlike a post
   const unlikePost = async (postId, token) => {
     try {
       if (!token) {
@@ -242,6 +288,8 @@ function App() {
       console.error(error);
     }
   };
+
+  // Follow a developer
   const followDeveloper = async (userId, developerId, token) => {
     try {
       if (!token) {
@@ -264,6 +312,8 @@ function App() {
       console.error(error);
     }
   };
+
+  // Unfollow a developer
   const unfollowDeveloper = async (userId, developerId, token) => {
     try {
       if (!token) {
@@ -291,7 +341,6 @@ function App() {
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
     token: token,
     setUser: setUser,
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
     user: user // Pass the user prop to NavBar
     ,
     setToken: setToken,
@@ -300,11 +349,6 @@ function App() {
     updatePost: updatePost,
     post: post
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-========
-    user: user,
-    setToken: setToken
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       user: user,
@@ -1379,16 +1423,12 @@ function HomePage() {
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-
-  // Fetch user data and post data
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchUserData();
+    fetchPosts();
+  }, []);
   const fetchUserData = async () => {
     try {
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      console.log('Post Data:', data);
-      setPosts(data);
-========
       const [postsResponse, usersResponse] = await Promise.all([fetch('/api/posts'), fetch('/api/users')]);
       if (!postsResponse.ok || !usersResponse.ok) {
         throw new Error('Failed to fetch data');
@@ -1397,26 +1437,20 @@ function HomePage() {
       const usersData = await usersResponse.json();
       setPosts(postsData);
       setUsers(usersData);
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchUserData();
-  }, []);
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('/api/posts');
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
   const createPost = async postData => {
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
-    const response = await fetch('/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer ".concat(localStorage.getItem('token'))
-      },
-      body: JSON.stringify(postData)
-    });
-    return response.json();
-========
     try {
       const response = await fetch('/api/posts', {
         method: 'POST',
@@ -1430,16 +1464,6 @@ function HomePage() {
     } catch (error) {
       console.error('Error creating post:', error);
       throw error; // Re-throw the error to be caught by the caller
-    }
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
-  };
-  const getAllPosts = async () => {
-    try {
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
     }
   };
   const handleCreatePost = async event => {
@@ -1480,9 +1504,17 @@ function HomePage() {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleCreatePost
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    value: projectTitle,
+    onChange: e => setProjectTitle(e.target.value),
+    placeholder: "Title"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    value: projectDescription,
+    onChange: e => setProjectDescription(e.target.value),
+    placeholder: "Description"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
     value: gitHubLink,
     onChange: e => setGitHubLink(e.target.value),
     placeholder: "GitHub Link"
@@ -1493,13 +1525,8 @@ function HomePage() {
     placeholder: "Image URL"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
-  }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    getAllPosts: getAllPosts,
-    posts: posts
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-========
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
     value: searchQuery,
     onChange: e => handleSearch(e.target.value),
     placeholder: "Search for users"
@@ -4384,8 +4411,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-<<<<<<<< HEAD:public/js/dist/App.383588b8a57b1c1cade3.js
-//# sourceMappingURL=App.a899e0635534d5b73f01c667e3e7c553.js.map
-========
-//# sourceMappingURL=App.04b4cfffe4a0aa4a10738a761969e923.js.map
->>>>>>>> 587b0b6 (created userlist/user.js/updated user routes and controllers to include  index all users/ patched app.js to include search query/ updated homepage.js to include search query/ added the scss files so that front-end can polish/ search bar finished):public/js/dist/App.2d07cca296b53ab32a8e.js
+//# sourceMappingURL=App.6be7369c5a9faa20cae951a97fbdfbbf.js.map
