@@ -1000,7 +1000,7 @@ function ProfilePost(props) {
       console.log("".concat(props.postId, " has been deleted"));
       // If the post is successfully deleted, you might want to update the UI to reflect the change
       // You can do this by fetching the updated list of posts or updating the existing list of posts
-      fetchPosts();
+      // fetchPosts()
     } catch (error) {
       console.error('Error deleting post:', error);
       // Handle any errors that occur during the deletion process
@@ -4600,4 +4600,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6d723abfacbc8a1bf2d301b9fd3bc1e2.js.map
+//# sourceMappingURL=App.e9792a314855af5e75587675cb45c179.js.map
