@@ -1273,11 +1273,9 @@ const UserList = _ref => {
     onUserClick(user);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Found Users"), users.map((user, index) => {
-    if (!user.username) {
-      console.log('User with undefined or null username:', user);
-    }
+    const key = user.id || user.username || index; // Use id, username, or index as the key
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      key: user.username ? user.username + index : index,
+      key: key,
       onClick: () => handleUserClick(user)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_User_User__WEBPACK_IMPORTED_MODULE_1__["default"], {
       user: user
@@ -1407,9 +1405,11 @@ function ForgotPasswordPage(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePage.module.scss */ "./src/pages/HomePage/HomePage.module.scss");
 /* harmony import */ var _components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/PostList/PostList */ "./src/components/PostList/PostList.js");
 /* harmony import */ var _components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/UserList/UserList */ "./src/components/UserList/UserList.js");
+
 
 
 
@@ -1423,6 +1423,7 @@ function HomePage() {
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchUserData();
     fetchPosts();
@@ -1463,7 +1464,7 @@ function HomePage() {
       return response.json();
     } catch (error) {
       console.error('Error creating post:', error);
-      throw error; // Re-throw the error to be caught by the caller
+      throw error;
     }
   };
   const handleCreatePost = async event => {
@@ -1494,11 +1495,8 @@ function HomePage() {
       setSearchResults([]);
     }
   };
-
-  // Handle clicking on a user
   const handleUserClick = user => {
-    // Perform actions when a user is clicked, such as navigating to the user's profile page
-    console.log('Clicked user:', user);
+    navigate("/profile/".concat(user.id));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
@@ -4411,4 +4409,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6be7369c5a9faa20cae951a97fbdfbbf.js.map
+//# sourceMappingURL=App.dbffe1de1d2d43ca04fec78cbecdddbd.js.map

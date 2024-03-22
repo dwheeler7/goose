@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import User from '../User/User';
 
 const UserList = ({ users, onUserClick }) => {
@@ -10,11 +10,9 @@ const UserList = ({ users, onUserClick }) => {
     <div>
       <h2>Found Users</h2>
       {users.map((user, index) => {
-        if (!user.username) {
-          console.log('User with undefined or null username:', user);
-        }
+        const key = user.id || user.username || index; // Use id, username, or index as the key
         return (
-          <div key={user.username ? user.username + index : index} onClick={() => handleUserClick(user)}>
+          <div key={key} onClick={() => handleUserClick(user)}>
             <User user={user} />
           </div>
         );

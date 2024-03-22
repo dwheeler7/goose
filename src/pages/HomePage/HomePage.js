@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
@@ -12,6 +13,7 @@ export default function HomePage() {
     const [image, setImage] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserData();
@@ -60,7 +62,7 @@ export default function HomePage() {
             return response.json();
         } catch (error) {
             console.error('Error creating post:', error);
-            throw error; // Re-throw the error to be caught by the caller
+            throw error;
         }
     };
 
@@ -90,10 +92,8 @@ export default function HomePage() {
         }
     };
 
-    // Handle clicking on a user
     const handleUserClick = (user) => {
-        // Perform actions when a user is clicked, such as navigating to the user's profile page
-        console.log('Clicked user:', user);
+        navigate(`/profile/${user.id}`);
     };
 
     return (
