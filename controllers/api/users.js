@@ -2,6 +2,7 @@ const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 const { sendPasswordResetEmail } = require('../../src/utilities/email-api');
+const { sendSupportTicketEmail } = require('../../src/utilities/email-support-api');
 
 function createJWT(user, rememberMe) {
     let expiresIn = '24h'; // Default expiration time (24 hours)
@@ -72,6 +73,7 @@ const dataController = {
             res.status(400).json({ message: 'Error updating user' });
         }
     },
+    //All email stuff below
     async resetPassword(req, res) {
         try {
             const { email } = req.body;
@@ -105,6 +107,7 @@ const dataController = {
             return res.status(400).json({ message: 'Error resetting password' });
         }
     },
+
     async updatePasswordWithToken(req, res) {
         try {
             const { token } = req.params;
@@ -131,6 +134,22 @@ const dataController = {
             return res.status(500).json({ message: 'Internal server error' });
           }
         },
+
+        async handleSupportTicket(req, res) {
+            const { name, email, message } = req.body;
+    
+            try {
+                // Call function to send email (assuming it's defined elsewhere)
+                await sendSupportTicketEmail(name, email, message);
+    
+                // Send success response
+                res.status(200).json({ message: 'Support ticket submitted successfully' });
+            } catch (error) {
+                console.error('Error submitting support ticket:', error);
+                res.status(500).json({ message: 'Failed to submit support ticket' });
+            }
+        },
+        // ALL email stuff DONE
     async followDeveloper(req, res) {
         try {
             const { userId, developerId } = req.body;
@@ -155,6 +174,8 @@ const dataController = {
         }
     } 
 }
+
+
 
 
 const apiController = {
