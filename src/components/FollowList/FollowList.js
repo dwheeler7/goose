@@ -13,7 +13,8 @@ export default function FollowList({ posts }) {
     }
 
     return (
-        <div className={styles.postList}>
+        <div className={styles.FollowList}>
+            <h5>Employers</h5>
             {posts.map(postData => (
                 <Follow 
                     key={postData._id} 

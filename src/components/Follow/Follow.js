@@ -9,7 +9,7 @@ export default function Follow(props) {
             {props.likes.map(like => (
                 <div>
                     <ul>
-                        <Link to={`/profile/${like._id}`}><li>{like.name}</li></Link>
+                        <Link className={styles.follows} to={`/profile/${like._id}`}><li>{like.name}</li></Link>
                     </ul>
                 </div>
             ))}

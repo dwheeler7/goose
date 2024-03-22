@@ -1,36 +1,30 @@
 .ProfilePage {
     margin: 0 auto;
-    width: 80%;
+    width: 100%;
     height: 100%;
-    padding: 5rem 10rem;
+    padding: 2rem 10rem;
+    display: flex;
     .topContainer {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+        width: 60%;
         max-height: 50rem;
         .userContainer {
             display: flex;
             flex-direction: column;
-            width: 25%;
+            justify-content: space-around;
+            align-items: center;
+            width: 90%;
+            max-height: 40rem;
             background-color: white;
-            border-radius: 1rem;
+            border-radius: .5rem;
             padding: 2rem;
             border: .1rem solid lightgrey;
-            box-shadow: 0 0 1rem lightgrey;
-            .imgAndEditContainer {
+            box-shadow: 0 0 .3rem darkgreen;
+            .imgContainer {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 width: 15rem;
-                .editBtn {
-                    font-size: 1.2rem;
-                    &:hover {
-                        color: blue;
-                        text-decoration: underline;
-                        transition: none;
-                    }
-                }
             }
             .userBio {
                 color: black;
@@ -46,7 +40,7 @@
                     width: 4rem;
                     transition: .3s ease;
                     &:hover {
-                        background-color: green;
+                        filter: invert(100%);
                         transition: .3s ease;
                     }
                 }
@@ -57,7 +51,7 @@
                     padding: 1rem;
                     transition: .3s ease;
                     &:hover {
-                        background-color: green;
+                        filter: invert(100%);
                         transition: .3s ease;
                     }
                 }
@@ -65,4 +59,3 @@
         }
     }
 }
-
