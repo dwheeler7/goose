@@ -29,20 +29,20 @@ export default function ResetPassword({ user, setUser }) {
   };
 
   return (
-    <div className="reset-password-container">
+    <div className={styles['reset-password-container']}>
       <h1>Reset Password</h1>
-      <form onSubmit={handleSubmit} className="reset-password-form">
-        <div className="form-group">
+      <form onSubmit={handleSubmit} className={styles['reset-password-form']}>
+        <div className={styles['form-group']}>
           <label htmlFor="password">New Password:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <div className="form-group">
+        <div className={styles['form-group']}>
           <label htmlFor="confirm-password">Confirm Password:</label>
           <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-        {error && <div className="error">{error}</div>}
-        {successMessage && <div className="success">{successMessage}</div>}
-        <button type="submit" className="btn-reset-password">Reset Password</button>
+        {error && <div className={styles['error']}>{error}</div>}
+        {successMessage && <div className={styles['success']}>{successMessage}</div>}
+        <button type="submit" className={styles['btn-reset-password']}>Reset Password</button>
       </form>
     </div>
   );
