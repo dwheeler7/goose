@@ -1,6 +1,7 @@
 .ProfilePost {
     display: flex;
     min-height: 20rem;
+    min-width: 50vw;
     justify-content: space-around;
     background-color: white;
     border-radius: .5rem;
@@ -11,6 +12,7 @@
     .TitleImgContainer {
         display: flex;
         flex-direction: column;
+        margin-right: .5rem;
         .ProjectImage {
             max-width: 20rem;
         }
@@ -20,6 +22,7 @@
         }
     }
     .ProjectDescription {
+        max-width: 30rem;
         font-size: 1vw;
     }
     .navBtnContainer {

@@ -131,6 +131,19 @@ export default function HomePage() {
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Search for users"
             />
+            <div>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    placeholder="Search for users"
+                />
+                <ul>
+                    {searchResults.map(post => (
+                        <li key={post.id}>{post.title}</li>
+                    ))}
+                </ul>
+            </div>
             {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>

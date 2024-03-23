@@ -14,7 +14,8 @@
     "dev": "gulp",
     "styles": "gulp styles",
     "start": "node server.js",
-    "submit": "gulp submit"
+    "submit": "gulp submit",
+    "pull": "gulp pull"
   },
   "author": "",
   "license": "ISC",
