@@ -10,8 +10,6 @@ export default function HomePage({ posts, fetchPosts }) {
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
     const [image, setImage] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -65,16 +63,6 @@ export default function HomePage({ posts, fetchPosts }) {
         }
     };
 
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-        if (query.length > 0) {
-            const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
-            setSearchResults(filteredUsers);
-        } else {
-            setSearchResults([]);
-        }
-    };
-
     const handleUserClick = (user) => {
         navigate(`/profile/${user._id}`);
     };
@@ -84,30 +72,30 @@ export default function HomePage({ posts, fetchPosts }) {
             {
                 localStorage.getItem('token') ?
                 <>
-                    <form onSubmit={handleCreatePost}>
-                    <input
-                        type="text"
-                        value={projectTitle}
-                        onChange={(e) => setProjectTitle(e.target.value)}
-                        placeholder="Title"
-                    />
+                   <form onSubmit={handleCreatePost} className={styles.form}>
                     <textarea
-                        value={projectDescription}
-                        onChange={(e) => setProjectDescription(e.target.value)}
-                        placeholder="Description"
-                    />
-                    <input
-                        type="text"
-                        value={gitHubLink}
-                        onChange={(e) => setGitHubLink(e.target.value)}
-                        placeholder="GitHub Link"
-                    />
-                    <input
-                        type="text"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        placeholder="Image URL"
-                    />
+                    type="text"
+                    value={projectTitle}
+                    onChange={(e) => setProjectTitle(e.target.value)}
+                    placeholder="Title"
+                />
+                  <textarea
+                      value={projectDescription}
+                      onChange={(e) => setProjectDescription(e.target.value)}
+                      placeholder="Description"
+                  />
+                  <textarea
+                      type="text"
+                      value={gitHubLink}
+                      onChange={(e) => setGitHubLink(e.target.value)}
+                      placeholder="GitHub Link"
+                  />
+                  <textarea
+                      type="text"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      placeholder="Image URL"
+                  />
                     <button type="submit">Post</button>
                     </form>
                     <input
