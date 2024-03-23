@@ -58,7 +58,7 @@ export async function resetPassword(emailData) {
     return true;
   } catch (error) {
     console.error("Password Reset Error:", error);
-    throw new Error("Failed to reset password. Please try again later.");
+    throw new Error("Failed to reset password.");
   }
 }
 
@@ -79,7 +79,7 @@ export async function updatePasswordWithToken(token, passwordData) {
     return true; // Password update successful
   } catch (error) {
     console.error('Password Update Error:', error);
-    throw new Error('Failed to update password. Please try again later.');
+    throw new Error('Failed to update password.');
   }
 }
 
@@ -91,6 +91,6 @@ export async function customerSupportRequest(name, email, message, attachment) {
     return true; // Support ticket request successful
   } catch (error) {
     console.error('Support Ticket Request Error:', error);
-    throw new Error('Failed to submit support ticket. Please try again later.');
+    throw new Error('Failed to submit support ticket.');
   }
 }

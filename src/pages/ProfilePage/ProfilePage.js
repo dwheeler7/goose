@@ -80,7 +80,7 @@ export default function ProfilePage() {
                             <p className={styles.userBio}>{user.bio}</p>
                         )}
                         {!user || !user.bio && (
-                            <p className={styles.userBio}>No Bio at this time.</p>
+                            <p className={styles.userBio}>No bio at this time.</p>
                         )}
                     </div>
                     <FollowList 

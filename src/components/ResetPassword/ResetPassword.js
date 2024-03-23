@@ -23,26 +23,26 @@ export default function ResetPassword({ user, setUser }) {
       setSuccessMessage('Password updated successfully');
       setError('');
     } catch (error) {
-      setError(error.message || 'Failed to reset password');
+      setError(error.message || 'Failed to update password');
       setSuccessMessage('');
     }
   };
 
   return (
-    <div className={styles['reset-password-container']}>
+    <div className={styles.container}>
       <h1>Reset Password</h1>
-      <form onSubmit={handleSubmit} className={styles['reset-password-form']}>
-        <div className={styles['form-group']}>
-          <label htmlFor="password">New Password:</label>
+      <form onSubmit={handleSubmit} className={styles.resetPassword}>
+        <div className={styles.formGroup}>
+          <label>New Password:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <div className={styles['form-group']}>
-          <label htmlFor="confirm-password">Confirm Password:</label>
+        <div className={styles.formGroup}>
+          <label>Confirm Password:</label>
           <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-        {error && <div className={styles['error']}>{error}</div>}
-        {successMessage && <div className={styles['success']}>{successMessage}</div>}
-        <button type="submit" className={styles['btn-reset-password']}>Reset Password</button>
+        {error && <div className={styles.error}>{error}</div>}
+        {successMessage && <div className={styles.success}>{successMessage}</div>}
+        <button type="submit" className={styles.button}>Reset Password</button>
       </form>
     </div>
   );
