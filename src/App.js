@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
+import postsService from './utilities/posts-service'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
@@ -13,8 +14,9 @@ import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
 
 export default function App() {
-    const [user, setUser] = useState(null);
-    const [post, setPost] = useState(null);
+    const [user, setUser] = useState(null)
+    const [posts, setPosts] = useState([])
+    // const [users, setUsers] = useState([]); 
     const [token, setToken] = useState('');
 //added global functionality to not display nav bar on whichever page youd like
     const location = useLocation();
@@ -137,23 +139,18 @@ export default function App() {
         }
     }
 
+    // use effect to get all posts
     useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const postsData = await postsService.getAllPosts()
+                setPosts(postData)            
+            } catch (error) {
+              console.error('There was an error!', error)
+            }
+        }
         fetchPosts()
       }, [])
-      
-      const fetchPosts = async () => {
-        try {
-          const response = await fetch('/api/posts', {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          const data = await response.json()
-          setPost(data.posts)
-        } catch (error) {
-          console.error('There was an error!', error)
-        }
-      };
 
     // UpdatePost
     const updatePost = async (newPostData, id, token) => {
@@ -203,33 +200,6 @@ export default function App() {
         }
     }
 
-    useEffect(() => {
-        if (token) {                    
-            const fetchUserData = async () => {
-                try {
-                    // Fetch user data from your backend
-                    const response = await fetch('/api/user-data', {
-                        headers: {
-                            Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
-                        }
-                    });
-        
-                    if (response.ok) {
-                        const userData = await response.json();
-                        setUser(userData); // Update the user state with the fetched data
-                    } else {
-                        // Handle error
-                        throw new Error('response failed')
-                    }
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                }
-            };    
-            // Call the fetchUserData function when the component mounts
-            fetchUserData();
-        }
-    }, [token])
-
 //added global functionality to not display nav bar on whichever page youd like
 
     // Like a post
@@ -252,7 +222,7 @@ const likePost = async (postId, token) => {
     } catch (error) {
         console.error(error);
     }
-};
+}
 
 // Unlike a post
 const unlikePost = async (postId, token) => {
@@ -274,7 +244,7 @@ const unlikePost = async (postId, token) => {
     } catch (error) {
         console.error(error);
     }
-};
+}
 
    // Follow a developer
 const followDeveloper = async (userId, developerId, token) => {
@@ -320,7 +290,36 @@ const unfollowDeveloper = async (userId, developerId, token) => {
     } catch (error) {
         console.error(error);
     }
-};
+}
+
+useEffect(() => {
+    if (token) {                    
+        const fetchUserData = async () => {
+            try {
+                // Fetch user data from your backend
+                const response = await fetch('/api/user-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+                    }
+                });
+    
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser(userData); // Update the user state with the fetched data
+                } else {
+                    // Handle error
+                    throw new Error('response failed')
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };    
+        // Call the fetchUserData function when the component mounts
+        fetchUserData();
+    }
+}, [token])
+
+
 
     return (
         <>
@@ -335,7 +334,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         getIndividualPost={getIndividualPost}
                         deletePost={deletePost}
                         updatePost={updatePost}
-                        post={post}
+                        // post={post}
                     />)}                
                 <Routes>
                     <Route path='/' element={
@@ -344,10 +343,10 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             token={token}
                             setToken={setToken}
                             setUser={setUser}
-                            createPost={createPost}
-                            setPost={setPost}
-                            post={post}
-                            getAllPosts={getAllPosts}
+                            // createPost={createPost}
+                            // setPost={setPost}
+                            // post={post}
+                            // getAllPosts={getAllPosts}
                         />
                     } />
                     <Route path='/customer-support' element={<SupportTicketForm />} />
@@ -383,7 +382,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         getIndividualPost={getIndividualPost}
                         deletePost={deletePost}
                         updatePost={updatePost}
-                        post={post}
+                        // post={post}
                     />} />
                 </Routes>
             </div>

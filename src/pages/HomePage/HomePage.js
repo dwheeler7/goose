@@ -4,9 +4,8 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 
-export default function HomePage() {
-    const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
+export default function HomePage({ posts, setPosts}) {    
+    const [users, setUsers] = useState([]);   
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
@@ -31,9 +30,9 @@ export default function HomePage() {
             }
 
             const postsData = await postsResponse.json();
-            const usersData = await usersResponse.json();
+            // const usersData = await usersResponse.json();
             setPosts(postsData);
-            setUsers(usersData);
+            // setUsers(usersData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

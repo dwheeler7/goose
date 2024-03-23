@@ -158,21 +158,21 @@ function App() {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        setPost(data.posts);
+      } catch (error) {
+        console.error('There was an error!', error);
+      }
+    };
     fetchPosts();
   }, []);
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch('/api/posts', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      setPost(data.posts);
-    } catch (error) {
-      console.error('There was an error!', error);
-    }
-  };
 
   // UpdatePost
   const updatePost = async (newPostData, id, token) => {
@@ -347,8 +347,8 @@ function App() {
     setToken: setToken,
     getIndividualPost: getIndividualPost,
     deletePost: deletePost,
-    updatePost: updatePost,
-    post: post
+    updatePost: updatePost
+    // post={post}
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -357,8 +357,9 @@ function App() {
       setToken: setToken,
       setUser: setUser,
       createPost: createPost,
-      setPost: setPost,
-      post: post,
+      setPost: setPost
+      // post={post}
+      ,
       getAllPosts: getAllPosts
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
@@ -399,8 +400,8 @@ function App() {
       setUser: setUser,
       getIndividualPost: getIndividualPost,
       deletePost: deletePost,
-      updatePost: updatePost,
-      post: post
+      updatePost: updatePost
+      // post={post}
     })
   }))));
 }
@@ -4920,4 +4921,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.4f66a2abc6dc47cbe2baf3d0690fe738.js.map
+//# sourceMappingURL=App.9903b59146dbafe04fd8bd84830d7cc2.js.map
