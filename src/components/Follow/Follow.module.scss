@@ -1,0 +1,11 @@
+.Follow ul {
+    list-style-type: none;
+    margin: .5rem;
+    .follows {
+        text-decoration: none;
+        color: blue;
+        &:hover {
+            color: cornflowerblue;
+        }
+    }
+}

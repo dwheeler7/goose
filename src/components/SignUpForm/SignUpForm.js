@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../utilities/users-service';
 import styles from './SignUpForm.module.scss';
+import User from '../User/User'; // Import User component
 
 export default function SignUpForm({ setUser, setShowLogin, setToken, token, user }) {
   const [formData, setFormData] = useState({

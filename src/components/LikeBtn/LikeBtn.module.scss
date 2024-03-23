@@ -1,72 +1,49 @@
 :root {
-    --color-icon: #535c68; 
-    --social-icon1: #e4405f;
-    --social-icon2: #3b5999;
-    --social-icon3: #e4405f;
-    --social-icon4: #cd201f;
-    --social-icon5: #0077B5; 
-  }
+  --color-icon: #535c68; 
+  --social-icon1: #e4405f;
+  --social-icon2: #3b5999;
+  --social-icon3: #e4405f;
+  --social-icon4: #cd201f;
+  --social-icon5: #0077B5; 
+}
 
-   .iconList {
-    width: 100%;
-    max-width: 50rem;
-    padding: 0 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-   .iconItem {
-    list-style: none;
-  }
-   .iconLink { 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem; 
-    text-decoration: none; 
-    color: var(--color-icon);
-    width: 3rem;
-    height: 3rem;  
-    transition: .5s linear;
-    position: relative;
-    z-index: 1;
-    margin: auto
-  }
-   .iconLink:hover {
-    color: #fff;
-  }
-   .iconLink i {
-    margin: auto;   
-  }
-   .iconLink::before { 
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 3rem;
-    height: 3rem;
-    background: #000;
-    border-radius: 50%;
-    z-index: -1;
-    transform: scale(0);
-    transition: 0.3s cubic-bezier(.95, .32, .37, 1.21);
-  }
-   
-  .iconLink:hover::before { 
-    transform: scale(1);
-  }
-   .iconItem a:hover:before {
-    background: var(--social-icon1);
-  }
- 
- 
-  .iconLink.clicked {
-    color: var(--social-icon1);
-  }
- 
- 
-  .iconLink.clicked:hover {
-    color: #fff;
-  }
+.iconList {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  list-style: none;
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.iconItem {
+  display: flex; /* Ensure list items are treated as flex items */
+}
+
+.iconLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  width: 3rem;
+  height: 3rem;
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.iconLink:hover {
+  color: #fff;
+  background-color: var(--social-icon1); /* Change background color on hover */
+}
+
+.iconLink.clicked {
+  color: var(--social-icon1);
+}
+
+.iconLink.clicked:hover {
+  background-color: var(--social-icon1); /* Change background color on hover when clicked */
+}
