@@ -1,6 +1,7 @@
 .ProfilePost {
     display: flex;
     min-height: 20rem;
+    min-width: 50vw;
     justify-content: space-around;
     background-color: white;
     border-radius: .5rem;
@@ -11,6 +12,7 @@
     .TitleImgContainer {
         display: flex;
         flex-direction: column;
+        margin-right: .5rem;
         .ProjectImage {
             max-width: 20rem;
         }
@@ -20,6 +22,7 @@
         }
     }
     .ProjectDescription {
+        max-width: 30rem;
         font-size: 1vw;
     }
     .navBtnContainer {
@@ -28,39 +31,49 @@
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
-        min-width: 6rem;
         .ghContainer {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            height: 40px;
+            border-radius: 40px;
             .ProjectLogo {
                 width: 4rem;
-                background-color: white;
-                border-radius: 100%;
                 transition: .3s ease;
-                &:hover {
-                    filter: invert(100%);
-                    transition: .3s ease;
-                }
+                background-color: rgb(87, 163, 115);
             }
+
+            .ProjectLogo:hover {
+                background-color: rgba(255, 255, 255, 0.5);
+              }
         }
-        .deleteBtn {
-            background-color: white;
-            border-radius: 0;
-            border: none;
-            width: auto;
-            color: blue;
-            font-size: 1rem;
-            font-weight: 200;
+
+        .iconImage {
+            height: 32px;
+            width: 32px;
+            overflow: hidden;
+        }
+        .iconImage:hover {
             transition: .3s ease;
-            &:hover {
-                text-decoration: underline;
-                transition: .3s ease;
-            }
-        }
+          }
     }
+
+    button {
+        color: white;
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        background-color: rgb(87, 163, 115);
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 1.25rem;
+        font-weight: 600;
+        transition: all 0.4s ease;
+      }
+      
+      button:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
 }

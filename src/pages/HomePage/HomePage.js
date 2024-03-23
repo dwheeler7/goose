@@ -4,9 +4,8 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 
-export default function HomePage() {
-    const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
+export default function HomePage({ posts, fetchPosts }) {        
+    const [users, setUsers] = useState([]);   
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
@@ -14,36 +13,20 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchUserData();
-        fetchPosts();
+        fetchUserData();        
     }, []);
 
     const fetchUserData = async () => {
         try {
-            const [postsResponse, usersResponse] = await Promise.all([
-                fetch('/api/posts'),
-                fetch('/api/users')
-            ]);
-            if (!postsResponse.ok || !usersResponse.ok) {
+            const usersResponse = await fetch('/api/users');
+            if (!usersResponse.ok) {
                 throw new Error('Failed to fetch data');
             }
-
-            const postsData = await postsResponse.json();
+    
             const usersData = await usersResponse.json();
-            setPosts(postsData);
             setUsers(usersData);
         } catch (error) {
             console.error('Error fetching data:', error);
-        }
-    };
-
-    const fetchPosts = async () => {
-        try {
-            const response = await fetch('/api/posts');
-            const data = await response.json();
-            setPosts(data);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
         }
     };
 
@@ -70,7 +53,7 @@ export default function HomePage() {
 
         try {
             const newPost = await createPost(postData);
-            setPosts(currentPosts => [newPost, ...currentPosts]);
+            fetchPosts()            
             setProjectTitle('');
             setProjectDescription('');
             setGitHubLink('');
@@ -83,37 +66,61 @@ export default function HomePage() {
     const handleUserClick = (user) => {
         navigate(`/profile/${user._id}`);
     };
-
     return (
         <div className={styles.homePage}>
-            <form onSubmit={handleCreatePost} className={styles.form}>
-                <textarea
+            <h1>This is the HomePage</h1>
+            {
+                localStorage.getItem('token') ?
+                <>
+                   <form onSubmit={handleCreatePost} className={styles.form}>
+                    <textarea
                     type="text"
                     value={projectTitle}
                     onChange={(e) => setProjectTitle(e.target.value)}
                     placeholder="Title"
                 />
-                <textarea
-                    value={projectDescription}
-                    onChange={(e) => setProjectDescription(e.target.value)}
-                    placeholder="Description"
-                />
-                <textarea
-                    type="text"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
-                    placeholder="GitHub Link"
-                />
-                <textarea
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="Image URL"
-                />
-                <button type="submit">Post</button>
-            </form>
+                  <textarea
+                      value={projectDescription}
+                      onChange={(e) => setProjectDescription(e.target.value)}
+                      placeholder="Description"
+                  />
+                  <textarea
+                      type="text"
+                      value={gitHubLink}
+                      onChange={(e) => setGitHubLink(e.target.value)}
+                      placeholder="GitHub Link"
+                  />
+                  <textarea
+                      type="text"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      placeholder="Image URL"
+                  />
+                    <button type="submit">Post</button>
+                    </form>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        placeholder="Search for users"
+                    />
+                    <div>
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => handleSearch(e.target.value)}
+                            placeholder="Search for users"
+                        />
+                        <ul>
+                            {searchResults.map(post => (
+                                <li key={post.id}>{post.title}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </> : null
+            }
+            {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>
     );
-    
 }

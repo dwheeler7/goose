@@ -54,11 +54,10 @@ const dataController = {
             res.status(400).json({ message: error.message || 'Bad Credentials' });
         }
     }, 
-    async showUser(req, res, next) {
+    async showUser(req, res) {
         try {
             const user = await User.findById(req.params.id)
-            res.locals.data.user = user
-            next()
+            res.json(user)
         } catch (error) {
             res.status(400).json({ msg: error.message })
         }
@@ -145,17 +144,24 @@ const dataController = {
         },
 
         async handleSupportTicket(req, res) {
-            const { name, email, message } = req.body;
-    
+            const { name, email, message, attachment } = req.body;
+          
             try {
-                // Call function to send email (assuming it's defined elsewhere)
+              const user = await User.findOne({ email });  // Check if the email exists in the system
+              if (!user) {
+                return res.status(400).json({ message: 'Email not found in the system' });
+              }
+          
+              if (attachment) {
+                await sendSupportTicketEmail(name, email, message, attachment);
+              } else {
                 await sendSupportTicketEmail(name, email, message);
-    
-                // Send success response
-                res.status(200).json({ message: 'Support ticket submitted successfully' });
+              }
+          
+              res.status(200).json({ message: 'Support ticket submitted successfully' });
             } catch (error) {
-                console.error('Error submitting support ticket:', error);
-                res.status(500).json({ message: 'Failed to submit support ticket' });
+              console.error('Error submitting support ticket:', error);
+              res.status(500).json({ message: 'Failed to submit support ticket' });
             }
         },
         // ALL email stuff DONE

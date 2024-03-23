@@ -1,12 +1,3 @@
-:root {
-  --color-icon: #535c68; 
-  --social-icon1: #e4405f;
-  --social-icon2: #3b5999;
-  --social-icon3: #e4405f;
-  --social-icon4: #cd201f;
-  --social-icon5: #0077B5; 
-}
-
 .iconList {
   display: flex;
   justify-content: center; /* Center horizontally */
@@ -24,26 +15,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
-  text-decoration: none;
-  background-color: white;
-  color: black;
-  width: 3rem;
-  height: 3rem;
-  border: none; /* Remove default button border */
-  cursor: pointer; /* Show pointer cursor on hover */
-  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+  border: none; 
+  cursor: pointer; 
 }
 
-.iconLink:hover {
-  color: #fff;
-  background-color: var(--social-icon1); /* Change background color on hover */
+.iconImage {
+  height: 35px;
+  width: 35px;
 }
 
-.iconLink.clicked {
-  color: var(--social-icon1);
+.iconContainer {
+  width: 64px;
+  height: 40px;
+  border-radius: 40px;
 }
 
-.iconLink.clicked:hover {
-  background-color: var(--social-icon1); /* Change background color on hover when clicked */
+button {
+  color: white;
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background-color: rgb(87, 163, 115);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: all 0.4s ease;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }

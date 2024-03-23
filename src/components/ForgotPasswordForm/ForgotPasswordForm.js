@@ -46,7 +46,7 @@ export default function ForgotPasswordForm() {
         </button>
       </form>
       <span className={styles.link} onClick={() => navigate('/auth')}>
-        I know my password
+        Back To Login
       </span>
     </div>
   );

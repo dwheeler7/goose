@@ -2,7 +2,6 @@ import styles from './Follow.module.scss'
 import { Link } from 'react-router-dom';
 
 export default function Follow(props) {
-    console.log(props.likes)
     return (
         <>
         <div className={styles.Follow}>

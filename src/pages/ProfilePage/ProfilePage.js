@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import FollowList from '../../components/FollowList/FollowList';
 import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
-import { getUser } from '../../utilities/users-service';
+import { findUser } from '../../utilities/users-api';
 
 const ensureHttps = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -14,27 +14,30 @@ const ensureHttps = (url) => {
 };
 
 export default function ProfilePage() {
-    const { id } = useParams();
-    const [user, setUser] = useState(null);
+    const { userId } = useParams();
+    const [user, setUser] = useState({});
     const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                // Fetch user data using getUser function
-                const fetchedUser = await getUser(id);
-                setUser(fetchedUser);
+    const fetchData = async () => {
+        try {
+            // Fetch user data using getUser function
+            console.log(userId)
+            const fetchedUser = await findUser(userId);
 
-                // Fetch all posts
-                const fetchedPosts = await getAllPosts();
-                setPosts(fetchedPosts);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+            console.log(fetchedUser)
+            setUser(fetchedUser);
+            // Fetch all posts
+            const fetchedPosts = await getAllPosts();
+            setPosts(fetchedPosts);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
+    }
 
+    useEffect(() => {
+        console.log(`This is the ${userId}`)
         fetchData(); // Call fetchData function
-    }, [id]); // Add id to dependency array to re-fetch data when id changes
+    }, [userId]); // Add id to dependency array to re-fetch data when id changes
 
     const getAllPosts = async () => {
         try {
@@ -57,6 +60,7 @@ export default function ProfilePage() {
                                 <ProfileImage 
                                     className={styles.ProfileImage}
                                     user={user}
+                                    setUser={setUser}
                                 />
                             </div>
                             <div className={styles.userLinks}>
@@ -76,7 +80,7 @@ export default function ProfilePage() {
                             <p className={styles.userBio}>{user.bio}</p>
                         )}
                         {!user || !user.bio && (
-                            <p className={styles.userBio}>No Bio at this time.</p>
+                            <p className={styles.userBio}>No bio at this time.</p>
                         )}
                     </div>
                     <FollowList 

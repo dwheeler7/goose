@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
 
-export default function NavBar(props) {
+export default function NavBar() {
     const [user, setUser] = useState(null);
     const [searchQuery, setSearchQuery] = useState(''); 
     const navigateTo = useNavigate();

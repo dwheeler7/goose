@@ -73,6 +73,18 @@ gulp.task('webpack', cb => {
 	});
 });
 
+gulp.task('pull', (cb) => {
+	executionAsyncId('git pull https://github.com/dwheeler7/goose.git', (err, success) => {
+		if(err){
+			console.log(err)
+			cb(err)
+		} else {
+			console.log(success)
+			cb(err)
+		}
+	})
+})
+
 // Explanation for Students ---- This is for the production build
 gulp.task('build', cb => {
 	exec('npm run build:webpack', function(err, stdout, stderr) {

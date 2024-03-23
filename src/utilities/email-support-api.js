@@ -10,11 +10,24 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Function to generate a random alphanumeric string (ticket number)
+function generateTicketNumber() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const length = 10; 
+    let ticketNumber = 'TICKET-';
+    for (let i = 0; i < length; i++) {
+        ticketNumber += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return ticketNumber;
+}
+
+// Function to get a random name with its link
 function getRandomNameWithLink(names) {
     const randomIndex = Math.floor(Math.random() * names.length);
     return { name: names[randomIndex], link: nameLinks[names[randomIndex]] };
 }
 
+// Name links object
 const nameLinks = {
     'William Kostreski': 'http://example.com/william',
     'Juan Zelaya': 'http://example.com/juan',
@@ -26,27 +39,27 @@ const nameLinks = {
     'Jeremy Casanova': 'http://example.com/jeremy'
 };
 
-// Function to generate a random alphanumeric string (ticket number)
-function generateTicketNumber() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const length = 6; // Adjust the length of the ticket number as needed
-    let ticketNumber = 'TICKET-';
-    for (let i = 0; i < length; i++) {
-        ticketNumber += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return ticketNumber;
-}
-
 // Function to send support ticket email with a link
-async function sendSupportTicketEmail(name, email, message) {
+async function sendSupportTicketEmail(name, email, message, attachment) {
     try {
-        const { name: randomName, link: randomNameLink } = getRandomNameWithLink(Object.keys(nameLinks));
-        const ticketNumber = generateTicketNumber(); // Call generateTicketNumber function to get the ticket number
+        const ticketNumber = generateTicketNumber();
+        const attachments = []; // Array to hold attachments
 
-        // Send email to support team
+        // Get random name and link
+        const { name: randomName, link: randomNameLink } = getRandomNameWithLink(Object.keys(nameLinks));
+
+        // Check if an attachment exists
+        if (attachment) {
+            // Add attachment to attachments array
+            attachments.push({
+                filename: attachment.originalname, // Set the filename to the original name of the attachment
+                content: attachment.buffer, // Set the content to the buffer of the attachment
+            });
+        }
+        // Send email to support team with attachments
         await transporter.sendMail({
             from: 'codehivemod@gmail.com',
-            to: 'codehivemod@gmail.com', // Update this with your valid support email address
+            to: 'codehivemod@gmail.com',
             subject: `New Support Ticket (${ticketNumber}) Assigned to ${randomName}`,
             html: `
                 <p><strong>Assigned Support:</strong> <a href="${randomNameLink}">${randomName}</a></p>
@@ -62,10 +75,11 @@ async function sendSupportTicketEmail(name, email, message) {
                 <p>Please review and respond as necessary.</p>
                 <br>
                 <p>CodeHive Support</p>
-            `
+            `,
+            attachments: attachments,
         });
 
-        // Send email to user who generated the ticket
+        // Send email to user who generated the ticket with attachments
         await transporter.sendMail({
             from: 'codehivemod@gmail.com',
             to: email,
@@ -77,18 +91,21 @@ async function sendSupportTicketEmail(name, email, message) {
                 <br>
                 <p>Hello ${name},</p>
                 <p><strong>Your support ticket (${ticketNumber}) has been received</strong></p>
+                <p><strong>Tickets message:</strong> ${message}</p>
                 <p>Please wait for further communication from our support team.</p>
                 <br>
                 <p>Thank you for reaching out,</p>
                 <p>CodeHive Support</p>
-            `
+            `,
+            attachments: attachments,
         });
 
-        console.log('Support ticket emails sent successfully');
+        console.log('Support ticket emails with attachments sent successfully');
     } catch (error) {
         console.error('Error sending support ticket emails:', error);
         throw error;
     }
 }
+
 // Export email utility function
 module.exports = { sendSupportTicketEmail };
