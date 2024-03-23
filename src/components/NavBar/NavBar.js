@@ -25,7 +25,7 @@ export default function NavBar(props) {
             <ul className={styles.ul}>
             <Link to="/" className={`${styles.navItem} ${styles.home}`}>
                 <li className={styles.listItem}>
-                <img src="https://cdn-icons-png.flaticon.com/128/4674/4674400.png" alt="Home" />
+                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/4674/4674400.png" alt="Home" />
                 </li>
             </Link>
                 {!user ? (
@@ -39,7 +39,7 @@ export default function NavBar(props) {
                         {user && user._id && (
                             <Link to={`/profile/${user._id}`} className={styles.navItem}>
                                 <li className={styles.listItem}>
-                                <img src="https://cdn-icons-png.flaticon.com/128/4674/4674426.png" alt="Profile" />
+                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/4674/4674426.png" alt="Profile" />
                                 </li>
                             </Link>
                         )}
@@ -53,7 +53,7 @@ export default function NavBar(props) {
                                     window.location.reload();
                                 }}
                             >
-                            <img src="https://cdn-icons-png.flaticon.com/128/4674/4674404.png" alt="Logout" />
+                            <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/4674/4674404.png" alt="Logout" />
                             </li>
                         </a>
                     </>

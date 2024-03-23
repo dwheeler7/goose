@@ -53,18 +53,15 @@ export default function ProfilePage() {
                     <div className={styles.userContainer}>
                         <div className={styles.userHeading}>
                             <h2 className={styles.userName}>{user && user.name}</h2>
-                            <div className={styles.imgAndEditContainer}>
+                            <div className={styles.imgContainer}>
                                 <ProfileImage 
                                     className={styles.ProfileImage}
                                     user={user}
                                 />
-                                {
-                                    user ? <button className={styles.editBtn}>Edit User Information</button> : ''
-                                }
                             </div>
                             <div className={styles.userLinks}>
                                 {user && (
-                                    <a className={styles.ghLink} href={user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'}>
+                                    <a className={styles.ghLink} href={user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'} target={user.gitHubLink ? "_blank" : null}>
                                         <img className={styles.ghLogo} src='https://i.imgur.com/F796Bnt.png' />
                                     </a>
                                 )}
@@ -83,7 +80,7 @@ export default function ProfilePage() {
                         )}
                     </div>
                     <FollowList 
-                        user={user}
+                        posts={posts}
                     />
                 </div>
                 <ProfilePostList 
