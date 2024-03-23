@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
-import postsService from './utilities/posts-service'
+import { getAllPosts } from './utilities/posts-service'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
@@ -115,40 +115,20 @@ export default function App() {
             console.error(error);
             // Handle error as needed
         }
-    }
-
-    // ReadPost - we don't need authentication
-    const getAllPosts = async () => {
+    }       
+    
+    const fetchPosts = async () => {
+        console.log('fetch posts use effect...')
         try {
-            const response = await fetch('/api/posts')
-            const data = await response.json()
-            return data
+            const postsData = await getAllPosts()
+            setPosts(postsData)            
         } catch (error) {
-            console.error(error)            
-        }
-    }
-
-    // Show and individual post - no need for authentication
-    const getIndividualPost = async (id) => {
-        try {
-            const response = await fetch(`/api/posts/${id}`)
-            const data = await response.json()
-            return data
-        } catch (error) {
-            console.error(error)
-        }
+            console.error('There was an error!', error)
+        }        
     }
 
     // use effect to get all posts
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const postsData = await postsService.getAllPosts()
-                setPosts(postData)            
-            } catch (error) {
-              console.error('There was an error!', error)
-            }
-        }
+    useEffect(() => {        
         fetchPosts()
       }, [])
 
@@ -330,10 +310,7 @@ useEffect(() => {
                         token={token}
                         setUser={setUser}
                         user={user} // Pass the user prop to NavBar
-                        setToken={setToken}                        
-                        getIndividualPost={getIndividualPost}
-                        deletePost={deletePost}
-                        updatePost={updatePost}
+                        setToken={setToken}                                                                        
                         // post={post}
                     />)}                
                 <Routes>
@@ -343,6 +320,8 @@ useEffect(() => {
                             token={token}
                             setToken={setToken}
                             setUser={setUser}
+                            posts={posts}
+                            fetchPosts={fetchPosts}
                             // createPost={createPost}
                             // setPost={setPost}
                             // post={post}
@@ -378,10 +357,7 @@ useEffect(() => {
                         user={user} 
                         token={token} 
                         setToken={setToken}
-                        setUser={setUser}
-                        getIndividualPost={getIndividualPost}
-                        deletePost={deletePost}
-                        updatePost={updatePost}
+                        setUser={setUser}                                            
                         // post={post}
                     />} />
                 </Routes>
