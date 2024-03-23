@@ -84,10 +84,10 @@ export async function updatePasswordWithToken(token, passwordData) {
 }
 
 // New function for support ticket request
-export async function customerSupportRequest(name, email, message) {
+export async function customerSupportRequest(name, email, message, attachment) {
   try {
     // Make POST request for support ticket
-    await usersAPI.customerSupportRequest(name, email, message);
+    await usersAPI.customerSupportRequest(name, email, message, attachment);
     return true; // Support ticket request successful
   } catch (error) {
     console.error('Support Ticket Request Error:', error);
