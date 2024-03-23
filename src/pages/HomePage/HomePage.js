@@ -10,7 +10,10 @@ export default function HomePage({ posts, fetchPosts }) {
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
     const [image, setImage] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
+    
 
     useEffect(() => {
         fetchUserData();        
