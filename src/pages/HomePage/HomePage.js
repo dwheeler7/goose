@@ -15,8 +15,7 @@ export default function HomePage({ posts, fetchPosts }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchUserData();
-        // fetchPosts();
+        fetchUserData();        
     }, []);
 
     const fetchUserData = async () => {
