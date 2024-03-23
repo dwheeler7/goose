@@ -1,15 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
+import UserList from '../../components/UserList/UserList';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchUserData();
+        fetchPosts();
+    }, []);
+
+    const fetchUserData = async () => {
+        try {
+            const [postsResponse, usersResponse] = await Promise.all([
+                fetch('/api/posts'),
+                fetch('/api/users')
+            ]);
+            if (!postsResponse.ok || !usersResponse.ok) {
+                throw new Error('Failed to fetch data');
+            }
+
+            const postsData = await postsResponse.json();
+            const usersData = await usersResponse.json();
+            setPosts(postsData);
+            setUsers(usersData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const fetchPosts = async () => {
         try {
@@ -21,36 +49,27 @@ export default function HomePage() {
         }
     };
 
-    useEffect(() => {
-        fetchPosts();
-    }, []);
-
     const createPost = async (postData) => {
-        const response = await fetch('/api/posts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify(postData),
-        });
-        return response.json();
-    };
-
-    const getAllPosts = async () => {
         try {
-            const response = await fetch('/api/posts')
-            const data = await response.json()
-            return data
+            const response = await fetch('/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(postData)
+            });
+            return response.json();
         } catch (error) {
-            console.error(error)            
+            console.error('Error creating post:', error);
+            throw error;
         }
-    }
+    };
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
         const postData = { projectTitle, projectDescription, gitHubLink, image };
-        
+
         try {
             const newPost = await createPost(postData);
             setPosts(currentPosts => [newPost, ...currentPosts]);
@@ -65,10 +84,16 @@ export default function HomePage() {
 
     const handleSearch = (query) => {
         setSearchQuery(query);
-        // Implement your search logic here
-        // For example, you can filter the posts array based on the query
-        const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
-        setSearchResults(filteredPosts);
+        if (query.length > 0) {
+            const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
+            setSearchResults(filteredUsers);
+        } else {
+            setSearchResults([]);
+        }
+    };
+
+    const handleUserClick = (user) => {
+        navigate(`/profile/${user._id}`);
     };
 
     return (
@@ -100,9 +125,11 @@ export default function HomePage() {
                 />
                 <button type="submit">Post</button>
             </form>
-            <PostList 
-                getAllPosts={getAllPosts}
-                posts={posts} 
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder="Search for users"
             />
             <div>
                 <input
@@ -117,6 +144,8 @@ export default function HomePage() {
                     ))}
                 </ul>
             </div>
+            {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
+            <PostList posts={posts} />
         </div>
     );
 }
