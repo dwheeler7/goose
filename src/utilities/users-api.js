@@ -19,6 +19,6 @@ export function findUser(userId) {
   return sendRequest(`${BASE_URL}/${userId}`);
 }
 
-export async function customerSupportRequest(name, email, message) {
-  return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message });
+export async function customerSupportRequest(name, email, message, attachment) {
+  return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
 }
