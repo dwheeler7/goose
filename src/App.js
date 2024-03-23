@@ -338,7 +338,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         post={post}
                     />)}                
                 <Routes>
-                    <Route path='/' element={
+                    <Route path='/' element={ 
                         <HomePage
                             user={user} 
                             token={token}

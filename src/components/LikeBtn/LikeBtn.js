@@ -34,7 +34,12 @@ export default function LikeBtn() {
             className={`${styles.iconLink} ${clicked ? styles.clicked : ''}`}
             onClick={handleClick}
           >
-            ♡
+            <div className={styles.iconContainer}>
+              <img 
+                src="https://cdn-icons-png.flaticon.com/128/4674/4674399.png" 
+                alt="Like" 
+                className={styles.iconImage}/>
+            </div>
           </button>
         </li>
       </ul>

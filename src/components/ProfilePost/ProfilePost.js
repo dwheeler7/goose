@@ -55,7 +55,8 @@ export default function ProfilePost(props) {
                     <a href={props.githubLink ? props.githubLink : '#'} target={props.githubLink ? "_blank" : null}><img className={styles.ProjectLogo} src="https://i.imgur.com/F796Bnt.png"/></a>
                 </div>
                 <LikeBtn />
-                <button className={styles.deleteBtn} onClick={handleDelete}>Delete Post</button>
+                <button className={styles.deleteBtn} onClick={handleDelete}>
+                    <img src="https://cdn-icons-png.flaticon.com/128/4674/4674422.png" alt="Delete" className={styles.iconImage} /></button>
             </div>
         </div>
         </>
