@@ -35,6 +35,7 @@ export default function ProfilePost(props) {
                 // If the post is successfully deleted, you might want to update the UI to reflect the change
                 // You can do this by fetching the updated list of posts or updating the existing list of posts
                 // fetchPosts()
+                window.location.reload()
             } catch (error) {
                 console.error('Error deleting post:', error);
                 // Handle any errors that occur during the deletion process

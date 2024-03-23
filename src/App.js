@@ -10,7 +10,6 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
 import styles from './App.module.scss';
-import * as userService from './utilities/users-service';
 
 export default function App() {
     const [user, setUser] = useState(null);

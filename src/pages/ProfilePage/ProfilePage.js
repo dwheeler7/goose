@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import FollowList from '../../components/FollowList/FollowList';
 import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
+import { getUser } from '../../utilities/users-service';
 import { findUser } from '../../utilities/users-api';
 
 const ensureHttps = (url) => {
@@ -16,15 +17,13 @@ const ensureHttps = (url) => {
 export default function ProfilePage() {
     const { userId } = useParams();
     const [user, setUser] = useState({});
+    const [loggedIn, setLoggedIn] = useState({})
     const [posts, setPosts] = useState([]);
 
     const fetchData = async () => {
         try {
             // Fetch user data using getUser function
-            console.log(userId)
             const fetchedUser = await findUser(userId);
-
-            console.log(fetchedUser)
             setUser(fetchedUser);
             // Fetch all posts
             const fetchedPosts = await getAllPosts();
@@ -35,9 +34,22 @@ export default function ProfilePage() {
     }
 
     useEffect(() => {
-        console.log(`This is the ${userId}`)
         fetchData(); // Call fetchData function
     }, [userId]); // Add id to dependency array to re-fetch data when id changes
+
+    const fetchLoggedIn = async () => {
+        try {
+            // Fetch user data using getUser function
+            const fetchedUser = await getUser();
+            setLoggedIn(fetchedUser);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchLoggedIn(); // Call fetchData function
+    }, []);
 
     const getAllPosts = async () => {
         try {
@@ -83,9 +95,12 @@ export default function ProfilePage() {
                             <p className={styles.userBio}>No Bio at this time.</p>
                         )}
                     </div>
-                    <FollowList 
-                        posts={posts}
-                    />
+                    {
+                        loggedIn._id === userId ?
+                        <FollowList 
+                            posts={posts}
+                        /> : null
+                    }
                 </div>
                 <ProfilePostList 
                     posts={posts}

@@ -4,7 +4,7 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 
-export default function HomePage() {
+export default function HomePage({user, token}) {
     const [posts, setPosts] = useState([]);
     const [users, setUsers] = useState([]);
     const [projectTitle, setProjectTitle] = useState('');
@@ -95,55 +95,59 @@ export default function HomePage() {
     const handleUserClick = (user) => {
         navigate(`/profile/${user._id}`);
     };
-
     return (
         <div className={styles.homePage}>
             <h1>This is the HomePage</h1>
-            <form onSubmit={handleCreatePost}>
-                <input
-                    type="text"
-                    value={projectTitle}
-                    onChange={(e) => setProjectTitle(e.target.value)}
-                    placeholder="Title"
-                />
-                <textarea
-                    value={projectDescription}
-                    onChange={(e) => setProjectDescription(e.target.value)}
-                    placeholder="Description"
-                />
-                <input
-                    type="text"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
-                    placeholder="GitHub Link"
-                />
-                <input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="Image URL"
-                />
-                <button type="submit">Post</button>
-            </form>
-            <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search for users"
-            />
-            <div>
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    placeholder="Search for users"
-                />
-                <ul>
-                    {searchResults.map(post => (
-                        <li key={post.id}>{post.title}</li>
-                    ))}
-                </ul>
-            </div>
+            {
+                localStorage.getItem('token') ?
+                <>
+                    <form onSubmit={handleCreatePost}>
+                    <input
+                        type="text"
+                        value={projectTitle}
+                        onChange={(e) => setProjectTitle(e.target.value)}
+                        placeholder="Title"
+                    />
+                    <textarea
+                        value={projectDescription}
+                        onChange={(e) => setProjectDescription(e.target.value)}
+                        placeholder="Description"
+                    />
+                    <input
+                        type="text"
+                        value={gitHubLink}
+                        onChange={(e) => setGitHubLink(e.target.value)}
+                        placeholder="GitHub Link"
+                    />
+                    <input
+                        type="text"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        placeholder="Image URL"
+                    />
+                    <button type="submit">Post</button>
+                    </form>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        placeholder="Search for users"
+                    />
+                    <div>
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => handleSearch(e.target.value)}
+                            placeholder="Search for users"
+                        />
+                        <ul>
+                            {searchResults.map(post => (
+                                <li key={post.id}>{post.title}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </> : null
+            }
             {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>
