@@ -21,6 +21,8 @@ router.post('/login', dataController.loginUser, apiController.authenticate);
 // willy's reset route 
 router.post('/reset-password', dataController.resetPassword);
 router.put('/reset-password/:token', dataController.updatePasswordWithToken);
+//Email Support router 
+router.post('/support', dataController.handleSupportTicket);
 
 // GET /api/users/check-token
 router.get('/check-token', ensureLoggedIn, (req, res) => {

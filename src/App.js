@@ -6,7 +6,8 @@ import HomePage from './pages/HomePage/HomePage';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
-// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';
+// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
+import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
 import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
@@ -349,7 +350,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                             getAllPosts={getAllPosts}
                         />
                     } />
-
+                    <Route path='/customer-support' element={<SupportTicketForm />} />
                     <Route path='/auth' element={
                         <AuthPage
                             setUser={setUser}

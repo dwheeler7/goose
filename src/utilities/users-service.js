@@ -82,3 +82,15 @@ export async function updatePasswordWithToken(token, passwordData) {
     throw new Error('Failed to update password. Please try again later.');
   }
 }
+
+// New function for support ticket request
+export async function customerSupportRequest(name, email, message) {
+  try {
+    // Make POST request for support ticket
+    await usersAPI.customerSupportRequest(name, email, message);
+    return true; // Support ticket request successful
+  } catch (error) {
+    console.error('Support Ticket Request Error:', error);
+    throw new Error('Failed to submit support ticket. Please try again later.');
+  }
+}
