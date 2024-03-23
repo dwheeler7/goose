@@ -9,7 +9,6 @@ export default function ForgotPasswordPage({ setUser }) {
     return (
       <div className={styles.container}>
         <h1 className={styles.title}></h1>
-        {/* Render the existing ForgotPasswordForm component */}
         <ForgotPasswordForm setUser={setUser} />
       </div>
     );

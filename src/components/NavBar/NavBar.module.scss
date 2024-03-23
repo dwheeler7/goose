@@ -1,12 +1,10 @@
 .Nav {
     width: 100%;
-    background-color: white;
-    opacity: .6;
     height: 4rem;
     position: fixed;
     top: 0;
     .btnLogo {
-        width: 2rem;
+        width: 3rem;
     }
     
     .ul {
@@ -15,15 +13,19 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        background-color: rgba(255, 255, 255, 0.5);
 
         .navItem {
+            margin-right: 1rem;
+            padding: 1rem;
             text-decoration: none;
-            border: .1rem solid var(--nav-border);
-            width: 10vw;
+            width: 5vw;
             height: 100%;
+            border-radius: 20%;
+            transition: all 0.4s ease;
             &:hover{
-                background-color: green;
                 cursor: pointer;
+                    background-color: rgb(87, 163, 115);
             }
 
             .listItem {
