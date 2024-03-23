@@ -487,37 +487,57 @@ const SupportTicketForm = () => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ FollowList)
 /* harmony export */ });
-/* harmony import */ var _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FollowList.module.scss */ "./src/components/FollowList/FollowList.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FollowList.module.scss */ "./src/components/FollowList/FollowList.module.scss");
+/* harmony import */ var _Follow_Follow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Follow/Follow */ "./src/components/Follow/Follow.js");
+
+
+
+const EmptyState = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].emptyState
+}, "No posts available.");
+function FollowList(_ref) {
+  let {
+    posts
+  } = _ref;
+  // Check if posts array is empty
+  if (posts.length === 0) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(EmptyState, null);
+  }
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].FollowList
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "Employers"), posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Follow_Follow__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    key: postData._id,
+    user: postData.user,
+    likes: postData.likes
+  })));
+}
+
+/***/ }),
+
+/***/ "./src/components/Follow/Follow.js":
+/*!*****************************************!*\
+  !*** ./src/components/Follow/Follow.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Follow)
+/* harmony export */ });
+/* harmony import */ var _Follow_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Follow.module.scss */ "./src/components/Follow/Follow.module.scss");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-function FollowList(user) {
-  return /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContainer
-  }, user && user.userType === 'employer' ? /*#__PURE__*/React.createElement("h3", null, "Following") : /*#__PURE__*/React.createElement("h3", null, "Employers"), /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].follows
-  }, /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContent
-  }, /*#__PURE__*/React.createElement("img", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followImg,
-    src: "https://i.imgur.com/C2VpXHd.png"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userInfo
-  }, /*#__PURE__*/React.createElement("h4", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followName
-  }, "User's Name"), /*#__PURE__*/React.createElement("h5", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followCompany
-  }, "User's Company"))), /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followsContent
-  }, /*#__PURE__*/React.createElement("img", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followImg,
-    src: "https://i.imgur.com/C2VpXHd.png"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userInfo
-  }, /*#__PURE__*/React.createElement("h4", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followName
-  }, "User's Name"), /*#__PURE__*/React.createElement("h5", {
-    className: _FollowList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].followCompany
-  }, "User's Company")))));
+
+function Follow(props) {
+  console.log(props.likes);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: _Follow_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].Follow
+  }, props.likes.map(like => /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    className: _Follow_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].follows,
+    to: "/profile/".concat(like._id)
+  }, /*#__PURE__*/React.createElement("li", null, like.name)))))));
 }
 
 /***/ }),
@@ -589,6 +609,55 @@ function ForgotPasswordForm() {
     className: _ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].link,
     onClick: () => navigate('/auth')
   }, "I know my password"));
+}
+
+/***/ }),
+
+/***/ "./src/components/LikeBtn/LikeBtn.js":
+/*!*******************************************!*\
+  !*** ./src/components/LikeBtn/LikeBtn.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LikeBtn)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LikeBtn.module.scss */ "./src/components/LikeBtn/LikeBtn.module.scss");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+function LikeBtn() {
+  const [clicked, setClicked] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const handleClick = () => {
+    // Toggle the clicked state
+    setClicked(!clicked);
+    // Call handleLike function
+    handleLike();
+  };
+  const handleLike = async () => {
+    try {
+      // Here you can perform the logic for like/unlike
+      if (clicked) {
+        // Unlike the post
+        await unlikePost();
+      } else {
+        // Like the post
+        await likePost();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  return /*#__PURE__*/React.createElement("section", null, /*#__PURE__*/React.createElement("ul", {
+    className: _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconList
+  }, /*#__PURE__*/React.createElement("li", {
+    className: _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconItem
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "".concat(_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconLink, " ").concat(clicked ? _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].clicked : ''),
+    onClick: handleClick
+  }, "\u2661"))));
 }
 
 /***/ }),
@@ -765,6 +834,7 @@ function LoginForm(_ref) {
 
 function NavBar(props) {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchUserData = async () => {
@@ -777,9 +847,20 @@ function NavBar(props) {
     };
     fetchUserData();
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  const handleSearch = event => {
+    setSearchQuery(event.target.value);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Nav
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].searchBar
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    value: searchQuery,
+    onChange: handleSearch,
+    placeholder: "Search",
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].searchInput
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ul
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/",
@@ -787,7 +868,8 @@ function NavBar(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "https://cdn-icons-png.flaticon.com/128/4674/4674400.png",
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
+    src: "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/home-circle-green-64.png",
     alt: "Home"
   }))), !user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/auth",
@@ -795,30 +877,41 @@ function NavBar(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "",
-    alt: "log/signup"
+    src: "https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png",
+    alt: "Log/Signup"
   }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, user && user._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/profile/".concat(user._id),
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "https://cdn-icons-png.flaticon.com/128/4674/4674426.png",
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
+    src: "https://cdn-icons-png.flaticon.com/128/14026/14026766.png",
     alt: "Profile"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    to: "/settings",
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem,
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
+    src: "https://cdn-icons-png.flaticon.com/128/14025/14025429.png",
+    alt: "Settings"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem,
     onClick: () => {
       _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.logOut();
       setUser(null);
       navigateTo('/');
       window.location.reload();
     }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "https://cdn-icons-png.flaticon.com/128/4674/4674404.png",
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
+    src: "https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-512.png",
     alt: "Logout"
-  })))))));
+  }))))));
 }
 
 /***/ }),
@@ -983,10 +1076,11 @@ function ProfilePostList(_ref) {
     className: _ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProfilePost_ProfilePost__WEBPACK_IMPORTED_MODULE_2__["default"], {
     key: postData._id,
+    postId: postData._id,
     user: postData.user,
     projectTitle: postData.projectTitle,
     projectDescription: postData.projectDescription,
-    gitHubLink: postData.gitHubLink,
+    githubLink: postData.githubLink,
     image: postData.image
   })));
 }
@@ -1004,14 +1098,77 @@ function ProfilePostList(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfilePost.module.scss */ "./src/components/ProfilePost/ProfilePost.module.scss");
+/* harmony import */ var _components_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/LikeBtn/LikeBtn */ "./src/components/LikeBtn/LikeBtn.js");
+
+
 
 
 function ProfilePost(props) {
   const {
     userId
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)();
-  return props.user === userId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, props.projectTitle) : null;
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
+
+  // DeletePost
+  const deletePost = async token => {
+    // https://i.imgur.com/3quZxs4.png
+    // Step 4
+    if (!token) {
+      return;
+    }
+    try {
+      const response = await fetch("/api/posts/".concat(props.postId), {
+        method: 'DELETE',
+        headers: {
+          // Don't need content-type because we are not sending any data
+          'Authorization': "Bearer ".concat(token)
+        }
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleDelete = async () => {
+    try {
+      // Call the deletePost function with the post id and token as arguments
+      const deletedPost = await deletePost(props.postId, props.token);
+      console.log("".concat(props.postId, " has been deleted"));
+      // If the post is successfully deleted, you might want to update the UI to reflect the change
+      // You can do this by fetching the updated list of posts or updating the existing list of posts
+      // fetchPosts()
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      // Handle any errors that occur during the deletion process
+    }
+  };
+  return props.user === userId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfilePost
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TitleImgContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectTitle
+  }, props.projectTitle), props.image === '' || props.image ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectImage,
+    src: props.image
+  }) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectDescription
+  }, props.projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navBtnContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    href: props.githubLink ? props.githubLink : '#',
+    target: props.githubLink ? "_blank" : null
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectLogo,
+    src: "https://i.imgur.com/F796Bnt.png"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].deleteBtn,
+    onClick: handleDelete
+  }, "Delete Post")))) : null;
 }
 
 /***/ }),
@@ -1110,9 +1267,10 @@ function ResetPassword(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignUpForm.module.scss */ "./src/components/SignUpForm/SignUpForm.module.scss");
+/* harmony import */ var _User_User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../User/User */ "./src/components/User/User.js");
 const _excluded = ["userType"];
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -1124,6 +1282,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 
 
+
+ // Import User component
 
 function SignUpForm(_ref) {
   let {
@@ -1143,7 +1303,7 @@ function SignUpForm(_ref) {
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // State to track password visibility
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // Corrected
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)(); // Corrected
 
   const handleChange = evt => {
     const {
@@ -1175,7 +1335,7 @@ function SignUpForm(_ref) {
           userType
         } = formData,
         userData = _objectWithoutProperties(formData, _excluded);
-      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(userData);
+      const user = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.signUp)(userData);
       setUser(user);
       navigate("/profile/".concat(user._id)); // Corrected
     } catch (_unused) {
@@ -1262,6 +1422,61 @@ function SignUpForm(_ref) {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].previewImage
   }));
 }
+
+/***/ }),
+
+/***/ "./src/components/UserList/UserList.js":
+/*!*********************************************!*\
+  !*** ./src/components/UserList/UserList.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _User_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../User/User */ "./src/components/User/User.js");
+
+
+const UserList = _ref => {
+  let {
+    users,
+    onUserClick
+  } = _ref;
+  const handleUserClick = user => {
+    onUserClick(user);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Found Users"), users.map((user, index) => {
+    const key = user._id || user.username || index; // Use id, username, or index as the key
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: key,
+      onClick: () => handleUserClick(user)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_User_User__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      user: user
+    }));
+  }));
+};
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (UserList);
+
+/***/ }),
+
+/***/ "./src/components/User/User.js":
+/*!*************************************!*\
+  !*** ./src/components/User/User.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const User = _ref => {
+  let {
+    user
+  } = _ref;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, user.name));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (User);
 
 /***/ }),
 
@@ -1384,50 +1599,64 @@ function ForgotPasswordPage(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePage.module.scss */ "./src/pages/HomePage/HomePage.module.scss");
 /* harmony import */ var _components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/PostList/PostList */ "./src/components/PostList/PostList.js");
+/* harmony import */ var _components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/UserList/UserList */ "./src/components/UserList/UserList.js");
+
+
 
 
 
 function HomePage() {
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [projectTitle, setProjectTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchUserData();
+    fetchPosts();
+  }, []);
+  const fetchUserData = async () => {
+    try {
+      const [postsResponse, usersResponse] = await Promise.all([fetch('/api/posts'), fetch('/api/users')]);
+      if (!postsResponse.ok || !usersResponse.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const postsData = await postsResponse.json();
+      const usersData = await usersResponse.json();
+      setPosts(postsData);
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   const fetchPosts = async () => {
     try {
       const response = await fetch('/api/posts');
       const data = await response.json();
-      console.log('Post Data:', data);
       setPosts(data);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchPosts();
-  }, []);
   const createPost = async postData => {
-    const response = await fetch('/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer ".concat(localStorage.getItem('token'))
-      },
-      body: JSON.stringify(postData)
-    });
-    return response.json();
-  };
-  const getAllPosts = async () => {
     try {
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      return data;
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+        },
+        body: JSON.stringify(postData)
+      });
+      return response.json();
     } catch (error) {
-      console.error(error);
+      console.error('Error creating post:', error);
+      throw error;
     }
   };
   const handleCreatePost = async event => {
@@ -1449,18 +1678,15 @@ function HomePage() {
       console.error('Error creating post:', error);
     }
   };
-  const handleSearch = query => {
-    setSearchQuery(query);
-    // Implement your search logic here
-    // For example, you can filter the posts array based on the query
-    const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
-    setSearchResults(filteredPosts);
+  const handleUserClick = user => {
+    navigate("/profile/".concat(user._id));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    onSubmit: handleCreatePost
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: handleCreatePost,
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
     type: "text",
     value: projectTitle,
     onChange: e => setProjectTitle(e.target.value),
@@ -1469,12 +1695,12 @@ function HomePage() {
     value: projectDescription,
     onChange: e => setProjectDescription(e.target.value),
     placeholder: "Description"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
     type: "text",
     value: gitHubLink,
     onChange: e => setGitHubLink(e.target.value),
     placeholder: "GitHub Link"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
     type: "text",
     value: image,
     onChange: e => setImage(e.target.value),
@@ -1482,16 +1708,6 @@ function HomePage() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    getAllPosts: getAllPosts,
-    posts: posts
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    value: searchQuery,
-    onChange: e => handleSearch(e.target.value),
-    placeholder: "Search for users"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, searchResults.map(post => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    key: post.id
-  }, post.title)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     posts: posts
   }));
 }
@@ -1571,17 +1787,16 @@ function ProfilePage() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userName
   }, user && user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgAndEditContainer
+    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
     user: user
-  }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].editBtn
-  }, "Edit User Information") : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
   }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLink,
-    href: user.gitHubLink ? ensureHttps(user.gitHubLink) : '#'
+    href: user.gitHubLink ? ensureHttps(user.gitHubLink) : '#',
+    target: user.gitHubLink ? "_blank" : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLogo,
     src: "https://i.imgur.com/F796Bnt.png"
@@ -1596,7 +1811,7 @@ function ProfilePage() {
   }, user.bio), !user || !user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
   }, "No Bio at this time.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    user: user
+    posts: posts
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__["default"], {
     posts: posts
   })));
@@ -1809,7 +2024,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.IMqMrT2eGOGeFiLbCAGg {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 h1 {
@@ -1849,7 +2064,7 @@ input:focus {
 label {
   font-size: 2.3rem;
   padding: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,aAAA;AACJ;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,iBAAA,EAAA,qBAAA;EACA,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\r\n    width: 100vw;\r\n    height: 100vh;\r\n}\r\n\r\nh1 {\r\n    font-size: 7vmin;\r\n    color: var(--text-dark);\r\n    text-shadow: 1px 1px 2px black;\r\n}\r\n\r\nh2 {\r\n    font-size: 2vw;\r\n    color: var(--text-dark);\r\n}\r\n\r\nh3 {\r\n    font-size: 1.3vw;\r\n}\r\n\r\np {\r\n    font-size: .8vw;\r\n}\r\n\r\ninput {\r\n    /* width: 25vw; */ /*Will Changed Temp */\r\n    height: 3.5rem;\r\n    border-radius: 1rem;\r\n    margin-left: 1rem;\r\n    font-size: 2rem;\r\n    padding: 1rem;\r\n    color: var(--input-color);\r\n}\r\n\r\ninput:focus {\r\n    outline: none;\r\n    box-shadow: 0 0 1rem var(--btn-color);\r\n}\r\n\r\nlabel {\r\n    font-size: 2.3rem;\r\n    padding: 1rem;\r\n}\r\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,YAAA;AACJ;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,iBAAA,EAAA,qBAAA;EACA,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\r\n    width: 100vw;\r\n    height: 100%;\r\n}\r\n\r\nh1 {\r\n    font-size: 7vmin;\r\n    color: var(--text-dark);\r\n    text-shadow: 1px 1px 2px black;\r\n}\r\n\r\nh2 {\r\n    font-size: 2vw;\r\n    color: var(--text-dark);\r\n}\r\n\r\nh3 {\r\n    font-size: 1.3vw;\r\n}\r\n\r\np {\r\n    font-size: .8vw;\r\n}\r\n\r\ninput {\r\n    /* width: 25vw; */ /*Will Changed Temp */\r\n    height: 3.5rem;\r\n    border-radius: 1rem;\r\n    margin-left: 1rem;\r\n    font-size: 2rem;\r\n    padding: 1rem;\r\n    color: var(--input-color);\r\n}\r\n\r\ninput:focus {\r\n    outline: none;\r\n    box-shadow: 0 0 1rem var(--btn-color);\r\n}\r\n\r\nlabel {\r\n    font-size: 2.3rem;\r\n    padding: 1rem;\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`
@@ -1948,38 +2163,61 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.AtSg2EkPDp6jd9QVI35I {
-  width: 73%;
-  background-color: white;
-  border-radius: 1rem;
-  border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
-  padding: 3rem;
+___CSS_LOADER_EXPORT___.push([module.id, `.n58utOoGOui0H9E8hTMP {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  overflow-y: scroll;
-}
-.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK {
-  display: flex;
-  flex-wrap: wrap;
-}
-.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK .OJbXhQxC3pJ5M1ose013 {
-  display: flex;
-  align-items: center;
-  margin-right: 2rem;
-}
-.AtSg2EkPDp6jd9QVI35I .Tsfcc0AYSwPzVwCzw7NK .OJbXhQxC3pJ5M1ose013 .hPv7IuPVo2GvSQG1SWo6 {
-  width: 8rem;
-  border-radius: 1rem;
-  margin-right: 2rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/FollowList/FollowList.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,sBAAA;EACA,kBAAA;AACJ;AAAI;EACI,aAAA;EACA,eAAA;AAER;AADQ;EACI,aAAA;EACA,mBAAA;EACA,kBAAA;AAGZ;AAFY;EACI,WAAA;EACA,mBAAA;EACA,kBAAA;AAIhB","sourcesContent":[".followsContainer {\r\n    width: 73%;\r\n    background-color: white;\r\n    border-radius: 1rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 1rem lightgrey;\r\n    padding: 3rem;\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    flex-direction: column;\r\n    overflow-y: scroll;\r\n    .follows {\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        .followsContent {\r\n            display: flex;\r\n            align-items: center;\r\n            margin-right: 2rem;\r\n            .followImg {\r\n                width: 8rem;\r\n                border-radius: 1rem;\r\n                margin-right: 2rem;\r\n            }\r\n        }\r\n    }\r\n}\r\n"],"sourceRoot":""}]);
+  width: 90%;
+  min-height: 5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 0.1rem solid lightgrey;
+  box-shadow: 0 0 0.3rem darkgreen;
+  margin: 2rem 0 2rem;
+}`, "",{"version":3,"sources":["webpack://./src/components/FollowList/FollowList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,gBAAA;EACA,uBAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;EACA,mBAAA;AACJ","sourcesContent":[".FollowList {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 90%;\r\n    min-height: 5rem;\r\n    background-color: white;\r\n    border-radius: .5rem;\r\n    margin-bottom: 2rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 .3rem darkgreen;\r\n    margin: 2rem 0 2rem;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"followsContainer": `AtSg2EkPDp6jd9QVI35I`,
-	"follows": `Tsfcc0AYSwPzVwCzw7NK`,
-	"followsContent": `OJbXhQxC3pJ5M1ose013`,
-	"followImg": `hPv7IuPVo2GvSQG1SWo6`
+	"FollowList": `n58utOoGOui0H9E8hTMP`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Follow/Follow.module.scss":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Follow/Follow.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.k_z3E_52ZfboqViZqStf ul {
+  list-style-type: none;
+  margin: 0.5rem;
+}
+.k_z3E_52ZfboqViZqStf ul .vBvFXqvo2bwXnANkAzWG {
+  text-decoration: none;
+  color: blue;
+}
+.k_z3E_52ZfboqViZqStf ul .vBvFXqvo2bwXnANkAzWG:hover {
+  color: cornflowerblue;
+}`, "",{"version":3,"sources":["webpack://./src/components/Follow/Follow.module.scss"],"names":[],"mappings":"AAAA;EACI,qBAAA;EACA,cAAA;AACJ;AAAI;EACI,qBAAA;EACA,WAAA;AAER;AADQ;EACI,qBAAA;AAGZ","sourcesContent":[".Follow ul {\r\n    list-style-type: none;\r\n    margin: .5rem;\r\n    .follows {\r\n        text-decoration: none;\r\n        color: blue;\r\n        &:hover {\r\n            color: cornflowerblue;\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"Follow": `k_z3E_52ZfboqViZqStf`,
+	"follows": `vBvFXqvo2bwXnANkAzWG`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2134,6 +2372,85 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"success": `dkaYBCIu5vx4QlxGCyHi`,
 	"button": `SQ6pFGLe9fdptuyzihAv`,
 	"link": `_uR7x4NFZTbsc3UtpAtZ`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/LikeBtn/LikeBtn.module.scss":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/LikeBtn/LikeBtn.module.scss ***!
+  \*******************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+  --color-icon: #535c68;
+  --social-icon1: #e4405f;
+  --social-icon2: #3b5999;
+  --social-icon3: #e4405f;
+  --social-icon4: #cd201f;
+  --social-icon5: #0077B5;
+}
+
+.J0M0F9EdoAVZrYUIX_F3 {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  list-style: none;
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.isNCXhZFl56IZEn46CO_ {
+  display: flex; /* Ensure list items are treated as flex items */
+}
+
+.mW4uXcKR7ZVmnZ4OrVG8 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  width: 3rem;
+  height: 3rem;
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.mW4uXcKR7ZVmnZ4OrVG8:hover {
+  color: #fff;
+  background-color: var(--social-icon1); /* Change background color on hover */
+}
+
+.mW4uXcKR7ZVmnZ4OrVG8.j913a9KLlJmRgDVkuL1T {
+  color: var(--social-icon1);
+}
+
+.mW4uXcKR7ZVmnZ4OrVG8.j913a9KLlJmRgDVkuL1T:hover {
+  background-color: var(--social-icon1); /* Change background color on hover when clicked */
+}`, "",{"version":3,"sources":["webpack://./src/components/LikeBtn/LikeBtn.module.scss"],"names":[],"mappings":"AAAA;EACE,qBAAA;EACA,uBAAA;EACA,uBAAA;EACA,uBAAA;EACA,uBAAA;EACA,uBAAA;AACF;;AAEA;EACE,aAAA;EACA,uBAAA,EAAA,wBAAA;EACA,mBAAA,EAAA,sBAAA;EACA,gBAAA;EACA,UAAA,EAAA,2BAAA;EACA,SAAA,EAAA,0BAAA;AACF;;AAEA;EACE,aAAA,EAAA,gDAAA;AACF;;AAEA;EACE,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,uBAAA;EACA,YAAA;EACA,WAAA;EACA,YAAA;EACA,YAAA,EAAA,iCAAA;EACA,eAAA,EAAA,iCAAA;EACA,uDAAA,EAAA,sBAAA;AACF;;AAEA;EACE,WAAA;EACA,qCAAA,EAAA,qCAAA;AACF;;AAEA;EACE,0BAAA;AACF;;AAEA;EACE,qCAAA,EAAA,kDAAA;AACF","sourcesContent":[":root {\r\n  --color-icon: #535c68; \r\n  --social-icon1: #e4405f;\r\n  --social-icon2: #3b5999;\r\n  --social-icon3: #e4405f;\r\n  --social-icon4: #cd201f;\r\n  --social-icon5: #0077B5; \r\n}\r\n\r\n.iconList {\r\n  display: flex;\r\n  justify-content: center; /* Center horizontally */\r\n  align-items: center; /* Center vertically */\r\n  list-style: none;\r\n  padding: 0; /* Remove default padding */\r\n  margin: 0; /* Remove default margin */\r\n}\r\n\r\n.iconItem {\r\n  display: flex; /* Ensure list items are treated as flex items */\r\n}\r\n\r\n.iconLink {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  font-size: 2rem;\r\n  text-decoration: none;\r\n  background-color: white;\r\n  color: black;\r\n  width: 3rem;\r\n  height: 3rem;\r\n  border: none; /* Remove default button border */\r\n  cursor: pointer; /* Show pointer cursor on hover */\r\n  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition */\r\n}\r\n\r\n.iconLink:hover {\r\n  color: #fff;\r\n  background-color: var(--social-icon1); /* Change background color on hover */\r\n}\r\n\r\n.iconLink.clicked {\r\n  color: var(--social-icon1);\r\n}\r\n\r\n.iconLink.clicked:hover {\r\n  background-color: var(--social-icon1); /* Change background color on hover when clicked */\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"iconList": `J0M0F9EdoAVZrYUIX_F3`,
+	"iconItem": `isNCXhZFl56IZEn46CO_`,
+	"iconLink": `mW4uXcKR7ZVmnZ4OrVG8`,
+	"clicked": `j913a9KLlJmRgDVkuL1T`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2409,52 +2726,70 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
-  width: 100%;
-  background-color: white;
-  opacity: 0.6;
-  height: 4rem;
-}
-.SLZXaJInmBusSKJAiC7A .Ycc7rx7800IPJaI2UyOo {
-  width: 20vw;
-  margin-left: 2rem;
-}
-.SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ {
-  width: 100%;
-  height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-}
-.SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ .Vi729QB0vR8fTZ0UgVAQ {
-  text-decoration: none;
-  border: 0.1rem solid var(--nav-border);
-  width: 10vw;
-  height: 100%;
-}
-.SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ .Vi729QB0vR8fTZ0UgVAQ:hover {
-  background-color: green;
-  cursor: pointer;
-}
-.SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ .Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: none;
   width: 100%;
-  height: 100%;
-  color: black;
-  font-size: 2rem;
+  padding: 0 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.y9nMRtKLACz8uMKjMe86 .eZtev9yXc9JXGdx0QBbI {
+  width: 100%;
+  border-radius: 4px;
+  border: white;
+  font-size: 16px;
+}
+
+.VhefOyE6KqL2INmTvax_ {
+  display: flex;
+  align-items: center;
   list-style: none;
 }
-.SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ .Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC:hover {
-  color: white;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,uBAAA;EACA,YAAA;EACA,YAAA;AACJ;AACI;EACI,WAAA;EACA,iBAAA;AACR;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,yBAAA;EACA,mBAAA;AAAR;AAEQ;EACI,qBAAA;EACA,sCAAA;EACA,WAAA;EACA,YAAA;AAAZ;AACY;EACI,uBAAA;EACA,eAAA;AAChB;AAEY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,gBAAA;AAAhB;AAEgB;EACI,YAAA;AAApB","sourcesContent":[".Nav {\r\n    width: 100%;\r\n    background-color: white;\r\n    opacity: .6;\r\n    height: 4rem;\r\n\r\n    .image {\r\n        width: 20vw;\r\n        margin-left: 2rem;\r\n    }\r\n    \r\n    .ul {\r\n        width: 100%;\r\n        height: 100%;\r\n        display: flex;\r\n        justify-content: flex-end;\r\n        align-items: center;\r\n\r\n        .navItem {\r\n            text-decoration: none;\r\n            border: .1rem solid var(--nav-border);\r\n            width: 10vw;\r\n            height: 100%;\r\n            &:hover{\r\n                background-color: green;\r\n                cursor: pointer;\r\n            }\r\n\r\n            .listItem {\r\n                display: flex;\r\n                justify-content: center;\r\n                align-items: center;\r\n                width: 100%;\r\n                height: 100%;\r\n                color: black;\r\n                font-size: 2rem;\r\n                list-style: none;\r\n\r\n                &:hover {\r\n                    color: white;\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
+
+.Vi729QB0vR8fTZ0UgVAQ {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  text-decoration: none;
+}
+.Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC {
+  display: flex;
+  align-items: center;
+}
+.Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC .J9UnnftTHXUkwLRjgCwj {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .SLZXaJInmBusSKJAiC7A {
+    flex-direction: column;
+  }
+  .SLZXaJInmBusSKJAiC7A .y9nMRtKLACz8uMKjMe86,
+  .SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ {
+    width: 100%;
+  }
+  .Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC .J9UnnftTHXUkwLRjgCwj {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,wCAAA;AACJ;;AAII;EACI,WAAA;EACA,kBAAA;EACA,aAAA;EACA,eAAA;AADR;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAFJ;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;AAFJ;AAII;EACI,aAAA;EACA,mBAAA;AAFR;AAIQ;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAFZ;;AAOA;EACI;IACI,sBAAA;EAJN;EAMM;;IAEI,WAAA;EAJV;EAUU;IACI,aAAA;IACA,cAAA;EARd;AACF","sourcesContent":[".Nav {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    height: none;\r\n    width: 100%;\r\n    padding: 0 1rem;\r\n    background-color: #ffffff;\r\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.searchBar {\r\n    \r\n    .searchInput {\r\n        width: 100%;\r\n        border-radius: 4px;\r\n        border: white;\r\n        font-size: 16px;\r\n    }\r\n}\r\n\r\n.ul {\r\n    display: flex;\r\n    align-items: center;\r\n    list-style: none;\r\n}\r\n\r\n.navItem {\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0 1rem;\r\n    text-decoration: none;\r\n\r\n    .listItem {\r\n        display: flex;\r\n        align-items: center;\r\n\r\n        .btnLogo {\r\n            width: 2rem; \r\n            height: 2rem; \r\n            margin-right: 0.5rem;\r\n        }\r\n    }\r\n}\r\n\r\n@media (max-width: 768px) {\r\n    .Nav {\r\n        flex-direction: column;\r\n\r\n        .searchBar,\r\n        .ul {\r\n            width: 100%; \r\n        }\r\n    }\r\n\r\n    .navItem {\r\n        .listItem {\r\n            .btnLogo {\r\n                width: 1.5rem; \r\n                height: 1.5rem;\r\n            }\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
-	"image": `Ycc7rx7800IPJaI2UyOo`,
+	"searchBar": `y9nMRtKLACz8uMKjMe86`,
+	"searchInput": `eZtev9yXc9JXGdx0QBbI`,
 	"ul": `VhefOyE6KqL2INmTvax_`,
 	"navItem": `Vi729QB0vR8fTZ0UgVAQ`,
-	"listItem": `XmTS1C8VIV547MbqjHFC`
+	"listItem": `XmTS1C8VIV547MbqjHFC`,
+	"btnLogo": `J9UnnftTHXUkwLRjgCwj`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2479,14 +2814,40 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.frwmGgIXMP1Gp_WSYbrf {
-  margin: 2rem auto;
-  width: 70vw;
-  height: 100vh;
-}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,iBAAA;EACA,WAAA;EACA,aAAA;AACJ","sourcesContent":[".PostList {\r\n    margin: 2rem auto;\r\n    width: 70vw;\r\n    height: 100vh;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.kzarDYEms6C4W3RidlsQ {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.xh5wRMlVK8Fl6xr_VBPV {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #666;
+  padding: 20px;
+}
+
+.yLopBHUe2Ss7rTVZt2vz {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.yLopBHUe2Ss7rTVZt2vz:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,2DAAA;EACA,SAAA;EACA,aAAA;EACA,uBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,aAAA;AACJ;;AAGA;EACI,sBAAA;EACA,wCAAA;EACA,mBAAA;EACA,YAAA;EACA,cAAA;EACA,aAAA;EACA,gBAAA;EACA,mEAAA;AAAJ;AAEI;EACI,2BAAA;EACA,yCAAA;AAAR","sourcesContent":[".postList {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\r\n    gap: 20px;\r\n    padding: 20px;\r\n    justify-content: center;\r\n}\r\n\r\n.emptyState {\r\n    text-align: center;\r\n    font-size: 1.5rem;\r\n    color: #666;\r\n    padding: 20px;\r\n}\r\n\r\n\r\n.post {\r\n    background-color: #fff;\r\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n    border-radius: 10px;\r\n    width: 300px; \r\n    margin: 0 auto; \r\n    padding: 20px;\r\n    overflow: hidden;\r\n    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;\r\n\r\n    &:hover {\r\n        transform: translateY(-5px);\r\n        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"PostList": `frwmGgIXMP1Gp_WSYbrf`
+	"postList": `kzarDYEms6C4W3RidlsQ`,
+	"emptyState": `xh5wRMlVK8Fl6xr_VBPV`,
+	"post": `yLopBHUe2Ss7rTVZt2vz`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2623,7 +2984,6 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.yvQBXs8UNZrzFQYNhhJZ {
-  margin-top: 3rem;
   background-color: white;
   width: 100%;
   min-height: 60rem;
@@ -2674,7 +3034,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.yvQBXs8UNZrzFQYNhhJZ {
   height: 9rem;
   border-radius: 100%;
   background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/components/ProfilePostList/ProfilePostList.module.scss"],"names":[],"mappings":"AAAA;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AACJ;;AACA;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAQ;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEZ;AACI;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACR;AACI;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACR;AAAQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEZ","sourcesContent":[".PostContainer {\r\n    margin-top: 3rem;\r\n    background-color: white;\r\n    width: 100%;\r\n    min-height: 60rem;\r\n    border-radius: 1rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 1rem lightgrey;\r\n}\r\n.PostItems {\r\n    margin-top: 3rem;\r\n    background-color: white;\r\n    width: 100%;\r\n    border-radius: 1rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 1rem lightgrey;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    .imgContainer {\r\n        .image {\r\n            max-height: 40rem;\r\n            border-radius: 1rem;\r\n            border: .2rem solid lightgrey;\r\n        }\r\n    }\r\n    .postDescription {\r\n        padding: 1rem;\r\n        margin-left: 1rem;\r\n        min-height: 50rem;\r\n        border: 1px solid lightgrey;\r\n        display: flex;\r\n        width: 50%;\r\n        border-radius: 1rem;\r\n        background-color: var(--bg-color);\r\n        box-shadow: 0 0 1rem lightgrey;\r\n    }\r\n    .iconContainer {\r\n        width: 20%;\r\n        min-height: 50rem;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: space-evenly;\r\n        align-items: center;\r\n        .icon {\r\n            width: 9rem;\r\n            height: 9rem;\r\n            border-radius: 100%;\r\n            background-color: var(--bg-color);\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/ProfilePostList/ProfilePostList.module.scss"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AACJ;;AACA;EACI,gBAAA;EACA,uBAAA;EACA,WAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAQ;EACI,iBAAA;EACA,mBAAA;EACA,8BAAA;AAEZ;AACI;EACI,aAAA;EACA,iBAAA;EACA,iBAAA;EACA,2BAAA;EACA,aAAA;EACA,UAAA;EACA,mBAAA;EACA,iCAAA;EACA,8BAAA;AACR;AACI;EACI,UAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;AACR;AAAQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,iCAAA;AAEZ","sourcesContent":[".PostContainer {\r\n    background-color: white;\r\n    width: 100%;\r\n    min-height: 60rem;\r\n    border-radius: 1rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 1rem lightgrey;\r\n}\r\n.PostItems {\r\n    margin-top: 3rem;\r\n    background-color: white;\r\n    width: 100%;\r\n    border-radius: 1rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 1rem lightgrey;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    .imgContainer {\r\n        .image {\r\n            max-height: 40rem;\r\n            border-radius: 1rem;\r\n            border: .2rem solid lightgrey;\r\n        }\r\n    }\r\n    .postDescription {\r\n        padding: 1rem;\r\n        margin-left: 1rem;\r\n        min-height: 50rem;\r\n        border: 1px solid lightgrey;\r\n        display: flex;\r\n        width: 50%;\r\n        border-radius: 1rem;\r\n        background-color: var(--bg-color);\r\n        box-shadow: 0 0 1rem lightgrey;\r\n    }\r\n    .iconContainer {\r\n        width: 20%;\r\n        min-height: 50rem;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: space-evenly;\r\n        align-items: center;\r\n        .icon {\r\n            width: 9rem;\r\n            height: 9rem;\r\n            border-radius: 100%;\r\n            background-color: var(--bg-color);\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"PostContainer": `yvQBXs8UNZrzFQYNhhJZ`,
@@ -2684,6 +3044,107 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"postDescription": `xXpT1wCFVQGqiwixd1b0`,
 	"iconContainer": `WzWGyhvoiCxWrepDuuZN`,
 	"icon": `wgPWHyTx4ee2dIX7sCHL`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProfilePost/ProfilePost.module.scss":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProfilePost/ProfilePost.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.LElHUfaogaIZIeUrZCB4 {
+  display: flex;
+  min-height: 20rem;
+  justify-content: space-around;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 0.1rem solid lightgrey;
+  box-shadow: 0 0 0.3rem darkgreen;
+}
+.LElHUfaogaIZIeUrZCB4 .sjUGLv2lxbi2lHmb8eIz {
+  display: flex;
+  flex-direction: column;
+}
+.LElHUfaogaIZIeUrZCB4 .sjUGLv2lxbi2lHmb8eIz .HtmCTcUYh48qeXBuXclQ {
+  max-width: 20rem;
+}
+.LElHUfaogaIZIeUrZCB4 .sjUGLv2lxbi2lHmb8eIz .NTrisIFHtCMU4cTU66om {
+  font-size: 2vw;
+  margin-bottom: 2rem;
+}
+.LElHUfaogaIZIeUrZCB4 .hHbAA0fYOHfgbuIZjLlQ {
+  font-size: 1vw;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 6rem;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .asDtuLGqSlhMd3XkRg_g {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .asDtuLGqSlhMd3XkRg_g .xyh1S60F7nTBCw8GYz_f {
+  width: 4rem;
+  background-color: white;
+  border-radius: 100%;
+  transition: 0.3s ease;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .asDtuLGqSlhMd3XkRg_g .xyh1S60F7nTBCw8GYz_f:hover {
+  filter: invert(100%);
+  transition: 0.3s ease;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .lveRiMysmCc7DCdWosA8 {
+  background-color: white;
+  border-radius: 0;
+  border: none;
+  width: auto;
+  color: blue;
+  font-size: 1rem;
+  font-weight: 200;
+  transition: 0.3s ease;
+}
+.LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .lveRiMysmCc7DCdWosA8:hover {
+  text-decoration: underline;
+  transition: 0.3s ease;
+}`, "",{"version":3,"sources":["webpack://./src/components/ProfilePost/ProfilePost.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,iBAAA;EACA,6BAAA;EACA,uBAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;AAER;AADQ;EACI,gBAAA;AAGZ;AADQ;EACI,cAAA;EACA,mBAAA;AAGZ;AAAI;EACI,cAAA;AAER;AAAI;EACI,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,eAAA;AAER;AADQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,gBAAA;AAGZ;AAFY;EACI,WAAA;EACA,uBAAA;EACA,mBAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,oBAAA;EACA,qBAAA;AAKpB;AADQ;EACI,uBAAA;EACA,gBAAA;EACA,YAAA;EACA,WAAA;EACA,WAAA;EACA,eAAA;EACA,gBAAA;EACA,qBAAA;AAGZ;AAFY;EACI,0BAAA;EACA,qBAAA;AAIhB","sourcesContent":[".ProfilePost {\r\n    display: flex;\r\n    min-height: 20rem;\r\n    justify-content: space-around;\r\n    background-color: white;\r\n    border-radius: .5rem;\r\n    margin-bottom: 2rem;\r\n    padding: 2rem;\r\n    border: .1rem solid lightgrey;\r\n    box-shadow: 0 0 .3rem darkgreen;\r\n    .TitleImgContainer {\r\n        display: flex;\r\n        flex-direction: column;\r\n        .ProjectImage {\r\n            max-width: 20rem;\r\n        }\r\n        .ProjectTitle {\r\n            font-size: 2vw;\r\n            margin-bottom: 2rem;\r\n        }\r\n    }\r\n    .ProjectDescription {\r\n        font-size: 1vw;\r\n    }\r\n    .navBtnContainer {\r\n        margin-left: auto;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: space-evenly;\r\n        align-items: center;\r\n        min-width: 6rem;\r\n        .ghContainer {\r\n            width: 3rem;\r\n            height: 3rem;\r\n            border-radius: 100%;\r\n            display: flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            overflow: hidden;\r\n            .ProjectLogo {\r\n                width: 4rem;\r\n                background-color: white;\r\n                border-radius: 100%;\r\n                transition: .3s ease;\r\n                &:hover {\r\n                    filter: invert(100%);\r\n                    transition: .3s ease;\r\n                }\r\n            }\r\n        }\r\n        .deleteBtn {\r\n            background-color: white;\r\n            border-radius: 0;\r\n            border: none;\r\n            width: auto;\r\n            color: blue;\r\n            font-size: 1rem;\r\n            font-weight: 200;\r\n            transition: .3s ease;\r\n            &:hover {\r\n                text-decoration: underline;\r\n                transition: .3s ease;\r\n            }\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"ProfilePost": `LElHUfaogaIZIeUrZCB4`,
+	"TitleImgContainer": `sjUGLv2lxbi2lHmb8eIz`,
+	"ProjectImage": `HtmCTcUYh48qeXBuXclQ`,
+	"ProjectTitle": `NTrisIFHtCMU4cTU66om`,
+	"ProjectDescription": `hHbAA0fYOHfgbuIZjLlQ`,
+	"navBtnContainer": `ATRQhwM0MHW34oNZOhqA`,
+	"ghContainer": `asDtuLGqSlhMd3XkRg_g`,
+	"ProjectLogo": `xyh1S60F7nTBCw8GYz_f`,
+	"deleteBtn": `lveRiMysmCc7DCdWosA8`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3108,9 +3569,108 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.CgjxyfEdobTkp_s1g1uU {
+  background-color: white;
+  padding: 20px;
+  border: none;
+  margin-top: -22.9rem;
+}
+
+.dEySatDVVilAzS3bqI9Z {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid rgb(58, 163, 49);
+  border-radius: 5px;
+  resize: none;
+}
+
+button {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(88, 85, 85);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: #6acf66;
+}
+
+.XPxNjc5GISdopuQ98rk6 {
+  margin-top: 20px;
+}
+
+.vCHNX8UaVIhE3i6IOusO {
+  background-color: white;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p {
+  color: black;
+}
+
+.vCHNX8UaVIhE3i6IOusO img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+._NMlzyl2SLslAiokZ3aS {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.HPoDdNDxi0HMP2hrM9Ts {
+  color: black;
+  cursor: pointer;
+}
+
+.HPoDdNDxi0HMP2hrM9Ts:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .dEySatDVVilAzS3bqI9Z {
+    flex-direction: column;
+  }
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
+  .CgjxyfEdobTkp_s1g1uU, .vCHNX8UaVIhE3i6IOusO, ._NMlzyl2SLslAiokZ3aS {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p, .HPoDdNDxi0HMP2hrM9Ts {
+    font-size: smaller;
+  }
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,yBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AACJ;;AAEA;EACI,YAAA;EACA,eAAA;AACJ;;AAEA;EACI,0BAAA;AACJ;;AAGA;EACI;IACI,sBAAA;EAAN;EAGE;IACI,WAAA;IACA,cAAA;EADN;EAKE;IACI,aAAA;IACA,mBAAA;EAHN;EAOE;IACI,kBAAA;EALN;AACF","sourcesContent":[".homePage {\r\n    background-color: white;\r\n    padding: 20px;\r\n    border: none;\r\n    margin-top: -22.9rem;\r\n}\r\n\r\n.form {\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-bottom: 2rem;\r\n}\r\n\r\ntextarea {\r\n    width: 100%;\r\n    padding: 10px;\r\n    margin-bottom: 10px;\r\n    border: 2px solid rgb(58, 163, 49);\r\n    border-radius: 5px;\r\n    resize: none;\r\n}\r\n\r\nbutton {\r\n    padding: 10px;\r\n    background-color: rgb(250, 250, 250);\r\n    color: rgb(88, 85, 85);\r\n    border: none;\r\n    border-radius: 5px;\r\n    cursor: pointer;\r\n    transition: background-color 0.3s ease;\r\n    width: auto; \r\n    margin: 0 auto; \r\n}\r\n\r\nbutton:hover {\r\n    background-color: #6acf66;\r\n}\r\n\r\n.postList {\r\n    margin-top: 20px;\r\n}\r\n\r\n.post {\r\n    background-color: white;\r\n    border: 2px solid rgb(0, 0, 0);\r\n    border-radius: 10px;\r\n    padding: 20px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.post h3, .post p {\r\n    color: black;\r\n}\r\n\r\n.post img {\r\n    max-width: 100%;\r\n    height: auto;\r\n    border-radius: 5px;\r\n}\r\n\r\n.userList {\r\n    background-color: white;\r\n    border: 2px solid black;\r\n    border-radius: 10px;\r\n    padding: 20px;\r\n    margin-top: 20px;\r\n}\r\n\r\n.user {\r\n    color: black;\r\n    cursor: pointer;\r\n}\r\n\r\n.user:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n\r\n@media (max-width: 768px) {\r\n    .form {\r\n        flex-direction: column;\r\n    }\r\n\r\n    button {\r\n        width: 100%; \r\n        margin-left: 0;\r\n    }\r\n\r\n   \r\n    .homePage, .post, .userList {\r\n        padding: 10px;\r\n        margin-bottom: 10px;\r\n    }\r\n\r\n   \r\n    .post h3, .post p, .user {\r\n        font-size: smaller; \r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
-___CSS_LOADER_EXPORT___.locals = {};
+___CSS_LOADER_EXPORT___.locals = {
+	"homePage": `CgjxyfEdobTkp_s1g1uU`,
+	"form": `dEySatDVVilAzS3bqI9Z`,
+	"postList": `XPxNjc5GISdopuQ98rk6`,
+	"post": `vCHNX8UaVIhE3i6IOusO`,
+	"userList": `_NMlzyl2SLslAiokZ3aS`,
+	"user": `HPoDdNDxi0HMP2hrM9Ts`
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -3136,40 +3696,34 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
   height: 100%;
-  padding: 5rem 10rem;
+  padding: 2rem 10rem;
+  display: flex;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+  width: 60%;
   max-height: 50rem;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  max-height: 40rem;
   background-color: white;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 2rem;
   border: 0.1rem solid lightgrey;
-  box-shadow: 0 0 1rem lightgrey;
+  box-shadow: 0 0 0.3rem darkgreen;
 }
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .uK8D5va6yweSFDp9V9EA {
+.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .syKW9dLz4EwS_wpHk6_0 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 15rem;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .uK8D5va6yweSFDp9V9EA .XLulKpjU3oXLNW5wNTQy {
-  font-size: 1.2rem;
-}
-.z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .uK8D5va6yweSFDp9V9EA .XLulKpjU3oXLNW5wNTQy:hover {
-  color: blue;
-  text-decoration: underline;
-  transition: none;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .dbIMdhqIGQg9JtZeKmrK {
   color: black;
@@ -3187,7 +3741,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   transition: 0.3s ease;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .VTiGYB_vr7yJA7Vk5uTj:hover {
-  background-color: green;
+  filter: invert(100%);
   transition: 0.3s ease;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw {
@@ -3198,16 +3752,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   transition: 0.3s ease;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
-  background-color: green;
+  filter: invert(100%);
   transition: 0.3s ease;
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,UAAA;EACA,YAAA;EACA,mBAAA;AACJ;AAAI;EACI,aAAA;EACA,8BAAA;EACA,WAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,8BAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAHgB;EACI,iBAAA;AAKpB;AAJoB;EACI,WAAA;EACA,0BAAA;EACA,gBAAA;AAMxB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,uBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\r\n    margin: 0 auto;\r\n    width: 80%;\r\n    height: 100%;\r\n    padding: 5rem 10rem;\r\n    .topContainer {\r\n        display: flex;\r\n        justify-content: space-between;\r\n        width: 100%;\r\n        max-height: 50rem;\r\n        .userContainer {\r\n            display: flex;\r\n            flex-direction: column;\r\n            width: 25%;\r\n            background-color: white;\r\n            border-radius: 1rem;\r\n            padding: 2rem;\r\n            border: .1rem solid lightgrey;\r\n            box-shadow: 0 0 1rem lightgrey;\r\n            .imgAndEditContainer {\r\n                display: flex;\r\n                flex-direction: column;\r\n                justify-content: center;\r\n                align-items: center;\r\n                width: 15rem;\r\n                .editBtn {\r\n                    font-size: 1.2rem;\r\n                    &:hover {\r\n                        color: blue;\r\n                        text-decoration: underline;\r\n                        transition: none;\r\n                    }\r\n                }\r\n            }\r\n            .userBio {\r\n                color: black;\r\n            }\r\n            .userLinks {\r\n                width: 15rem;\r\n                display: flex;\r\n                justify-content: space-evenly;\r\n                margin-bottom: 1.5rem;\r\n                .ghLogo {\r\n                    background-color: lightgrey;\r\n                    border-radius: 100%;\r\n                    width: 4rem;\r\n                    transition: .3s ease;\r\n                    &:hover {\r\n                        background-color: green;\r\n                        transition: .3s ease;\r\n                    }\r\n                }\r\n                .portfolioLogo {\r\n                    background-color: lightgrey;\r\n                    border-radius: 100%;\r\n                    width: 4rem;\r\n                    padding: 1rem;\r\n                    transition: .3s ease;\r\n                    &:hover {\r\n                        background-color: green;\r\n                        transition: .3s ease;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,uBAAA;EACA,qBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\r\n    margin: 0 auto;\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 2rem 10rem;\r\n    display: flex;\r\n    .topContainer {\r\n        width: 60%;\r\n        max-height: 50rem;\r\n        .userContainer {\r\n            display: flex;\r\n            flex-direction: column;\r\n            justify-content: space-around;\r\n            align-items: center;\r\n            width: 90%;\r\n            max-height: 40rem;\r\n            background-color: white;\r\n            border-radius: .5rem;\r\n            padding: 2rem;\r\n            border: .1rem solid lightgrey;\r\n            box-shadow: 0 0 .3rem darkgreen;\r\n            .imgContainer {\r\n                display: flex;\r\n                flex-direction: column;\r\n                justify-content: center;\r\n                align-items: center;\r\n                width: 15rem;\r\n            }\r\n            .userBio {\r\n                color: black;\r\n            }\r\n            .userLinks {\r\n                width: 15rem;\r\n                display: flex;\r\n                justify-content: space-evenly;\r\n                margin-bottom: 1.5rem;\r\n                .ghLogo {\r\n                    background-color: lightgrey;\r\n                    border-radius: 100%;\r\n                    width: 4rem;\r\n                    transition: .3s ease;\r\n                    &:hover {\r\n                        filter: invert(100%);\r\n                        transition: .3s ease;\r\n                    }\r\n                }\r\n                .portfolioLogo {\r\n                    background-color: lightgrey;\r\n                    border-radius: 100%;\r\n                    width: 4rem;\r\n                    padding: 1rem;\r\n                    transition: .3s ease;\r\n                    &:hover {\r\n                        filter: invert(100%);\r\n                        transition: .3s ease;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
 	"topContainer": `Fn3Y8z6cyE3sFTgZXhsg`,
 	"userContainer": `C3y4TdU4vKMpvL4_wj8H`,
-	"imgAndEditContainer": `uK8D5va6yweSFDp9V9EA`,
-	"editBtn": `XLulKpjU3oXLNW5wNTQy`,
+	"imgContainer": `syKW9dLz4EwS_wpHk6_0`,
 	"userBio": `dbIMdhqIGQg9JtZeKmrK`,
 	"userLinks": `LG29adQOef4sgu1x7iuH`,
 	"ghLogo": `VTiGYB_vr7yJA7Vk5uTj`,
@@ -3377,6 +3930,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/Follow/Follow.module.scss":
+/*!**************************************************!*\
+  !*** ./src/components/Follow/Follow.module.scss ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Follow_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./Follow.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Follow/Follow.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Follow_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Follow_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Follow_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Follow_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss":
 /*!**************************************************************************!*\
   !*** ./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss ***!
@@ -3426,6 +4032,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ForgotPasswordForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/LikeBtn/LikeBtn.module.scss":
+/*!****************************************************!*\
+  !*** ./src/components/LikeBtn/LikeBtn.module.scss ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./LikeBtn.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/LikeBtn/LikeBtn.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3744,6 +4403,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/ProfilePost/ProfilePost.module.scss":
+/*!************************************************************!*\
+  !*** ./src/components/ProfilePost/ProfilePost.module.scss ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ProfilePost.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProfilePost/ProfilePost.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProfilePost_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -4325,4 +5037,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.ebd6fb21e022236477fd78b3dab8b98a.js.map
+//# sourceMappingURL=App.9cd567fbb444438be16b68de72025b40.js.map

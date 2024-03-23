@@ -11,8 +11,6 @@ export default function HomePage() {
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
     const [image, setImage] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -82,25 +80,14 @@ export default function HomePage() {
         }
     };
 
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-        if (query.length > 0) {
-            const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
-            setSearchResults(filteredUsers);
-        } else {
-            setSearchResults([]);
-        }
-    };
-
     const handleUserClick = (user) => {
         navigate(`/profile/${user._id}`);
     };
 
     return (
         <div className={styles.homePage}>
-            <h1>This is the HomePage</h1>
-            <form onSubmit={handleCreatePost}>
-                <input
+            <form onSubmit={handleCreatePost} className={styles.form}>
+                <textarea
                     type="text"
                     value={projectTitle}
                     onChange={(e) => setProjectTitle(e.target.value)}
@@ -111,13 +98,13 @@ export default function HomePage() {
                     onChange={(e) => setProjectDescription(e.target.value)}
                     placeholder="Description"
                 />
-                <input
+                <textarea
                     type="text"
                     value={gitHubLink}
                     onChange={(e) => setGitHubLink(e.target.value)}
                     placeholder="GitHub Link"
                 />
-                <input
+                <textarea
                     type="text"
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
@@ -125,14 +112,8 @@ export default function HomePage() {
                 />
                 <button type="submit">Post</button>
             </form>
-            <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search for users"
-            />
-            {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>
     );
+    
 }
