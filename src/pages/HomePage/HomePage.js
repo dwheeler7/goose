@@ -9,10 +9,11 @@ export default function HomePage() {
     const [users, setUsers] = useState([]);
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
-    const [gitHubLink, setGitHubLink] = useState('');
+    const [githubLink, setGitHubLink] = useState('');
     const [image, setImage] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [useReadmeAsDescription, setUseReadmeAsDescription] = useState(false); // Checkbox state
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,7 +69,13 @@ export default function HomePage() {
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        const postData = { projectTitle, projectDescription, gitHubLink, image };
+        const postData = {
+            projectTitle,
+            projectDescription: useReadmeAsDescription ? '' : projectDescription, // Use empty string if README is used as description
+            githubLink,
+            image,
+            useReadmeAsDescription
+        };
 
         try {
             const newPost = await createPost(postData);
@@ -77,6 +84,7 @@ export default function HomePage() {
             setProjectDescription('');
             setGitHubLink('');
             setImage('');
+            setUseReadmeAsDescription(false); // Reset the checkbox
         } catch (error) {
             console.error('Error creating post:', error);
         }
@@ -100,31 +108,37 @@ export default function HomePage() {
         <div className={styles.homePage}>
             <h1>This is the HomePage</h1>
             <form onSubmit={handleCreatePost}>
-                <input
-                    type="text"
-                    value={projectTitle}
-                    onChange={(e) => setProjectTitle(e.target.value)}
-                    placeholder="Title"
-                />
-                <textarea
-                    value={projectDescription}
-                    onChange={(e) => setProjectDescription(e.target.value)}
-                    placeholder="Description"
-                />
-                <input
-                    type="text"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
-                    placeholder="GitHub Link"
-                />
-                <input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="Image URL"
-                />
-                <button type="submit">Post</button>
-            </form>
+        <input
+            type="text"
+            value={projectTitle}
+            onChange={(e) => setProjectTitle(e.target.value)}
+            placeholder="Title"
+        />
+        <textarea
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+            placeholder="Description"
+        />
+        <input
+            type="text"
+            value={githubLink}
+            onChange={(e) => setGitHubLink(e.target.value)}
+            placeholder="GitHub Link"
+        />
+        <input
+            type="checkbox"
+            checked={useReadmeAsDescription}
+            onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
+        />
+        <label htmlFor="useReadmeAsDescription">Use README as description</label>
+        <input
+            type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="Image URL"
+        />
+        <button type="submit">Post</button>
+    </form>
             <input
                 type="text"
                 value={searchQuery}

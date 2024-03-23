@@ -30,14 +30,16 @@ async function create(req, res, next) {
 
         let description = projectDescription; // Initialize with provided projectDescription
         // If GitHub link is provided and user wants to use README content as description
+        console.log(githubLink, useReadmeAsDescription)
         if (githubLink && useReadmeAsDescription) {
             // Extract owner and repo name from the GitHub link
+            console.log('working')
             const [_, owner, repo] = githubLink.split('/');
             // Fetch README content from GitHub repository
             const readmeContent = await fetchReadmeContent(owner, repo);
             req.body.projectDescription = readmeContent; // Update projectDescription with README content
         }
-
+        
         const post = await Post.create({ user: userId, ...req.body, description });
         const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;

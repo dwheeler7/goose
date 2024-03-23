@@ -1597,10 +1597,11 @@ function HomePage() {
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [projectTitle, setProjectTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [githubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [useReadmeAsDescription, setUseReadmeAsDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // Checkbox state
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchUserData();
@@ -1649,9 +1650,11 @@ function HomePage() {
     event.preventDefault();
     const postData = {
       projectTitle,
-      projectDescription,
-      gitHubLink,
-      image
+      projectDescription: useReadmeAsDescription ? '' : projectDescription,
+      // Use empty string if README is used as description
+      githubLink,
+      image,
+      useReadmeAsDescription
     };
     try {
       const newPost = await createPost(postData);
@@ -1660,6 +1663,7 @@ function HomePage() {
       setProjectDescription('');
       setGitHubLink('');
       setImage('');
+      setUseReadmeAsDescription(false); // Reset the checkbox
     } catch (error) {
       console.error('Error creating post:', error);
     }
@@ -1691,10 +1695,16 @@ function HomePage() {
     placeholder: "Description"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    value: gitHubLink,
+    value: githubLink,
     onChange: e => setGitHubLink(e.target.value),
     placeholder: "GitHub Link"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "checkbox",
+    checked: useReadmeAsDescription,
+    onChange: e => setUseReadmeAsDescription(e.target.checked)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "useReadmeAsDescription"
+  }, "Use README as description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     value: image,
     onChange: e => setImage(e.target.value),
@@ -4920,4 +4930,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.4f66a2abc6dc47cbe2baf3d0690fe738.js.map
+//# sourceMappingURL=App.d61e9ed17e6548ed2646c3ff7ec20a03.js.map
