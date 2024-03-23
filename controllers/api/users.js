@@ -53,11 +53,10 @@ const dataController = {
             res.status(400).json({ message: error.message || 'Bad Credentials' });
         }
     }, 
-    async showUser(req, res, next) {
+    async showUser(req, res) {
         try {
             const user = await User.findById(req.params.id)
-            res.locals.data.user = user
-            next()
+            res.json(user)
         } catch (error) {
             res.status(400).json({ msg: error.message })
         }

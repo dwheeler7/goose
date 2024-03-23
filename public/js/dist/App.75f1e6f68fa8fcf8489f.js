@@ -223,7 +223,6 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (token) {
       const fetchUserData = async () => {
-        console.log('fetching user data');
         try {
           // Fetch user data from your backend
           const response = await fetch('/api/user-data', {
@@ -339,6 +338,7 @@ function App() {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_7__["default"].App
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_7__["default"].NavBar,
     token: token,
     setUser: setUser,
     user: user // Pass the user prop to NavBar
@@ -418,7 +418,6 @@ function App() {
 
 
 function Follow(props) {
-  console.log(props.likes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _Follow_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].Follow
   }, props.likes.map(like => /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -890,10 +889,11 @@ const Post = _ref3 => {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PostList.module.scss */ "./src/components/PostList/PostList.module.scss");
 /* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Post/Post */ "./src/components/Post/Post.js");
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
 
+
+// Component to display when there are no posts available
 const EmptyState = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
   className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].emptyState
 }, "No posts available.");
@@ -901,9 +901,13 @@ function PostList(_ref) {
   let {
     posts
   } = _ref;
+  // Check if there are no posts
   if (posts.length === 0) {
+    // If no posts, render the EmptyState component
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(EmptyState, null);
   }
+
+  // If there are posts, render the list
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -912,9 +916,7 @@ function PostList(_ref) {
     projectDescription: postData.projectDescription,
     gitHubLink: postData.gitHubLink,
     image: postData.image
-  })), posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-    key: postData._id
-  }, postData))));
+  })));
 }
 
 /***/ }),
@@ -936,9 +938,10 @@ function ProfileImage(_ref) {
     user
   } = _ref;
   // Accept user data as a prop
+
   return /*#__PURE__*/React.createElement("div", {
     className: _ProfileImage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].imgContainer
-  }, user && typeof user.picture === 'string' ? /*#__PURE__*/React.createElement("img", {
+  }, user.picture ? /*#__PURE__*/React.createElement("img", {
     className: _ProfileImage_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProfileImage,
     src: user.picture
   }) : /*#__PURE__*/React.createElement("img", {
@@ -997,7 +1000,6 @@ function ProfilePost(props) {
     try {
       // Call the deletePost function with the post id and token as arguments
       const deletedPost = await deletePost(props.postId, props.token);
-      console.log("".concat(props.postId, " has been deleted"));
       // If the post is successfully deleted, you might want to update the UI to reflect the change
       // You can do this by fetching the updated list of posts or updating the existing list of posts
       // fetchPosts()
@@ -1064,7 +1066,7 @@ function ProfilePostList(_ref) {
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
-  }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProfilePost_ProfilePost__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, posts.slice().reverse().map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ProfilePost_ProfilePost__WEBPACK_IMPORTED_MODULE_2__["default"], {
     key: postData._id,
     postId: postData._id,
     user: postData.user,
@@ -1462,7 +1464,6 @@ function HomePage() {
     try {
       const response = await fetch('/api/posts');
       const data = await response.json();
-      console.log('Post Data:', data);
       setPosts(data);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -1552,9 +1553,7 @@ function HomePage() {
     placeholder: "Search for users"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, searchResults.map(post => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     key: post.id
-  }, post.title)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    posts: posts
-  }));
+  }, post.title)))));
 }
 
 /***/ }),
@@ -1575,7 +1574,7 @@ function HomePage() {
 /* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
 /* harmony import */ var _components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FollowList/FollowList */ "./src/components/FollowList/FollowList.js");
 /* harmony import */ var _components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProfilePostList/ProfilePostList */ "./src/components/ProfilePostList/ProfilePostList.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_users_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-api */ "./src/utilities/users-api.js");
 
 
 
@@ -1591,26 +1590,28 @@ const ensureHttps = url => {
 };
 function ProfilePage() {
   const {
-    id
+    userId
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    async function fetchData() {
-      try {
-        // Fetch user data using getUser function
-        const fetchedUser = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_6__.getUser)(id);
-        setUser(fetchedUser);
-
-        // Fetch all posts
-        const fetchedPosts = await getAllPosts();
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+  const fetchData = async () => {
+    try {
+      // Fetch user data using getUser function
+      console.log(userId);
+      const fetchedUser = await (0,_utilities_users_api__WEBPACK_IMPORTED_MODULE_6__.findUser)(userId);
+      console.log(fetchedUser);
+      setUser(fetchedUser);
+      // Fetch all posts
+      const fetchedPosts = await getAllPosts();
+      setPosts(fetchedPosts);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log("This is the ".concat(userId));
     fetchData(); // Call fetchData function
-  }, [id]); // Add id to dependency array to re-fetch data when id changes
+  }, [userId]); // Add id to dependency array to re-fetch data when id changes
 
   const getAllPosts = async () => {
     try {
@@ -1635,7 +1636,8 @@ function ProfilePage() {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
-    user: user
+    user: user,
+    setUser: setUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
   }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
@@ -1707,6 +1709,7 @@ async function sendRequest(url) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   findUser: () => (/* binding */ findUser),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   resetPassword: () => (/* binding */ resetPassword),
 /* harmony export */   signUp: () => (/* binding */ signUp)
@@ -1723,7 +1726,9 @@ function login(credentials) {
 function resetPassword(emailData) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/reset-password"), 'POST', emailData);
 }
-
+function findUser(userId) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(userId));
+}
 // export function updatePasswordWithToken(token, newPassword) {
 //   const url = `${BASE_URL}/reset-password/${token}`;
 //   const passwordData = { newPassword }; 
@@ -1856,6 +1861,11 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.IMqMrT2eGOGeFiLbCAGg {
   width: 100vw;
   height: 100%;
+  padding-top: 4rem;
+}
+.IMqMrT2eGOGeFiLbCAGg .z1Y52ButKREXXJL8AqTW {
+  position: fixed;
+  top: 0;
 }
 
 h1 {
@@ -1895,10 +1905,11 @@ input:focus {
 label {
   font-size: 2.3rem;
   padding: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,YAAA;AACJ;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,iBAAA,EAAA,qBAAA;EACA,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    height: 100%;\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    /* width: 25vw; */ /*Will Changed Temp */\n    height: 3.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 2rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,YAAA;EACA,iBAAA;AACJ;AAAI;EACI,eAAA;EACA,MAAA;AAER;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,iBAAA,EAAA,qBAAA;EACA,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    height: 100%;\n    padding-top: 4rem;\n    .NavBar {\n        position: fixed;\n        top: 0;\n    }\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    /* width: 25vw; */ /*Will Changed Temp */\n    height: 3.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 2rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"App": `IMqMrT2eGOGeFiLbCAGg`
+	"App": `IMqMrT2eGOGeFiLbCAGg`,
+	"NavBar": `z1Y52ButKREXXJL8AqTW`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2490,6 +2501,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
   background-color: white;
   opacity: 0.6;
   height: 4rem;
+  position: fixed;
+  top: 0;
 }
 .SLZXaJInmBusSKJAiC7A .J9UnnftTHXUkwLRjgCwj {
   width: 2rem;
@@ -2523,7 +2536,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
 }
 .SLZXaJInmBusSKJAiC7A .VhefOyE6KqL2INmTvax_ .Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC:hover {
   color: white;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,uBAAA;EACA,YAAA;EACA,YAAA;AACJ;AACI;EACI,WAAA;AACR;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,yBAAA;EACA,mBAAA;AAAR;AAEQ;EACI,qBAAA;EACA,sCAAA;EACA,WAAA;EACA,YAAA;AAAZ;AACY;EACI,uBAAA;EACA,eAAA;AAChB;AAEY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,gBAAA;AAAhB;AAEgB;EACI,YAAA;AAApB","sourcesContent":[".Nav {\n    width: 100%;\n    background-color: white;\n    opacity: .6;\n    height: 4rem;\n\n    .btnLogo {\n        width: 2rem;\n    }\n    \n    .ul {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: flex-end;\n        align-items: center;\n\n        .navItem {\n            text-decoration: none;\n            border: .1rem solid var(--nav-border);\n            width: 10vw;\n            height: 100%;\n            &:hover{\n                background-color: green;\n                cursor: pointer;\n            }\n\n            .listItem {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                height: 100%;\n                color: black;\n                font-size: 2rem;\n                list-style: none;\n\n                &:hover {\n                    color: white;\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,uBAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,MAAA;AACJ;AAAI;EACI,WAAA;AAER;AACI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,yBAAA;EACA,mBAAA;AACR;AACQ;EACI,qBAAA;EACA,sCAAA;EACA,WAAA;EACA,YAAA;AACZ;AAAY;EACI,uBAAA;EACA,eAAA;AAEhB;AACY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,gBAAA;AAChB;AACgB;EACI,YAAA;AACpB","sourcesContent":[".Nav {\n    width: 100%;\n    background-color: white;\n    opacity: .6;\n    height: 4rem;\n    position: fixed;\n    top: 0;\n    .btnLogo {\n        width: 2rem;\n    }\n    \n    .ul {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: flex-end;\n        align-items: center;\n\n        .navItem {\n            text-decoration: none;\n            border: .1rem solid var(--nav-border);\n            width: 10vw;\n            height: 100%;\n            &:hover{\n                background-color: green;\n                cursor: pointer;\n            }\n\n            .listItem {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                height: 100%;\n                color: black;\n                font-size: 2rem;\n                list-style: none;\n\n                &:hover {\n                    color: white;\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
@@ -2701,6 +2714,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.LElHUfaogaIZIeUrZCB4 {
   display: flex;
   min-height: 20rem;
+  min-width: 50vw;
   justify-content: space-around;
   background-color: white;
   border-radius: 0.5rem;
@@ -2712,6 +2726,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.LElHUfaogaIZIeUrZCB4 {
 .LElHUfaogaIZIeUrZCB4 .sjUGLv2lxbi2lHmb8eIz {
   display: flex;
   flex-direction: column;
+  margin-right: 0.5rem;
 }
 .LElHUfaogaIZIeUrZCB4 .sjUGLv2lxbi2lHmb8eIz .HtmCTcUYh48qeXBuXclQ {
   max-width: 20rem;
@@ -2721,6 +2736,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.LElHUfaogaIZIeUrZCB4 {
   margin-bottom: 2rem;
 }
 .LElHUfaogaIZIeUrZCB4 .hHbAA0fYOHfgbuIZjLlQ {
+  max-width: 30rem;
   font-size: 1vw;
 }
 .LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA {
@@ -2763,7 +2779,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.LElHUfaogaIZIeUrZCB4 {
 .LElHUfaogaIZIeUrZCB4 .ATRQhwM0MHW34oNZOhqA .lveRiMysmCc7DCdWosA8:hover {
   text-decoration: underline;
   transition: 0.3s ease;
-}`, "",{"version":3,"sources":["webpack://./src/components/ProfilePost/ProfilePost.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,iBAAA;EACA,6BAAA;EACA,uBAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;AAER;AADQ;EACI,gBAAA;AAGZ;AADQ;EACI,cAAA;EACA,mBAAA;AAGZ;AAAI;EACI,cAAA;AAER;AAAI;EACI,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,eAAA;AAER;AADQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,gBAAA;AAGZ;AAFY;EACI,WAAA;EACA,uBAAA;EACA,mBAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,oBAAA;EACA,qBAAA;AAKpB;AADQ;EACI,uBAAA;EACA,gBAAA;EACA,YAAA;EACA,WAAA;EACA,WAAA;EACA,eAAA;EACA,gBAAA;EACA,qBAAA;AAGZ;AAFY;EACI,0BAAA;EACA,qBAAA;AAIhB","sourcesContent":[".ProfilePost {\n    display: flex;\n    min-height: 20rem;\n    justify-content: space-around;\n    background-color: white;\n    border-radius: .5rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n    border: .1rem solid lightgrey;\n    box-shadow: 0 0 .3rem darkgreen;\n    .TitleImgContainer {\n        display: flex;\n        flex-direction: column;\n        .ProjectImage {\n            max-width: 20rem;\n        }\n        .ProjectTitle {\n            font-size: 2vw;\n            margin-bottom: 2rem;\n        }\n    }\n    .ProjectDescription {\n        font-size: 1vw;\n    }\n    .navBtnContainer {\n        margin-left: auto;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-evenly;\n        align-items: center;\n        min-width: 6rem;\n        .ghContainer {\n            width: 3rem;\n            height: 3rem;\n            border-radius: 100%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            overflow: hidden;\n            .ProjectLogo {\n                width: 4rem;\n                background-color: white;\n                border-radius: 100%;\n                transition: .3s ease;\n                &:hover {\n                    filter: invert(100%);\n                    transition: .3s ease;\n                }\n            }\n        }\n        .deleteBtn {\n            background-color: white;\n            border-radius: 0;\n            border: none;\n            width: auto;\n            color: blue;\n            font-size: 1rem;\n            font-weight: 200;\n            transition: .3s ease;\n            &:hover {\n                text-decoration: underline;\n                transition: .3s ease;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/ProfilePost/ProfilePost.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,iBAAA;EACA,eAAA;EACA,6BAAA;EACA,uBAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,oBAAA;AAER;AADQ;EACI,gBAAA;AAGZ;AADQ;EACI,cAAA;EACA,mBAAA;AAGZ;AAAI;EACI,gBAAA;EACA,cAAA;AAER;AAAI;EACI,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,eAAA;AAER;AADQ;EACI,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,gBAAA;AAGZ;AAFY;EACI,WAAA;EACA,uBAAA;EACA,mBAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,oBAAA;EACA,qBAAA;AAKpB;AADQ;EACI,uBAAA;EACA,gBAAA;EACA,YAAA;EACA,WAAA;EACA,WAAA;EACA,eAAA;EACA,gBAAA;EACA,qBAAA;AAGZ;AAFY;EACI,0BAAA;EACA,qBAAA;AAIhB","sourcesContent":[".ProfilePost {\n    display: flex;\n    min-height: 20rem;\n    min-width: 50vw;\n    justify-content: space-around;\n    background-color: white;\n    border-radius: .5rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n    border: .1rem solid lightgrey;\n    box-shadow: 0 0 .3rem darkgreen;\n    .TitleImgContainer {\n        display: flex;\n        flex-direction: column;\n        margin-right: .5rem;\n        .ProjectImage {\n            max-width: 20rem;\n        }\n        .ProjectTitle {\n            font-size: 2vw;\n            margin-bottom: 2rem;\n        }\n    }\n    .ProjectDescription {\n        max-width: 30rem;\n        font-size: 1vw;\n    }\n    .navBtnContainer {\n        margin-left: auto;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-evenly;\n        align-items: center;\n        min-width: 6rem;\n        .ghContainer {\n            width: 3rem;\n            height: 3rem;\n            border-radius: 100%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            overflow: hidden;\n            .ProjectLogo {\n                width: 4rem;\n                background-color: white;\n                border-radius: 100%;\n                transition: .3s ease;\n                &:hover {\n                    filter: invert(100%);\n                    transition: .3s ease;\n                }\n            }\n        }\n        .deleteBtn {\n            background-color: white;\n            border-radius: 0;\n            border: none;\n            width: auto;\n            color: blue;\n            font-size: 1rem;\n            font-weight: 200;\n            transition: .3s ease;\n            &:hover {\n                text-decoration: underline;\n                transition: .3s ease;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePost": `LElHUfaogaIZIeUrZCB4`,
@@ -3313,7 +3329,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   margin: 0 auto;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 2rem 10rem;
   display: flex;
 }
@@ -3370,7 +3386,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
   filter: invert(100%);
   transition: 0.3s ease;
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,uBAAA;EACA,qBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 100%;\n    height: 100%;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background-color: white;\n            border-radius: .5rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 .3rem darkgreen;\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;EACA,WAAA;EACA,aAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,uBAAA;EACA,qBAAA;EACA,aAAA;EACA,8BAAA;EACA,gCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 0 auto;\n    width: 100%;\n    height: 100vh;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background-color: white;\n            border-radius: .5rem;\n            padding: 2rem;\n            border: .1rem solid lightgrey;\n            box-shadow: 0 0 .3rem darkgreen;\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
@@ -4600,4 +4616,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.e9792a314855af5e75587675cb45c179.js.map
+//# sourceMappingURL=App.42c72c14f8d6463656d2156b76f4f76a.js.map

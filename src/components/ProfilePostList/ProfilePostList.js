@@ -14,7 +14,8 @@ export default function ProfilePostList({posts}) {
 
     return (
         <div className={styles.postList}>
-            {posts.map(postData => (
+            {/* Reverse the posts array and map over it */}
+            {posts.slice().reverse().map(postData => (
                 <ProfilePost 
                     key={postData._id} 
                     postId={postData._id}

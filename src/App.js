@@ -205,7 +205,6 @@ export default function App() {
     useEffect(() => {
         if (token) {                    
             const fetchUserData = async () => {
-                console.log('fetching user data')
                 try {
                     // Fetch user data from your backend
                     const response = await fetch('/api/user-data', {
@@ -327,6 +326,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
             <div className={styles.App}>
                 {shouldNotDisplayNavBar && (
                     <NavBar
+                        className={styles.NavBar}
                         token={token}
                         setUser={setUser}
                         user={user} // Pass the user prop to NavBar
