@@ -4,9 +4,8 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 
-export default function HomePage() {
-    const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
+export default function HomePage({ posts, fetchPosts }) {        
+    const [users, setUsers] = useState([]);   
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
@@ -16,36 +15,20 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchUserData();
-        fetchPosts();
+        fetchUserData();        
     }, []);
 
     const fetchUserData = async () => {
         try {
-            const [postsResponse, usersResponse] = await Promise.all([
-                fetch('/api/posts'),
-                fetch('/api/users')
-            ]);
-            if (!postsResponse.ok || !usersResponse.ok) {
+            const usersResponse = await fetch('/api/users');
+            if (!usersResponse.ok) {
                 throw new Error('Failed to fetch data');
             }
-
-            const postsData = await postsResponse.json();
+    
             const usersData = await usersResponse.json();
-            setPosts(postsData);
             setUsers(usersData);
         } catch (error) {
             console.error('Error fetching data:', error);
-        }
-    };
-
-    const fetchPosts = async () => {
-        try {
-            const response = await fetch('/api/posts');
-            const data = await response.json();
-            setPosts(data);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
         }
     };
 
@@ -72,7 +55,7 @@ export default function HomePage() {
 
         try {
             const newPost = await createPost(postData);
-            setPosts(currentPosts => [newPost, ...currentPosts]);
+            fetchPosts()            
             setProjectTitle('');
             setProjectDescription('');
             setGitHubLink('');
