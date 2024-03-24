@@ -53,143 +53,145 @@ function App() {
     }
   };
 
-  // UpdatePost
-  const updatePost = async (newPostData, id, token) => {
-    // https://i.imgur.com/3quZxs4.png
-    // Step 4
-    if (!token) {
-      return;
-    }
-    try {
-      const response = await fetch("/api/posts/".concat(id), {
-        method: 'PUT',
-        headers: {
-          // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
-          // Tell it that we're sending JSON data
-          'Content-Type': 'application/json',
-          // Tell it that we have a user token
-          'Authorization': "Bearer ".concat(token)
-        },
-        body: JSON.stringify(newPostData)
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     // UpdatePost
+  //     const updatePost = async (newPostData, id, token) => {
+  //         // https://i.imgur.com/3quZxs4.png
+  //         // Step 4
+  //         if(!token){
+  //             return
+  //         }
+  //         try {
+  //             const response = await fetch(`/api/posts/${id}`, {
+  //                 method: 'PUT',
+  //                 headers: {
+  //                     // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
+  //                     // Tell it that we're sending JSON data
+  //                     'Content-Type': 'application/json',
+  //                     // Tell it that we have a user token
+  //                     'Authorization': `Bearer ${token}`
+  //                 },
+  //                 body: JSON.stringify(newPostData)
+  //             })
+  //             const data = await response.json()
+  //             return data
+  //         } catch (error) {
+  //             console.error(error)
+  //         }
+  //     }
 
-  // DeletePost
-  const deletePost = async (id, token) => {
-    // https://i.imgur.com/3quZxs4.png
-    // Step 4
-    if (!token) {
-      return;
-    }
-    try {
-      const response = await fetch("/api/posts/".concat(id), {
-        method: 'DELETE',
-        headers: {
-          // Don't need content-type because we are not sending any data
-          'Authorization': "Bearer ".concat(token)
-        }
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     // DeletePost
+  //     const deletePost = async (id, token) => {
+  //         // https://i.imgur.com/3quZxs4.png
+  //         // Step 4
+  //         if(!token){
+  //             return
+  //         }
+  //         try {
+  //             const response = await fetch(`/api/posts/${id}`, {
+  //                 method: 'DELETE',
+  //                 headers: {
+  //                     // Don't need content-type because we are not sending any data
+  //                     'Authorization': `Bearer ${token}`
+  //                 }
+  //             })
+  //             const data = await response.json()
+  //             return data
+  //         } catch (error) {
+  //             console.error(error)
+  //         }
+  //     }
 
-  //added global functionality to not display nav bar on whichever page youd like
+  // //added global functionality to not display nav bar on whichever page youd like
 
-  // Like a post
-  const likePost = async (postId, token) => {
-    try {
-      if (!token) {
-        return;
-      }
-      const response = await fetch("/api/posts/".concat(postId, "/like"), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token)
-        }
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     // Like a post
+  // const likePost = async (postId, token) => {
+  //     try {
+  //         if (!token) {
+  //             return;
+  //         }
 
-  // Unlike a post
-  const unlikePost = async (postId, token) => {
-    try {
-      if (!token) {
-        return;
-      }
-      const response = await fetch("/api/posts/".concat(postId, "/unlike"), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token)
-        }
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //         const response = await fetch(`/api/posts/${postId}/like`, {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 'Authorization': `Bearer ${token}`
+  //             }
+  //         });
 
-  // Follow a developer
-  const followDeveloper = async (userId, developerId, token) => {
-    try {
-      if (!token) {
-        return;
-      }
-      const response = await fetch('/api/follow', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token)
-        },
-        body: JSON.stringify({
-          userId,
-          developerId
-        })
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //         const data = await response.json();
+  //         return data;
+  //     } catch (error) {
+  //         console.error(error);
+  //     }
+  // }
 
-  // Unfollow a developer
-  const unfollowDeveloper = async (userId, developerId, token) => {
-    try {
-      if (!token) {
-        return;
-      }
-      const response = await fetch('/api/unfollow', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token)
-        },
-        body: JSON.stringify({
-          userId,
-          developerId
-        })
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // // Unlike a post
+  // const unlikePost = async (postId, token) => {
+  //     try {
+  //         if (!token) {
+  //             return;
+  //         }
+
+  //         const response = await fetch(`/api/posts/${postId}/unlike`, {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 'Authorization': `Bearer ${token}`
+  //             }
+  //         });
+
+  //         const data = await response.json();
+  //         return data;
+  //     } catch (error) {
+  //         console.error(error);
+  //     }
+  // }
+
+  //    // Follow a developer
+  // const followDeveloper = async (userId, developerId, token) => {
+  //     try {
+  //         if (!token) {
+  //             return;
+  //         }
+
+  //         const response = await fetch('/api/follow', {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 'Authorization': `Bearer ${token}`
+  //             },
+  //             body: JSON.stringify({ userId, developerId })
+  //         });
+
+  //         const data = await response.json();
+  //         return data;
+  //     } catch (error) {
+  //         console.error(error);
+  //     }
+  // };
+
+  // // Unfollow a developer
+  // const unfollowDeveloper = async (userId, developerId, token) => {
+  //     try {
+  //         if (!token) {
+  //             return;
+  //         }
+
+  //         const response = await fetch('/api/unfollow', {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 'Authorization': `Bearer ${token}`
+  //             },
+  //             body: JSON.stringify({ userId, developerId })
+  //         });
+
+  //         const data = await response.json();
+  //         return data;
+  //     } catch (error) {
+  //         console.error(error);
+  //     }
+  // }
 
   // use effect to get all posts
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -689,28 +691,34 @@ function LoginForm(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 
 
 
 
-function NavBar() {
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+function NavBar(_ref) {
+  let {
+    user
+  } = _ref;
+  // const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.getUser();
-        setUser(userData);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-    fetchUserData();
-  }, []);
+
+  // useEffect(() => {
+  //     const fetchUserData = async () => {
+  //         try {
+  //             const userData = await userService.getUser();
+  //             setUser(userData);
+  //         } catch (error) {
+  //             console.error('Error fetching user data:', error);
+  //         }
+  //     };
+
+  //     fetchUserData();
+  // }, []);
+
   const handleSearch = event => {
     setSearchQuery(event.target.value);
   };
@@ -726,7 +734,7 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].searchInput
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ul
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/",
     className: "".concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem, " ").concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].home)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -735,7 +743,7 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
     src: "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/home-circle-green-64.png",
     alt: "Home"
-  }))), !user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), !user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/auth",
     className: "".concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem, " ").concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -743,7 +751,7 @@ function NavBar() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: "https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png",
     alt: "Log/Signup"
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, user && user._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, user && user._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/profile/".concat(user._id),
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -752,7 +760,7 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
     src: "https://cdn-icons-png.flaticon.com/128/14026/14026766.png",
     alt: "Profile"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/settings",
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -764,7 +772,7 @@ function NavBar() {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem,
     onClick: () => {
-      _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.logOut();
+      _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.logOut();
       setUser(null);
       navigateTo('/');
       window.location.reload();
@@ -1566,10 +1574,8 @@ function AuthPage(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_ForgotPasswordForm_ForgotPasswordForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ForgotPasswordForm/ForgotPasswordForm */ "./src/components/ForgotPasswordForm/ForgotPasswordForm.js");
 /* harmony import */ var _ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ForgotPassword.module.scss */ "./src/pages/ForgotPassword/ForgotPassword.module.scss");
-
 
  // Adjust the import path as needed
  // Adjust the import path as needed
@@ -1578,7 +1584,6 @@ function ForgotPasswordPage(_ref) {
   let {
     setUser
   } = _ref;
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ForgotPassword_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].container
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
@@ -5116,4 +5121,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.64651d6add9d0ca39ebc98177e4a6bd4.js.map
+//# sourceMappingURL=App.feb3bcd493ad06524d52fef16d671f8c.js.map

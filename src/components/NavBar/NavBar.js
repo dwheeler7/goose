@@ -3,23 +3,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
 
-export default function NavBar() {
-    const [user, setUser] = useState(null);
+export default function NavBar({ user }) {
+    // const [user, setUser] = useState(null);
     const [searchQuery, setSearchQuery] = useState(''); 
     const navigateTo = useNavigate();
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData = await userService.getUser();
-                setUser(userData);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const userData = await userService.getUser();
+    //             setUser(userData);
+    //         } catch (error) {
+    //             console.error('Error fetching user data:', error);
+    //         }
+    //     };
 
-        fetchUserData();
-    }, []);
+    //     fetchUserData();
+    // }, []);
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
