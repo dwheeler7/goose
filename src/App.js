@@ -174,33 +174,6 @@ const unfollowDeveloper = async (userId, developerId, token) => {
     }
 }
 
-// useEffect(() => {
-//     if (token) {                    
-//         const fetchUserData = async () => {
-//             try {
-//                 // Fetch user data from your backend
-//                 const response = await fetch('/api/user-data', {
-//                     headers: {
-//                         Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
-//                     }
-//                 });
-    
-//                 if (response.ok) {
-//                     const userData = await response.json();
-//                     setUser(userData); // Update the user state with the fetched data
-//                 } else {
-//                     // Handle error
-//                     throw new Error('response failed')
-//                 }
-//             } catch (error) {
-//                 console.error('Error fetching user data:', error);
-//             }
-//         };    
-//         // Call the fetchUserData function when the component mounts
-//         fetchUserData();
-//     }
-// }, [token])
-
     // use effect to get all posts
     useEffect(() => {        
         fetchPosts()
@@ -227,7 +200,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                         className={styles.NavBar}
                         token={token}
                         setUser={setUser}
-                        user={user} // Pass the user prop to NavBar
+                        user={user}
                         setToken={setToken}                                                                                                
                     />)}                
                 <Routes>
@@ -246,6 +219,7 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                     <Route path='/customer-support' element={<SupportTicketForm />} />
                     <Route path='/auth' element={
                         <AuthPage
+                            user={user}
                             setUser={setUser}
                             setToken={setToken}
                             // signUp={signUp}
