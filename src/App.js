@@ -22,55 +22,6 @@ export default function App() {
     const [token, setToken] = useState('');
     const location = useLocation();
     const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
-
-    // Create a signUp fn that connects to the backend
-    const signUp = async(credentials) => {
-        try {
-            const response = await fetch('/api/users', {
-                method: 'POST',
-                // Headers that will be set in PostMan
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                // Turn the body into a readable JavaScript object 
-                body: JSON.stringify(credentials)
-            })
-            const data = await response.json()
-            setUser(data.user)
-            setToken(data.token)
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user', JSON.stringify(data.user))
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    // This function will need to be a prop passed to the LoginForm via AuthPage
-    const login = async (credentials) => {
-        try {
-            // https://i.imgur.com/3quZxs4.png
-            // Step 1 is complete here once someone fills out the loginForm
-            const response = await fetch('/api/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(credentials)
-            })
-            const data = await response.json()
-            // Step 3
-            const tokenData = data.token
-            localStorage.setItem('token', tokenData)
-            // The below code is additional to the core features of authentication
-            // You need to decide what additional things you would like to accomplish when you
-            // set up your stuff
-            const userData = data.user
-            localStorage.setItem('user', JSON.stringify(userData))
-            setUser(userData)
-        } catch (error) {
-            console.error(error)
-        }
-    }
     
     const fetchPosts = async () => {
         console.log('fetch posts use effect...')
@@ -297,15 +248,17 @@ useEffect(() => {
                         <AuthPage
                             setUser={setUser}
                             setToken={setToken}
-                            signUp={signUp}
-                            login={login}
+                            // signUp={signUp}
+                            // login={login}
                         />
                     }/>
                     <Route path="/auth/forgot-password" element={<ForgotPassword 
-                     setUser={setUser}
-                     setToken={setToken}
-                     signUp={signUp}
-                     login={login} />} />
+                        setUser={setUser}
+                        setToken={setToken}
+                        // signUp={signUp}
+                        // login={login}
+                      />
+                     } />
                    <Route
                         path="/reset-password/:token"
                         element={  // Pass user, token, and setUser props down to ResetPassword
