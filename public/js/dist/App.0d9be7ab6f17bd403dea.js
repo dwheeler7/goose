@@ -1668,15 +1668,23 @@ function HomePage(_ref) {
       console.error('Error creating post:', error);
     }
   };
+  const handleSearch = query => {
+    setSearchQuery(query);
+    if (query.length > 0) {
+      const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
+      setSearchResults(filteredUsers);
+    } else {
+      setSearchResults([]);
+    }
+  };
   const handleUserClick = user => {
     navigate("/profile/".concat(user._id));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    onSubmit: handleCreatePost,
-    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    onSubmit: handleCreatePost
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     value: projectTitle,
     onChange: e => setProjectTitle(e.target.value),
@@ -1685,12 +1693,12 @@ function HomePage(_ref) {
     value: projectDescription,
     onChange: e => setProjectDescription(e.target.value),
     placeholder: "Description"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     value: gitHubLink,
     onChange: e => setGitHubLink(e.target.value),
     placeholder: "GitHub Link"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     value: image,
     onChange: e => setImage(e.target.value),
@@ -5176,4 +5184,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.71ba858a50d4f5dac5e58ad90c7e9f68.js.map
+//# sourceMappingURL=App.4c9604542f67ffccef59c3228eb82d5f.js.map
