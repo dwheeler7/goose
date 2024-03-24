@@ -40,12 +40,7 @@ export default function HomePage({ posts, fetchPosts, users }) {
                         value={searchQuery}
                         onChange={(e) => handleSearch(e.target.value)}
                         placeholder="Search for users"
-                    />
-                    {/* <ul>
-                        {searchResults.map(post => (
-                            <li key={post.id}>{post.title}</li>
-                        ))}
-                    </ul> */}
+                    />                    
                 </div>
                 </> : null
             }
