@@ -1615,6 +1615,8 @@ function HomePage(_ref) {
   const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchUserData();
@@ -5174,4 +5176,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.7c264ed92c8830f46ae24dd9344ff114.js.map
+//# sourceMappingURL=App.71ba858a50d4f5dac5e58ad90c7e9f68.js.map
