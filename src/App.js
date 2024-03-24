@@ -94,7 +94,8 @@ export default function App() {
                     <Route path='/profile/:userId' 
                     element={<ProfilePage 
                         user={user}                     
-                        setUser={setUser}                                                                    
+                        setUser={setUser}      
+                        posts={posts}                                                              
                     />} />
                 </Routes>
             </div>
