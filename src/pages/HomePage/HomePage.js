@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
+import NewPostForm from '../../components/NewPostForm/NewPostForm';
 
-export default function HomePage({ posts, fetchPosts, users }) {            
-    const [projectTitle, setProjectTitle] = useState('');
-    const [projectDescription, setProjectDescription] = useState('');
-    const [gitHubLink, setGitHubLink] = useState('');
-    const [image, setImage] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const navigate = useNavigate();
+export default function HomePage({ posts, fetchPosts, users, token }) {            
+    const [projectTitle, setProjectTitle] = useState('')
+    const [projectDescription, setProjectDescription] = useState('')
+    const [gitHubLink, setGitHubLink] = useState('')
+    const [image, setImage] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
+    const [searchResults, setSearchResults] = useState([])
+    const navigate = useNavigate()
 
     const createPost = async (postData) => {
         try {
@@ -23,16 +24,16 @@ export default function HomePage({ posts, fetchPosts, users }) {
                 },
                 body: JSON.stringify(postData)
             });
-            return response.json();
+            return response.json()
         } catch (error) {
-            console.error('Error creating post:', error);
+            console.error('Error creating post:', error)
             throw error;
         }
-    };
+    }
 
     const handleCreatePost = async (event) => {
-        event.preventDefault();
-        const postData = { projectTitle, projectDescription, gitHubLink, image };
+        event.preventDefault()
+        const postData = { projectTitle, projectDescription, gitHubLink, image }
 
         try {
             const newPost = await createPost(postData);
@@ -65,7 +66,8 @@ export default function HomePage({ posts, fetchPosts, users }) {
             {
                 localStorage.getItem('token') ?
                 <>
-                    <form onSubmit={handleCreatePost}>
+                <NewPostForm fetchPosts={fetchPosts} />
+                    {/* <form onSubmit={handleCreatePost}>
                     <input
                         type="text"
                         value={projectTitle}
@@ -90,7 +92,7 @@ export default function HomePage({ posts, fetchPosts, users }) {
                         placeholder="Image URL"
                     />
                     <button type="submit">Post</button>
-                    </form>
+                </form> */}
                     <input
                         type="text"
                         value={searchQuery}

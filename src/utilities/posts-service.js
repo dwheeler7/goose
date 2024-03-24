@@ -10,5 +10,14 @@ export async function getAllPosts() {
       console.error("Error getting posts", error);
       return null; // Return null if there's an error parsing the token
     }
+}
+
+export async function createPost(postData) {
+  try {
+    const createdPost = await postsAPI.create(postData)
+    return createPost
+  } catch (error) {
+    console.error("Error getting posts", error);
+    return null
   }
-  
+}
