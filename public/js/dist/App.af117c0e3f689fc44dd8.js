@@ -924,6 +924,94 @@ function NavBar() {
 
 /***/ }),
 
+/***/ "./src/components/NewPostForm/NewPostForm.js":
+/*!***************************************************!*\
+  !*** ./src/components/NewPostForm/NewPostForm.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ NewPostForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+function NewPostForm(_ref) {
+  let {
+    fetchPosts
+  } = _ref;
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    projectTitle: '',
+    projectDescription: '',
+    gitHubLink: '',
+    image: ''
+  });
+  const handleChange = evt => {
+    const {
+      name,
+      value
+    } = evt.target;
+    setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+      [name]: value
+    }));
+    setError('');
+  };
+  const handleSubmit = async evt => {
+    evt.preventDefault();
+    try {
+      await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__.createPost)(formData);
+      await fetchPosts();
+    } catch (_unused) {
+      console.error('Error submitting form', error);
+    }
+  };
+  const {
+    projectTitle,
+    projectDescription,
+    gitHubLink,
+    image
+  } = formData;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    name: "projectTitle",
+    value: projectTitle,
+    onChange: handleChange,
+    placeholder: "Title"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    type: "text",
+    name: "projectDescription",
+    value: projectDescription,
+    onChange: handleChange,
+    placeholder: "Description"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    name: "gitHubLink",
+    value: gitHubLink,
+    onChange: handleChange,
+    placeholder: "Github link"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    name: "image",
+    value: image,
+    onChange: handleChange,
+    placeholder: "Image URL"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit"
+  }, "Add project"))), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, error));
+}
+
+/***/ }),
+
 /***/ "./src/components/Post/Post.js":
 /*!*************************************!*\
   !*** ./src/components/Post/Post.js ***!
@@ -1613,10 +1701,12 @@ function ForgotPasswordPage(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePage.module.scss */ "./src/pages/HomePage/HomePage.module.scss");
 /* harmony import */ var _components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/PostList/PostList */ "./src/components/PostList/PostList.js");
 /* harmony import */ var _components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/UserList/UserList */ "./src/components/UserList/UserList.js");
+/* harmony import */ var _components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/NewPostForm/NewPostForm */ "./src/components/NewPostForm/NewPostForm.js");
+
 
 
 
@@ -1634,61 +1724,7 @@ function HomePage(_ref) {
   const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-
-  // useEffect(() => {
-  //     fetchUserData();        
-  // }, []);
-
-  // const fetchUserData = async () => {
-  //     try {
-  //         const usersResponse = await fetch('/api/users');
-  //         if (!usersResponse.ok) {
-  //             throw new Error('Failed to fetch data');
-  //         }
-
-  //         const usersData = await usersResponse.json();
-  //         setUsers(usersData);
-  //     } catch (error) {
-  //         console.error('Error fetching data:', error);
-  //     }
-  // };
-
-  const createPost = async postData => {
-    try {
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(localStorage.getItem('token'))
-        },
-        body: JSON.stringify(postData)
-      });
-      return response.json();
-    } catch (error) {
-      console.error('Error creating post:', error);
-      throw error;
-    }
-  };
-  const handleCreatePost = async event => {
-    event.preventDefault();
-    const postData = {
-      projectTitle,
-      projectDescription,
-      gitHubLink,
-      image
-    };
-    try {
-      const newPost = await createPost(postData);
-      fetchPosts();
-      setProjectTitle('');
-      setProjectDescription('');
-      setGitHubLink('');
-      setImage('');
-    } catch (error) {
-      console.error('Error creating post:', error);
-    }
-  };
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
   const handleSearch = query => {
     setSearchQuery(query);
     if (query.length > 0) {
@@ -1703,34 +1739,8 @@ function HomePage(_ref) {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    onSubmit: handleCreatePost
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    value: projectTitle,
-    onChange: e => setProjectTitle(e.target.value),
-    placeholder: "Title"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    value: projectDescription,
-    onChange: e => setProjectDescription(e.target.value),
-    placeholder: "Description"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    value: gitHubLink,
-    onChange: e => setGitHubLink(e.target.value),
-    placeholder: "GitHub Link"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    value: image,
-    onChange: e => setImage(e.target.value),
-    placeholder: "Image URL"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit"
-  }, "Post")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    value: searchQuery,
-    onChange: e => handleSearch(e.target.value),
-    placeholder: "Search for users"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    fetchPosts: fetchPosts
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     value: searchQuery,
@@ -1863,12 +1873,16 @@ function ProfilePage() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   create: () => (/* binding */ create),
 /* harmony export */   getAll: () => (/* binding */ getAll)
 /* harmony export */ });
 /* unused harmony export getById */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/posts';
+function create(postData) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL, 'POST', postData);
+}
 function getAll() {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL);
 }
@@ -1885,6 +1899,7 @@ function getById(id) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createPost: () => (/* binding */ createPost),
 /* harmony export */   getAllPosts: () => (/* binding */ getAllPosts)
 /* harmony export */ });
 /* harmony import */ var _posts_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./posts-api */ "./src/utilities/posts-api.js");
@@ -1898,6 +1913,15 @@ async function getAllPosts() {
   } catch (error) {
     console.error("Error getting posts", error);
     return null; // Return null if there's an error parsing the token
+  }
+}
+async function createPost(postData) {
+  try {
+    const createdPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.create(postData);
+    return createPost;
+  } catch (error) {
+    console.error("Error getting posts", error);
+    return null;
   }
 }
 
@@ -5219,4 +5243,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.87fe632cc90919a9e5186a8855f2aec6.js.map
+//# sourceMappingURL=App.d81c7944558f978d8f2d31a4b8275b74.js.map

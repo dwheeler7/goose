@@ -5,47 +5,14 @@ import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 import NewPostForm from '../../components/NewPostForm/NewPostForm';
 
-export default function HomePage({ posts, fetchPosts, users, token }) {            
+export default function HomePage({ posts, fetchPosts, users }) {            
     const [projectTitle, setProjectTitle] = useState('')
     const [projectDescription, setProjectDescription] = useState('')
     const [gitHubLink, setGitHubLink] = useState('')
     const [image, setImage] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    const navigate = useNavigate()
-
-    const createPost = async (postData) => {
-        try {
-            const response = await fetch('/api/posts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify(postData)
-            });
-            return response.json()
-        } catch (error) {
-            console.error('Error creating post:', error)
-            throw error;
-        }
-    }
-
-    const handleCreatePost = async (event) => {
-        event.preventDefault()
-        const postData = { projectTitle, projectDescription, gitHubLink, image }
-
-        try {
-            const newPost = await createPost(postData);
-            fetchPosts()            
-            setProjectTitle('');
-            setProjectDescription('');
-            setGitHubLink('');
-            setImage('');
-        } catch (error) {
-            console.error('Error creating post:', error);
-        }
-    };
+    const navigate = useNavigate()    
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -66,52 +33,20 @@ export default function HomePage({ posts, fetchPosts, users, token }) {
             {
                 localStorage.getItem('token') ?
                 <>
-                <NewPostForm fetchPosts={fetchPosts} />
-                    {/* <form onSubmit={handleCreatePost}>
-                    <input
-                        type="text"
-                        value={projectTitle}
-                        onChange={(e) => setProjectTitle(e.target.value)}
-                        placeholder="Title"
-                    />
-                    <textarea
-                        value={projectDescription}
-                        onChange={(e) => setProjectDescription(e.target.value)}
-                        placeholder="Description"
-                    />
-                    <input
-                        type="text"
-                        value={gitHubLink}
-                        onChange={(e) => setGitHubLink(e.target.value)}
-                        placeholder="GitHub Link"
-                    />
-                    <input
-                        type="text"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        placeholder="Image URL"
-                    />
-                    <button type="submit">Post</button>
-                </form> */}
+                <NewPostForm fetchPosts={fetchPosts} />                                    
+                <div>
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => handleSearch(e.target.value)}
                         placeholder="Search for users"
                     />
-                    <div>
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => handleSearch(e.target.value)}
-                            placeholder="Search for users"
-                        />
-                        <ul>
-                            {searchResults.map(post => (
-                                <li key={post.id}>{post.title}</li>
-                            ))}
-                        </ul>
-                    </div>
+                    <ul>
+                        {searchResults.map(post => (
+                            <li key={post.id}>{post.title}</li>
+                        ))}
+                    </ul>
+                </div>
                 </> : null
             }
             {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}

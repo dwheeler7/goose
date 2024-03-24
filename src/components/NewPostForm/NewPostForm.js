@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { createPost } from '../../utilities/posts-service'
 
-export default function NewPostForm({ setPosts, fetchPosts }) {
+export default function NewPostForm({ fetchPosts }) {
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     projectTitle: '',
     projectDescription: '',
     gitHubLink: '',
     image: ''
   })
-
-  const [error, setError] = useState('')
 
   const handleChange = (evt) => {
     const { name, value } = evt.target
@@ -20,13 +19,10 @@ export default function NewPostForm({ setPosts, fetchPosts }) {
   const handleSubmit = async (evt) => {
     evt.preventDefault()
     try {
-
-        // createPost service
-        // fetch posts
-        // 
-      
+        await createPost(formData) 
+        await fetchPosts()
     } catch {
-      setError('Sign Up Failed - Try Again');
+      console.error('Error submitting form', error)
     }
   }
 
@@ -35,7 +31,7 @@ export default function NewPostForm({ setPosts, fetchPosts }) {
   return (
     <div>
       <div>
-        <form onSubmit={handleCreatePost}>                    
+        <form onSubmit={handleSubmit}>                    
             <input type="text" name="projectTitle" value={projectTitle} onChange={handleChange} placeholder='Title' />        
             <textarea type="text" name="projectDescription" value={projectDescription} onChange={handleChange} placeholder='Description' />                      
             <input type="text" name="gitHubLink" value={gitHubLink} onChange={handleChange} placeholder='Github link' />        
