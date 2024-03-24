@@ -7,18 +7,19 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { getAllPosts } from './utilities/posts-service'
+import { indexUsers } from './utilities/users-service'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
 import styles from './App.module.scss';
 import * as userService from './utilities/users-service';
+import { index } from './utilities/users-api';
 
 export default function App() {
     const [user, setUser] = useState(null)
-    const [posts, setPosts] = useState([])
-    // const [users, setUsers] = useState([]); 
+    const [users, setUsers] = useState([])
+    const [posts, setPosts] = useState([])    
     const [token, setToken] = useState('');
-//added global functionality to not display nav bar on whichever page youd like
     const location = useLocation();
     const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
 
@@ -127,10 +128,6 @@ export default function App() {
         }        
     }
 
-    // use effect to get all posts
-    useEffect(() => {        
-        fetchPosts()
-      }, [])
 
     // UpdatePost
     const updatePost = async (newPostData, id, token) => {
@@ -299,6 +296,26 @@ useEffect(() => {
     }
 }, [token])
 
+    // use effect to get all posts
+    useEffect(() => {        
+        fetchPosts()
+    }, [])
+
+    // use effect to get all users
+    useEffect(() => {
+
+        const fetchUsers = async () => {
+            try {
+                const foundUsers = await indexUsers()
+                setUsers(foundUsers)
+            } catch (error) {
+                console.error('Error finding users', error)
+            }
+        }
+        fetchUsers()
+    }, [])
+
+
 
 
     return (
@@ -322,6 +339,8 @@ useEffect(() => {
                             setUser={setUser}
                             posts={posts}
                             fetchPosts={fetchPosts}
+                            users={users}
+                            setUsers={setUsers}                            
                             // createPost={createPost}
                             // setPost={setPost}
                             // post={post}

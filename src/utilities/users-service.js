@@ -47,6 +47,16 @@ export function getUser() {
   }
 }
 
+export async function indexUsers() {
+  console.log('indexing users')
+  try {
+    const foundUsers = await usersAPI.index()
+    return foundUsers
+  } catch (error) {
+    console.error("Error finding users", error)
+  }
+}
+
 export function logOut() {
   localStorage.removeItem('token');
 }

@@ -21,6 +21,7 @@
 /* harmony import */ var _components_ResetPassword_ResetPassword__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ResetPassword/ResetPassword */ "./src/components/ResetPassword/ResetPassword.js");
 /* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
 /* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _components_CustomerSupport_CustomerSupport__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CustomerSupport/CustomerSupport */ "./src/components/CustomerSupport/CustomerSupport.js");
 /* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -33,16 +34,17 @@
 
 
 
+
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
+
 
 
 
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  // const [users, setUsers] = useState([]); 
   const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  //added global functionality to not display nav bar on whichever page youd like
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useLocation)();
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
 
@@ -147,11 +149,6 @@ function App() {
       console.error('There was an error!', error);
     }
   };
-
-  // use effect to get all posts
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchPosts();
-  }, []);
 
   // UpdatePost
   const updatePost = async (newPostData, id, token) => {
@@ -315,6 +312,24 @@ function App() {
       fetchUserData();
     }
   }, [token]);
+
+  // use effect to get all posts
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchPosts();
+  }, []);
+
+  // use effect to get all users
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const fetchUsers = async () => {
+      try {
+        const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_11__.indexUsers)();
+        setUsers(foundUsers);
+      } catch (error) {
+        console.error('Error finding users', error);
+      }
+    };
+    fetchUsers();
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_8__["default"].App
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -333,7 +348,9 @@ function App() {
       setToken: setToken,
       setUser: setUser,
       posts: posts,
-      fetchPosts: fetchPosts
+      fetchPosts: fetchPosts,
+      users: users,
+      setUsers: setUsers
       // createPost={createPost}
       // setPost={setPost}
       // post={post}
@@ -1608,9 +1625,9 @@ function ForgotPasswordPage(_ref) {
 function HomePage(_ref) {
   let {
     posts,
-    fetchPosts
+    fetchPosts,
+    users
   } = _ref;
-  const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [projectTitle, setProjectTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [projectDescription, setProjectDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [gitHubLink, setGitHubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
@@ -1618,21 +1635,25 @@ function HomePage(_ref) {
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [searchResults, setSearchResults] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchUserData();
-  }, []);
-  const fetchUserData = async () => {
-    try {
-      const usersResponse = await fetch('/api/users');
-      if (!usersResponse.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      const usersData = await usersResponse.json();
-      setUsers(usersData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+
+  // useEffect(() => {
+  //     fetchUserData();        
+  // }, []);
+
+  // const fetchUserData = async () => {
+  //     try {
+  //         const usersResponse = await fetch('/api/users');
+  //         if (!usersResponse.ok) {
+  //             throw new Error('Failed to fetch data');
+  //         }
+
+  //         const usersData = await usersResponse.json();
+  //         setUsers(usersData);
+  //     } catch (error) {
+  //         console.error('Error fetching data:', error);
+  //     }
+  // };
+
   const createPost = async postData => {
     try {
       const response = await fetch('/api/posts', {
@@ -1927,6 +1948,7 @@ async function sendRequest(url) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customerSupportRequest: () => (/* binding */ customerSupportRequest),
 /* harmony export */   findUser: () => (/* binding */ findUser),
+/* harmony export */   index: () => (/* binding */ index),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   resetPassword: () => (/* binding */ resetPassword),
 /* harmony export */   signUp: () => (/* binding */ signUp)
@@ -1945,6 +1967,9 @@ function resetPassword(emailData) {
 }
 function findUser(userId) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(userId));
+}
+function index() {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/"));
 }
 async function customerSupportRequest(name, email, message, attachment) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/support"), 'POST', {
@@ -1967,6 +1992,7 @@ async function customerSupportRequest(name, email, message, attachment) {
 /* harmony export */   customerSupportRequest: () => (/* binding */ customerSupportRequest),
 /* harmony export */   getToken: () => (/* binding */ getToken),
 /* harmony export */   getUser: () => (/* binding */ getUser),
+/* harmony export */   indexUsers: () => (/* binding */ indexUsers),
 /* harmony export */   logOut: () => (/* binding */ logOut),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   resetPassword: () => (/* binding */ resetPassword),
@@ -2023,6 +2049,15 @@ function getUser() {
   } catch (error) {
     console.error("Error parsing user from token:", error);
     return null; // Return null if there's an error parsing the token
+  }
+}
+async function indexUsers() {
+  console.log('indexing users');
+  try {
+    const foundUsers = await _users_api__WEBPACK_IMPORTED_MODULE_0__.index();
+    return foundUsers;
+  } catch (error) {
+    console.error("Error finding users", error);
   }
 }
 function logOut() {
@@ -5184,4 +5219,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.4c9604542f67ffccef59c3228eb82d5f.js.map
+//# sourceMappingURL=App.87fe632cc90919a9e5186a8855f2aec6.js.map

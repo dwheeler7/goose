@@ -4,8 +4,7 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 
-export default function HomePage({ posts, fetchPosts }) {        
-    const [users, setUsers] = useState([]);   
+export default function HomePage({ posts, fetchPosts, users }) {            
     const [projectTitle, setProjectTitle] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [gitHubLink, setGitHubLink] = useState('');
@@ -14,23 +13,23 @@ export default function HomePage({ posts, fetchPosts }) {
     const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchUserData();        
-    }, []);
+    // useEffect(() => {
+    //     fetchUserData();        
+    // }, []);
 
-    const fetchUserData = async () => {
-        try {
-            const usersResponse = await fetch('/api/users');
-            if (!usersResponse.ok) {
-                throw new Error('Failed to fetch data');
-            }
+    // const fetchUserData = async () => {
+    //     try {
+    //         const usersResponse = await fetch('/api/users');
+    //         if (!usersResponse.ok) {
+    //             throw new Error('Failed to fetch data');
+    //         }
     
-            const usersData = await usersResponse.json();
-            setUsers(usersData);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+    //         const usersData = await usersResponse.json();
+    //         setUsers(usersData);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     const createPost = async (postData) => {
         try {
