@@ -4,8 +4,9 @@ import styles from './AuthPage.module.scss';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
-export default function AuthPage({ setUser, user, setToken, token }) {
-  const [showLogin, setShowLogin] = useState(true);  
+export default function AuthPage({ setUser, user }) {
+  const navigate = useNavigate()
+  const [showLogin, setShowLogin] = useState(true);    
 
   return (
     <main className={styles.AuthPage}>

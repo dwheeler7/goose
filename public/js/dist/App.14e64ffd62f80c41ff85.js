@@ -35,16 +35,12 @@
 
 
 
-// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
-
-
 
 
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_9__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useLocation)();
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
   const fetchPosts = async () => {
@@ -195,33 +191,6 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //     if (token) {                    
-  //         const fetchUserData = async () => {
-  //             try {
-  //                 // Fetch user data from your backend
-  //                 const response = await fetch('/api/user-data', {
-  //                     headers: {
-  //                         Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
-  //                     }
-  //                 });
-
-  //                 if (response.ok) {
-  //                     const userData = await response.json();
-  //                     setUser(userData); // Update the user state with the fetched data
-  //                 } else {
-  //                     // Handle error
-  //                     throw new Error('response failed')
-  //                 }
-  //             } catch (error) {
-  //                 console.error('Error fetching user data:', error);
-  //             }
-  //         };    
-  //         // Call the fetchUserData function when the component mounts
-  //         fetchUserData();
-  //     }
-  // }, [token])
-
   // use effect to get all posts
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchPosts();
@@ -243,17 +212,12 @@ function App() {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_8__["default"].App
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_8__["default"].NavBar,
-    token: token,
     setUser: setUser,
-    user: user // Pass the user prop to NavBar
-    ,
-    setToken: setToken
+    user: user
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       user: user,
-      token: token,
-      setToken: setToken,
       setUser: setUser,
       posts: posts,
       fetchPosts: fetchPosts,
@@ -266,37 +230,25 @@ function App() {
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/auth",
     element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      setUser: setUser,
-      setToken: setToken
-      // signUp={signUp}
-      // login={login}
+      user: user,
+      setUser: setUser
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/auth/forgot-password",
     element: /*#__PURE__*/React.createElement(_pages_ForgotPassword_ForgotPassword__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      setUser: setUser,
-      setToken: setToken
-      // signUp={signUp}
-      // login={login}
+      setUser: setUser
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/reset-password/:token",
-    element:
-    /*#__PURE__*/
-    // Pass user, token, and setUser props down to ResetPassword
-    React.createElement(_components_ResetPassword_ResetPassword__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    element: /*#__PURE__*/React.createElement(_components_ResetPassword_ResetPassword__WEBPACK_IMPORTED_MODULE_5__["default"], {
       user: user,
-      token: token,
       setUser: setUser
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/profile/:userId",
     element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       user: user,
-      token: token,
-      setToken: setToken,
       setUser: setUser
-      // post={post}
     })
   }))));
 }
@@ -654,7 +606,7 @@ function LoginForm(_ref) {
       const user = await _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login(credentials, rememberMe, navigate);
       setUser(user);
       navigate('/');
-      window.location.reload();
+      // window.location.reload()
     } catch (_unused) {
       setError('Log In Failed - Try Again');
     }
@@ -1343,10 +1295,7 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 function SignUpForm(_ref) {
   let {
     setUser,
-    setShowLogin,
-    setToken,
-    token,
-    user
+    setShowLogin
   } = _ref;
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
@@ -1572,38 +1521,33 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuthPage.module.scss */ "./src/pages/AuthPage/AuthPage.module.scss");
-/* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
-/* harmony import */ var _components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/LoginForm/LoginForm */ "./src/components/LoginForm/LoginForm.js");
-/* harmony import */ var _components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/SignUpForm/SignUpForm */ "./src/components/SignUpForm/SignUpForm.js");
+/* harmony import */ var _components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/LoginForm/LoginForm */ "./src/components/LoginForm/LoginForm.js");
+/* harmony import */ var _components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/SignUpForm/SignUpForm */ "./src/components/SignUpForm/SignUpForm.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
  // Import useNavigate from react-router-dom
 
 
 
-
 function AuthPage(_ref) {
   let {
     setUser,
-    user,
-    setToken,
-    token
+    user
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const [showLogin, setShowLogin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)(); // Initialize the useNavigate hook
-
   return /*#__PURE__*/React.createElement("main", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AuthPage
   }, /*#__PURE__*/React.createElement("div", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logo
   }), /*#__PURE__*/React.createElement("div", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].credentialsContainer
-  }, showLogin ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, showLogin ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUser: setUser,
     setShowLogin: setShowLogin
-  })) : /*#__PURE__*/React.createElement(_components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  })) : /*#__PURE__*/React.createElement(_components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     setUser: setUser,
     setShowLogin: setShowLogin
   })));
@@ -5172,4 +5116,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.ada547ebad8304cb583ba289c67c9f22.js.map
+//# sourceMappingURL=App.64651d6add9d0ca39ebc98177e4a6bd4.js.map

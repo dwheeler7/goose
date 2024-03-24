@@ -4,7 +4,7 @@ import { signUp } from '../../utilities/users-service';
 import styles from './SignUpForm.module.scss';
 import User from '../User/User'; // Import User component
 
-export default function SignUpForm({ setUser, setShowLogin, setToken, token, user }) {
+export default function SignUpForm({ setUser, setShowLogin }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

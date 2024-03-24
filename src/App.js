@@ -8,18 +8,14 @@ import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { getAllPosts } from './utilities/posts-service'
 import { indexUsers, getUser } from './utilities/users-service'
-// import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
 import styles from './App.module.scss';
-import * as userService from './utilities/users-service';
-import { index } from './utilities/users-api';
 
 export default function App() {
     const [user, setUser] = useState(getUser())
     const [users, setUsers] = useState([])
-    const [posts, setPosts] = useState([])    
-    const [token, setToken] = useState('');
+    const [posts, setPosts] = useState([])        
     const location = useLocation();
     const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
     
@@ -197,18 +193,14 @@ const unfollowDeveloper = async (userId, developerId, token) => {
             <div className={styles.App}>
                 {shouldNotDisplayNavBar && (
                     <NavBar
-                        className={styles.NavBar}
-                        token={token}
+                        className={styles.NavBar}                        
                         setUser={setUser}
-                        user={user}
-                        setToken={setToken}                                                                                                
+                        user={user}                                                                                                                      
                     />)}                
                 <Routes>
                     <Route path='/' element={ 
                         <HomePage
-                            user={user} 
-                            token={token}
-                            setToken={setToken}
+                            user={user}                             
                             setUser={setUser}
                             posts={posts}
                             fetchPosts={fetchPosts}
@@ -220,36 +212,26 @@ const unfollowDeveloper = async (userId, developerId, token) => {
                     <Route path='/auth' element={
                         <AuthPage
                             user={user}
-                            setUser={setUser}
-                            setToken={setToken}
-                            // signUp={signUp}
-                            // login={login}
+                            setUser={setUser}                                                        
                         />
                     }/>
                     <Route path="/auth/forgot-password" element={<ForgotPassword 
-                        setUser={setUser}
-                        setToken={setToken}
-                        // signUp={signUp}
-                        // login={login}
+                        setUser={setUser}                        
                       />
                      } />
                    <Route
                         path="/reset-password/:token"
-                        element={  // Pass user, token, and setUser props down to ResetPassword
+                        element={  
                             <ResetPassword 
-                            user={user} 
-                            token={token} 
+                            user={user}                             
                             setUser={setUser} 
                         />
                         }
                      />
                     <Route path='/profile/:userId' 
                     element={<ProfilePage 
-                        user={user} 
-                        token={token} 
-                        setToken={setToken}
-                        setUser={setUser}                                            
-                        // post={post}
+                        user={user}                     
+                        setUser={setUser}                                                                    
                     />} />
                 </Routes>
             </div>
