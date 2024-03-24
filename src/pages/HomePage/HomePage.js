@@ -4,6 +4,7 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 import NewPostForm from '../../components/NewPostForm/NewPostForm';
+import SearchUsersForm from '../../components/SearchUsersForm/SearchUsersForm';
 
 export default function HomePage({ posts, fetchPosts, users }) {            
     const [projectTitle, setProjectTitle] = useState('')
@@ -33,8 +34,10 @@ export default function HomePage({ posts, fetchPosts, users }) {
             {
                 localStorage.getItem('token') ?
                 <>
-                <NewPostForm fetchPosts={fetchPosts} />                                    
-                <div>
+                <NewPostForm fetchPosts={fetchPosts} />                                                    
+                </> : null
+            }
+            <div>
                     <input
                         type="text"
                         value={searchQuery}
@@ -42,8 +45,7 @@ export default function HomePage({ posts, fetchPosts, users }) {
                         placeholder="Search for users"
                     />                    
                 </div>
-                </> : null
-            }
+                
             {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
             <PostList posts={posts} />
         </div>
