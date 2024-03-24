@@ -1666,11 +1666,12 @@ function HomePage(_ref) {
   let {
     posts,
     fetchPosts,
-    users
+    users,
+    user
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     fetchPosts: fetchPosts
   })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     users: users
@@ -5166,4 +5167,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.f41a32373c893469ad4a7993eb2d70eb.js.map
+//# sourceMappingURL=App.197c216c66fbbfe630f87efacbfd56a0.js.map
