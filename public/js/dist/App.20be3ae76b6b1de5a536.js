@@ -13,15 +13,15 @@
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/AuthPage/AuthPage */ "./src/pages/AuthPage/AuthPage.js");
 /* harmony import */ var _pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage/HomePage */ "./src/pages/HomePage/HomePage.js");
 /* harmony import */ var _pages_ForgotPassword_ForgotPassword__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ForgotPassword/ForgotPassword */ "./src/pages/ForgotPassword/ForgotPassword.js");
 /* harmony import */ var _components_ResetPassword_ResetPassword__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ResetPassword/ResetPassword */ "./src/components/ResetPassword/ResetPassword.js");
 /* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
-/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utilities/posts-service */ "./src/utilities/posts-service.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _components_CustomerSupport_CustomerSupport__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CustomerSupport/CustomerSupport */ "./src/components/CustomerSupport/CustomerSupport.js");
 /* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -41,66 +41,16 @@
 
 
 function App() {
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_9__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useLocation)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useLocation)();
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
-
-  // Create a signUp fn that connects to the backend
-  // const signUp = async(credentials) => {
-  //     try {
-  //         const response = await fetch('/api/users', {
-  //             method: 'POST',
-  //             // Headers that will be set in PostMan
-  //             headers: {
-  //                 'Content-Type': 'application/json'
-  //             },
-  //             // Turn the body into a readable JavaScript object 
-  //             body: JSON.stringify(credentials)
-  //         })
-  //         const data = await response.json()
-  //         setUser(data.user)
-  //         setToken(data.token)
-  //         localStorage.setItem('token', data.token)
-  //         localStorage.setItem('user', JSON.stringify(data.user))
-  //     } catch (error) {
-  //         console.error(error)
-  //     }
-  // }
-
-  // // This function will need to be a prop passed to the LoginForm via AuthPage
-  // const login = async (credentials) => {
-  //     try {
-  //         // https://i.imgur.com/3quZxs4.png
-  //         // Step 1 is complete here once someone fills out the loginForm
-  //         const response = await fetch('/api/users/login', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json'
-  //             },
-  //             body: JSON.stringify(credentials)
-  //         })
-  //         const data = await response.json()
-  //         // Step 3
-  //         const tokenData = data.token
-  //         localStorage.setItem('token', tokenData)
-  //         // The below code is additional to the core features of authentication
-  //         // You need to decide what additional things you would like to accomplish when you
-  //         // set up your stuff
-  //         const userData = data.user
-  //         localStorage.setItem('user', JSON.stringify(userData))
-  //         setUser(userData)
-  //     } catch (error) {
-  //         console.error(error)
-  //     }
-  // }
-
   const fetchPosts = async () => {
     console.log('fetch posts use effect...');
     try {
-      const postsData = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_10__.getAllPosts)();
+      const postsData = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_11__.getAllPosts)();
       setPosts(postsData);
     } catch (error) {
       console.error('There was an error!', error);
@@ -244,31 +194,33 @@ function App() {
       console.error(error);
     }
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (token) {
-      const fetchUserData = async () => {
-        try {
-          // Fetch user data from your backend
-          const response = await fetch('/api/user-data', {
-            headers: {
-              Authorization: "Bearer ".concat(token) // Assuming you're passing token as a prop
-            }
-          });
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData); // Update the user state with the fetched data
-          } else {
-            // Handle error
-            throw new Error('response failed');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-      // Call the fetchUserData function when the component mounts
-      fetchUserData();
-    }
-  }, [token]);
+
+  // useEffect(() => {
+  //     if (token) {                    
+  //         const fetchUserData = async () => {
+  //             try {
+  //                 // Fetch user data from your backend
+  //                 const response = await fetch('/api/user-data', {
+  //                     headers: {
+  //                         Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+  //                     }
+  //                 });
+
+  //                 if (response.ok) {
+  //                     const userData = await response.json();
+  //                     setUser(userData); // Update the user state with the fetched data
+  //                 } else {
+  //                     // Handle error
+  //                     throw new Error('response failed')
+  //                 }
+  //             } catch (error) {
+  //                 console.error('Error fetching user data:', error);
+  //             }
+  //         };    
+  //         // Call the fetchUserData function when the component mounts
+  //         fetchUserData();
+  //     }
+  // }, [token])
 
   // use effect to get all posts
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -279,7 +231,7 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchUsers = async () => {
       try {
-        const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_11__.indexUsers)();
+        const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_9__.indexUsers)();
         setUsers(foundUsers);
       } catch (error) {
         console.error('Error finding users', error);
@@ -296,7 +248,7 @@ function App() {
     user: user // Pass the user prop to NavBar
     ,
     setToken: setToken
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       user: user,
@@ -308,10 +260,10 @@ function App() {
       users: users,
       setUsers: setUsers
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/customer-support",
     element: /*#__PURE__*/React.createElement(_components_CustomerSupport_CustomerSupport__WEBPACK_IMPORTED_MODULE_7__.SupportTicketForm, null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/auth",
     element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_2__["default"], {
       setUser: setUser,
@@ -319,7 +271,7 @@ function App() {
       // signUp={signUp}
       // login={login}
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/auth/forgot-password",
     element: /*#__PURE__*/React.createElement(_pages_ForgotPassword_ForgotPassword__WEBPACK_IMPORTED_MODULE_4__["default"], {
       setUser: setUser,
@@ -327,7 +279,7 @@ function App() {
       // signUp={signUp}
       // login={login}
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/reset-password/:token",
     element:
     /*#__PURE__*/
@@ -337,7 +289,7 @@ function App() {
       token: token,
       setUser: setUser
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     path: "/profile/:userId",
     element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       user: user,
@@ -5214,4 +5166,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.038bd845e14dbea2b4c63b51d07cd370.js.map
+//# sourceMappingURL=App.f41a32373c893469ad4a7993eb2d70eb.js.map

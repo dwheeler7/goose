@@ -7,7 +7,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { getAllPosts } from './utilities/posts-service'
-import { indexUsers } from './utilities/users-service'
+import { indexUsers, getUser } from './utilities/users-service'
 // import ForgotPasswordPage from './components/ForgotPasswordForm/ForgotPasswordForm';'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
@@ -16,7 +16,7 @@ import * as userService from './utilities/users-service';
 import { index } from './utilities/users-api';
 
 export default function App() {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(getUser())
     const [users, setUsers] = useState([])
     const [posts, setPosts] = useState([])    
     const [token, setToken] = useState('');
@@ -174,32 +174,32 @@ const unfollowDeveloper = async (userId, developerId, token) => {
     }
 }
 
-useEffect(() => {
-    if (token) {                    
-        const fetchUserData = async () => {
-            try {
-                // Fetch user data from your backend
-                const response = await fetch('/api/user-data', {
-                    headers: {
-                        Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
-                    }
-                });
+// useEffect(() => {
+//     if (token) {                    
+//         const fetchUserData = async () => {
+//             try {
+//                 // Fetch user data from your backend
+//                 const response = await fetch('/api/user-data', {
+//                     headers: {
+//                         Authorization: `Bearer ${token}` // Assuming you're passing token as a prop
+//                     }
+//                 });
     
-                if (response.ok) {
-                    const userData = await response.json();
-                    setUser(userData); // Update the user state with the fetched data
-                } else {
-                    // Handle error
-                    throw new Error('response failed')
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };    
-        // Call the fetchUserData function when the component mounts
-        fetchUserData();
-    }
-}, [token])
+//                 if (response.ok) {
+//                     const userData = await response.json();
+//                     setUser(userData); // Update the user state with the fetched data
+//                 } else {
+//                     // Handle error
+//                     throw new Error('response failed')
+//                 }
+//             } catch (error) {
+//                 console.error('Error fetching user data:', error);
+//             }
+//         };    
+//         // Call the fetchUserData function when the component mounts
+//         fetchUserData();
+//     }
+// }, [token])
 
     // use effect to get all posts
     useEffect(() => {        
