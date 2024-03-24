@@ -97,49 +97,52 @@ function App() {
     }
   };
 
-  // CreatePost
-  // We need token authentication in order to verify that someone can make a post
-  // Now that we have the token from the signup/login above, we will pass it into the following functions for authentication
-  const createPost = async (postData, token) => {
-    // https://i.imgur.com/3quZxs4.png
-    // Step 4
-    if (!token) {
-      return;
-    }
-    try {
-      // Ensure required fields are present
-      if (!postData.content || !postData.projectTitle) {
-        throw new Error('Content and project title are required'); // Throw error if required fields are missing
-      }
+  // // CreatePost
+  // // We need token authentication in order to verify that someone can make a post
+  // // Now that we have the token from the signup/login above, we will pass it into the following functions for authentication
+  // const createPost = async (postData, token) => {
+  //     // https://i.imgur.com/3quZxs4.png
+  //     // Step 4
+  //     if(!token){
+  //         return
+  //     }
+  //     try {
+  //         // Ensure required fields are present
+  //         if (!postData.content || !postData.projectTitle) {
+  //             throw new Error('Content and project title are required'); // Throw error if required fields are missing
+  //         }
 
-      // If githubLink is provided, ensure required fields for GitHub integration are present
-      if (postData.githubLink) {
-        if (typeof postData.useReadmeAsDescription !== 'boolean') {
-          throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
-        }
-        // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
-        if (postData.useReadmeAsDescription && postData.projectDescription) {
-          throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
-        }
-      }
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token)
-        },
-        body: JSON.stringify(postData)
-      });
-      const data = await response.json();
-      localStorage.setItem('post', JSON.stringify(postData));
-      // Assuming setPost is a function to update the UI with the new post data
-      setPost(postData);
-      return data;
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
-  };
+  //         // If githubLink is provided, ensure required fields for GitHub integration are present
+  //         if (postData.githubLink) {
+  //             if (typeof postData.useReadmeAsDescription !== 'boolean') {
+  //                 throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
+  //             }
+  //             // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
+  //             if (postData.useReadmeAsDescription && postData.projectDescription) {
+  //                 throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
+  //             }
+  //         }
+
+  //         const response = await fetch('/api/posts', {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //                 'Authorization': `Bearer ${token}`
+  //             },
+  //             body: JSON.stringify(postData)
+  //         });
+
+  //         const data = await response.json();
+  //         localStorage.setItem('post', JSON.stringify(postData));
+  //         // Assuming setPost is a function to update the UI with the new post data
+  //         setPost(postData);
+  //         return data;
+  //     } catch (error) {
+  //         console.error(error);
+  //         // Handle error as needed
+  //     }
+  // }       
+
   const fetchPosts = async () => {
     console.log('fetch posts use effect...');
     try {
@@ -339,7 +342,6 @@ function App() {
     user: user // Pass the user prop to NavBar
     ,
     setToken: setToken
-    // post={post}
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -351,10 +353,6 @@ function App() {
       fetchPosts: fetchPosts,
       users: users,
       setUsers: setUsers
-      // createPost={createPost}
-      // setPost={setPost}
-      // post={post}
-      // getAllPosts={getAllPosts}
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     path: "/customer-support",
@@ -1751,11 +1749,8 @@ function ForgotPasswordPage(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePage.module.scss */ "./src/pages/HomePage/HomePage.module.scss");
 /* harmony import */ var _components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/PostList/PostList */ "./src/components/PostList/PostList.js");
-/* harmony import */ var _components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/UserList/UserList */ "./src/components/UserList/UserList.js");
-/* harmony import */ var _components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/NewPostForm/NewPostForm */ "./src/components/NewPostForm/NewPostForm.js");
-/* harmony import */ var _components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/SearchUsersForm/SearchUsersForm */ "./src/components/SearchUsersForm/SearchUsersForm.js");
-
-
+/* harmony import */ var _components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/NewPostForm/NewPostForm */ "./src/components/NewPostForm/NewPostForm.js");
+/* harmony import */ var _components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/SearchUsersForm/SearchUsersForm */ "./src/components/SearchUsersForm/SearchUsersForm.js");
 
 
 
@@ -1767,32 +1762,11 @@ function HomePage(_ref) {
     fetchPosts,
     users
   } = _ref;
-  // const [projectTitle, setProjectTitle] = useState('')
-  // const [projectDescription, setProjectDescription] = useState('')
-  // const [gitHubLink, setGitHubLink] = useState('')
-  // const [image, setImage] = useState('')
-  // const [searchQuery, setSearchQuery] = useState('')
-  // const [searchResults, setSearchResults] = useState([])
-  // const navigate = useNavigate()    
-
-  // const handleSearch = (query) => {
-  //     setSearchQuery(query);
-  //     if (query.length > 0) {
-  //         const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
-  //         setSearchResults(filteredUsers);
-  //     } else {
-  //         setSearchResults([]);
-  //     }
-  // };
-
-  // const handleUserClick = (user) => {
-  //     navigate(`/profile/${user._id}`);
-  // };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), localStorage.getItem('token') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     fetchPosts: fetchPosts
-  })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     users: users
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     posts: posts
@@ -5286,4 +5260,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.dcf9cf1241e0d7d647a7b5456f052f9f.js.map
+//# sourceMappingURL=App.0b0ce6bbb36d25c422f4c15cbc4e6748.js.map
