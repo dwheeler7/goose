@@ -71,52 +71,6 @@ export default function App() {
             console.error(error)
         }
     }
-
-    // // CreatePost
-    // // We need token authentication in order to verify that someone can make a post
-    // // Now that we have the token from the signup/login above, we will pass it into the following functions for authentication
-    // const createPost = async (postData, token) => {
-    //     // https://i.imgur.com/3quZxs4.png
-    //     // Step 4
-    //     if(!token){
-    //         return
-    //     }
-    //     try {
-    //         // Ensure required fields are present
-    //         if (!postData.content || !postData.projectTitle) {
-    //             throw new Error('Content and project title are required'); // Throw error if required fields are missing
-    //         }
-    
-    //         // If githubLink is provided, ensure required fields for GitHub integration are present
-    //         if (postData.githubLink) {
-    //             if (typeof postData.useReadmeAsDescription !== 'boolean') {
-    //                 throw new Error('Invalid useReadmeAsDescription value'); // Throw error if useReadmeAsDescription is missing or invalid
-    //             }
-    //             // If useReadmeAsDescription is true, projectDescription will be automatically set to the Readme
-    //             if (postData.useReadmeAsDescription && postData.projectDescription) {
-    //                 throw new Error('Project description should not be provided when using README'); // Throw error if projectDescription is provided when using README
-    //             }
-    //         }
-    
-    //         const response = await fetch('/api/posts', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${token}`
-    //             },
-    //             body: JSON.stringify(postData)
-    //         });
-    
-    //         const data = await response.json();
-    //         localStorage.setItem('post', JSON.stringify(postData));
-    //         // Assuming setPost is a function to update the UI with the new post data
-    //         setPost(postData);
-    //         return data;
-    //     } catch (error) {
-    //         console.error(error);
-    //         // Handle error as needed
-    //     }
-    // }       
     
     const fetchPosts = async () => {
         console.log('fetch posts use effect...')
