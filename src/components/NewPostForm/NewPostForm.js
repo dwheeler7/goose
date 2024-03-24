@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPost } from '../../utilities/posts-service'
 
-export default function NewPostForm({ fetchPosts }) {
+export default function NewPostForm({ fetchPosts, user }) {
   const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     projectTitle: '',
@@ -19,10 +19,13 @@ export default function NewPostForm({ fetchPosts }) {
   const handleSubmit = async (evt) => {
     evt.preventDefault()
     try {
-        await createPost(formData) 
-        await fetchPosts()
-    } catch {
-      console.error('Error submitting form', error)
+      if (!user) throw new Error('Cannot create a post when user is not logged in')
+        const createdPost = await createPost(formData) 
+        if (!createdPost) throw new Error('Could not create new post')
+        const fetchedPosts = await fetchPosts()
+        if (!fetchedPosts) throw new Error ('Cound not fetch posts')
+    } catch(err) {
+        setError(err.message)
     }
   }
 

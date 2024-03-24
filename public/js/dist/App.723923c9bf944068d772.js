@@ -849,7 +849,8 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 function NewPostForm(_ref) {
   let {
-    fetchPosts
+    fetchPosts,
+    user
   } = _ref;
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -871,10 +872,13 @@ function NewPostForm(_ref) {
   const handleSubmit = async evt => {
     evt.preventDefault();
     try {
-      await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__.createPost)(formData);
-      await fetchPosts();
-    } catch (_unused) {
-      console.error('Error submitting form', error);
+      if (!user) throw new Error('Cannot create a post when user is not logged in');
+      const createdPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__.createPost)(formData);
+      if (!createdPost) throw new Error('Could not create new post');
+      const fetchedPosts = await fetchPosts();
+      if (!fetchedPosts) throw new Error('Cound not fetch posts');
+    } catch (err) {
+      setError(err.message);
     }
   };
   const {
@@ -1672,7 +1676,8 @@ function HomePage(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    fetchPosts: fetchPosts
+    fetchPosts: fetchPosts,
+    user: user
   })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     users: users
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -5167,4 +5172,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.197c216c66fbbfe630f87efacbfd56a0.js.map
+//# sourceMappingURL=App.ada547ebad8304cb583ba289c67c9f22.js.map
