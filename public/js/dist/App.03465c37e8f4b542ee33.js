@@ -1746,9 +1746,7 @@ function HomePage(_ref) {
     value: searchQuery,
     onChange: e => handleSearch(e.target.value),
     placeholder: "Search for users"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, searchResults.map(post => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    key: post.id
-  }, post.title))))) : null, searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }))) : null, searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_UserList_UserList__WEBPACK_IMPORTED_MODULE_3__["default"], {
     users: searchResults,
     onUserClick: handleUserClick
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -5243,4 +5241,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.d81c7944558f978d8f2d31a4b8275b74.js.map
+//# sourceMappingURL=App.6ef5db8f0d5ae7b452615359b754b817.js.map

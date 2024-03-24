@@ -5,7 +5,11 @@ import PostList from '../../components/PostList/PostList';
 import UserList from '../../components/UserList/UserList';
 import NewPostForm from '../../components/NewPostForm/NewPostForm';
 
-export default function HomePage({ posts, fetchPosts, users }) {                
+export default function HomePage({ posts, fetchPosts, users }) {            
+    const [projectTitle, setProjectTitle] = useState('')
+    const [projectDescription, setProjectDescription] = useState('')
+    const [gitHubLink, setGitHubLink] = useState('')
+    const [image, setImage] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const navigate = useNavigate()    
@@ -37,11 +41,11 @@ export default function HomePage({ posts, fetchPosts, users }) {
                         onChange={(e) => handleSearch(e.target.value)}
                         placeholder="Search for users"
                     />
-                    <ul>
+                    {/* <ul>
                         {searchResults.map(post => (
                             <li key={post.id}>{post.title}</li>
                         ))}
-                    </ul>
+                    </ul> */}
                 </div>
                 </> : null
             }
