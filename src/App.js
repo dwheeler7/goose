@@ -19,6 +19,7 @@ export default function App() {
     const location = useLocation();
     const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
     
+    // function to fetch posts to pass to compontents
     const fetchPosts = async () => {
         console.log('fetch posts use effect...')
         try {
@@ -29,162 +30,24 @@ export default function App() {
         }        
     }
 
+    // function to fetch users
+    const fetchUsers = async () => {
+        try {
+            const foundUsers = await indexUsers()
+            setUsers(foundUsers)
+        } catch (error) {
+            console.error('Error finding users', error)
+        }
 
-//     // UpdatePost
-//     const updatePost = async (newPostData, id, token) => {
-//         // https://i.imgur.com/3quZxs4.png
-//         // Step 4
-//         if(!token){
-//             return
-//         }
-//         try {
-//             const response = await fetch(`/api/posts/${id}`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
-//                     // Tell it that we're sending JSON data
-//                     'Content-Type': 'application/json',
-//                     // Tell it that we have a user token
-//                     'Authorization': `Bearer ${token}`
-//                 },
-//                 body: JSON.stringify(newPostData)
-//             })
-//             const data = await response.json()
-//             return data
-//         } catch (error) {
-//             console.error(error)
-//         }
-//     }
+    }
 
-//     // DeletePost
-//     const deletePost = async (id, token) => {
-//         // https://i.imgur.com/3quZxs4.png
-//         // Step 4
-//         if(!token){
-//             return
-//         }
-//         try {
-//             const response = await fetch(`/api/posts/${id}`, {
-//                 method: 'DELETE',
-//                 headers: {
-//                     // Don't need content-type because we are not sending any data
-//                     'Authorization': `Bearer ${token}`
-//                 }
-//             })
-//             const data = await response.json()
-//             return data
-//         } catch (error) {
-//             console.error(error)
-//         }
-//     }
-
-// //added global functionality to not display nav bar on whichever page youd like
-
-//     // Like a post
-// const likePost = async (postId, token) => {
-//     try {
-//         if (!token) {
-//             return;
-//         }
-
-//         const response = await fetch(`/api/posts/${postId}/like`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         });
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-// // Unlike a post
-// const unlikePost = async (postId, token) => {
-//     try {
-//         if (!token) {
-//             return;
-//         }
-
-//         const response = await fetch(`/api/posts/${postId}/unlike`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         });
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-//    // Follow a developer
-// const followDeveloper = async (userId, developerId, token) => {
-//     try {
-//         if (!token) {
-//             return;
-//         }
-
-//         const response = await fetch('/api/follow', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             },
-//             body: JSON.stringify({ userId, developerId })
-//         });
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error(error);
-//     }
-// };
-
-// // Unfollow a developer
-// const unfollowDeveloper = async (userId, developerId, token) => {
-//     try {
-//         if (!token) {
-//             return;
-//         }
-
-//         const response = await fetch('/api/unfollow', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             },
-//             body: JSON.stringify({ userId, developerId })
-//         });
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-    // use effect to get all posts
+    // use effect to fetch all posts
     useEffect(() => {        
         fetchPosts()
     }, [])
 
-    // use effect to get all users
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const foundUsers = await indexUsers()
-                setUsers(foundUsers)
-            } catch (error) {
-                console.error('Error finding users', error)
-            }
-        }
+    // use effect to fetch all users
+    useEffect(() => {        
         fetchUsers()
     }, [])    
 

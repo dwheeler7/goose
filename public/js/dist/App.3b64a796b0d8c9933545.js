@@ -43,6 +43,8 @@ function App() {
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useLocation)();
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
+
+  // function to fetch posts to pass to compontents
   const fetchPosts = async () => {
     console.log('fetch posts use effect...');
     try {
@@ -53,161 +55,23 @@ function App() {
     }
   };
 
-  //     // UpdatePost
-  //     const updatePost = async (newPostData, id, token) => {
-  //         // https://i.imgur.com/3quZxs4.png
-  //         // Step 4
-  //         if(!token){
-  //             return
-  //         }
-  //         try {
-  //             const response = await fetch(`/api/posts/${id}`, {
-  //                 method: 'PUT',
-  //                 headers: {
-  //                     // This part is only necessary when sending data, not when retrieving it, i.e. GET requests
-  //                     // Tell it that we're sending JSON data
-  //                     'Content-Type': 'application/json',
-  //                     // Tell it that we have a user token
-  //                     'Authorization': `Bearer ${token}`
-  //                 },
-  //                 body: JSON.stringify(newPostData)
-  //             })
-  //             const data = await response.json()
-  //             return data
-  //         } catch (error) {
-  //             console.error(error)
-  //         }
-  //     }
+  // function to fetch users
+  const fetchUsers = async () => {
+    try {
+      const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_9__.indexUsers)();
+      setUsers(foundUsers);
+    } catch (error) {
+      console.error('Error finding users', error);
+    }
+  };
 
-  //     // DeletePost
-  //     const deletePost = async (id, token) => {
-  //         // https://i.imgur.com/3quZxs4.png
-  //         // Step 4
-  //         if(!token){
-  //             return
-  //         }
-  //         try {
-  //             const response = await fetch(`/api/posts/${id}`, {
-  //                 method: 'DELETE',
-  //                 headers: {
-  //                     // Don't need content-type because we are not sending any data
-  //                     'Authorization': `Bearer ${token}`
-  //                 }
-  //             })
-  //             const data = await response.json()
-  //             return data
-  //         } catch (error) {
-  //             console.error(error)
-  //         }
-  //     }
-
-  // //added global functionality to not display nav bar on whichever page youd like
-
-  //     // Like a post
-  // const likePost = async (postId, token) => {
-  //     try {
-  //         if (!token) {
-  //             return;
-  //         }
-
-  //         const response = await fetch(`/api/posts/${postId}/like`, {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': `Bearer ${token}`
-  //             }
-  //         });
-
-  //         const data = await response.json();
-  //         return data;
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // }
-
-  // // Unlike a post
-  // const unlikePost = async (postId, token) => {
-  //     try {
-  //         if (!token) {
-  //             return;
-  //         }
-
-  //         const response = await fetch(`/api/posts/${postId}/unlike`, {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': `Bearer ${token}`
-  //             }
-  //         });
-
-  //         const data = await response.json();
-  //         return data;
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // }
-
-  //    // Follow a developer
-  // const followDeveloper = async (userId, developerId, token) => {
-  //     try {
-  //         if (!token) {
-  //             return;
-  //         }
-
-  //         const response = await fetch('/api/follow', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': `Bearer ${token}`
-  //             },
-  //             body: JSON.stringify({ userId, developerId })
-  //         });
-
-  //         const data = await response.json();
-  //         return data;
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // };
-
-  // // Unfollow a developer
-  // const unfollowDeveloper = async (userId, developerId, token) => {
-  //     try {
-  //         if (!token) {
-  //             return;
-  //         }
-
-  //         const response = await fetch('/api/unfollow', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': `Bearer ${token}`
-  //             },
-  //             body: JSON.stringify({ userId, developerId })
-  //         });
-
-  //         const data = await response.json();
-  //         return data;
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // }
-
-  // use effect to get all posts
+  // use effect to fetch all posts
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchPosts();
   }, []);
 
-  // use effect to get all users
+  // use effect to fetch all users
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const fetchUsers = async () => {
-      try {
-        const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_9__.indexUsers)();
-        setUsers(foundUsers);
-      } catch (error) {
-        console.error('Error finding users', error);
-      }
-    };
     fetchUsers();
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -703,7 +567,6 @@ function NavBar(_ref) {
     user,
     setUser
   } = _ref;
-  // const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   const handleSearch = event => {
@@ -762,7 +625,6 @@ function NavBar(_ref) {
       _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.logOut();
       setUser(null);
       navigateTo('/');
-      // window.location.reload();
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
@@ -5108,4 +4970,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.94f65f771b0db3baf08c61235a415dbd.js.map
+//# sourceMappingURL=App.999b5c2d44b143bd98ef890ea6326696.js.map
