@@ -47,6 +47,16 @@ export function getUser() {
   }
 }
 
+export async function indexUsers() {
+  console.log('indexing users')
+  try {
+    const foundUsers = await usersAPI.index()
+    return foundUsers
+  } catch (error) {
+    console.error("Error finding users", error)
+  }
+}
+
 export function logOut() {
   localStorage.removeItem('token');
 }
@@ -58,7 +68,7 @@ export async function resetPassword(emailData) {
     return true;
   } catch (error) {
     console.error("Password Reset Error:", error);
-    throw new Error("Failed to reset password. Please try again later.");
+    throw new Error("Failed to reset password.");
   }
 }
 
@@ -79,18 +89,18 @@ export async function updatePasswordWithToken(token, passwordData) {
     return true; // Password update successful
   } catch (error) {
     console.error('Password Update Error:', error);
-    throw new Error('Failed to update password. Please try again later.');
+    throw new Error('Failed to update password.');
   }
 }
 
 // New function for support ticket request
-export async function customerSupportRequest(name, email, message) {
+export async function customerSupportRequest(name, email, message, attachment) {
   try {
     // Make POST request for support ticket
-    await usersAPI.customerSupportRequest(name, email, message);
+    await usersAPI.customerSupportRequest(name, email, message, attachment);
     return true; // Support ticket request successful
   } catch (error) {
     console.error('Support Ticket Request Error:', error);
-    throw new Error('Failed to submit support ticket. Please try again later.');
+    throw new Error('Failed to submit support ticket.');
   }
 }
