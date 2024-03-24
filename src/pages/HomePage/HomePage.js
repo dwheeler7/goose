@@ -66,6 +66,16 @@ export default function HomePage({ posts, fetchPosts }) {
         }
     };
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query.length > 0) {
+            const filteredUsers = users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
+            setSearchResults(filteredUsers);
+        } else {
+            setSearchResults([]);
+        }
+    };
+
     const handleUserClick = (user) => {
         navigate(`/profile/${user._id}`);
     };
