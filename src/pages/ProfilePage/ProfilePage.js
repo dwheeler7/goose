@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ProfilePage.module.scss'
+import { useParams } from 'react-router-dom';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import FollowList from '../../components/FollowList/FollowList';
 import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
+import { findUser } from '../../utilities/users-api';
 
 const ensureHttps = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -11,41 +13,41 @@ const ensureHttps = (url) => {
   return url;
 };
 
-export default function ProfilePage({user, setUser, posts}) {
-    // const { userId } = useParams();
-    // const [user, setUser] = useState({});
-    // const [posts, setPosts] = useState([]);
+export default function ProfilePage() {
+    const { userId } = useParams();
+    const [user, setUser] = useState({});
+    const [posts, setPosts] = useState([]);
 
-    // const fetchData = async () => {
-    //     try {
-    //         // Fetch user data using getUser function
-    //         console.log(userId)
-    //         const fetchedUser = await findUser(userId);
+    const fetchData = async () => {
+        try {
+            // Fetch user data using getUser function
+            console.log(userId)
+            const fetchedUser = await findUser(userId);
 
-    //         console.log(fetchedUser)
-    //         setUser(fetchedUser);
-    //         // Fetch all posts
-    //         const fetchedPosts = await getAllPosts();
-    //         setPosts(fetchedPosts);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // }
+            console.log(fetchedUser)
+            setUser(fetchedUser);
+            // Fetch all posts
+            const fetchedPosts = await getAllPosts();
+            setPosts(fetchedPosts);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
-    // useEffect(() => {
-    //     console.log(`This is the ${userId}`)
-    //     fetchData(); // Call fetchData function
-    // }, [userId]); // Add id to dependency array to re-fetch data when id changes
+    useEffect(() => {
+        console.log(`This is the ${userId}`)
+        fetchData(); // Call fetchData function
+    }, [userId]); // Add id to dependency array to re-fetch data when id changes
 
-    // const getAllPosts = async () => {
-    //     try {
-    //         const response = await fetch('/api/posts')
-    //         const data = await response.json()
-    //         return data
-    //     } catch (error) {
-    //         console.error(error)            
-    //     }
-    // }
+    const getAllPosts = async () => {
+        try {
+            const response = await fetch('/api/posts')
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error(error)            
+        }
+    }
 
     return (
         <>
@@ -57,7 +59,8 @@ export default function ProfilePage({user, setUser, posts}) {
                             <div className={styles.imgContainer}>
                                 <ProfileImage 
                                     className={styles.ProfileImage}
-                                    user={user}                                    
+                                    user={user}
+                                    setUser={setUser}
                                 />
                             </div>
                             <div className={styles.userLinks}>
