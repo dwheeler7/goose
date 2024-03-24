@@ -13,24 +13,6 @@ export default function HomePage({ posts, fetchPosts, users }) {
     const [searchResults, setSearchResults] = useState([]);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     fetchUserData();        
-    // }, []);
-
-    // const fetchUserData = async () => {
-    //     try {
-    //         const usersResponse = await fetch('/api/users');
-    //         if (!usersResponse.ok) {
-    //             throw new Error('Failed to fetch data');
-    //         }
-    
-    //         const usersData = await usersResponse.json();
-    //         setUsers(usersData);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
-
     const createPost = async (postData) => {
         try {
             const response = await fetch('/api/posts', {
