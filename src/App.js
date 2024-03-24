@@ -303,7 +303,6 @@ useEffect(() => {
 
     // use effect to get all users
     useEffect(() => {
-
         const fetchUsers = async () => {
             try {
                 const foundUsers = await indexUsers()
@@ -313,9 +312,7 @@ useEffect(() => {
             }
         }
         fetchUsers()
-    }, [])
-
-
+    }, [])    
 
 
     return (
