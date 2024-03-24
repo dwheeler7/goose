@@ -1498,9 +1498,13 @@ function HomePage(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfilePage.module.scss */ "./src/pages/ProfilePage/ProfilePage.module.scss");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ProfileImage/ProfileImage */ "./src/components/ProfileImage/ProfileImage.js");
 /* harmony import */ var _components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FollowList/FollowList */ "./src/components/FollowList/FollowList.js");
 /* harmony import */ var _components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProfilePostList/ProfilePostList */ "./src/components/ProfilePostList/ProfilePostList.js");
+/* harmony import */ var _utilities_users_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-api */ "./src/utilities/users-api.js");
+
+
 
 
 
@@ -1512,47 +1516,40 @@ const ensureHttps = url => {
   }
   return url;
 };
-function ProfilePage(_ref) {
-  let {
-    user,
-    setUser,
-    posts
-  } = _ref;
-  // const { userId } = useParams();
-  // const [user, setUser] = useState({});
-  // const [posts, setPosts] = useState([]);
+function ProfilePage() {
+  const {
+    userId
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const fetchData = async () => {
+    try {
+      // Fetch user data using getUser function
+      console.log(userId);
+      const fetchedUser = await (0,_utilities_users_api__WEBPACK_IMPORTED_MODULE_6__.findUser)(userId);
+      console.log(fetchedUser);
+      setUser(fetchedUser);
+      // Fetch all posts
+      const fetchedPosts = await getAllPosts();
+      setPosts(fetchedPosts);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log("This is the ".concat(userId));
+    fetchData(); // Call fetchData function
+  }, [userId]); // Add id to dependency array to re-fetch data when id changes
 
-  // const fetchData = async () => {
-  //     try {
-  //         // Fetch user data using getUser function
-  //         console.log(userId)
-  //         const fetchedUser = await findUser(userId);
-
-  //         console.log(fetchedUser)
-  //         setUser(fetchedUser);
-  //         // Fetch all posts
-  //         const fetchedPosts = await getAllPosts();
-  //         setPosts(fetchedPosts);
-  //     } catch (error) {
-  //         console.error('Error fetching data:', error);
-  //     }
-  // }
-
-  // useEffect(() => {
-  //     console.log(`This is the ${userId}`)
-  //     fetchData(); // Call fetchData function
-  // }, [userId]); // Add id to dependency array to re-fetch data when id changes
-
-  // const getAllPosts = async () => {
-  //     try {
-  //         const response = await fetch('/api/posts')
-  //         const data = await response.json()
-  //         return data
-  //     } catch (error) {
-  //         console.error(error)            
-  //     }
-  // }
-
+  const getAllPosts = async () => {
+    try {
+      const response = await fetch('/api/posts');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfilePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1567,7 +1564,8 @@ function ProfilePage(_ref) {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
-    user: user
+    user: user,
+    setUser: setUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
   }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
@@ -1701,12 +1699,12 @@ async function sendRequest(url) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customerSupportRequest: () => (/* binding */ customerSupportRequest),
+/* harmony export */   findUser: () => (/* binding */ findUser),
 /* harmony export */   index: () => (/* binding */ index),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   resetPassword: () => (/* binding */ resetPassword),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
-/* unused harmony export findUser */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/users';
@@ -4973,4 +4971,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.538e5c0dde4fb1a1c8db6e6bd0292965.js.map
+//# sourceMappingURL=App.5af2e4d47ac2ba5a037de5054d12ba0c.js.map
