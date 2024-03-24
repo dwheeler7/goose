@@ -3,23 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
 
-export default function NavBar({ user }) {
-    // const [user, setUser] = useState(null);
+export default function NavBar({ user, setUser }) {
     const [searchQuery, setSearchQuery] = useState(''); 
     const navigateTo = useNavigate();
-
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         try {
-    //             const userData = await userService.getUser();
-    //             setUser(userData);
-    //         } catch (error) {
-    //             console.error('Error fetching user data:', error);
-    //         }
-    //     };
-
-    //     fetchUserData();
-    // }, []);
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
@@ -64,9 +50,8 @@ export default function NavBar({ user }) {
                         </Link>
                         <a className={styles.navItem} onClick={() => {
                             userService.logOut();
-                            setUser(null);
-                            navigateTo('/');
-                            window.location.reload();
+                            setUser(null)
+                            navigateTo('/')                            
                         }}>
                             <li className={styles.listItem}>
                                 <img className={styles.btnLogo} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-512.png" alt="Logout" />

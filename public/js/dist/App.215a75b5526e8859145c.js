@@ -700,25 +700,12 @@ function LoginForm(_ref) {
 
 function NavBar(_ref) {
   let {
-    user
+    user,
+    setUser
   } = _ref;
   // const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
-
-  // useEffect(() => {
-  //     const fetchUserData = async () => {
-  //         try {
-  //             const userData = await userService.getUser();
-  //             setUser(userData);
-  //         } catch (error) {
-  //             console.error('Error fetching user data:', error);
-  //         }
-  //     };
-
-  //     fetchUserData();
-  // }, []);
-
   const handleSearch = event => {
     setSearchQuery(event.target.value);
   };
@@ -775,7 +762,7 @@ function NavBar(_ref) {
       _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.logOut();
       setUser(null);
       navigateTo('/');
-      window.location.reload();
+      // window.location.reload();
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
@@ -5121,4 +5108,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.feb3bcd493ad06524d52fef16d671f8c.js.map
+//# sourceMappingURL=App.94f65f771b0db3baf08c61235a415dbd.js.map
