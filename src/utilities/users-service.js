@@ -47,6 +47,15 @@ export function getUser() {
   }
 }
 
+export async function getProfileUser(userId) {
+  try {
+    const foundUser = await usersAPI.findUser(userId)
+    return foundUser
+  } catch (error) {
+    console.error("Error finding users", error)
+  }
+}
+
 export async function indexUsers() {
   console.log('indexing users')
   try {
