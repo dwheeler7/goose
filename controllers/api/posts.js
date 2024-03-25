@@ -32,6 +32,7 @@ async function create(req, res, next) {
         let description = projectDescription; // Initialize with provided projectDescription
         // If GitHub link is provided and user wants to use README content as description
         if (githubLink && useReadmeAsDescription) {
+            console.log("attempting to pull readme from github")
             // Extract owner and repo name from the GitHub link
             const [_, owner, repo] = githubLink.split('/');
             // Fetch README content from GitHub repository

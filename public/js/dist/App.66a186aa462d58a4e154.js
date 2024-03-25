@@ -693,11 +693,12 @@ function NewPostForm(_ref) {
     user
   } = _ref;
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [useReadmeAsDescription, setUseReadmeAsDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     projectTitle: '',
-    projectDescription: '',
     gitHubLink: '',
-    image: ''
+    image: '',
+    projectDescription: ''
   });
   const handleChange = evt => {
     const {
@@ -711,12 +712,23 @@ function NewPostForm(_ref) {
   };
   const handleSubmit = async evt => {
     evt.preventDefault();
+    formData.useReadmeAsDescription = useReadmeAsDescription;
+    if (useReadmeAsDescription) {
+      formData.projectDescription = '';
+    }
     try {
       if (!user) throw new Error('Cannot create a post when user is not logged in');
       const createdPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__.createPost)(formData);
       if (!createdPost) throw new Error('Could not create new post');
-      const fetchedPosts = await fetchPosts();
-      if (!fetchedPosts) throw new Error('Cound not fetch posts');
+      await fetchPosts();
+      setUseReadmeAsDescription(false);
+      setFormData({
+        // Reset form data
+        projectTitle: '',
+        gitHubLink: '',
+        image: '',
+        projectDescription: ''
+      });
     } catch (err) {
       setError(err.message);
     }
@@ -748,6 +760,12 @@ function NewPostForm(_ref) {
     onChange: handleChange,
     placeholder: "Github link"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "checkbox",
+    checked: useReadmeAsDescription,
+    onChange: e => setUseReadmeAsDescription(e.target.checked)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "useReadmeAsDescription"
+  }, "Use README as Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     name: "image",
     value: image,
@@ -1535,9 +1553,10 @@ function unlikePost(id) {
 /* harmony import */ var _posts_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./posts-api */ "./src/utilities/posts-api.js");
 
 async function createPost(postData) {
+  console.log('Post data:', postData);
   try {
     const createdPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.create(postData);
-    return createPost;
+    return createdPost;
   } catch (error) {
     console.error("Error getting posts", error);
     return null;
@@ -4618,4 +4637,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.2eab9679c64860450cd12501dae29be1.js.map
+//# sourceMappingURL=App.3d38f0287f2208bdb3575a12ff1e5d2e.js.map

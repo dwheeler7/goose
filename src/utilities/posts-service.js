@@ -1,9 +1,10 @@
 import * as postsAPI  from './posts-api';
 
 export async function createPost(postData) {
+  console.log('Post data:', postData)
   try {
     const createdPost = await postsAPI.create(postData)
-    return createPost
+    return createdPost
   } catch (error) {
     console.error("Error getting posts", error);
     return null
