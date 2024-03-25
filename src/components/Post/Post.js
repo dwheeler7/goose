@@ -12,9 +12,9 @@ export default function Post({ postData, isLoggedInUser, user }) {
         <li className={styles.post}>
         <h3>{post.projectTitle}</h3>
         <p>{post.projectDescription}</p>        
-        { user ? <LikeBtn post={post} user={user} setPost={setPost} /> : null }        
+        { user && !isLoggedInUser ? <LikeBtn post={post} user={user} setPost={setPost} /> : null }
         {
-            isLoggedInUser ? 
+            user && isLoggedInUser ?
             <>            
             <button>Edit</button>
             <button>Delete</button>            

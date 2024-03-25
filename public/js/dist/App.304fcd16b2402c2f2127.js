@@ -256,6 +256,7 @@ function FollowList(_ref) {
   let {
     posts
   } = _ref;
+  console.log(posts);
   const {
     userId
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
@@ -378,21 +379,17 @@ function LikeBtn(_ref) {
     setPost
   } = _ref;
   // state for number of likes  
-  const [likesNum, setLikesNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [likedPostBool, setLikedPostBool] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  // state for if the user already liked the post
+  const [likesNum, setLikesNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const [likedPostBool, setLikedPostBool] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(getLikedPostBool());
 
   // helper function to get likes num
   const getLikesNum = () => post.likes.length;
 
-  // helper function to whether user liked post likes num
-  const getLikedPostBool = () => {
-    let likedPost = false;
-    post.likes.forEach(userLike => {
-      if (userLike === user._id) likedPost = true;
-    });
-    return likedPost;
-  };
+  // helper function to determine whether user liked post
+  function getLikedPostBool() {
+    // return post.likes.some(userLike => userLike === user._id);
+    return post.likes.some(userLike => userLike._id === user._id || userLike === user._id);
+  }
 
   // handle click
   const handleClick = async e => {
@@ -401,18 +398,24 @@ function LikeBtn(_ref) {
       let updatedPost;
       if (likedPostBool) {
         updatedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.unlikePost)(post._id);
-      } else updatedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.likePost)(post._id);
+      } else {
+        updatedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.likePost)(post._id);
+      }
       setPost(updatedPost);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // use effect to get likesNum and likedPostBool
+  // use effect to update likesNum and likedPostBool
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setLikesNum(getLikesNum());
     setLikedPostBool(getLikedPostBool());
   }, [post]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     onClick: handleClick
   }, likedPostBool ? /*#__PURE__*/React.createElement("span", null, "Unlike") : /*#__PURE__*/React.createElement("span", null, "Like")), /*#__PURE__*/React.createElement("span", null, likesNum));
@@ -783,11 +786,11 @@ function Post(_ref) {
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].post
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, post.projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, post.projectDescription), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, post.projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, post.projectDescription), user && !isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
     post: post,
     user: user,
     setPost: setPost
-  }) : null, isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
+  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
 }
 
 /***/ }),
@@ -1488,7 +1491,8 @@ function ProfilePage(_ref) {
 /* harmony export */   getAll: () => (/* binding */ getAll),
 /* harmony export */   getAllByUser: () => (/* binding */ getAllByUser),
 /* harmony export */   getById: () => (/* binding */ getById),
-/* harmony export */   likePost: () => (/* binding */ likePost)
+/* harmony export */   likePost: () => (/* binding */ likePost),
+/* harmony export */   unlikePost: () => (/* binding */ unlikePost)
 /* harmony export */ });
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
@@ -1508,6 +1512,9 @@ function getById(id) {
 function likePost(id) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id, "/like"), 'POST');
 }
+function unlikePost(id) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id, "/unlike"), 'POST');
+}
 
 /***/ }),
 
@@ -1521,7 +1528,8 @@ function likePost(id) {
 /* harmony export */   createPost: () => (/* binding */ createPost),
 /* harmony export */   getAllPosts: () => (/* binding */ getAllPosts),
 /* harmony export */   getAllPostsByUser: () => (/* binding */ getAllPostsByUser),
-/* harmony export */   likePost: () => (/* binding */ likePost)
+/* harmony export */   likePost: () => (/* binding */ likePost),
+/* harmony export */   unlikePost: () => (/* binding */ unlikePost)
 /* harmony export */ });
 /* unused harmony export getPost */
 /* harmony import */ var _posts_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./posts-api */ "./src/utilities/posts-api.js");
@@ -1561,6 +1569,16 @@ async function likePost(postId) {
     const likedPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.likePost(postId);
     if (!likedPost) throw new Error('Could not like post');
     return likedPost;
+  } catch (err) {
+    console.error("Error liking posts", err);
+    return null;
+  }
+}
+async function unlikePost(postId) {
+  try {
+    const unlikedPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.unlikePost(postId);
+    if (!unlikedPost) throw new Error('Could not like post');
+    return unlikedPost;
   } catch (err) {
     console.error("Error liking posts", err);
     return null;
@@ -3242,7 +3260,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.CgjxyfEdobTkp_s1g1uU {
   background-color: white;
   padding: 20px;
   border: none;
-  margin-top: -22.9rem;
 }
 
 .dEySatDVVilAzS3bqI9Z {
@@ -3330,7 +3347,7 @@ button:hover {
   .vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p, .HPoDdNDxi0HMP2hrM9Ts {
     font-size: smaller;
   }
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,yBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AACJ;;AAEA;EACI,YAAA;EACA,eAAA;AACJ;;AAEA;EACI,0BAAA;AACJ;;AAGA;EACI;IACI,sBAAA;EAAN;EAGE;IACI,WAAA;IACA,cAAA;EADN;EAKE;IACI,aAAA;IACA,mBAAA;EAHN;EAOE;IACI,kBAAA;EALN;AACF","sourcesContent":[".homePage {\n    background-color: white;\n    padding: 20px;\n    border: none;\n    margin-top: -22.9rem;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid rgb(58, 163, 49);\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,yBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AACJ;;AAEA;EACI,YAAA;EACA,eAAA;AACJ;;AAEA;EACI,0BAAA;AACJ;;AAGA;EACI;IACI,sBAAA;EAAN;EAGE;IACI,WAAA;IACA,cAAA;EADN;EAKE;IACI,aAAA;IACA,mBAAA;EAHN;EAOE;IACI,kBAAA;EALN;AACF","sourcesContent":[".homePage {\n    background-color: white;\n    padding: 20px;\n    border: none;    \n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid rgb(58, 163, 49);\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"homePage": `CgjxyfEdobTkp_s1g1uU`,
@@ -4600,4 +4617,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c4601f023da9e72530d5d3000606502d.js.map
+//# sourceMappingURL=App.f82b1a18ca08e976a75022fa57b6c97d.js.map

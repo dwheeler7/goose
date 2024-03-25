@@ -1,46 +1,47 @@
 import { useEffect, useState } from 'react';
 import styles from './LikeBtn.module.scss';
-import { likePost, unlikePost, getPost } from '../../utilities/posts-service'
+import { likePost, unlikePost } from '../../utilities/posts-service';
 
 export default function LikeBtn({ post, user, setPost }) {
   // state for number of likes  
-  const [likesNum, setLikesNum] = useState(null)
-  const [likedPostBool, setLikedPostBool] = useState(null)
-  // state for if the user already liked the post
+  const [likesNum, setLikesNum] = useState();
+  const [likedPostBool, setLikedPostBool] = useState(getLikedPostBool());
 
   // helper function to get likes num
-  const getLikesNum = () =>  post.likes.length
+  const getLikesNum = () => post.likes.length;
 
-  // helper function to whether user liked post likes num
-  const getLikedPostBool = () => {
-    let likedPost = false
-    post.likes.forEach(userLike => {
-      if (userLike === user._id) likedPost = true
-    })
-    return likedPost
+  // helper function to determine whether user liked post
+  function getLikedPostBool() {
+    // return post.likes.some(userLike => userLike === user._id);
+    return post.likes.some(userLike => userLike._id === user._id || userLike === user._id)
   }
-
-  
 
   // handle click
   const handleClick = async e => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      let updatedPost
+      let updatedPost;
       if (likedPostBool) {
-        updatedPost = await unlikePost(post._id)
-      } else updatedPost = await likePost(post._id)
-      setPost(updatedPost)      
+        updatedPost = await unlikePost(post._id);
+      } else {
+        updatedPost = await likePost(post._id);
+      }
+      setPost(updatedPost);      
     } catch(err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
-  // use effect to get likesNum and likedPostBool
+  // use effect to update likesNum and likedPostBool
   useEffect(() => {
-    setLikesNum(getLikesNum())
-    setLikedPostBool(getLikedPostBool())    
-  },[post])
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());    
+  }, [post]);
+
+  useEffect(() => {
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());
+  }, []);
 
   return (
     <>    
@@ -48,5 +49,5 @@ export default function LikeBtn({ post, user, setPost }) {
     <span>{likesNum}</span>
     </>
 
-  )
+  );
 }

@@ -25,7 +25,7 @@ export async function getAllPosts() {
 export async function getAllPostsByUser(userID) {
   try {
     const postsData = await postsAPI.getAllByUser(userID)
-    if (!postsData) throw new Error('Could not get posts')
+    if (!postsData) throw new Error('Could not get posts')    
     return postsData
   } catch(err) {
     console.error("Error getting posts", err);
@@ -38,6 +38,17 @@ export async function likePost(postId) {
     const likedPost = await postsAPI.likePost(postId)
     if (!likedPost) throw new Error('Could not like post')
     return likedPost
+  } catch(err) {
+    console.error("Error liking posts", err);
+    return null;
+  }
+}
+
+export async function unlikePost(postId) {
+  try {
+    const unlikedPost = await postsAPI.unlikePost(postId)
+    if (!unlikedPost) throw new Error('Could not like post')
+    return unlikedPost
   } catch(err) {
     console.error("Error liking posts", err);
     return null;

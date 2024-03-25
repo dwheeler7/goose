@@ -61,16 +61,21 @@ async function index(_, res) {
     }
 }
 
-// Index by user
+// Index posts by user and populate likes
 async function indexByUser(req, res) {
     try {
-        const postUser = req.params.userId
-        if (!postUser) throw new Error('Cound not find user')
-        const posts = await Post.find({ user: postUser })
-        if (!posts) throw new Error('Could not find posts')
-        res.json(posts)
+        const postUser = req.params.userId;
+        if (!postUser) {
+            throw new Error('User ID is missing');
+        }
+        const posts = await Post.find({ user: postUser }).populate('likes').exec();        
+        if (!posts || posts.length === 0) {
+            return res.status(404).json({ error: 'No posts found for the specified user' });
+        }
+        res.json(posts);
     } catch (error) {
-        res.status(500).send(error);
+        console.error('Error retrieving posts by user:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -163,8 +168,7 @@ async function unlikePost(req, res) {
         const postLikesIdx = post.likes.indexOf(user._id);
         post.likes.splice(postLikesIdx, 1);
         await post.save();
-
-        res.json({ post, user });
+        res.json(post);
     } catch (error) {
         console.error("Error unliking post:", error);
         res.status(500).json({ message: "Failed to unlike post" });
