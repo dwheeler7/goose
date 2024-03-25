@@ -15,6 +15,8 @@ const Post = ({ projectTitle, projectDescription, gitHubLink, image, isLoggedInU
         <p>{projectDescription}</p>
         <GitHubLink url={gitHubLink} />
         <PostImage src={image} alt={image} />
+        <button>Like</button>
+        <button>Unlike</button>
         {
             Post.image ? <img src={image}/> : ''
         }
