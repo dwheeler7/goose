@@ -16,17 +16,17 @@ export default function PostList({ posts, user }) {
 
     // If there are posts, render the list
     return (
-        <div className={styles.postList}>            
+        <ul className={styles.postList}>            
             {posts.map(postData => (
-                <Post 
-                    key={postData._id}
+                <Post
+                    postId={postData._id}                     
                     projectTitle={postData.projectTitle}
                     projectDescription={postData.projectDescription}
                     gitHubLink={postData.gitHubLink} 
-                    image={postData.image}
+                    image={postData.image}                    
                     isLoggedInUser={user && user._id === postData.user}
                 />
             ))}
-        </div>
+        </ul>
     );
 }
