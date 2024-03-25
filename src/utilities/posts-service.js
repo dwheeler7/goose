@@ -37,7 +37,7 @@ export async function likePost(postId) {
   try {
     const likedPost = await postsAPI.likePost(postId)
     if (!likedPost) throw new Error('Could not like post')
-    return    
+    return likedPost
   } catch(err) {
     console.error("Error liking posts", err);
     return null;

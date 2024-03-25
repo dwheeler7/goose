@@ -19,7 +19,7 @@ export default function PostList({ posts, user }) {
         <ul className={styles.postList}>            
             {posts.map(postData => (
                 <Post                                   
-                    post={postData}
+                    postData={postData}
                     key={postData._id}                                               
                     isLoggedInUser={user && user._id === postData.user}
                     user={user}

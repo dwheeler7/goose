@@ -1,25 +1,18 @@
-import React from 'react';
-import styles from './Post.module.scss';
+import React from 'react'
+import { useEffect, useState } from 'react'
+import styles from './Post.module.scss'
 import LikeBtn from '../LikeBtn/LikeBtn'
 
-const GitHubLink = ({ url }) => (
-    url ? <a href={url} target="_blank" rel="noopener noreferrer">GitHub Link</a> : null
-);
 
-const PostImage = ({ src, alt }) => (
-    src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
-);
+export default function Post({ postData, isLoggedInUser, user }) {
+    const [post, setPost] = useState(postData)
 
-const Post = ({ postId, projectTitle, projectDescription, gitHubLink, image, isLoggedInUser, user }) => (    
-    <li className={styles.post}>
-        <h3>{projectTitle}</h3>
-        <p>{projectDescription}</p>
-        <GitHubLink url={gitHubLink} />
-        <PostImage src={image} alt={image} />
-        { user ? <LikeBtn postId={postId} user={user} /> : null }
-        {
-            Post.image ? <img src={image}/> : ''
-        }
+    return (
+
+        <li className={styles.post}>
+        <h3>{post.projectTitle}</h3>
+        <p>{post.projectDescription}</p>        
+        { user ? <LikeBtn post={post} user={user} setPost={setPost} /> : null }        
         {
             isLoggedInUser ? 
             <>            
@@ -28,6 +21,5 @@ const Post = ({ postId, projectTitle, projectDescription, gitHubLink, image, isL
             </> : null
         }        
     </li>    
-);
- 
-export default React.memo(Post);
+    )
+}

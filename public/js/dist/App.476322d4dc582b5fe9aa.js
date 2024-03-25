@@ -366,17 +366,56 @@ function ForgotPasswordForm() {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LikeBtn.module.scss */ "./src/components/LikeBtn/LikeBtn.module.scss");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 
 function LikeBtn(_ref) {
   let {
-    postId,
-    user
+    post,
+    user,
+    setPost
   } = _ref;
-  // 
+  // state for number of likes  
+  const [likesNum, setLikesNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [likedPostBool, setLikedPostBool] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  // state for if the user already liked the post
 
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", null, "Like"), /*#__PURE__*/React.createElement("span", null, "2"));
+  // helper function to get likes num
+  const getLikesNum = () => post.likes.length;
+
+  // helper function to whether user liked post likes num
+  const getLikedPostBool = () => {
+    let likedPost = false;
+    post.likes.forEach(userLike => {
+      if (userLike === user._id) likedPost = true;
+    });
+    return likedPost;
+  };
+
+  // handle click
+  const handleClick = async e => {
+    e.preventDefault();
+    try {
+      let updatedPost;
+      if (likedPostBool) {
+        updatedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.unlikePost)(post._id);
+      } else updatedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.likePost)(post._id);
+      setPost(updatedPost);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // use effect to get likesNum and likedPostBool
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());
+  }, [post]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    onClick: handleClick
+  }, likedPostBool ? /*#__PURE__*/React.createElement("span", null, "Unlike") : /*#__PURE__*/React.createElement("span", null, "Like")), /*#__PURE__*/React.createElement("span", null, likesNum));
 }
 
 /***/ }),
@@ -725,7 +764,7 @@ function NewPostForm(_ref) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ Post)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -734,52 +773,22 @@ function NewPostForm(_ref) {
 
 
 
-const GitHubLink = _ref => {
+
+function Post(_ref) {
   let {
-    url
-  } = _ref;
-  return url ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    href: url,
-    target: "_blank",
-    rel: "noopener noreferrer"
-  }, "GitHub Link") : null;
-};
-const PostImage = _ref2 => {
-  let {
-    src,
-    alt
-  } = _ref2;
-  return src ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: src,
-    alt: alt,
-    onError: e => e.target.style.display = 'none'
-  }) : null;
-};
-const Post = _ref3 => {
-  let {
-    postId,
-    projectTitle,
-    projectDescription,
-    gitHubLink,
-    image,
+    postData,
     isLoggedInUser,
     user
-  } = _ref3;
+  } = _ref;
+  const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].post
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(GitHubLink, {
-    url: gitHubLink
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PostImage, {
-    src: image,
-    alt: image
-  }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    postId: postId,
-    user: user
-  }) : null, Post.image ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: image
-  }) : '', isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().memo(Post));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, post.projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, post.projectDescription), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    post: post,
+    user: user,
+    setPost: setPost
+  }) : null, isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
+}
 
 /***/ }),
 
@@ -819,12 +828,8 @@ function PostList(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    postId: postData._id,
+    postData: postData,
     key: postData._id,
-    projectTitle: postData.projectTitle,
-    projectDescription: postData.projectDescription,
-    gitHubLink: postData.gitHubLink,
-    image: postData.image,
     isLoggedInUser: user && user._id === postData.user,
     user: user
   })));
@@ -1482,9 +1487,9 @@ function ProfilePage(_ref) {
 /* harmony export */   create: () => (/* binding */ create),
 /* harmony export */   getAll: () => (/* binding */ getAll),
 /* harmony export */   getAllByUser: () => (/* binding */ getAllByUser),
+/* harmony export */   getById: () => (/* binding */ getById),
 /* harmony export */   likePost: () => (/* binding */ likePost)
 /* harmony export */ });
-/* unused harmony export getById */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/posts';
@@ -1515,9 +1520,10 @@ function likePost(id) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createPost: () => (/* binding */ createPost),
 /* harmony export */   getAllPosts: () => (/* binding */ getAllPosts),
-/* harmony export */   getAllPostsByUser: () => (/* binding */ getAllPostsByUser)
+/* harmony export */   getAllPostsByUser: () => (/* binding */ getAllPostsByUser),
+/* harmony export */   likePost: () => (/* binding */ likePost)
 /* harmony export */ });
-/* unused harmony export likePost */
+/* unused harmony export getPost */
 /* harmony import */ var _posts_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./posts-api */ "./src/utilities/posts-api.js");
 
 async function createPost(postData) {
@@ -1554,9 +1560,19 @@ async function likePost(postId) {
   try {
     const likedPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.likePost(postId);
     if (!likedPost) throw new Error('Could not like post');
-    return;
+    return likedPost;
   } catch (err) {
     console.error("Error liking posts", err);
+    return null;
+  }
+}
+async function getPost(postId) {
+  try {
+    const foundPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.getById(postId);
+    if (!foundPost) throw new Error('Could not find post');
+    return foundPost;
+  } catch (err) {
+    console.error("Error finding post", err);
     return null;
   }
 }
@@ -4584,4 +4600,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.12ea5f2696de8a91db05f7adfbb1ee9a.js.map
+//# sourceMappingURL=App.c4601f023da9e72530d5d3000606502d.js.map
