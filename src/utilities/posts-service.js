@@ -43,3 +43,14 @@ export async function likePost(postId) {
     return null;
   }
 }
+
+export async function getPost(postId) {
+  try {
+    const foundPost = await postsAPI.getById(postId)
+    if (!foundPost) throw new Error('Could not find post')
+    return foundPost
+  } catch (err) {
+    console.error("Error finding post", err);
+    return null
+  }
+}
