@@ -29,5 +29,17 @@ export async function getAllPostsByUser(userID) {
     return postsData
   } catch(err) {
     console.error("Error getting posts", err);
+    return null;
+  }
+}
+
+export async function likePost(postId) {
+  try {
+    const likedPost = await postsAPI.likePost(postId)
+    if (!likedPost) throw new Error('Could not like post')
+    return    
+  } catch(err) {
+    console.error("Error liking posts", err);
+    return null;
   }
 }
