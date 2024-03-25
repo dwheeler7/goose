@@ -6,6 +6,7 @@ import FollowList from '../../components/FollowList/FollowList';
 import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
 import { getUser } from '../../utilities/users-service';
 import { findUser } from '../../utilities/users-api';
+import { use } from 'browser-sync';
 
 const ensureHttps = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -14,8 +15,28 @@ const ensureHttps = (url) => {
   return url;
 };
 
-export default function ProfilePage() {
-    const { userId } = useParams();
+export default function ProfilePage({user}) {
+    const [isLoggedInUser, setIsLoggedInUser] = useState(false)
+    const [profilePosts, setProfilePosts] = useState([])
+    // save profile user from params
+    const { userId } = useParams()
+    // get loggedInuser from props
+    const loggedInUser = user
+
+    // get posts of user from db
+    const fetchProfilePosts = async () => {
+        
+    }
+
+    // set isLoggedInUser state for edit & delete options
+    useEffect(() => {
+        setIsLoggedInUser(!!(userId === loggedInUser._id))
+    }, [])    
+    
+    
+    
+
+    // set posts of user to state var    
     const [user, setUser] = useState({});
     const [loggedIn, setLoggedIn] = useState({})
     const [posts, setPosts] = useState([]);
