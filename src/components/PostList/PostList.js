@@ -7,7 +7,7 @@ const EmptyState = () => (
     <div className={styles.emptyState}>No posts available.</div>
 );
 
-export default function PostList({ posts }) {
+export default function PostList({ posts, user }) {
     // Check if there are no posts
     if (posts.length === 0) {
         // If no posts, render the EmptyState component
@@ -16,15 +16,15 @@ export default function PostList({ posts }) {
 
     // If there are posts, render the list
     return (
-        <div className={styles.postList}>
-            {/* Map through each post and render the Post component */}
+        <div className={styles.postList}>            
             {posts.map(postData => (
                 <Post 
-                    key={postData._id} 
-                    projectTitle={postData.projectTitle} 
-                    projectDescription={postData.projectDescription} 
+                    key={postData._id}
+                    projectTitle={postData.projectTitle}
+                    projectDescription={postData.projectDescription}
                     gitHubLink={postData.gitHubLink} 
-                    image={postData.image} 
+                    image={postData.image}
+                    isLoggedInUser={user && user._id === postData.user}
                 />
             ))}
         </div>

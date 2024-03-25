@@ -15,7 +15,7 @@ export default function HomePage({ posts, fetchPosts, users, user }) {
                 </> : null
             }
             <SearchUsersForm users={users}/>            
-            <PostList posts={posts} />
+            <PostList posts={posts} user={user} />
         </div>
-    );
+    )
 }

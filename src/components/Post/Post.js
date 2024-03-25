@@ -9,7 +9,8 @@ const PostImage = ({ src, alt }) => (
     src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
 );
 
-const Post = ({ projectTitle, projectDescription, gitHubLink, image }) => (
+const Post = ({ projectTitle, projectDescription, gitHubLink, image, isLoggedInUser }) => (
+    <>
     <div className={styles.post}>
         <h3>{projectTitle}</h3>
         <p>{projectDescription}</p>
@@ -18,7 +19,16 @@ const Post = ({ projectTitle, projectDescription, gitHubLink, image }) => (
         {
             Post.image ? <img src={image}/> : ''
         }
+        {
+            isLoggedInUser ? 
+            <>            
+            <button>Edit</button>
+            <button>Delete</button>            
+            </> : null
+        }
+        
     </div>
+    </>
 );
  
 export default React.memo(Post);

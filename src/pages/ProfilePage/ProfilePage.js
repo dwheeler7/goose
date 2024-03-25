@@ -3,7 +3,8 @@ import styles from './ProfilePage.module.scss';
 import { useParams } from 'react-router-dom';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import FollowList from '../../components/FollowList/FollowList';
-import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
+// import ProfilePostList from '../../components/ProfilePostList/ProfilePostList';
+import PostList from '../../components/PostList/PostList';
 import { getProfileUser } from '../../utilities/users-service';
 import { getAllPostsByUser } from '../../utilities/posts-service';
 
@@ -93,7 +94,8 @@ export default function ProfilePage({ user }) {
               ) : null}
             </div>
             {isLoggedInUser && <FollowList posts={profilePosts} />}
-            <ProfilePostList posts={profilePosts} />
+            {/* <ProfilePostList posts={profilePosts} /> */}
+            <PostList posts={profilePosts} user={loggedInUser} />
           </>
         )}
       </div>
