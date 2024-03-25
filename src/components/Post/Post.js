@@ -9,8 +9,8 @@ const PostImage = ({ src, alt }) => (
     src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
 );
 
-const Post = ({ postId, projectTitle, projectDescription, gitHubLink, image, isLoggedInUser }) => (    
-    <li className={styles.post} key={postId}>
+const Post = ({ projectTitle, projectDescription, gitHubLink, image, isLoggedInUser }) => (    
+    <li className={styles.post}>
         <h3>{projectTitle}</h3>
         <p>{projectDescription}</p>
         <GitHubLink url={gitHubLink} />

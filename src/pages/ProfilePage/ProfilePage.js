@@ -44,8 +44,8 @@ export default function ProfilePage({ user }) {
   };
 
   useEffect(() => {
-    setIsLoggedInUser(!!(userId === loggedInUser._id));
-  }, [userId, loggedInUser._id]);
+    setIsLoggedInUser(!!(userId === loggedInUser?._id));
+  }, [userId, loggedInUser?._id]);
 
   useEffect(() => {
     fetchProfilePosts();
@@ -64,34 +64,31 @@ export default function ProfilePage({ user }) {
           <>
             <div className={styles.userContainer}>
               <div className={styles.userHeading}>
-                <h2 className={styles.userName}>{profileUser && profileUser.name}</h2>
+                <h2 className={styles.userName}>{profileUser.name}</h2>
                 <div className={styles.imgContainer}>
                   <ProfileImage className={styles.ProfileImage} user={profileUser} />
                 </div>
                 <div className={styles.userLinks}>
-                  {profileUser && (
-                    <a
-                      className={styles.ghLink}
-                      href={profileUser.gitHubLink ? ensureHttps(profileUser.gitHubLink) : '#'}
-                      target={profileUser.gitHubLink ? '_blank' : null}
-                    >
-                      <img className={styles.ghLogo} src="https://i.imgur.com/F796Bnt.png" alt="GitHub" />
-                    </a>
-                  )}
-                  {profileUser && (
-                    <a
-                      className={styles.portfolioLink}
-                      href={profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'}
-                    >
-                      <img className={styles.portfolioLogo} src="https://i.imgur.com/FZvlk3y.png" alt="Portfolio" />
-                    </a>
-                  )}
+                  <a
+                    className={styles.ghLink}
+                    href={profileUser.gitHubLink ? ensureHttps(profileUser.gitHubLink) : '#'}
+                    target={profileUser.gitHubLink ? '_blank' : null}
+                  >
+                    <img className={styles.ghLogo} src="https://i.imgur.com/F796Bnt.png" alt="GitHub" />
+                  </a>
+                  <a
+                    className={styles.portfolioLink}
+                    href={profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'}
+                  >
+                    <img className={styles.portfolioLogo} src="https://i.imgur.com/FZvlk3y.png" alt="Portfolio" />
+                  </a>
                 </div>
               </div>
-              {profileUser && profileUser.bio && <p className={styles.userBio}>{profileUser.bio}</p>}
-              {!profileUser || !profileUser.bio ? (
+              {profileUser.bio ? (
+                <p className={styles.userBio}>{profileUser.bio}</p>
+              ) : (
                 <p className={styles.userBio}>No bio at this time.</p>
-              ) : null}
+              )}
             </div>
             {isLoggedInUser && <FollowList posts={profilePosts} />}
             {/* <ProfilePostList posts={profilePosts} /> */}

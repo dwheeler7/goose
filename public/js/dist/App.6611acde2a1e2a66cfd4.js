@@ -728,7 +728,6 @@ const PostImage = _ref2 => {
 };
 const Post = _ref3 => {
   let {
-    postId,
     projectTitle,
     projectDescription,
     gitHubLink,
@@ -736,8 +735,7 @@ const Post = _ref3 => {
     isLoggedInUser
   } = _ref3;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].post,
-    key: postId
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].post
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(GitHubLink, {
     url: gitHubLink
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PostImage, {
@@ -787,7 +785,7 @@ function PostList(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
   }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    postId: postData._id,
+    key: postData._id,
     projectTitle: postData.projectTitle,
     projectDescription: postData.projectDescription,
     gitHubLink: postData.gitHubLink,
@@ -1384,8 +1382,8 @@ function ProfilePage(_ref) {
     setIsLoadingUser(false);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    setIsLoggedInUser(!!(userId === loggedInUser._id));
-  }, [userId, loggedInUser._id]);
+    setIsLoggedInUser(!!(userId === (loggedInUser === null || loggedInUser === void 0 ? void 0 : loggedInUser._id)));
+  }, [userId, loggedInUser === null || loggedInUser === void 0 ? void 0 : loggedInUser._id]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     fetchProfilePosts();
   }, [userId]);
@@ -1402,14 +1400,14 @@ function ProfilePage(_ref) {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userHeading
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userName
-  }, profileUser && profileUser.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, profileUser.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
     user: profileUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
-  }, profileUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLink,
     href: profileUser.gitHubLink ? ensureHttps(profileUser.gitHubLink) : '#',
     target: profileUser.gitHubLink ? '_blank' : null
@@ -1417,18 +1415,18 @@ function ProfilePage(_ref) {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLogo,
     src: "https://i.imgur.com/F796Bnt.png",
     alt: "GitHub"
-  })), profileUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLink,
     href: profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLogo,
     src: "https://i.imgur.com/FZvlk3y.png",
     alt: "Portfolio"
-  })))), profileUser && profileUser.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  })))), profileUser.bio ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
-  }, profileUser.bio), !profileUser || !profileUser.bio ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, profileUser.bio) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
-  }, "No bio at this time.") : null), isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "No bio at this time.")), isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
     posts: profilePosts
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_4__["default"], {
     posts: profilePosts,
@@ -4404,4 +4402,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.0b19e05b2969508b3e16447ad54e676d.js.map
+//# sourceMappingURL=App.4234c969940b9075af58fe3d7e4050e3.js.map
