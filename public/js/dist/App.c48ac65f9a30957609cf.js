@@ -1396,22 +1396,18 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuthPage.module.scss */ "./src/pages/AuthPage/AuthPage.module.scss");
 /* harmony import */ var _components_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/LoginForm/LoginForm */ "./src/components/LoginForm/LoginForm.js");
 /* harmony import */ var _components_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/SignUpForm/SignUpForm */ "./src/components/SignUpForm/SignUpForm.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
- // Import useNavigate from react-router-dom
 
 
 
 function AuthPage(_ref) {
   let {
-    setUser,
-    user
+    setUser
   } = _ref;
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const [showLogin, setShowLogin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   return /*#__PURE__*/React.createElement("main", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AuthPage
@@ -1520,7 +1516,7 @@ function HomePage(_ref) {
 /* harmony import */ var _components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FollowList/FollowList */ "./src/components/FollowList/FollowList.js");
 /* harmony import */ var _components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProfilePostList/ProfilePostList */ "./src/components/ProfilePostList/ProfilePostList.js");
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
-/* harmony import */ var _utilities_users_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-api */ "./src/utilities/users-api.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
 
 
 
@@ -1535,90 +1531,88 @@ const ensureHttps = url => {
   }
   return url;
 };
-function ProfilePage() {
+function ProfilePage(_ref) {
+  let {
+    user
+  } = _ref;
+  const [profileUser, setProfileUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [profilePosts, setProfilePosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [isLoadingUser, setIsLoadingUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [isLoadingPosts, setIsLoadingPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [isLoggedInUser, setIsLoggedInUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  // save profile user from params
   const {
     userId
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [loggedIn, setLoggedIn] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const fetchData = async () => {
-    try {
-      // Fetch user data using getUser function
-      const fetchedUser = await (0,_utilities_users_api__WEBPACK_IMPORTED_MODULE_6__.findUser)(userId);
-      setUser(fetchedUser);
-      // Fetch all posts
-      const fetchedPosts = await getAllPosts();
-      setPosts(fetchedPosts);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchData(); // Call fetchData function
-  }, [userId]); // Add id to dependency array to re-fetch data when id changes
+  // get loggedInuser from props
+  const loggedInUser = user;
 
-  const fetchLoggedIn = async () => {
-    try {
-      // Fetch user data using getUser function
-      const fetchedUser = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_7__.getUser)();
-      setLoggedIn(fetchedUser);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  // get posts of user from db
+  const fetchProfilePosts = async () => {
+    setIsLoadingPosts(true);
+    const foundPosts = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_6__.getAllPostsByUser)(userId);
+    setProfilePosts(foundPosts);
+    setIsLoadingPosts(false);
+  };
+
+  // get profile user
+  const fetchProfileUser = async () => {
+    setIsLoadingUser(true);
+    const foundUser = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_7__.getProfileUser)(userId);
+    setProfileUser(foundUser);
+    setIsLoadingUser(false);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchLoggedIn(); // Call fetchData function
-  }, []);
-  const getAllPosts = async () => {
-    try {
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    setIsLoggedInUser(!!(userId === loggedInUser._id));
+  }, [userId, loggedInUser._id]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchProfilePosts();
+  }, [userId]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchProfileUser();
+  }, [userId]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfilePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].topContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, isLoadingUser || isLoadingPosts ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading...") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userHeading
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userName
-  }, user && user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, profileUser && profileUser.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfileImage_ProfileImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProfileImage,
-    user: user,
-    setUser: setUser
+    user: profileUser
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userLinks
-  }, user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+  }, profileUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLink,
-    href: user.gitHubLink ? ensureHttps(user.gitHubLink) : '#',
-    target: user.gitHubLink ? "_blank" : null
+    href: profileUser.gitHubLink ? ensureHttps(profileUser.gitHubLink) : '#',
+    target: profileUser.gitHubLink ? '_blank' : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghLogo,
-    src: "https://i.imgur.com/F796Bnt.png"
-  })), user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    src: "https://i.imgur.com/F796Bnt.png",
+    alt: "GitHub"
+  })), profileUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLink,
-    href: user.portfolioLink ? ensureHttps(user.portfolioLink) : '#'
+    href: profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLogo,
-    src: "https://i.imgur.com/FZvlk3y.png"
-  })))), user && user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    src: "https://i.imgur.com/FZvlk3y.png",
+    alt: "Portfolio"
+  })))), profileUser && profileUser.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
-  }, user.bio), !user || !user.bio && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }, profileUser.bio), !profileUser || !profileUser.bio ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
-  }, "No bio at this time.")), loggedIn._id === userId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    posts: posts
-  }) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    posts: posts
-  })));
+  }, "No bio at this time.") : null), isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FollowList_FollowList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    posts: profilePosts
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ProfilePostList_ProfilePostList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    posts: profilePosts
+  }))));
 }
 
 /***/ }),
@@ -1631,7 +1625,8 @@ function ProfilePage() {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   create: () => (/* binding */ create),
-/* harmony export */   getAll: () => (/* binding */ getAll)
+/* harmony export */   getAll: () => (/* binding */ getAll),
+/* harmony export */   getAllByUser: () => (/* binding */ getAllByUser)
 /* harmony export */ });
 /* unused harmony export getById */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
@@ -1642,6 +1637,9 @@ function create(postData) {
 }
 function getAll() {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL);
+}
+function getAllByUser(userId) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/user/").concat(userId));
 }
 function getById(id) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id));
@@ -1657,10 +1655,20 @@ function getById(id) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createPost: () => (/* binding */ createPost),
-/* harmony export */   getAllPosts: () => (/* binding */ getAllPosts)
+/* harmony export */   getAllPosts: () => (/* binding */ getAllPosts),
+/* harmony export */   getAllPostsByUser: () => (/* binding */ getAllPostsByUser)
 /* harmony export */ });
 /* harmony import */ var _posts_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./posts-api */ "./src/utilities/posts-api.js");
 
+async function createPost(postData) {
+  try {
+    const createdPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.create(postData);
+    return createPost;
+  } catch (error) {
+    console.error("Error getting posts", error);
+    return null;
+  }
+}
 async function getAllPosts() {
   console.log('getting all posts...');
   try {
@@ -1672,13 +1680,13 @@ async function getAllPosts() {
     return null; // Return null if there's an error parsing the token
   }
 }
-async function createPost(postData) {
+async function getAllPostsByUser(userID) {
   try {
-    const createdPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.create(postData);
-    return createPost;
-  } catch (error) {
-    console.error("Error getting posts", error);
-    return null;
+    const postsData = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.getAllByUser(userID);
+    if (!postsData) throw new Error('Could not get posts');
+    return postsData;
+  } catch (err) {
+    console.error("Error getting posts", err);
   }
 }
 
@@ -1771,6 +1779,7 @@ async function customerSupportRequest(name, email, message, attachment) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customerSupportRequest: () => (/* binding */ customerSupportRequest),
+/* harmony export */   getProfileUser: () => (/* binding */ getProfileUser),
 /* harmony export */   getToken: () => (/* binding */ getToken),
 /* harmony export */   getUser: () => (/* binding */ getUser),
 /* harmony export */   indexUsers: () => (/* binding */ indexUsers),
@@ -1830,6 +1839,14 @@ function getUser() {
   } catch (error) {
     console.error("Error parsing user from token:", error);
     return null; // Return null if there's an error parsing the token
+  }
+}
+async function getProfileUser(userId) {
+  try {
+    const foundUser = await _users_api__WEBPACK_IMPORTED_MODULE_0__.findUser(userId);
+    return foundUser;
+  } catch (error) {
+    console.error("Error finding users", error);
   }
 }
 async function indexUsers() {
@@ -5000,4 +5017,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6bc0745488f5c8e581dbd8958ced1641.js.map
+//# sourceMappingURL=App.0f9dbb5ae45372702651642ecaa5a277.js.map
