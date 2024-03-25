@@ -10,6 +10,9 @@ router.post('/', checkToken, postCtrl.create, postCtrl.jsonPost)
 // index
 router.get('/', postCtrl.index)
 
+// index for a user
+router.get('/user/:userId', postCtrl.indexByUser)
+
 // show
 router.get('/:id', postCtrl.show)
 

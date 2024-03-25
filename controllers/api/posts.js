@@ -5,6 +5,7 @@ const { fetchReadmeContent } = require('../../services/githubAPI');
 module.exports = {
     create,
     index,
+    indexByUser,
     show,
     update,
     destroy,
@@ -52,8 +53,7 @@ async function create(req, res, next) {
 async function index(_, res) {
     try {
         const posts = await Post.find({}).populate("likes");
-        res.locals.data.posts = posts;
-        console.log("Retrieved posts:", posts);
+        res.locals.data.posts = posts;        
         res.json(posts);
     } catch (error) {
         console.error("Error retrieving posts:", error);
@@ -61,11 +61,24 @@ async function index(_, res) {
     }
 }
 
+// Index by user
+async function indexByUser(req, res) {
+    try {
+        const postUser = req.params.userId
+        if (!postUser) throw new Error('Cound not find user')
+        const posts = await Post.find({ user: postUser })
+        if (!posts) throw new Error('Could not find posts')
+        res.json(posts)
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+
 async function show(req, res) {
     try {
         const post = await Post.findById(req.params.id);
-        res.locals.data.post = post;
-        console.log("Retrieved post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error retrieving post:", error);
@@ -77,8 +90,7 @@ async function show(req, res) {
 async function update(req, res) {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.locals.data.post = post;
-        console.log("Updated post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error updating post:", error);
@@ -93,8 +105,7 @@ async function destroy(req, res) {
 
         // Remove post from user's posts array
         await User.updateOne({ posts: req.params.id }, { $pull: { posts: req.params.id } });
-        res.locals.data.post = post;
-        console.log("Deleted post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error deleting post:", error);

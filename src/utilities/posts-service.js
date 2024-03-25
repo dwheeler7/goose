@@ -30,5 +30,4 @@ export async function getAllPostsByUser(userID) {
   } catch(err) {
     console.error("Error getting posts", err);
   }
-
 }

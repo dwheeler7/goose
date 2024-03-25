@@ -10,6 +10,10 @@ export function getAll() {
   return sendRequest(BASE_URL);
 }
 
+export function getAllByUser(userId) {
+  return sendRequest(`${BASE_URL}/user/${userId}`)  
+}
+
 export function getById(id) {
   return sendRequest(`${BASE_URL}/${id}`);
 }
