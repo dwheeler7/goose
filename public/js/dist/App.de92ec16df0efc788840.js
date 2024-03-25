@@ -1578,6 +1578,7 @@ async function unlikePost(postId) {
   try {
     const unlikedPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.unlikePost(postId);
     if (!unlikedPost) throw new Error('Could not like post');
+    console.log(unlikedPost);
     return unlikedPost;
   } catch (err) {
     console.error("Error liking posts", err);
@@ -4617,4 +4618,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.f82b1a18ca08e976a75022fa57b6c97d.js.map
+//# sourceMappingURL=App.2eab9679c64860450cd12501dae29be1.js.map

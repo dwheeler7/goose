@@ -48,6 +48,7 @@ export async function unlikePost(postId) {
   try {
     const unlikedPost = await postsAPI.unlikePost(postId)
     if (!unlikedPost) throw new Error('Could not like post')
+    console.log(unlikedPost)
     return unlikedPost
   } catch(err) {
     console.error("Error liking posts", err);
