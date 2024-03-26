@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import styles from './Post.module.scss'
 import LikeBtn from '../LikeBtn/LikeBtn'
+import CommentForm from '../CommentForm/CommentForm'
 
 
 export default function Post({ postData, isLoggedInUser, user }) {
@@ -18,11 +19,10 @@ export default function Post({ postData, isLoggedInUser, user }) {
         { user && !isLoggedInUser ? <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} /> : null }
         {
             user && isLoggedInUser ?
-            <>  
-            
-                <button className={styles.button}>Edit</button>
-                <button className={styles.button}>Delete</button>   
-                             
+            <>
+            <CommentForm post={post} user={user} />            
+            <button>Edit</button>
+            <button>Delete</button>            
             </> : null
         } 
         </div>         
