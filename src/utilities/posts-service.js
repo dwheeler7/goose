@@ -68,3 +68,14 @@ export async function getPost(postId) {
     return null
   }
 }
+
+export async function deletePost(postId) {
+  try {
+    const deletedPost = await postsAPI.deletePost(postId)
+    if (!deletedPost) throw new Error('Could not delete')
+    return deletedPost
+  } catch (err) {
+    console.error("Error finding post", err);
+    return null
+  }
+}
