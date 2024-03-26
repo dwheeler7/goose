@@ -8,6 +8,7 @@ const EmptyState = () => (
 );
 
 export default function FollowList({ posts }) {
+    console.log(posts)
     const { userId } = useParams();
 
     // Check if there are any followers

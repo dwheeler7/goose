@@ -10,7 +10,23 @@ export function getAll() {
   return sendRequest(BASE_URL);
 }
 
+export function getAllByUser(userId) {
+  console.log('Post API', userId)
+  return sendRequest(`${BASE_URL}/user/${userId}`)  
+}
+
 export function getById(id) {
   return sendRequest(`${BASE_URL}/${id}`);
 }
 
+export function likePost(id) {
+  return sendRequest(`${BASE_URL}/${id}/like`, 'POST')
+}
+
+export function unlikePost(id) {
+  return sendRequest(`${BASE_URL}/${id}/unlike`, 'POST')
+}
+
+export function deletePost(id) {
+  return sendRequest(`${BASE_URL}/${id}`, 'DELETE')
+}

@@ -1,8 +1,13 @@
-.homePage {
+
+.HomePage {
+    width: 100%;
+    height: 100%;
     background-color: white;
+    margin: 0 auto;
+    padding: 1rem 0;
+.homePage {
     padding: 20px;
     border: none;
-    margin-top: -22.9rem;
 }
 
 .form {
@@ -15,7 +20,7 @@ textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 2px solid rgb(58, 163, 49);
+    border: 2px solid black;
     border-radius: 5px;
     resize: none;
 }
@@ -24,16 +29,19 @@ button {
     padding: 10px;
     background-color: rgb(250, 250, 250);
     color: rgb(88, 85, 85);
-    border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: 1px solid black;
     width: auto; 
     margin: 0 auto; 
 }
 
 button:hover {
-    background-color: #6acf66;
+    background-color:rgb(87, 163, 115);
+    border: 1px solid black;
+    transform: scale(1.01);
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
 
 .postList {
@@ -96,4 +104,5 @@ button:hover {
     .post h3, .post p, .user {
         font-size: smaller; 
     }
+}
 }

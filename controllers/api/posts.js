@@ -5,6 +5,7 @@ const { fetchReadmeContent } = require('../../services/githubAPI');
 module.exports = {
     create,
     index,
+    indexByUser,
     show,
     update,
     destroy,
@@ -26,11 +27,17 @@ function jsonPosts(_, res) {
 async function create(req, res, next) {
     try {
         const userId = req.user._id;
-        const { githubLink, useReadmeAsDescription, projectDescription } = req.body;
+        let { githubLink, useReadmeAsDescription, projectDescription } = req.body; // Changed from const to let
+
+        // Preprocess the GitHub link to remove 'https://' if present
+        if (githubLink.startsWith('https://')) {
+            githubLink = githubLink.slice(8);
+        }
 
         let description = projectDescription; // Initialize with provided projectDescription
         // If GitHub link is provided and user wants to use README content as description
         if (githubLink && useReadmeAsDescription) {
+            console.log("attempting to pull readme from github")
             // Extract owner and repo name from the GitHub link
             const [_, owner, repo] = githubLink.split('/');
             // Fetch README content from GitHub repository
@@ -38,7 +45,7 @@ async function create(req, res, next) {
             req.body.projectDescription = readmeContent; // Update projectDescription with README content
         }
 
-        const post = await Post.create({ user: userId, ...req.body, description });
+        let post = await Post.create({ user: userId, ...req.body, description });
         const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;
         next();
@@ -52,8 +59,7 @@ async function create(req, res, next) {
 async function index(_, res) {
     try {
         const posts = await Post.find({}).populate("likes");
-        res.locals.data.posts = posts;
-        console.log("Retrieved posts:", posts);
+        res.locals.data.posts = posts;        
         res.json(posts);
     } catch (error) {
         console.error("Error retrieving posts:", error);
@@ -61,11 +67,29 @@ async function index(_, res) {
     }
 }
 
+// Index posts by user and populate likes
+async function indexByUser(req, res) {
+    try {
+        console.log('backend...')
+        const postUser = req.params.userId;
+        console.log(postUser)
+        if (!postUser) {
+            throw new Error('User ID is missing');
+        }
+
+        const posts = await Post.find({ user: postUser }).populate('likes').exec()                
+        res.json(posts);
+    } catch (error) {
+        console.error('Error retrieving posts by user:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
 async function show(req, res) {
     try {
         const post = await Post.findById(req.params.id);
-        res.locals.data.post = post;
-        console.log("Retrieved post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error retrieving post:", error);
@@ -77,8 +101,7 @@ async function show(req, res) {
 async function update(req, res) {
     try {
         const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.locals.data.post = post;
-        console.log("Updated post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error updating post:", error);
@@ -93,8 +116,7 @@ async function destroy(req, res) {
 
         // Remove post from user's posts array
         await User.updateOne({ posts: req.params.id }, { $pull: { posts: req.params.id } });
-        res.locals.data.post = post;
-        console.log("Deleted post:", post);
+        res.locals.data.post = post;        
         res.json(post);
     } catch (error) {
         console.error("Error deleting post:", error);
@@ -152,8 +174,7 @@ async function unlikePost(req, res) {
         const postLikesIdx = post.likes.indexOf(user._id);
         post.likes.splice(postLikesIdx, 1);
         await post.save();
-
-        res.json({ post, user });
+        res.json(post);
     } catch (error) {
         console.error("Error unliking post:", error);
         res.status(500).json({ message: "Failed to unlike post" });

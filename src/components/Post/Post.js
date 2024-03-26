@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Post.module.scss';
+import LikeBtn from '../LikeBtn/LikeBtn';
+import DeleteBtn from '../DeleteBtn/DeleteBtn';
+import CommentForm from '../CommentForm/CommentForm';
 
-const GitHubLink = ({ url }) => (
-    url ? <a href={url} target="_blank" rel="noopener noreferrer">GitHub Link</a> : null
-);
+export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
+    const [post, setPost] = useState(postData);
 
-const PostImage = ({ src, alt }) => (
-    src ? <img src={src} alt={alt} onError={(e) => (e.target.style.display = 'none')} /> : null
-);
-
-const Post = ({ projectTitle, projectDescription, gitHubLink, image }) => (
-    <div className={styles.post}>
-        <h3>{projectTitle}</h3>
-        <p>{projectDescription}</p>
-        <GitHubLink url={gitHubLink} />
-        <PostImage src={image} alt={image} />
-        {
-            Post.image ? <img src={image}/> : ''
-        }
-    </div>
-);
- 
-export default React.memo(Post);
+    return (
+        post ? (
+            <li className={styles.Post}>
+                <div className={styles.TitleImgContainer}>
+                    <h2 className={styles.ProjectTitle}>{post.projectTitle}</h2>
+                    {post.image && <img className={styles.ProjectImage} src={post.image} alt="Project" />}
+                </div>
+                <p className={styles.projectDescription}>{post.projectDescription}</p>
+                <div className={styles.btnContainer}>
+                    {user && !isLoggedInUser && <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} />}
+                    {user && isLoggedInUser && (
+                        <>
+                            <CommentForm post={post} user={user} />
+                            <button>Edit</button>
+                            <DeleteBtn post={post} setPost={setPost} fetchPosts={fetchPosts} />
+                        </>
+                    )}
+                </div>
+            </li>
+        ) : null
+    );
+}
