@@ -21,9 +21,20 @@ const userSchema = new Schema({
         required: true
     },
     picture: { type: String },
-    userType: { type: String, enum: ['developer', 'employer'], required: true },
+    userType: { type: String, enum: ['developer', 'employer'], required: true, default: 'developer' },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }] // Fixed typo here
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], // Fixed typo here
+    likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }], //i added likes to user
+    likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }], //added notification
+    followedDevelopers: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    usersThatFollowThisDeveloper: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    bio: {type: String},
+    gitHubLink: {type: String},
+    portfolioLink: {type: String},
+    passwordResetToken: {type: String},
+    location: {type: String}
+
 }, {
     timestamps: true,
     toJSON: {

@@ -1,0 +1,10 @@
+.imgContainer {
+    border: 3px solid var(--bg-color);
+    height: 10rem;
+    width: 10rem;
+    border-radius: 40%;
+    overflow: hidden;
+    .ProfileImage {
+        width: 100%;
+    }
+}

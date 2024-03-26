@@ -1,0 +1,61 @@
+.ProfilePage {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 10rem;
+    display: flex;
+    .topContainer {
+        width: 60%;
+        max-height: 50rem;
+        .userContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            width: 90%;
+            max-height: 40rem;
+            background-color: white;
+            border-radius: .5rem;
+            padding: 2rem;
+            border: .1rem solid lightgrey;
+            box-shadow: 0 0 .3rem darkgreen;
+            .imgContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 15rem;
+            }
+            .userBio {
+                color: black;
+            }
+            .userLinks {
+                width: 15rem;
+                display: flex;
+                justify-content: space-evenly;
+                margin-bottom: 1.5rem;
+                .ghLogo {
+                    background-color: lightgrey;
+                    border-radius: 100%;
+                    width: 4rem;
+                    transition: .3s ease;
+                    &:hover {
+                        filter: invert(100%);
+                        transition: .3s ease;
+                    }
+                }
+                .portfolioLogo {
+                    background-color: lightgrey;
+                    border-radius: 100%;
+                    width: 4rem;
+                    padding: 1rem;
+                    transition: .3s ease;
+                    &:hover {
+                        filter: invert(100%);
+                        transition: .3s ease;
+                    }
+                }
+            }
+        }
+    }
+}

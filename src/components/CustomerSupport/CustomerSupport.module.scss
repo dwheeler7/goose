@@ -1,0 +1,61 @@
+.support-ticket-form {
+    max-width: 400px;
+    margin: 0 auto;
+  
+    form {
+      display: flex;
+      flex-direction: column;
+  
+      input,
+      textarea {
+        margin-bottom: 10px;
+        margin-left: 0;
+        padding: 8px;
+        background-color: rgb(240, 240, 240);
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 1.15rem;
+        color: black;
+        transition: border-color 0.3s ease;
+  
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+      }
+      textarea {
+        height: 12rem;
+      }
+  
+      button {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+  
+        &:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+      }
+    }
+    .error-message {
+      color: red;
+      font-size: 1.25rem;
+      font-weight: bolder;
+    }
+    .success-message {
+      color: limegreen;
+      font-size: 3rem;
+      font-weight: bolder;
+    }
+  }
+  

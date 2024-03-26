@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
     let token = req.get('Authorization')
-    if(token){
+    if(token){        
         token = token.split(' ')[1]
         jwt.verify(token, process.env.SECRET, (err, decoded) => {
             req.user = err ? null : decoded.user

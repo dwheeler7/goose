@@ -9,3 +9,20 @@ export function signUp(userData) {
 export function login(credentials) {
   return sendRequest(`${BASE_URL}/login`, 'POST', credentials);
 }
+
+export function resetPassword(emailData) {
+  return sendRequest(`${BASE_URL}/reset-password`, 'POST', emailData);
+}
+
+
+export function findUser(userId) {
+  return sendRequest(`${BASE_URL}/${userId}`);
+}
+
+export function index() {
+  return sendRequest(`${BASE_URL}/`)
+}
+
+export async function customerSupportRequest(name, email, message, attachment) {
+  return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
+}

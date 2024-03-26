@@ -1,0 +1,13 @@
+.FollowList {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    min-height: 5rem;
+    background-color: white;
+    border-radius: .5rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border: .1rem solid lightgrey;
+    box-shadow: 0 0 .3rem darkgreen;
+    margin: 2rem 0 2rem;
+}

@@ -1,13 +1,21 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+const { sendPasswordResetEmail } = require('../../src/utilities/email-api');
+const { sendSupportTicketEmail } = require('../../src/utilities/email-support-api');
 
-function createJWT(user) {
-    return jwt.sign(
+function createJWT(user, rememberMe) {
+    let expiresIn = '24h'; // Default expiration time (24 hours)
+    if (rememberMe) {
+        expiresIn = '30d'; // 30 days expiration if rememberMe is true
+    }
+    const jwtToken = jwt.sign(
         { user },
         process.env.SECRET,
-        { expiresIn: '24h' }
+        { expiresIn }
     );
+    console.log(jwtToken)
+    return jwtToken
 }
 
 const checkToken = (req, res) => {
@@ -20,7 +28,7 @@ const dataController = {
         try {
             const user = await User.create(req.body);
             console.log(req.body);
-            const token = createJWT(user);
+            const token = createJWT(user, false); // Default expiration
             res.locals.data = { user, token };
             next();
         } catch (e) {
@@ -31,10 +39,14 @@ const dataController = {
     async loginUser(req, res, next) {
         try {
             const user = await User.findOne({ email: req.body.email });
+            console.log('Request body:', req.body); // Log entire request body
+            console.log('Remember Me from frontend:', req.body.rememberMe); // Log the value of rememberMe
             if (!user) throw new Error('User not found');
-            const match = await bcrypt.compare(req.body.password, user.password);
+            const match = await bcryptjs.compare(req.body.password, user.password);
             if (!match) throw new Error('Invalid password');
-            const token = createJWT(user);
+
+            // Assuming "rememberMe" is sent in the request body
+            const token = createJWT(user, req.body.rememberMe);
             res.locals.data = { user, token };
             next();
         } catch (error) {
@@ -42,6 +54,24 @@ const dataController = {
             res.status(400).json({ message: error.message || 'Bad Credentials' });
         }
     }, 
+    async showUser(req, res) {
+        try {
+            const user = await User.findById(req.params.id)
+            res.json(user)
+        } catch (error) {
+            res.status(400).json({ msg: error.message })
+        }
+    },
+
+    async indexAll(req, res, next) {
+        try {
+            const user = await User.find()
+            res.status(200).json(user)
+          } catch (error) {
+            res.status(400).json({message: error.message})
+          }
+        },
+
     async updateUser(req, res) {
         try {
             const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -50,8 +80,118 @@ const dataController = {
             console.error('Error updating user', error);
             res.status(400).json({ message: 'Error updating user' });
         }
+    },
+    //All email stuff below
+    async resetPassword(req, res) {
+        try {
+            const { email } = req.body;
+    
+            // Check if the user with the provided email exists
+            const user = await User.findOne({ email });
+            console.log(user)
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            
+            // Generate a random temporary password
+            const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character temporary password
+    
+            // Hash the temporary password
+            const hashedPassword = await bcryptjs.hash(temporaryPassword, 10);
+    
+            // Generate a temporary token
+            const temporaryToken = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: '30m' }); // Example: Expires in 1 hour
+            // Associate the temporary token with the user in the database
+            user.passwordResetToken = temporaryToken;
+            await user.save();
+            console.log(temporaryToken)
+            // Send an email to the user with the temporary password and token
+            await sendPasswordResetEmail(email, temporaryPassword, temporaryToken);
+    
+            // Respond with success message
+            return res.status(200).json({ message: 'Password reset successful. Check your email for the temporary password and token.' });
+        } catch (error) {
+            console.error('Error resetting password', error);
+            return res.status(400).json({ message: 'Error resetting password' });
+        }
+    },
+
+    async updatePasswordWithToken(req, res) {
+        try {
+            const { token } = req.params;
+            const { newPassword } = req.body;
+        
+            // Find the user associated with the provided token
+            const user = await User.findOne({ passwordResetToken: token });
+            console.log(user)
+            // If user not found or token expired
+            if (!user) {
+              return res.status(404).json({ message: 'User not found or token expired' });
+            }
+        
+            // Update the user's password in the database
+            user.password = newPassword;
+            user.passwordResetToken = null; // Clear password reset token
+            await user.save();
+            console.log(token)
+        
+            // Respond with success message
+            return res.status(200).json({ message: 'Password updated successfully' });
+          } catch (error) {
+            console.error('Error updating password:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+          }
+        },
+
+        async handleSupportTicket(req, res) {
+            const { name, email, message, attachment } = req.body;
+          
+            try {
+              const user = await User.findOne({ email });  // Check if the email exists in the system
+              if (!user) {
+                return res.status(400).json({ message: 'Email not found in the system' });
+              }
+          
+              if (attachment) {
+                await sendSupportTicketEmail(name, email, message, attachment);
+              } else {
+                await sendSupportTicketEmail(name, email, message);
+              }
+          
+              res.status(200).json({ message: 'Support ticket submitted successfully' });
+            } catch (error) {
+              console.error('Error submitting support ticket:', error);
+              res.status(500).json({ message: 'Failed to submit support ticket' });
+            }
+        },
+        // ALL email stuff DONE
+    async followDeveloper(req, res) {
+        try {
+            const { userId, developerId } = req.body;
+            const user = await User.findByIdAndUpdate(userId, { $addToSet: { followedDevelopers: developerId } }, { new: true });
+            const developer = await User.findByIdAndUpdate(developerId, { $addToSet: { usersThatFollowThisDeveloper: userId } }, { new: true });
+            res.json({ user, developer });
+        } catch (error) {
+            console.error('Error following developer', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+
+    async unfollowDeveloper(req, res) {
+        try {
+            const { userId, developerId } = req.body;
+            const user = await User.findByIdAndUpdate(userId, { $pull: { followedDevelopers: developerId } }, { new: true });
+            const developer = await User.findByIdAndUpdate(developerId, { $pull: { usersThatFollowThisDeveloper: userId } }, { new: true });
+            res.json({ user, developer });
+        } catch (error) {
+            console.error('Error unfollowing developer', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
     } 
-};
+}
+
+
+
 
 const apiController = {
     authenticate(req, res) {

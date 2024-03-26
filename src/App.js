@@ -1,119 +1,105 @@
-import { useState, useEffect } from 'react'
-import styles from './App.module.scss'
-import { Route, Routes } from 'react-router-dom'
-import AuthPage from './pages/AuthPage/AuthPage'
-import HomePage from './pages/HomePage/HomePage'
+import { useState, useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
+import NavBar from './components/NavBar/NavBar';
+import AuthPage from './pages/AuthPage/AuthPage';
+import HomePage from './pages/HomePage/HomePage';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
+import { getAllPosts } from './utilities/posts-service'
+import { indexUsers, getUser } from './utilities/users-service'
+import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
 
+import styles from './App.module.scss';
 
-export default function App(){
-    const [todos, setTodos] = useState([])
-    const [completedTodos, setCompletedTodos] = useState([])
-    const [newTodo, setNewTodo] = useState({
-        title: '',
-        completed: false
-    })
-
-    //createTodos
-    const createTodo = async () => {
-        const body = {...newTodo}
+export default function App() {
+    const [user, setUser] = useState(getUser())
+    const [users, setUsers] = useState([])
+    const [posts, setPosts] = useState([])        
+    const location = useLocation();
+    const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
+    
+    // function to fetch posts to pass to compontents
+    const fetchPosts = async () => {
+        console.log('fetch posts use effect...')
         try {
-            const response = await fetch('/api/todos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-            const createdTodo = await response.json()
-            const todosCopy = [createdTodo,...todos]
-            setTodos(todosCopy)
-            setNewTodo({
-                title: '',
-                completed: false
-            })
-        } catch (error) {   
-            console.error(error)
-        }
-    }
-    //deleteTodos
-    const deleteTodo = async (id) => {
-        try {
-            const index = completedTodos.findIndex((todo) => todo._id === id)
-            const completedTodosCopy = [...completedTodos]
-            const response = await fetch(`/api/todos/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            await response.json()
-            completedTodosCopy.splice(index, 1)
-            setCompletedTodos(completedTodosCopy)
+            const postsData = await getAllPosts()
+            setPosts(postsData)            
         } catch (error) {
-            console.error(error)
-        }
+            console.error('There was an error!', error)
+        }        
     }
-    //moveToCompleted
-    const moveToCompleted = async (id) => {
+
+    // function to fetch users
+    const fetchUsers = async () => {
         try {
-            const index = todos.findIndex((todo) => todo._id === id)
-            const todosCopy = [...todos]
-            const subject = todosCopy[index]
-            subject.completed = true 
-            const response = await fetch(`/api/todos/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(subject)
-            })
-            const updatedTodo = await response.json()
-            const completedTDsCopy = [updatedTodo, ...completedTodos]
-            setCompletedTodos(completedTDsCopy)
-            todosCopy.splice(index, 1)
-            setTodos(todosCopy)
+            const foundUsers = await indexUsers()
+            setUsers(foundUsers)
         } catch (error) {
-            console.error(error)
+            console.error('Error finding users', error)
         }
+
     }
-    //getTodos
-    const getTodos = async () => {
-        try{
-            const response = await fetch('/api/todos')
-            const foundTodos = await response.json()
-            setTodos(foundTodos.reverse())
-            console.log('hey')
-            const responseTwo = await fetch('/api/todos/completed')
-            const foundCompletedTodos = await responseTwo.json()
-            setCompletedTodos(foundCompletedTodos.reverse())
-        } catch(error){
-            console.error(error)
-        }
-    }
-    useEffect(() => {
-        getTodos()
+
+    // use effect to fetch all posts
+    useEffect(() => {        
+        fetchPosts()
     }, [])
-    return(
+
+    // use effect to fetch all users
+    useEffect(() => {        
+        fetchUsers()
+    }, [])    
+
+    return (
         <>
-        <div className={styles.App}>
-            <Routes>
-                <Route 
-                path='/auth' 
-                element= {<AuthPage 
-                />}></Route>
-
-                <Route 
-                path='/' 
-                element={<HomePage 
-                />}></Route>
-
-                <Route 
-                path='/profile' 
-                element={<ProfilePage 
-                />}></Route>
-            </Routes>
-        </div>
-    </>
-    )
+            <div className={styles.App}>
+                {shouldNotDisplayNavBar && (
+                    <NavBar
+                        className={styles.NavBar}                        
+                        setUser={setUser}
+                        user={user}   
+                        users={users}                                                                                                                
+                    />)}                
+                <Routes>
+                    <Route path='/' element={ 
+                        <HomePage
+                            user={user}                             
+                            setUser={setUser}
+                            posts={posts}
+                            fetchPosts={fetchPosts}
+                            users={users}
+                            setUsers={setUsers}                                                        
+                        />
+                    } />
+                    <Route path='/customer-support' element={<SupportTicketForm />} />
+                    <Route path='/auth' element={
+                        <AuthPage
+                            user={user}
+                            setUser={setUser}                                                        
+                        />
+                    }/>
+                    <Route path="/auth/forgot-password" element={<ForgotPassword 
+                        setUser={setUser}                        
+                      />
+                     } />
+                   <Route
+                        path="/reset-password/:token"
+                        element={  
+                            <ResetPassword 
+                            user={user}                             
+                            setUser={setUser} 
+                        />
+                        }
+                     />
+                    <Route path='/profile/:userId' 
+                    element={<ProfilePage 
+                        user={user}                     
+                        setUser={setUser}      
+                        // posts={posts}                                                              
+                    />} />
+                </Routes>
+            </div>
+        </>
+    );
 }
