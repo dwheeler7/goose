@@ -51,7 +51,7 @@ export default function NavBar({ user, setUser }) {
                         <a className={styles.navItem} onClick={() => {
                             userService.logOut();
                             setUser(null)
-                            navigateTo('/')                            
+                            navigateTo('/auth')                            
                         }}>
                             <li className={styles.listItem}>
                                 <img className={styles.btnLogo} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-512.png" alt="Logout" />
