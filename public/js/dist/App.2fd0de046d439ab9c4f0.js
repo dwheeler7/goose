@@ -630,6 +630,7 @@ function NavBar(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logSignup,
     src: "https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png",
     alt: "Log/Signup"
   }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, user && user._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
@@ -655,7 +656,7 @@ function NavBar(_ref) {
     onClick: () => {
       _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.logOut();
       setUser(null);
-      navigateTo('/');
+      navigateTo('/auth');
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
@@ -1365,7 +1366,7 @@ function HomePage(_ref) {
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome to Goose"), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     fetchPosts: fetchPosts,
     user: user
   })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -2611,6 +2612,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
   height: 2rem;
   margin-right: 0.5rem;
 }
+.Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC .IVj3kljTpbWeopBe4tgh {
+  width: 32px;
+  height: 32px;
+}
 
 @media (max-width: 768px) {
   .SLZXaJInmBusSKJAiC7A {
@@ -2624,7 +2629,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
     width: 1.5rem;
     height: 1.5rem;
   }
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,wCAAA;AACJ;;AAII;EACI,WAAA;EACA,kBAAA;EACA,aAAA;EACA,eAAA;AADR;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAFJ;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;AAFJ;AAII;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAFR;AAIQ;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAFZ;;AAOA;EACI;IACI,sBAAA;EAJN;EAMM;;IAEI,WAAA;EAJV;EAUU;IACI,aAAA;IACA,cAAA;EARd;AACF","sourcesContent":[".Nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    height: none;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n\n.searchBar {\n    \n    .searchInput {\n        width: 100%;\n        border-radius: 4px;\n        border: white;\n        font-size: 16px;\n    }\n}\n\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n\n    .listItem {\n        display: flex;\n        align-items: center;\n        background-color: rgba(255, 255, 255, 0.5);\n\n        .btnLogo {\n            width: 2rem; \n            height: 2rem; \n            margin-right: 0.5rem;\n        }\n    }\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    .navItem {\n        .listItem {\n            .btnLogo {\n                width: 1.5rem; \n                height: 1.5rem;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,wCAAA;AACJ;;AAII;EACI,WAAA;EACA,kBAAA;EACA,aAAA;EACA,eAAA;AADR;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAFJ;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;AAFJ;AAII;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAFR;AAIQ;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAFZ;AAKQ;EACI,WAAA;EACA,YAAA;AAHZ;;AAQA;EACI;IACI,sBAAA;EALN;EAOM;;IAEI,WAAA;EALV;EAWU;IACI,aAAA;IACA,cAAA;EATd;AACF","sourcesContent":[".Nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    height: none;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n\n.searchBar {\n    \n    .searchInput {\n        width: 100%;\n        border-radius: 4px;\n        border: white;\n        font-size: 16px;\n    }\n}\n\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n\n    .listItem {\n        display: flex;\n        align-items: center;\n        background-color: rgba(255, 255, 255, 0.5);\n\n        .btnLogo {\n            width: 2rem; \n            height: 2rem; \n            margin-right: 0.5rem;\n        }\n\n        .logSignup {\n            width: 32px;\n            height: 32px;\n        }\n    }\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    .navItem {\n        .listItem {\n            .btnLogo {\n                width: 1.5rem; \n                height: 1.5rem;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
@@ -2633,7 +2638,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"ul": `VhefOyE6KqL2INmTvax_`,
 	"navItem": `Vi729QB0vR8fTZ0UgVAQ`,
 	"listItem": `XmTS1C8VIV547MbqjHFC`,
-	"btnLogo": `J9UnnftTHXUkwLRjgCwj`
+	"btnLogo": `J9UnnftTHXUkwLRjgCwj`,
+	"logSignup": `IVj3kljTpbWeopBe4tgh`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4637,4 +4643,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.a2cb203c8b2c84153015695afad36307.js.map
+//# sourceMappingURL=App.bf2285a059690a12a23ea3582bf5027a.js.map
