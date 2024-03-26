@@ -6,7 +6,7 @@ export default function NewPostForm({ fetchPosts, user }) {
   const [useReadmeAsDescription, setUseReadmeAsDescription] = useState(false);
   const [formData, setFormData] = useState({
     projectTitle: '',
-    gitHubLink: '',
+    githubLink: '',
     image: '',
     projectDescription: '',
   });
@@ -31,7 +31,7 @@ export default function NewPostForm({ fetchPosts, user }) {
       setUseReadmeAsDescription(false)
       setFormData({  // Reset form data
         projectTitle: '',
-        gitHubLink: '',
+        githubLink: '',
         image: '',
         projectDescription: '',
       })
@@ -40,7 +40,7 @@ export default function NewPostForm({ fetchPosts, user }) {
     }
   };
 
-  const { projectTitle, projectDescription, gitHubLink, image } = formData;
+  const { projectTitle, projectDescription, githubLink, image } = formData;
 
   return (
     <div>
@@ -54,7 +54,7 @@ export default function NewPostForm({ fetchPosts, user }) {
             onChange={handleChange}
             placeholder="Description"
           />
-          <input type="text" name="gitHubLink" value={gitHubLink} onChange={handleChange} placeholder="Github link" />
+          <input type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github link" />
           <input
             type="checkbox"
             checked={useReadmeAsDescription}

@@ -696,7 +696,7 @@ function NewPostForm(_ref) {
   const [useReadmeAsDescription, setUseReadmeAsDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     projectTitle: '',
-    gitHubLink: '',
+    githubLink: '',
     image: '',
     projectDescription: ''
   });
@@ -725,7 +725,7 @@ function NewPostForm(_ref) {
       setFormData({
         // Reset form data
         projectTitle: '',
-        gitHubLink: '',
+        githubLink: '',
         image: '',
         projectDescription: ''
       });
@@ -736,7 +736,7 @@ function NewPostForm(_ref) {
   const {
     projectTitle,
     projectDescription,
-    gitHubLink,
+    githubLink,
     image
   } = formData;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
@@ -755,8 +755,8 @@ function NewPostForm(_ref) {
     placeholder: "Description"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    name: "gitHubLink",
-    value: gitHubLink,
+    name: "githubLink",
+    value: githubLink,
     onChange: handleChange,
     placeholder: "Github link"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
@@ -4637,4 +4637,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3d38f0287f2208bdb3575a12ff1e5d2e.js.map
+//# sourceMappingURL=App.a2cb203c8b2c84153015695afad36307.js.map
