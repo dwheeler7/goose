@@ -44,7 +44,7 @@ export default function NavBar({ user, setUser, users }) {
                             navigateTo('/auth')                            
                         }}>
                             <li className={styles.listItem}>
-                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/126/126497.png" alt="Logout" />
+                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/10015/10015437.png" alt="Logout" />
                             </li>
                         </a>
                     </>

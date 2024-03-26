@@ -1,3 +1,13 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
 .Nav {
     display: flex;
     justify-content: space-between;
@@ -8,15 +18,23 @@
     height: none;
     width: 100%;
     padding: 0 1rem;
-    background: linear-gradient(to bottom right, #7bbd86, #1f644b);
+    background: linear-gradient(to bottom right, #7bbd86, #216b50);
+    border-bottom: .25rem solid black;
 }
 
 input {
-    border: 1.4px solid black;
+    border: .09rem solid black;
 }
 
 .searchBar {
     padding: 10px;
+    animation: fadeIn 1s ease-out;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.01);
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+    }
 }
 
 .ul {
@@ -30,6 +48,13 @@ input {
     align-items: center;
     padding: 0 1rem;
     text-decoration: none;
+    animation: fadeIn 1s ease-out;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+    }
 
     .listItem {
         display: flex;

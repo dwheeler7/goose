@@ -23,6 +23,10 @@
             &:focus {
                 outline: .1rem solid green;
             }
+            &:hover {
+                transform: scale(1.0005);
+                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            }
         }
         .textAreaInput {
             height: 6rem;
@@ -35,6 +39,11 @@
             &:focus {
                 outline: .1rem solid green;
             }
+            &:hover {
+                transform: scale(1.0005);
+                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+            }
+
         }
         .checkboxContainer {
             display: flex;
@@ -49,6 +58,8 @@
             &:hover {
                 background-color: rgb(87, 163, 115);
                 border: 1px solid black;
+                transform: scale(1.01);
+                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
               }
         }
     }

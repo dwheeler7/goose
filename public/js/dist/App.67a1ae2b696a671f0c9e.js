@@ -123,6 +123,30 @@ function App() {
 
 /***/ }),
 
+/***/ "./src/components/Button/Button.js":
+/*!*****************************************!*\
+  !*** ./src/components/Button/Button.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Button)
+/* harmony export */ });
+/* harmony import */ var _Button_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Button.module.scss */ "./src/components/Button/Button.module.scss");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function Button(_ref) {
+  let {
+    value,
+    handleClick
+  } = _ref;
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: handleClick
+  }, value);
+}
+
+/***/ }),
+
 /***/ "./src/components/CommentForm/CommentForm.js":
 /*!***************************************************!*\
   !*** ./src/components/CommentForm/CommentForm.js ***!
@@ -202,6 +226,7 @@ function CommentForm(_ref) {
   }, comment.user), /*#__PURE__*/React.createElement("p", {
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
   }, comment.text)))), /*#__PURE__*/React.createElement("form", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].inputComment,
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("input", {
     type: "text",
@@ -295,6 +320,46 @@ const SupportTicketForm = () => {
     className: _CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"]['error-message']
   }, error, " \u274C\uD83D\uDC4E\uD83D\uDC4E\uD83D\uDC4E")));
 };
+
+/***/ }),
+
+/***/ "./src/components/DeleteBtn/DeleteBtn.js":
+/*!***********************************************!*\
+  !*** ./src/components/DeleteBtn/DeleteBtn.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DeleteBtn)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Button_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Button/Button */ "./src/components/Button/Button.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+function DeleteBtn(_ref) {
+  let {
+    post,
+    setPost
+  } = _ref;
+  // handle click
+  const handleClick = async e => {
+    try {
+      const deletedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.deletePost)(post._id);
+      if (!_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.deletePost) throw new Error('Could not delete post');
+      setPost('');
+    } catch (err) {
+      console.log("error");
+    }
+  };
+  return /*#__PURE__*/React.createElement(_Button_Button__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    handleClick: handleClick,
+    value: "Delete"
+  });
+}
 
 /***/ }),
 
@@ -756,7 +821,7 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnLogo,
-    src: "https://cdn-icons-png.flaticon.com/128/126/126497.png",
+    src: "https://cdn-icons-png.flaticon.com/128/10015/10015437.png",
     alt: "Logout"
   }))))));
 }
@@ -906,7 +971,8 @@ function NewPostForm(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Post.module.scss */ "./src/components/Post/Post.module.scss");
 /* harmony import */ var _LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../LikeBtn/LikeBtn */ "./src/components/LikeBtn/LikeBtn.js");
-/* harmony import */ var _CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CommentForm/CommentForm */ "./src/components/CommentForm/CommentForm.js");
+/* harmony import */ var _DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../DeleteBtn/DeleteBtn */ "./src/components/DeleteBtn/DeleteBtn.js");
+/* harmony import */ var _CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../CommentForm/CommentForm */ "./src/components/CommentForm/CommentForm.js");
 
 
 
@@ -916,31 +982,37 @@ function Post(_ref) {
   let {
     postData,
     isLoggedInUser,
-    user
+    user,
+    fetchPosts
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+  return post ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Post
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TitleImgContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectTitle
-  }, post.projectTitle), post.image === '' || post.image ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, post.projectTitle), post.image && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectImage,
-    src: post.image
-  }) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    src: post.image,
+    alt: "Project"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].projectDescription
   }, post.projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, user && !isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
     post: post,
     user: user,
     setPost: setPost
-  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), user && isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     post: post,
     user: user
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    post: post,
+    setPost: setPost,
+    fetchPosts: fetchPosts
+  })))) : null;
 }
 
 /***/ }),
@@ -969,7 +1041,8 @@ const EmptyState = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default
 function PostList(_ref) {
   let {
     posts,
-    user
+    user,
+    fetchPosts
   } = _ref;
   // Check if there are no posts
   if (posts.length === 0) {
@@ -984,7 +1057,8 @@ function PostList(_ref) {
     postData: postData,
     key: postData._id,
     isLoggedInUser: user && user._id === postData.user,
-    user: user
+    user: user,
+    fetchPosts: fetchPosts
   })));
 }
 
@@ -1648,21 +1722,27 @@ const SettingsPage = _ref => {
     user,
     updateUser
   } = _ref;
-  const [firstName, setFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [lastName, setLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''); // State for username
   const [profilePic, setProfilePic] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [bio, setBio] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''); // State for bio
+  const [githubLink, setGithubLink] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''); // State for GitHub link
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (user) {
-      setFirstName(user.firstName || '');
-      setLastName(user.lastName || '');
+      setUsername(user.username || ''); // Initialize username
       setProfilePic(user.profilePic || '');
+      setBio(user.bio || ''); // Initialize bio
+      setGithubLink(user.githubLink || ''); // Initialize GitHub link
     }
   }, [user]);
   const handleSave = async () => {
     const updatedUser = await updateUser({
-      firstName,
-      lastName,
-      profilePic
+      username,
+      // Include username
+      profilePic,
+      bio,
+      // Include bio
+      githubLink // Include GitHub link
     });
     if (updatedUser) {
       alert('Profile updated successfully!');
@@ -1679,15 +1759,21 @@ const SettingsPage = _ref => {
     reader.readAsDataURL(file);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _SettingsPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"]['settings-page']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Edit User Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Edit First Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _SettingsPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].settingsPage
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+    className: _SettingsPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].editTitle
+  }, "Edit User Profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Username", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    value: firstName,
-    onChange: e => setFirstName(e.target.value)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Edit Email", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    value: username,
+    onChange: e => setUsername(e.target.value)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "User Bio", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    value: lastName,
-    onChange: e => setLastName(e.target.value)
+    value: bio,
+    onChange: e => setBio(e.target.value)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "GitHub Link", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    value: githubLink,
+    onChange: e => setGithubLink(e.target.value)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Change Profile Photo:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
     onChange: handleFileChange
@@ -1710,6 +1796,7 @@ const SettingsPage = _ref => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   create: () => (/* binding */ create),
+/* harmony export */   deletePost: () => (/* binding */ deletePost),
 /* harmony export */   getAll: () => (/* binding */ getAll),
 /* harmony export */   getAllByUser: () => (/* binding */ getAllByUser),
 /* harmony export */   getById: () => (/* binding */ getById),
@@ -1738,6 +1825,9 @@ function likePost(id) {
 function unlikePost(id) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id, "/unlike"), 'POST');
 }
+function deletePost(id) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id), 'DELETE');
+}
 
 /***/ }),
 
@@ -1749,6 +1839,7 @@ function unlikePost(id) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createPost: () => (/* binding */ createPost),
+/* harmony export */   deletePost: () => (/* binding */ deletePost),
 /* harmony export */   getAllPosts: () => (/* binding */ getAllPosts),
 /* harmony export */   getAllPostsByUser: () => (/* binding */ getAllPostsByUser),
 /* harmony export */   likePost: () => (/* binding */ likePost),
@@ -1815,6 +1906,16 @@ async function getPost(postId) {
     const foundPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.getById(postId);
     if (!foundPost) throw new Error('Could not find post');
     return foundPost;
+  } catch (err) {
+    console.error("Error finding post", err);
+    return null;
+  }
+}
+async function deletePost(postId) {
+  try {
+    const deletedPost = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.deletePost(postId);
+    if (!deletedPost) throw new Error('Could not delete');
+    return deletedPost;
   } catch (err) {
     console.error("Error finding post", err);
     return null;
@@ -2111,6 +2212,73 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Button/Button.module.scss":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Button/Button.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.YmYKfusPOyIbyY4W_Qw5 {
+  margin: 1rem;
+  height: 4rem;
+  width: 10vw;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.b_aG7bzo5aM2mIR7O3BA {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  background-color: rgb(87, 163, 115);
+  border-top-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.b_aG7bzo5aM2mIR7O3BA:hover {
+  cursor: pointer;
+}
+
+.du_jimamrCqrJeA6IThG {
+  position: absolute;
+  background-color: var(--btn-animation);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: transform 0.5s ease;
+}
+
+.YmYKfusPOyIbyY4W_Qw5:hover .du_jimamrCqrJeA6IThG {
+  transform: translateX(100%);
+  cursor: pointer;
+}`, "",{"version":3,"sources":["webpack://./src/components/Button/Button.module.scss"],"names":[],"mappings":"AACA;EACI,YAAA;EACA,YAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,YAAA;EACA,mCAAA;EACA,4BAAA;EACA,gCAAA;AAAJ;;AAGA;EACI,eAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,sCAAA;EACA,WAAA;EACA,YAAA;EACA,OAAA;EACA,MAAA;EACA,+BAAA;AAAJ;;AAGA;EACI,2BAAA;EACA,eAAA;AAAJ","sourcesContent":["\n.btnContainer {\n    margin: 1rem;\n    height: 4rem;\n    width: 10vw;\n    border: none;\n    position: relative;\n    overflow: hidden;\n}\n\n.button {\n    width: 100%;\n    height: 100%;\n    border: none;\n    font-size: 2rem;\n    color: white;\n    background-color: rgb(87, 163, 115);\n    border-top-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n}\n\n.button:hover {\n    cursor: pointer;\n}\n\n.btnAnimation {\n    position: absolute;\n    background-color: var(--btn-animation);\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    transition: transform 0.5s ease;\n}\n\n.btnContainer:hover .btnAnimation {\n    transform: translateX(100%);\n    cursor: pointer;\n}\n\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"btnContainer": `YmYKfusPOyIbyY4W_Qw5`,
+	"button": `b_aG7bzo5aM2mIR7O3BA`,
+	"btnAnimation": `du_jimamrCqrJeA6IThG`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CommentForm/CommentForm.module.scss":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CommentForm/CommentForm.module.scss ***!
@@ -2178,7 +2346,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.TjvmHHxvXBzh3dA9l3uX {
 .qFZ8hD7PpZxT1J4FUrwu:hover {
   background-color: rgb(87, 163, 115);
   border: 1px solid black;
-}`, "",{"version":3,"sources":["webpack://./src/components/CommentForm/CommentForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,iBAAA;EACA,gBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,aAAA;EACA,oBAAA;AACJ;AACI;EACI,mCAAA;EACA,uBAAA;AACR","sourcesContent":[".commentContainer {\n    max-width: 100%;\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: 2rem;\n    max-height: 200px;\n    max-width: 100px;\n    overflow-y: auto;\n}\n\n.commentUser {\n    font-size: 1rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.submitBtn {\n    display: flex;\n    justify-content: end;\n\n    &:hover {\n        background-color: rgb(87, 163, 115);\n        border: 1px solid black;\n      }\n}"],"sourceRoot":""}]);
+}
+.qFZ8hD7PpZxT1J4FUrwu:hover:hover {
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}`, "",{"version":3,"sources":["webpack://./src/components/CommentForm/CommentForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,iBAAA;EACA,gBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,aAAA;EACA,oBAAA;AACJ;AACI;EACI,mCAAA;EACA,uBAAA;AACR;AAAQ;EACI,sBAAA;EACA,mDAAA;AAEZ","sourcesContent":[".commentContainer {\n    max-width: 100%;\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: 2rem;\n    max-height: 200px;\n    max-width: 100px;\n    overflow-y: auto;\n}\n\n.commentUser {\n    font-size: 1rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.submitBtn {\n    display: flex;\n    justify-content: end;\n\n    &:hover {\n        background-color: rgb(87, 163, 115);\n        border: 1px solid black;\n        &:hover {\n            transform: scale(1.01);\n            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n        }\n      }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"commentContainer": `TjvmHHxvXBzh3dA9l3uX`,
@@ -2535,6 +2707,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.HQz_aJWGEJ_QTsm2PCvM {
 .HQz_aJWGEJ_QTsm2PCvM .bkEyFKmi8gKCaQS4WJ6p:hover {
   background-color: rgb(87, 163, 115);
   border: 1px solid black;
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
 .HQz_aJWGEJ_QTsm2PCvM .nbZ6eV9LWt5Z4uODx8f7 {
   position: absolute;
@@ -2549,7 +2723,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.HQz_aJWGEJ_QTsm2PCvM {
   display: flex;
   justify-content: center;
   align-items: center;
-}`, "",{"version":3,"sources":["webpack://./src/components/LikeBtn/LikeBtn.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;AACF;AAAE;EACE,WAAA;AAEJ;AADI;EACE,mCAAA;EACA,uBAAA;AAGN;AAAE;EACE,kBAAA;EACA,MAAA;EACA,cAAA;EACA,eAAA;EACA,iBAAA;EACA,oCAAA;EACA,aAAA;EACA,cAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAEJ","sourcesContent":[".LikeBtnContainer {\n  position: relative;\n  .button {\n    width: 5rem;\n    &:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n    }\n  }\n  .likesSum {\n    position: absolute;\n    top: 0;\n    right: -.5rem;\n    font-size: 1rem;\n    font-weight: bold;\n    background-color: rgb(185, 228, 178);\n    width: 1.3rem;\n    height: 1.3rem;\n    border-radius: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LikeBtn/LikeBtn.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;AACF;AAAE;EACE,WAAA;AAEJ;AADI;EACE,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAGN;AAAE;EACE,kBAAA;EACA,MAAA;EACA,cAAA;EACA,eAAA;EACA,iBAAA;EACA,oCAAA;EACA,aAAA;EACA,cAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAEJ","sourcesContent":[".LikeBtnContainer {\n  position: relative;\n  .button {\n    width: 5rem;\n    &:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n      transform: scale(1.01);\n      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n    }\n  }\n  .likesSum {\n    position: absolute;\n    top: 0;\n    right: -.5rem;\n    font-size: 1rem;\n    font-weight: bold;\n    background-color: rgb(185, 228, 178);\n    width: 1.3rem;\n    height: 1.3rem;\n    border-radius: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"LikeBtnContainer": `HQz_aJWGEJ_QTsm2PCvM`,
@@ -2828,7 +3002,15 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
+___CSS_LOADER_EXPORT___.push([module.id, `@keyframes VLeMwo6zXkTSOx1NGU9o {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.SLZXaJInmBusSKJAiC7A {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2838,15 +3020,22 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.SLZXaJInmBusSKJAiC7A {
   height: none;
   width: 100%;
   padding: 0 1rem;
-  background: linear-gradient(to bottom right, #7bbd86, #1f644b);
+  background: linear-gradient(to bottom right, #7bbd86, #216b50);
+  border-bottom: 0.25rem solid black;
 }
 
 input {
-  border: 1.4px solid black;
+  border: 0.09rem solid black;
 }
 
 .y9nMRtKLACz8uMKjMe86 {
   padding: 10px;
+  animation: VLeMwo6zXkTSOx1NGU9o 1s ease-out;
+  transition: transform 0.3s ease;
+}
+.y9nMRtKLACz8uMKjMe86:hover {
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
 .VhefOyE6KqL2INmTvax_ {
@@ -2860,6 +3049,12 @@ input {
   align-items: center;
   padding: 0 1rem;
   text-decoration: none;
+  animation: VLeMwo6zXkTSOx1NGU9o 1s ease-out;
+  transition: transform 0.3s ease;
+}
+.Vi729QB0vR8fTZ0UgVAQ:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
 .Vi729QB0vR8fTZ0UgVAQ .XmTS1C8VIV547MbqjHFC {
   display: flex;
@@ -2887,11 +3082,12 @@ input {
     width: 1.5rem;
     height: 1.5rem;
   }
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,8DAAA;AACJ;;AAEA;EACI,yBAAA;AACJ;;AAEA;EACI,aAAA;AACJ;;AAEA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;AACJ;AACI;EACI,aAAA;EACA,mBAAA;AACR;AACQ;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AACZ;AAEQ;EACI,WAAA;EACA,YAAA;AAAZ;;AAKA;EACI;IACI,sBAAA;EAFN;EAIM;;IAEI,WAAA;EAFV;EAQU;IACI,aAAA;IACA,cAAA;EANd;AACF","sourcesContent":[".Nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    height: none;\n    width: 100%;\n    padding: 0 1rem;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n}\n\ninput {\n    border: 1.4px solid black;\n}\n\n.searchBar {\n    padding: 10px;\n}\n\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n\n    .listItem {\n        display: flex;\n        align-items: center;\n\n        .btnLogo {\n            width: 2rem; \n            height: 2rem; \n            margin-right: 0.5rem;\n        }\n\n        .logSignup {\n            width: 32px;\n            height: 32px;\n        }\n    }\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    .navItem {\n        .listItem {\n            .btnLogo {\n                width: 1.5rem; \n                height: 1.5rem;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,YAAA;EACA,WAAA;EACA,eAAA;EACA,8DAAA;EACA,kCAAA;AADJ;;AAIA;EACI,2BAAA;AADJ;;AAIA;EACI,aAAA;EACA,2CAAA;EACA,+BAAA;AADJ;AAGI;EACI,sBAAA;EACA,mDAAA;AADR;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAFJ;;AAKA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,2CAAA;EACA,+BAAA;AAFJ;AAII;EACI,qBAAA;EACA,mDAAA;AAFR;AAKI;EACI,aAAA;EACA,mBAAA;AAHR;AAKQ;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAHZ;AAMQ;EACI,WAAA;EACA,YAAA;AAJZ;;AASA;EACI;IACI,sBAAA;EANN;EAQM;;IAEI,WAAA;EANV;EAYU;IACI,aAAA;IACA,cAAA;EAVd;AACF","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    height: none;\n    width: 100%;\n    padding: 0 1rem;\n    background: linear-gradient(to bottom right, #7bbd86, #216b50);\n    border-bottom: .25rem solid black;\n}\n\ninput {\n    border: .09rem solid black;\n}\n\n.searchBar {\n    padding: 10px;\n    animation: fadeIn 1s ease-out;\n    transition: transform 0.3s ease;\n\n    &:hover {\n        transform: scale(1.01);\n        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));\n    }\n}\n\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    animation: fadeIn 1s ease-out;\n    transition: transform 0.3s ease;\n\n    &:hover {\n        transform: scale(1.1);\n        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n    }\n\n    .listItem {\n        display: flex;\n        align-items: center;\n\n        .btnLogo {\n            width: 2rem; \n            height: 2rem; \n            margin-right: 0.5rem;\n        }\n\n        .logSignup {\n            width: 32px;\n            height: 32px;\n        }\n    }\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    .navItem {\n        .listItem {\n            .btnLogo {\n                width: 1.5rem; \n                height: 1.5rem;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
 	"searchBar": `y9nMRtKLACz8uMKjMe86`,
+	"fadeIn": `VLeMwo6zXkTSOx1NGU9o`,
 	"ul": `VhefOyE6KqL2INmTvax_`,
 	"navItem": `Vi729QB0vR8fTZ0UgVAQ`,
 	"listItem": `XmTS1C8VIV547MbqjHFC`,
@@ -2949,6 +3145,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX:focus {
   outline: 0.1rem solid green;
 }
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX:hover {
+  transform: scale(1.0005);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .DRQjw5t79oTsny9CdCMF {
   height: 6rem;
   border-radius: 0.2rem;
@@ -2960,6 +3160,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
 }
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .DRQjw5t79oTsny9CdCMF:focus {
   outline: 0.1rem solid green;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .DRQjw5t79oTsny9CdCMF:hover {
+  transform: scale(1.0005);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .cgJh9_cI3zRlHT3nHVWG {
   display: flex;
@@ -2975,7 +3179,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .jTc77r50RjSsdPdWZC0t:hover {
   background-color: rgb(87, 163, 115);
   border: 1px solid black;
-}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0BAAA;EACA,qBAAA;EACA,cAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AADQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAGZ;AAFY;EACI,eAAA;AAIhB;AADQ;EACI,gBAAA;AAGZ;AAFY;EACI,mCAAA;EACA,uBAAA;AAIhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 0 auto;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            margin-top: 1rem;\n            &:hover {\n                background-color: rgb(87, 163, 115);\n                border: 1px solid black;\n              }\n        }\n    }\n}"],"sourceRoot":""}]);
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0BAAA;EACA,qBAAA;EACA,cAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,gBAAA;AAEZ;AADY;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 0 auto;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            margin-top: 1rem;\n            &:hover {\n                background-color: rgb(87, 163, 115);\n                border: 1px solid black;\n                transform: scale(1.01);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n              }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NewPostForm": `wekziSaaqwOLRFMJXHQ2`,
@@ -3619,7 +3825,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   padding: 1rem 0;
 }
 .luBJirBC3AbIwQNsEypk .CgjxyfEdobTkp_s1g1uU {
-  background-color: white;
   padding: 20px;
   border: none;
 }
@@ -3640,15 +3845,18 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   padding: 10px;
   background-color: rgb(250, 250, 250);
   color: rgb(88, 85, 85);
-  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 1px solid black;
   width: auto;
   margin: 0 auto;
 }
 .luBJirBC3AbIwQNsEypk button:hover {
-  background-color: #6acf66;
+  background-color: rgb(87, 163, 115);
+  border: 1px solid black;
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
 .luBJirBC3AbIwQNsEypk .XPxNjc5GISdopuQ98rk6 {
   margin-top: 20px;
@@ -3697,7 +3905,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   .luBJirBC3AbIwQNsEypk .vCHNX8UaVIhE3i6IOusO h3, .luBJirBC3AbIwQNsEypk .vCHNX8UaVIhE3i6IOusO p, .luBJirBC3AbIwQNsEypk .HPoDdNDxi0HMP2hrM9Ts {
     font-size: smaller;
   }
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,cAAA;EACA,eAAA;AAAJ;AACA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;AACJ;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,kBAAA;EACA,YAAA;AADJ;AAIA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AAFJ;AAKA;EACI,yBAAA;AAHJ;AAMA;EACI,gBAAA;AAJJ;AAOA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AALJ;AAQA;EACI,YAAA;AANJ;AASA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAPJ;AAUA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AARJ;AAWA;EACI,YAAA;EACA,eAAA;AATJ;AAYA;EACI,0BAAA;AAVJ;AAcA;EACI;IACI,sBAAA;EAZN;EAeE;IACI,WAAA;IACA,cAAA;EAbN;EAiBE;IACI,aAAA;IACA,mBAAA;EAfN;EAmBE;IACI,kBAAA;EAjBN;AACF","sourcesContent":["\n.HomePage {\n    width: 100%;\n    height: 100%;\n    background-color: white;\n    margin: 0 auto;\n    padding: 1rem 0;\n.homePage {\n    background-color: white;\n    padding: 20px;\n    border: none;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid black;\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,cAAA;EACA,eAAA;AAAJ;AACA;EACI,aAAA;EACA,YAAA;AACJ;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,kBAAA;EACA,YAAA;AADJ;AAIA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,WAAA;EACA,cAAA;AAFJ;AAKA;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAHJ;AAMA;EACI,gBAAA;AAJJ;AAOA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AALJ;AAQA;EACI,YAAA;AANJ;AASA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAPJ;AAUA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AARJ;AAWA;EACI,YAAA;EACA,eAAA;AATJ;AAYA;EACI,0BAAA;AAVJ;AAcA;EACI;IACI,sBAAA;EAZN;EAeE;IACI,WAAA;IACA,cAAA;EAbN;EAiBE;IACI,aAAA;IACA,mBAAA;EAfN;EAmBE;IACI,kBAAA;EAjBN;AACF","sourcesContent":["\n.HomePage {\n    width: 100%;\n    height: 100%;\n    background-color: white;\n    margin: 0 auto;\n    padding: 1rem 0;\n.homePage {\n    padding: 20px;\n    border: none;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid black;\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color:rgb(87, 163, 115);\n    border: 1px solid black;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"HomePage": `luBJirBC3AbIwQNsEypk`,
@@ -3826,58 +4034,76 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.OwU84Cs0lelMbKA58SL1 {
-  max-width: 400px;
+___CSS_LOADER_EXPORT___.push([module.id, `@keyframes c1Qez6OSS0nHpXwiLCAY {
+  0%, 100% {
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), inset 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+.thCg_3UQm0Dn3hMX99NQ {
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  background-color: white;
+  background: white;
   border-radius: 8px;
-  border: 1px solid black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: "Inter Tight";
+  overflow: hidden;
+  animation: c1Qez6OSS0nHpXwiLCAY 5s infinite linear;
 }
-.OwU84Cs0lelMbKA58SL1 h1 {
-  font-size: 24px;
+.thCg_3UQm0Dn3hMX99NQ .eGXYe2I6MmqqeAmPBxqs {
+  font-size: 2.2rem;
   margin-bottom: 20px;
+  color: black;
+  text-shadow: none;
+  text-align: center;
 }
-.OwU84Cs0lelMbKA58SL1 label {
+.thCg_3UQm0Dn3hMX99NQ label {
   display: block;
-  margin-bottom: 10px;
   font-size: 16px;
   color: black;
 }
-.OwU84Cs0lelMbKA58SL1 input[type=text],
-.OwU84Cs0lelMbKA58SL1 input[type=file] {
-  width: calc(100% - 22px);
+.thCg_3UQm0Dn3hMX99NQ input[type=text],
+.thCg_3UQm0Dn3hMX99NQ input[type=file] {
+  width: 100%;
   padding: 8px;
   font-size: 16px;
   border-radius: 4px;
   border: 1px solid black;
   background-color: white;
+  margin: 0;
 }
-.OwU84Cs0lelMbKA58SL1 img {
+.thCg_3UQm0Dn3hMX99NQ img {
   max-width: 100%;
   margin-top: 10px;
   border-radius: 4px;
 }
-.OwU84Cs0lelMbKA58SL1 button {
-  padding: 10px 20px;
+.thCg_3UQm0Dn3hMX99NQ button {
   font-size: 16px;
-  background-color: #52B788;
-  color: #D8F3DC;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   border: 1px solid black;
+  transition: transform 0.3s ease;
 }
-.OwU84Cs0lelMbKA58SL1 button:hover {
+.thCg_3UQm0Dn3hMX99NQ button:hover {
   background-color: rgb(87, 163, 115);
   border: 1px solid black;
-}`, "",{"version":3,"sources":["webpack://./src/pages/SettingsPage/SettingsPage.module.scss"],"names":[],"mappings":"AAUA;EACI,gBAAA;EACA,cAAA;EACA,aAAA;EACA,uBAAA;EACA,kBAAA;EACA,uBAAA;EACA,wCAAA;EACA,0BAAA;AATJ;AAWI;EACE,eAAA;EACA,mBAAA;AATN;AAYI;EACE,cAAA;EACA,mBAAA;EACA,eAAA;EACA,YAAA;AAVN;AAaI;;EAEE,wBAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,uBAAA;EACA,uBAAA;AAXN;AAcI;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;AAZN;AAeI;EACE,kBAAA;EACA,eAAA;EACA,yBA/CI;EAgDJ,cApDI;EAqDJ,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;AAbN;AAgBI;EACE,mCAAA;EACA,uBAAA;AAdN","sourcesContent":["$primary: #D8F3DC;\n$secondary: #B7E4C7;\n$tertiary: #95D5B2;\n$quaternary: #74C69D;\n$quinary: #52B788;\n$senary: #40916C;\n$septenary: #2D6A4F;\n$octonary: #1B4332;\n$nonary: #081C15;\n\n.settings-page {\n    max-width: 400px;\n    margin: 0 auto;\n    padding: 20px;\n    background-color: white;\n    border-radius: 8px;\n    border: 1px solid black;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    font-family: \"Inter Tight\";\n  \n    h1 {\n      font-size: 24px;\n      margin-bottom: 20px;\n    }\n  \n    label {\n      display: block;\n      margin-bottom: 10px;\n      font-size: 16px;\n      color: black;\n    }\n  \n    input[type=\"text\"],\n    input[type=\"file\"] {\n      width: calc(100% - 22px);\n      padding: 8px;\n      font-size: 16px;\n      border-radius: 4px;\n      border: 1px solid black;\n      background-color: white;\n    }\n  \n    img {\n      max-width: 100%;\n      margin-top: 10px;\n      border-radius: 4px;\n    }\n  \n    button {\n      padding: 10px 20px;\n      font-size: 16px;\n      background-color: $quinary;\n      color: $primary;\n      border: none;\n      border-radius: 4px;\n      cursor: pointer;\n      transition: background-color 0.3s ease;\n      border: 1px solid black;\n    }\n  \n    button:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n    }\n  }\n"],"sourceRoot":""}]);
+  transform: scale(1.0002);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}`, "",{"version":3,"sources":["webpack://./src/pages/SettingsPage/SettingsPage.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAMA;EACI,gBAAA;EACA,cAAA;EACA,aAAA;EACA,iBAAA;EACA,kBAAA;EACA,wCAAA;EACA,gBAAA;EACA,kDAAA;AAJJ;AAMG;EACG,iBAAA;EACA,mBAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;AAJN;AAOI;EACE,cAAA;EACA,eAAA;EACA,YAAA;AALN;AAQI;;EAEE,WAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,uBAAA;EACA,uBAAA;EACA,SAAA;AANN;AASI;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;AAPN;AAUI;EACE,eAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,uBAAA;EACA,+BAAA;AARN;AAWI;EACE,mCAAA;EACA,uBAAA;EACA,wBAAA;EACA,mDAAA;AATN","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.settingsPage {\n    max-width: 500px;\n    margin: 0 auto;\n    padding: 20px;\n    background: white;\n    border-radius: 8px;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    overflow: hidden; \n    animation: shine 5s infinite linear;\n  \n   .editTitle {\n      font-size: 2.2rem;\n      margin-bottom: 20px;\n      color: black;\n      text-shadow: none;\n      text-align: center;\n    }\n  \n    label {\n      display: block;\n      font-size: 16px;\n      color: black;\n    }\n  \n    input[type=\"text\"],\n    input[type=\"file\"] {\n      width: 100%;\n      padding: 8px;\n      font-size: 16px;\n      border-radius: 4px;\n      border: 1px solid black;\n      background-color: white;\n      margin: 0;\n    }\n  \n    img {\n      max-width: 100%;\n      margin-top: 10px;\n      border-radius: 4px;\n    }\n  \n    button {\n      font-size: 16px;\n      border: none;\n      border-radius: 4px;\n      cursor: pointer;\n      border: 1px solid black;\n      transition: transform 0.3s ease;\n    }\n  \n    button:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n      transform: scale(1.0002);\n      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n    }\n  }\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"settings-page": `OwU84Cs0lelMbKA58SL1`
+	"settingsPage": `thCg_3UQm0Dn3hMX99NQ`,
+	"shine": `c1Qez6OSS0nHpXwiLCAY`,
+	"editTitle": `eGXYe2I6MmqqeAmPBxqs`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3933,6 +4159,56 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/Button/Button.module.scss":
+/*!**************************************************!*\
+  !*** ./src/components/Button/Button.module.scss ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./Button.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Button/Button.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -5206,4 +5482,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.518bea1512fb3951680c525ec9b79239.js.map
+//# sourceMappingURL=App.9f2d46e821316ba19b1c7451e1e76993.js.map

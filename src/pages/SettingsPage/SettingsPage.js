@@ -2,21 +2,27 @@ import React, { useState, useEffect } from 'react';
 import styles from './SettingsPage.module.scss';
 
 const SettingsPage = ({ user, updateUser }) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState(''); // State for username
     const [profilePic, setProfilePic] = useState('');
+    const [bio, setBio] = useState(''); // State for bio
+    const [githubLink, setGithubLink] = useState(''); // State for GitHub link
 
-    
     useEffect(() => {
         if (user) {
-            setFirstName(user.firstName || '');
-            setLastName(user.lastName || '');
+            setUsername(user.username || ''); // Initialize username
             setProfilePic(user.profilePic || '');
+            setBio(user.bio || ''); // Initialize bio
+            setGithubLink(user.githubLink || ''); // Initialize GitHub link
         }
     }, [user]);
 
     const handleSave = async () => {
-        const updatedUser = await updateUser({ firstName, lastName, profilePic });
+        const updatedUser = await updateUser({ 
+            username, // Include username
+            profilePic, 
+            bio, // Include bio
+            githubLink // Include GitHub link
+        });
         if (updatedUser) {
             alert('Profile updated successfully!');
         } else {
@@ -34,23 +40,32 @@ const SettingsPage = ({ user, updateUser }) => {
     };
 
     return (
-        <div className={styles['settings-page']}>
-            <h1>Edit User Profile</h1>
+        <div className={styles.settingsPage}>
+            <h1 className={styles.editTitle}>Edit User Profile</h1>
             <label>
-                Edit First Name
+                Username
                 <input
                     type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
             </label>
             <br />
             <label>
-                Edit Email
+                User Bio
                 <input
                     type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                />
+            </label>
+            <br />
+            <label>
+                GitHub Link
+                <input
+                    type="text"
+                    value={githubLink}
+                    onChange={(e) => setGithubLink(e.target.value)}
                 />
             </label>
             <br />
