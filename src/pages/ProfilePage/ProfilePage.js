@@ -23,17 +23,20 @@ export default function ProfilePage({ user }) {
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
 
   // save profile user from params
-  const { userId } = useParams();
+  const { userId } = useParams();  
   // get loggedInuser from props
   const loggedInUser = user;
 
   // get posts of user from db
   const fetchProfilePosts = async () => {
     setIsLoadingPosts(true);
+    console.log('USer Id:', userId)
+    console.log('About to call API')
     const foundPosts = await getAllPostsByUser(userId);
+    console.log(foundPosts)
     setProfilePosts(foundPosts);
     setIsLoadingPosts(false);
-  };
+  }
 
   // get profile user
   const fetchProfileUser = async () => {

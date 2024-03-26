@@ -2,25 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
+import SearchUsersForm from '../../components/SearchUsersForm/SearchUsersForm';
 
-export default function NavBar({ user, setUser }) {
-    const [searchQuery, setSearchQuery] = useState(''); 
+export default function NavBar({ user, setUser, users }) {
     const navigateTo = useNavigate();
-
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
 
     return (
         <div className={styles.Nav}>
             <div className={styles.searchBar}>
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    placeholder="Search"
-                    className={styles.searchInput}
-                />
+                <SearchUsersForm users={users} />
             </div>
             <ul className={styles.ul}>
                 <Link to="/" className={`${styles.navItem} ${styles.home}`}>

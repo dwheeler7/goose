@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createPost } from '../../utilities/posts-service';
+import styles from './NewPostForm.module.scss'
 
 export default function NewPostForm({ fetchPosts, user }) {
   const [error, setError] = useState('');
@@ -43,29 +44,34 @@ export default function NewPostForm({ fetchPosts, user }) {
   const { projectTitle, projectDescription, githubLink, image } = formData;
 
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="projectTitle" value={projectTitle} onChange={handleChange} placeholder="Title" />
+    <div className={styles.NewPostForm}>
+      <h2 className={styles.heading}>Create a New Post</h2>
+      <div className={styles.NewPostFormContainer}>
+        <form className={styles.Form} onSubmit={handleSubmit}>
+          <input className={styles.textInput} type="text" name="projectTitle" value={projectTitle} onChange={handleChange} placeholder="Title" />
           <textarea
+            className={styles.textAreaInput}
             type="text"
             name="projectDescription"
             value={projectDescription}
             onChange={handleChange}
             placeholder="Description"
           />
-          <input type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github link" />
-          <input
-            type="checkbox"
-            checked={useReadmeAsDescription}
-            onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
-          />
-          <label htmlFor="useReadmeAsDescription">Use README as Description</label>
-          <input type="text" name="image" value={image} onChange={handleChange} placeholder="Image URL" />
-          <button type="submit">Add project</button>
+          <div className={styles.checkboxContainer}>
+            <input
+              className={styles.checkInput}
+              type="checkbox"
+              checked={useReadmeAsDescription}
+              onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
+            />
+            <label className={styles.label} htmlFor="useReadmeAsDescription">Use README as Description</label>
+          </div>
+          <input className={styles.textInput} type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github link" />
+          <input className={styles.textInput} type="text" name="image" value={image} onChange={handleChange} placeholder="Image URL" />
+          <button className={styles.button} type="submit">Add project</button>
         </form>
       </div>
-      {error && <p>{error}</p>}
+      {error && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
 }

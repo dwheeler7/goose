@@ -56,9 +56,9 @@ export default function App() {
                     <NavBar
                         className={styles.NavBar}                        
                         setUser={setUser}
-                        user={user}                                                                     
-                    />
-                )}                
+                        user={user}   
+                        users={users}                                                                                                                
+                    />)}                
                 <Routes>
                     <Route path='/' element={<HomePage user={user} setUser={setUser} posts={posts} fetchPosts={fetchPosts} users={users} setUsers={setUsers} />} />
                     <Route path='/customer-support' element={<SupportTicketForm />} />

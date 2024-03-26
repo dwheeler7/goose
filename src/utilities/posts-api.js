@@ -11,6 +11,7 @@ export function getAll() {
 }
 
 export function getAllByUser(userId) {
+  console.log('Post API', userId)
   return sendRequest(`${BASE_URL}/user/${userId}`)  
 }
 

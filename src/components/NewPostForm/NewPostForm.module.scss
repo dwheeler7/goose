@@ -1,0 +1,52 @@
+.NewPostForm {
+    width: 90%;
+    background-color: #7bbd86;
+    border: .1rem solid black;
+    border-radius: .5rem;
+    margin: 0 auto;
+    padding: 2rem;
+    .heading {
+        margin: 0 0 1rem;
+    }
+    .Form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .textInput {
+            height: 2rem;
+            border-radius: 0;
+            border: .01rem solid black;
+            width: 80%;
+            margin: .1rem 0;
+            font-size: 1rem;
+            &:focus {
+                outline: .1rem solid green;
+            }
+        }
+        .textAreaInput {
+            height: 6rem;
+            border-radius: 0;
+            width: 80%;
+            margin: 0;
+            padding: .5rem 1rem;
+            &:focus {
+                outline: .1rem solid green;
+            }
+        }
+        .checkboxContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .label {
+                font-size: 1.5rem;
+            }
+        }
+        .button {
+            margin-top: 1rem;
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}
