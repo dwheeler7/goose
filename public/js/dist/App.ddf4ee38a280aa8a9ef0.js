@@ -1403,9 +1403,7 @@ function HomePage(_ref) {
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].HomePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    users: users
-  }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     fetchPosts: fetchPosts,
     user: user
   })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -3372,6 +3370,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   padding: 1rem 0;
 }
 
+.CgjxyfEdobTkp_s1g1uU {
+  background-color: white;
+  padding: 20px;
+  border: none;
+}
+
 .dEySatDVVilAzS3bqI9Z {
   display: flex;
   flex-direction: column;
@@ -3457,16 +3461,16 @@ button:hover {
   .vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p, .HPoDdNDxi0HMP2hrM9Ts {
     font-size: smaller;
   }
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,UAAA;EACA,YAAA;EACA,yBAAA;EACA,cAAA;EACA,eAAA;AAAJ;;AAGA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AAAJ;;AAGA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AAAJ;;AAGA;EACI,yBAAA;AAAJ;;AAGA;EACI,gBAAA;AAAJ;;AAGA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,YAAA;AAAJ;;AAGA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,YAAA;EACA,eAAA;AAAJ;;AAGA;EACI,0BAAA;AAAJ;;AAIA;EACI;IACI,sBAAA;EADN;EAIE;IACI,WAAA;IACA,cAAA;EAFN;EAME;IACI,aAAA;IACA,mBAAA;EAJN;EAQE;IACI,kBAAA;EANN;AACF","sourcesContent":["\n.HomePage {\n    width: 95%;\n    height: 100%;\n    background-color: #f1f1f1;\n    margin: 0 auto;\n    padding: 1rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid rgb(58, 163, 49);\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,UAAA;EACA,YAAA;EACA,yBAAA;EACA,cAAA;EACA,eAAA;AAAJ;;AAGA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;AAAJ;;AAGA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AAAJ;;AAGA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AAAJ;;AAGA;EACI,yBAAA;AAAJ;;AAGA;EACI,gBAAA;AAAJ;;AAGA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AAAJ;;AAGA;EACI,YAAA;AAAJ;;AAGA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAAJ;;AAGA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,YAAA;EACA,eAAA;AAAJ;;AAGA;EACI,0BAAA;AAAJ;;AAIA;EACI;IACI,sBAAA;EADN;EAIE;IACI,WAAA;IACA,cAAA;EAFN;EAME;IACI,aAAA;IACA,mBAAA;EAJN;EAQE;IACI,kBAAA;EANN;AACF","sourcesContent":["\n.HomePage {\n    width: 95%;\n    height: 100%;\n    background-color: #f1f1f1;\n    margin: 0 auto;\n    padding: 1rem 0;\n}\n\n.homePage {\n    background-color: white;\n    padding: 20px;\n    border: none;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid rgb(58, 163, 49);\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"HomePage": `luBJirBC3AbIwQNsEypk`,
+	"homePage": `CgjxyfEdobTkp_s1g1uU`,
 	"form": `dEySatDVVilAzS3bqI9Z`,
 	"postList": `XPxNjc5GISdopuQ98rk6`,
 	"post": `vCHNX8UaVIhE3i6IOusO`,
 	"userList": `_NMlzyl2SLslAiokZ3aS`,
-	"user": `HPoDdNDxi0HMP2hrM9Ts`,
-	"homePage": `CgjxyfEdobTkp_s1g1uU`
+	"user": `HPoDdNDxi0HMP2hrM9Ts`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4784,4 +4788,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.184f881af72d7f18d6a85f5efa99fdfc.js.map
+//# sourceMappingURL=App.7511f740a81eb6d8c885eaaa3df2fa2f.js.map
