@@ -7,7 +7,7 @@ const EmptyState = () => (
     <div className={styles.emptyState}>No posts available.</div>
 );
 
-export default function PostList({ posts, user }) {
+export default function PostList({ posts, user, fetchPosts }) {
     // Check if there are no posts
     if (posts.length === 0) {
         // If no posts, render the EmptyState component
@@ -23,6 +23,7 @@ export default function PostList({ posts, user }) {
                     key={postData._id}                                               
                     isLoggedInUser={user && user._id === postData.user}
                     user={user}
+                    fetchPosts={fetchPosts}
                 />
             ))}
         </ul>

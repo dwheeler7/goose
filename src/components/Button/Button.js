@@ -1,7 +1,7 @@
 import styles from './Button.module.scss'
 
-export default function Button({children, handleClick}){
+export default function Button({value, handleClick}){
     return (
-        <button className={styles.button} onClick={handleClick()}>{children}</button>
+        <button onClick={handleClick}>{value}</button>
     )
 }
