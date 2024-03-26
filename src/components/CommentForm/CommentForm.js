@@ -66,7 +66,7 @@ export default function CommentForm({ post, user }) {
 					</li>
 				))}
 			</ul>
-			<form onSubmit={handleSubmit}>
+			<form className={styles.inputComment} onSubmit={handleSubmit}>
 				<input
 					type="text"
 					value={newComment}
