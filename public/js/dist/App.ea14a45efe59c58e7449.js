@@ -123,6 +123,100 @@ function App() {
 
 /***/ }),
 
+/***/ "./src/components/CommentForm/CommentForm.js":
+/*!***************************************************!*\
+  !*** ./src/components/CommentForm/CommentForm.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CommentForm)
+/* harmony export */ });
+/* harmony import */ var _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommentForm.module.scss */ "./src/components/CommentForm/CommentForm.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Post/Post */ "./src/components/Post/Post.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+function CommentForm(_ref) {
+  let {
+    post,
+    user
+  } = _ref;
+  const [newComment, setNewComment] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+  const [comments, setComments] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+  const [postId, setPostId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+  const [userId, setUserId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+  const fetchComments = async () => {
+    try {
+      const response = await fetch('/api/comments', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      setComments(data.comments);
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    fetchComments();
+  }, []);
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          content: newComment,
+          post: postId,
+          user: userId
+        })
+      });
+      if (!response.ok) {
+        throw new Error('HTTP error ' + response.status);
+      }
+      const data = await response.json();
+      setComments([...comments, data.comment]);
+      setNewComment('');
+    } catch (error) {
+      console.error('There was an error.', error);
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentContainer
+  }, /*#__PURE__*/React.createElement("p", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentTitle
+  }, "Comments"), /*#__PURE__*/React.createElement("ul", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentList
+  }, comments && comments.map(comment => /*#__PURE__*/React.createElement("li", {
+    key: comment.id,
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "",
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
+  }, comment.user), /*#__PURE__*/React.createElement("p", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
+  }, comment.text)))), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: newComment,
+    onChange: e => setNewComment(e.target.value),
+    placeholder: "Add a comment"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit"
+  }, "Submit")));
+}
+
+/***/ }),
+
 /***/ "./src/components/CustomerSupport/CustomerSupport.js":
 /*!***********************************************************!*\
   !*** ./src/components/CustomerSupport/CustomerSupport.js ***!
@@ -788,6 +882,8 @@ function NewPostForm(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Post.module.scss */ "./src/components/Post/Post.module.scss");
 /* harmony import */ var _LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../LikeBtn/LikeBtn */ "./src/components/LikeBtn/LikeBtn.js");
+/* harmony import */ var _CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CommentForm/CommentForm */ "./src/components/CommentForm/CommentForm.js");
+
 
 
 
@@ -805,7 +901,10 @@ function Post(_ref) {
     post: post,
     user: user,
     setPost: setPost
-  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
+  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    post: post,
+    user: user
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
 }
 
 /***/ }),
@@ -1901,6 +2000,92 @@ label {
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`,
 	"NavBar": `z1Y52ButKREXXJL8AqTW`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CommentForm/CommentForm.module.scss":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CommentForm/CommentForm.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.TjvmHHxvXBzh3dA9l3uX {
+  max-width: 100%;
+  border: 0.2rem solid rgba(51, 86, 51, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.aunXGWI4P64MBxNeLg8A {
+  font-size: 2rem;
+  color: var(--text-green);
+  letter-spacing: 2px;
+  text-align: center;
+  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
+}
+
+.u7gcbFha0mhQrN61_EUl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+  max-height: 250px;
+  max-width: 200px;
+  overflow-y: auto;
+  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
+}
+
+.QvFakg437pTadoWQ9VWn {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.fiIfKwBY3LvKFZZZTlgZ {
+  font-size: 1.5rem;
+  color: black;
+  letter-spacing: 1px;
+  padding-top: 1rem;
+  list-style: none;
+  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
+}
+
+.bgdqfVbpMVFmuf6aDJAS {
+  display: inline-block;
+  padding: 1rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}`, "",{"version":3,"sources":["webpack://./src/components/CommentForm/CommentForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;AACJ;;AAEA;EACI,eAAA;EACA,wBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,iBAAA;EACA,gBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ","sourcesContent":[".commentContainer {\n    max-width: 100%;\n    border: .2rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    padding: 2rem;\n}\n\n.commentTitle {\n    font-size: 2rem;\n    color: var(--text-green);\n    letter-spacing: 2px;\n    text-align: center;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: 2rem;\n    max-height: 250px;\n    max-width: 200px;\n    overflow-y: auto;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.commentUser {\n    font-size: 1.2rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"commentContainer": `TjvmHHxvXBzh3dA9l3uX`,
+	"commentTitle": `aunXGWI4P64MBxNeLg8A`,
+	"commentList": `u7gcbFha0mhQrN61_EUl`,
+	"commentUser": `QvFakg437pTadoWQ9VWn`,
+	"commentItem": `fiIfKwBY3LvKFZZZTlgZ`,
+	"comment": `bgdqfVbpMVFmuf6aDJAS`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3536,6 +3721,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/CommentForm/CommentForm.module.scss":
+/*!************************************************************!*\
+  !*** ./src/components/CommentForm/CommentForm.module.scss ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./CommentForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CommentForm/CommentForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/CustomerSupport/CustomerSupport.module.scss":
 /*!********************************************************************!*\
   !*** ./src/components/CustomerSupport/CustomerSupport.module.scss ***!
@@ -4643,4 +4881,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6651ee628c1ef1ab382f07033919cc2d.js.map
+//# sourceMappingURL=App.897397bdd060a1852f469d6189d882f8.js.map
