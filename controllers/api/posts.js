@@ -70,14 +70,14 @@ async function index(_, res) {
 // Index posts by user and populate likes
 async function indexByUser(req, res) {
     try {
+        console.log('backend...')
         const postUser = req.params.userId;
+        console.log(postUser)
         if (!postUser) {
             throw new Error('User ID is missing');
         }
-        const posts = await Post.find({ user: postUser }).populate('likes').exec();        
-        if (!posts || posts.length === 0) {
-            return res.status(404).json({ error: 'No posts found for the specified user' });
-        }
+
+        const posts = await Post.find({ user: postUser }).populate('likes').exec()                
         res.json(posts);
     } catch (error) {
         console.error('Error retrieving posts by user:', error);
