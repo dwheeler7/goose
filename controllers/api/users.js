@@ -142,28 +142,36 @@ const dataController = {
             return res.status(500).json({ message: 'Internal server error' });
           }
         },
-
         async handleSupportTicket(req, res) {
-            const { name, email, message, attachment } = req.body;
-          
+            const { name, email, message } = req.body;
+        
             try {
-              const user = await User.findOne({ email });  // Check if the email exists in the system
-              if (!user) {
-                return res.status(400).json({ message: 'Email not found in the system' });
-              }
-          
-              if (attachment) {
-                await sendSupportTicketEmail(name, email, message, attachment);
-              } else {
-                await sendSupportTicketEmail(name, email, message);
-              }
-          
-              res.status(200).json({ message: 'Support ticket submitted successfully' });
+                const user = await User.findOne({ email });
+                if (!user) {
+                    return res.status(400).json({ message: 'Email not found in the system' });
+                }
+        
+                // Extract attachments from req.files
+                const attachments = req.files && Object.values(req.files);
+        
+                console.log('Attachments received:', attachments); // Log attachments
+        
+                if (attachments && Array.isArray(attachments) && attachments.length > 0) {
+                    // If there are attachments, send email with all attachments
+                    await sendSupportTicketEmail(name, email, message, attachments);
+                } else {
+                    // If there are no attachments, send email without attachments
+                    await sendSupportTicketEmail(name, email, message, []);
+                }
+        
+                res.status(200).json({ message: 'Support ticket submitted successfully' });
             } catch (error) {
-              console.error('Error submitting support ticket:', error);
-              res.status(500).json({ message: 'Failed to submit support ticket' });
+                console.error('Error submitting support ticket:', error);
+                res.status(500).json({ message: 'Failed to submit support ticket', error: error.message }); // Return detailed error message
             }
-        },
+        }
+        ,
+    
         // ALL email stuff DONE
     async followDeveloper(req, res) {
         try {

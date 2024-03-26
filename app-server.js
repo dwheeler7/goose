@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+const fileUpload = require('express-fileupload');
 
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(checkTokenMiddleware);
 app.use('/api/users', usersRouter);
+app.use(fileUpload());
 
 // app.use(ensureLoggedInMiddleware);
 app.use('/api/posts', postsRouter);

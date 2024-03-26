@@ -18,6 +18,15 @@
 }
 
 body {
+    background-color: var(--bg-color);
+}
+
+input:-webkit-autofill {
+    transition: background-color 0s 99999s;
+  }
+  
+  input:-webkit-autofill:focus {
+    background-color: inherit !important;
     display: flex;
     align-items: center;
     justify-content: center;
