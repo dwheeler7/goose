@@ -31,7 +31,7 @@ export default function NavBar({ user, setUser }) {
                 {!user ? (
                     <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
                         <li className={styles.listItem}>
-                            <img src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png" alt="Log/Signup" />
+                            <img className={styles.logSignup} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png" alt="Log/Signup" />
                         </li>
                     </Link>
                 ) : (

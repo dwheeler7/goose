@@ -7,7 +7,7 @@ import SearchUsersForm from '../../components/SearchUsersForm/SearchUsersForm';
 export default function HomePage({ posts, fetchPosts, users, user }) {                
     return (
         <div className={styles.homePage}>
-            <h1>This is the HomePage</h1>
+            <h1>Welcome to Goose</h1>
             {
                 user ?
                 <>
