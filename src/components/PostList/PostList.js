@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './PostList.module.scss';
 import Post from '../Post/Post';
-import MarkdownRenderer from '../MarkdownRenderer/MarkdownRenderer'; // Import the MarkdownRenderer component
 
 // Component to display when there are no posts available
 const EmptyState = () => (
@@ -19,18 +18,12 @@ export default function PostList({ posts, user }) {
     return (
         <ul className={styles.postList}>            
             {posts.map(postData => (
-                <li key={postData._id}> {/* Wrap each post in an <li> */}
-                    <div>
-                        <h2>{postData.projectTitle}</h2>
-                        {/* Render the project description using MarkdownRenderer */}
-                        <MarkdownRenderer source={postData.projectDescription} />
-                    </div>
-                    <Post                                   
-                        postData={postData}
-                        isLoggedInUser={user && user._id === postData.user}
-                        user={user}
-                    />
-                </li>
+                <Post                                   
+                    postData={postData}
+                    key={postData._id}                                               
+                    isLoggedInUser={user && user._id === postData.user}
+                    user={user}
+                />
             ))}
         </ul>
     );
