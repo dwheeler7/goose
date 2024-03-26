@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import styles from './Post.module.scss'
 import LikeBtn from '../LikeBtn/LikeBtn'
+import DeleteBtn from '../DeleteBtn/DeleteBtn'
 import CommentForm from '../CommentForm/CommentForm'
 
 
@@ -22,7 +23,7 @@ export default function Post({ postData, isLoggedInUser, user }) {
             <>
             <CommentForm post={post} user={user} />            
             <button>Edit</button>
-            <button>Delete</button>            
+            <DeleteBtn post={post} setPost={setPost}></DeleteBtn>
             </> : null
         } 
         </div>         

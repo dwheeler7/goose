@@ -26,3 +26,7 @@ export function likePost(id) {
 export function unlikePost(id) {
   return sendRequest(`${BASE_URL}/${id}/unlike`, 'POST')
 }
+
+export function delete(id) {
+  return sendRequest(`${BASE_URL}/${id}`, 'DELETE')
+}
