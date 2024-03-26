@@ -45,7 +45,7 @@ export default function NewPostForm({ fetchPosts, user }) {
 
   return (
     <div className={styles.NewPostForm}>
-      <h2 className={styles.heading}>Create a New Post</h2>
+      <h2 className={styles.heading}>Create a new post</h2>
       <div className={styles.NewPostFormContainer}>
         <form className={styles.Form} onSubmit={handleSubmit}>
           <input className={styles.textInput} type="text" name="projectTitle" value={projectTitle} onChange={handleChange} placeholder="Title" />
@@ -64,9 +64,9 @@ export default function NewPostForm({ fetchPosts, user }) {
               checked={useReadmeAsDescription}
               onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
             />
-            <label className={styles.label} htmlFor="useReadmeAsDescription">Use README as Description</label>
+            <label className={styles.label} htmlFor="useReadmeAsDescription">Use README</label>
           </div>
-          <input className={styles.textInput} type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github link" />
+          <input className={styles.textInput} type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github" />
           <input className={styles.textInput} type="text" name="image" value={image} onChange={handleChange} placeholder="Image URL" />
           <button className={styles.button} type="submit">Add project</button>
         </form>

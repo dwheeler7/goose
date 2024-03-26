@@ -15,13 +15,13 @@ export default function NavBar({ user, setUser, users }) {
             <ul className={styles.ul}>
                 <Link to="/" className={`${styles.navItem} ${styles.home}`}>
                     <li className={styles.listItem}>
-                        <img className={styles.btnLogo} src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/home-circle-green-64.png" alt="Home" />
+                        <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/126/126496.png" alt="Home" />
                     </li>
                 </Link>
                 {!user ? (
                     <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
                         <li className={styles.listItem}>
-                            <img className={styles.logSignup} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png" alt="Log/Signup" />
+                            <img className={styles.logSignup} src="https://cdn-icons-png.flaticon.com/128/126/126497.png" alt="Log/Signup" />
                         </li>
                     </Link>
                 ) : (
@@ -29,13 +29,13 @@ export default function NavBar({ user, setUser, users }) {
                         {user && user._id && (
                             <Link to={`/profile/${user._id}`} className={styles.navItem}>
                                 <li className={styles.listItem}>
-                                    <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/14026/14026766.png" alt="Profile" />
+                                    <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/126/126486.png" alt="Profile" />
                                 </li>
                             </Link>
                         )}
                         <Link to="/settings" className={styles.navItem}>
                             <li className={styles.listItem}>
-                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/14025/14025429.png" alt="Settings" />
+                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/126/126472.png" alt="Settings" />
                             </li>
                         </Link>
                         <a className={styles.navItem} onClick={() => {
@@ -44,7 +44,7 @@ export default function NavBar({ user, setUser, users }) {
                             navigateTo('/auth')                            
                         }}>
                             <li className={styles.listItem}>
-                                <img className={styles.btnLogo} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-512.png" alt="Logout" />
+                                <img className={styles.btnLogo} src="https://cdn-icons-png.flaticon.com/128/126/126497.png" alt="Logout" />
                             </li>
                         </a>
                     </>

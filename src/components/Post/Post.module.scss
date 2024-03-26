@@ -3,30 +3,35 @@
     margin: 1rem 0;
     padding: 2rem;
     min-height: 35vh;
-    border: .1rem solid rgb(51, 86, 51, 0.3);
-    border-radius: 20px;
+    border: .1rem solid black;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    background-color: white;
     color: black;
-    box-shadow: 0 0 .3rem var(--text-green);
+    background: linear-gradient(to bottom right, #7bbd86, #16523c);
+
     .TitleImgContainer {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         width: 30%;
+        padding-right: 1.5rem;
         .projectTitle {
             font-size: 2rem;
             margin-bottom: 2rem;
         }
+        .ProjectImage {
+            border: 1px solid black;
+            border-radius: .5rem;
+        }
     }
     .projectDescription {
-        border: 1px solid grey;
+        border: 1px solid black;
         border-radius: .5rem;
         padding: .5rem;
         width: 40%;
-        font-size: 1.2rem;
-        background-color: #f1f1f1;
+        font-size: 1.1rem;
+        background-color: white;
     }
     .LikeBtn {
         width: 5rem;
@@ -39,8 +44,9 @@
             width: 5rem;
             margin: 1rem;
             &:hover {
-                background-color: green;
-            }
+                background-color: rgb(87, 163, 115);
+                border: 1px solid black;
+              }
         }
     }
 }
