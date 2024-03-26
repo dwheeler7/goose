@@ -20,10 +20,11 @@ export default function PostList({ posts, user }) {
         <ul className={styles.postList}>            
             {posts.map(postData => (
                 <li key={postData._id}> {/* Wrap each post in an <li> */}
-                    <h2>{postData.projectTitle}</h2>
-                    {/* Render the project description using MarkdownRenderer */}
-                    <MarkdownRenderer source={postData.projectDescription} />
-                    {/* Pass other props if necessary */}
+                    <div>
+                        <h2>{postData.projectTitle}</h2>
+                        {/* Render the project description using MarkdownRenderer */}
+                        <MarkdownRenderer source={postData.projectDescription} />
+                    </div>
                     <Post                                   
                         postData={postData}
                         isLoggedInUser={user && user._id === postData.user}
