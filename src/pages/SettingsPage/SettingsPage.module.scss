@@ -1,0 +1,62 @@
+$primary: #D8F3DC;
+$secondary: #B7E4C7;
+$tertiary: #95D5B2;
+$quaternary: #74C69D;
+$quinary: #52B788;
+$senary: #40916C;
+$septenary: #2D6A4F;
+$octonary: #1B4332;
+$nonary: #081C15;
+
+.settings-page {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: $primary;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: $quinary;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: $septenary;
+    }
+  
+    input[type="text"],
+    input[type="file"] {
+      width: calc(100% - 22px);
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid $septenary;
+      background-color: $tertiary;
+    }
+  
+    img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+  
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: $quinary;
+      color: $primary;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    button:hover {
+      background-color: $senary;
+    }
+  }
