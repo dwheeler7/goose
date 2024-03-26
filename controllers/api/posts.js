@@ -27,7 +27,12 @@ function jsonPosts(_, res) {
 async function create(req, res, next) {
     try {
         const userId = req.user._id;
-        const { githubLink, useReadmeAsDescription, projectDescription } = req.body;
+        let { githubLink, useReadmeAsDescription, projectDescription } = req.body; // Changed from const to let
+
+        // Preprocess the GitHub link to remove 'https://' if present
+        if (githubLink.startsWith('https://')) {
+            githubLink = githubLink.slice(8);
+        }
 
         let description = projectDescription; // Initialize with provided projectDescription
         // If GitHub link is provided and user wants to use README content as description
@@ -40,7 +45,7 @@ async function create(req, res, next) {
             req.body.projectDescription = readmeContent; // Update projectDescription with README content
         }
 
-        const post = await Post.create({ user: userId, ...req.body, description });
+        let post = await Post.create({ user: userId, ...req.body, description });
         const foundUser = await User.findByIdAndUpdate(userId, { $push: { posts: post._id } });
         res.locals.data.post = post;
         next();
