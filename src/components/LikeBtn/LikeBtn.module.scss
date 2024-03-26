@@ -1,49 +1,23 @@
-.iconList {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  list-style: none;
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-}
-
-.iconItem {
-  display: flex; /* Ensure list items are treated as flex items */
-}
-
-.iconLink {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none; 
-  cursor: pointer; 
-}
-
-.iconImage {
-  height: 35px;
-  width: 35px;
-}
-
-.iconContainer {
-  width: 64px;
-  height: 40px;
-  border-radius: 40px;
-}
-
-button {
-  color: white;
-  width: 100%;
-  height: 40px;
-  border-radius: 40px;
-  background-color: rgb(87, 163, 115);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 600;
-  transition: all 0.4s ease;
-}
-
-button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+.LikeBtnContainer {
+  position: relative;
+  .button {
+    width: 5rem;
+    &:hover {
+      background-color: green;
+    }
+  }
+  .likesSum {
+    position: absolute;
+    top: 0;
+    right: -.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: rgb(185, 228, 178);
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
