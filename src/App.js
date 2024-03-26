@@ -58,7 +58,8 @@ export default function App() {
                     <NavBar
                         className={styles.NavBar}                        
                         setUser={setUser}
-                        user={user}                                                                                                                      
+                        user={user}   
+                        users={users}                                                                                                                
                     />)}                
                 <Routes>
                     <Route path='/' element={ 
