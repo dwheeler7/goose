@@ -2,25 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
+import SearchUsersForm from '../../components/SearchUsersForm/SearchUsersForm';
 
-export default function NavBar({ user, setUser }) {
-    const [searchQuery, setSearchQuery] = useState(''); 
+export default function NavBar({ user, setUser, users }) {
     const navigateTo = useNavigate();
-
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
 
     return (
         <div className={styles.Nav}>
             <div className={styles.searchBar}>
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    placeholder="Search"
-                    className={styles.searchInput}
-                />
+                <SearchUsersForm users={users} />
             </div>
             <ul className={styles.ul}>
                 <Link to="/" className={`${styles.navItem} ${styles.home}`}>
@@ -31,7 +21,7 @@ export default function NavBar({ user, setUser }) {
                 {!user ? (
                     <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
                         <li className={styles.listItem}>
-                            <img src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png" alt="Log/Signup" />
+                            <img className={styles.logSignup} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-64.png" alt="Log/Signup" />
                         </li>
                     </Link>
                 ) : (
@@ -51,7 +41,7 @@ export default function NavBar({ user, setUser }) {
                         <a className={styles.navItem} onClick={() => {
                             userService.logOut();
                             setUser(null)
-                            navigateTo('/')                            
+                            navigateTo('/auth')                            
                         }}>
                             <li className={styles.listItem}>
                                 <img className={styles.btnLogo} src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/253990/141-512.png" alt="Logout" />

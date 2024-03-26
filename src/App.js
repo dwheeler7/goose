@@ -58,7 +58,8 @@ export default function App() {
                     <NavBar
                         className={styles.NavBar}                        
                         setUser={setUser}
-                        user={user}                                                                                                                      
+                        user={user}   
+                        users={users}                                                                                                                
                     />)}                
                 <Routes>
                     <Route path='/' element={ 
@@ -95,7 +96,7 @@ export default function App() {
                     element={<ProfilePage 
                         user={user}                     
                         setUser={setUser}      
-                        posts={posts}                                                              
+                        // posts={posts}                                                              
                     />} />
                 </Routes>
             </div>

@@ -11,8 +11,7 @@ export async function createPost(postData) {
   }
 }
 
-export async function getAllPosts() {    
-    console.log('getting all posts...')
+export async function getAllPosts() {        
     try {
         const postsData = await postsAPI.getAll()
         if (!postsData) throw new Error('Could not get posts')        
@@ -25,7 +24,9 @@ export async function getAllPosts() {
 
 export async function getAllPostsByUser(userID) {
   try {
+    console.log(userID)
     const postsData = await postsAPI.getAllByUser(userID)
+    console.log(postsData)
     if (!postsData) throw new Error('Could not get posts')    
     return postsData
   } catch(err) {
