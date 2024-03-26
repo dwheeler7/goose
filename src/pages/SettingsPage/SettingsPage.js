@@ -35,8 +35,9 @@ const SettingsPage = ({ user, updateUser }) => {
 
     return (
         <div className={styles['settings-page']}>
+            <h1>Edit User Profile</h1>
             <label>
-                Edit First Name:
+                Edit First Name
                 <input
                     type="text"
                     value={firstName}
@@ -45,7 +46,7 @@ const SettingsPage = ({ user, updateUser }) => {
             </label>
             <br />
             <label>
-                Edit Last Name:
+                Edit Email
                 <input
                     type="text"
                     value={lastName}
@@ -54,7 +55,7 @@ const SettingsPage = ({ user, updateUser }) => {
             </label>
             <br />
             <label>
-                Edit Profile Picture:
+                Change Profile Photo:
                 <input
                     type="file"
                     onChange={handleFileChange}

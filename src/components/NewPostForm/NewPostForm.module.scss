@@ -1,6 +1,6 @@
 .NewPostForm {
     width: 90%;
-    background-color: #7bbd86;
+    background: linear-gradient(to bottom right, #7bbd86, #1f644b);
     border: .1rem solid black;
     border-radius: .5rem;
     margin: 0 auto;
@@ -15,7 +15,7 @@
         align-items: center;
         .textInput {
             height: 2rem;
-            border-radius: 0;
+            border-radius: .2rem;
             border: .01rem solid black;
             width: 80%;
             margin: .1rem 0;
@@ -26,10 +26,12 @@
         }
         .textAreaInput {
             height: 6rem;
-            border-radius: 0;
+            border-radius: .2rem;
             width: 80%;
             margin: 0;
             padding: .5rem 1rem;
+            font-size: 1rem;
+            border: .01rem solid black;
             &:focus {
                 outline: .1rem solid green;
             }
@@ -39,14 +41,15 @@
             justify-content: center;
             align-items: center;
             .label {
-                font-size: 1.5rem;
+                font-size: 1rem;
             }
         }
         .button {
             margin-top: 1rem;
             &:hover {
-                color: black;
-            }
+                background-color: rgb(87, 163, 115);
+                border: 1px solid black;
+              }
         }
     }
 }
