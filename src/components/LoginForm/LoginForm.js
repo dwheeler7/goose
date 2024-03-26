@@ -72,24 +72,25 @@ export default function LoginForm({ setUser, setShowLogin }) {
   return (
     <div className={styles.LoginForm}>
       <div className={styles.boxc}>
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        <form className={styles.form} autoComplete="off" onSubmit={handleSubmit}>
           <div className={styles.title}>
-            <h1>DevHive</h1>
+            <h1 className={styles.heading}>DevHive</h1>
           </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
-            <input type="text" name="email" value={credentials.email} onChange={handleChange} required />
-            <label>Email</label>
+            <input className={styles.textInput} type="text" name="email" value={credentials.email} onChange={handleChange} required />
+            <label className={styles.label}>Email</label>
             {errors.email && <span className={styles.errorSign}>❌{errors.email}</span>}
           </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
             <input 
+              className={styles.textInput}
               type={showPassword ? 'text' : 'password'} 
               name="password" 
               value={credentials.password} 
               onChange={handleChange} 
               required 
             />
-            <label>Password</label>
+            <label className={styles.label}>Password</label>
             <span 
               className={styles.showPasswordIcon} 
               onClick={() => setShowPassword(!showPassword)}
@@ -99,14 +100,16 @@ export default function LoginForm({ setUser, setShowLogin }) {
             {errors.password && <span className={styles.errorSign}>❌{errors.password}</span>}
           </div>
           <div className={styles.lost}>
-            <label>
-              <input type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
-              Remember Me
-            </label>
+            <div className={styles.checkContainer}>
+              <input className={styles.checkInput} type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
+              <label className={styles.checkLabel}>
+                Remember Me
+              </label>
+            </div>
             {/* Replace the anchor tag with a span and attach onClick event handler */}
             <span className={styles.forgotPassword} onClick={handleForgotPasswordClick}>Forgot Password</span>
           </div>
-          <button type="submit">Log In</button>
+          <button className={styles.button} type="submit">Log In</button>
           <div className={styles.register}>
             <p onClick={() => setShowLogin(false)}>Don't have an account? <span className={styles.registerLink}>Sign Up</span></p>
           </div>

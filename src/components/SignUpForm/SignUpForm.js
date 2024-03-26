@@ -95,7 +95,9 @@ export default function SignUpForm({ setUser, setShowLogin }) {
               onChange={handlePictureChange} 
             />
           </div>
-          <button type="submit" disabled={disable}>Sign Up</button>
+          <div className={styles.btnContainer}>
+            <button className={styles.button} type="submit" disabled={disable}>Sign Up</button>
+          </div>
           <div className={styles.login}>
             <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Log In</p>
           </div>

@@ -64,6 +64,19 @@ gulp.task('submit', (cb) => {
 	})
 })
 
+gulp.task('pull', (cb) => {
+	exec('git pull https://github.com/dwheeler7/goose.git', (err, success) => {
+		if(err){
+			console.log(err)
+			cb(err)
+		} else {
+			console.log(success)
+			cb(err)
+		}
+	})
+})
+
+
 // Explanation for Students ---- This is for the development build
 gulp.task('webpack', cb => {
 	exec('npm run dev:webpack', function(err, stdout, stderr) {

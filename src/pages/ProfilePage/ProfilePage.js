@@ -95,10 +95,11 @@ export default function ProfilePage({ user }) {
             </div>
             {isLoggedInUser && <FollowList posts={profilePosts} />}
             {/* <ProfilePostList posts={profilePosts} /> */}
-            <PostList posts={profilePosts} user={loggedInUser} />
+            
           </>
         )}
       </div>
+      <PostList posts={profilePosts} user={loggedInUser} />
     </div>
   );
 }

@@ -34,35 +34,39 @@ const SettingsPage = ({ user, updateUser }) => {
     };
 
     return (
-        <div className={styles['settings-page']}>
-            <label>
-                Edit First Name:
-                <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                Edit Last Name:
-                <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                Edit Profile Picture:
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                />
-            </label>
-            {profilePic && <img src={profilePic} alt="Profile" />}
-            <br />
-            <button onClick={handleSave}>Save Changes</button>
+        <div className={styles.settingsPage}>
+            <form className={styles.Form}>
+                <label className={styles.label}>
+                    Edit First Name:
+                    <input
+                        className={styles.textInput}
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </label>
+                <br />
+                <label className={styles.label}>
+                    Edit Last Name:
+                    <input
+                        className={styles.textInput}
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                </label>
+                <br />
+                <label className={styles.label}>
+                    Edit Profile Picture:
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                    />
+                </label>
+                {profilePic && <img src={profilePic} alt="Profile" />}
+                <br />
+                <button className={styles.button} onClick={handleSave}>Save Changes</button>
+            </form>
         </div>
     );
 };

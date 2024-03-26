@@ -57,14 +57,14 @@ export default function NewPostForm({ fetchPosts, user }) {
             onChange={handleChange}
             placeholder="Description"
           />
-          <div className={styles.checkboxContainer}>
-            <input
-              className={styles.checkInput}
-              type="checkbox"
-              checked={useReadmeAsDescription}
-              onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
-            />
-            <label className={styles.label} htmlFor="useReadmeAsDescription">Use README as Description</label>
+          <div className={styles.checkboxContainer}>         
+              <input
+                className={styles.checkInput}
+                type="checkbox"
+                checked={useReadmeAsDescription}
+                onChange={(e) => setUseReadmeAsDescription(e.target.checked)}
+              />
+            <p className={styles.label} htmlFor="useReadmeAsDescription"> Use README as Description</p>
           </div>
           <input className={styles.textInput} type="text" name="githubLink" value={githubLink} onChange={handleChange} placeholder="Github link" />
           <input className={styles.textInput} type="text" name="image" value={image} onChange={handleChange} placeholder="Image URL" />

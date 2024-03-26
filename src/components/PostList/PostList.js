@@ -24,6 +24,12 @@ export default function PostList({ posts, user, fetchPosts }) {
                     isLoggedInUser={user && user._id === postData.user}
                     user={user}
                     fetchPosts={fetchPosts}
+                    postId={postData._id}
+                    postUser={postData.user}
+                    projectTitle={postData.projectTitle} 
+                    projectDescription={postData.projectDescription} 
+                    githubLink={postData.githubLink} 
+                    image={postData.image} 
                 />
             ))}
         </ul>
