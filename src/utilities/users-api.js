@@ -23,6 +23,6 @@ export function index() {
   return sendRequest(`${BASE_URL}/`)
 }
 
-export async function customerSupportRequest(name, email, message, attachment) {
-  return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
-}
+// export async function customerSupportRequest(name, email, message, attachment) {
+//   return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
+// }

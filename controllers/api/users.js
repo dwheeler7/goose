@@ -146,33 +146,32 @@ const dataController = {
             const { name, email, message } = req.body;
         
             try {
-                // Your existing logic to check if the email exists in the system
                 const user = await User.findOne({ email });
                 if (!user) {
                     return res.status(400).json({ message: 'Email not found in the system' });
                 }
         
-                // Extract attachment from request
-                const attachment = req.files.attachment;
+                // Extract attachments from req.files
+                const attachments = req.files && Object.values(req.files);
         
-                // Log attachment received on the server side
-                console.log('Attachment received:', attachment);
+                console.log('Attachments received:', attachments); // Log attachments
         
-                // Call the function to send support ticket email, passing attachment if present
-                if (attachment) {
-                    await sendSupportTicketEmail(name, email, message, attachment);
+                if (attachments && Array.isArray(attachments) && attachments.length > 0) {
+                    // If there are attachments, send email with all attachments
+                    await sendSupportTicketEmail(name, email, message, attachments);
                 } else {
-                    await sendSupportTicketEmail(name, email, message);
+                    // If there are no attachments, send email without attachments
+                    await sendSupportTicketEmail(name, email, message, []);
                 }
         
-                // Respond with success message
                 res.status(200).json({ message: 'Support ticket submitted successfully' });
             } catch (error) {
                 console.error('Error submitting support ticket:', error);
-                res.status(500).json({ message: 'Failed to submit support ticket' });
+                res.status(500).json({ message: 'Failed to submit support ticket', error: error.message }); // Return detailed error message
             }
-        },
-        
+        }
+        ,
+    
         // ALL email stuff DONE
     async followDeveloper(req, res) {
         try {

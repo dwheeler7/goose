@@ -142,7 +142,7 @@ const SupportTicketForm = () => {
   const [name, setName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [message, setMessage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [attachment, setAttachment] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null); // State for attachment
+  const [attachments, setAttachments] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // State for attachments
   const [submitting, setSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [submitted, setSubmitted] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
@@ -154,7 +154,9 @@ const SupportTicketForm = () => {
       formData.append('name', name);
       formData.append('email', email);
       formData.append('message', message);
-      formData.append('attachment', attachment);
+      attachments.forEach((file, index) => {
+        formData.append("attachment".concat(index + 1), file);
+      });
       console.log('Form data:', formData);
 
       // Call customerSupportRequest function from usersService and pass formData
@@ -165,6 +167,16 @@ const SupportTicketForm = () => {
       setError(error.message || 'Failed to submit support ticket, invalid email 👎');
     } finally {
       setSubmitting(false);
+    }
+  };
+  const handleAttachmentChange = e => {
+    const files = e.target.files;
+    if (files.length > 5) {
+      alert('You can only select up to 5 files.');
+      e.target.value = null;
+    } else {
+      console.log('Attachments selected:', files);
+      setAttachments(Array.from(files));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -199,12 +211,12 @@ const SupportTicketForm = () => {
     type: "file",
     id: "attachment",
     accept: ".jpg, .jpeg, .png",
-    onChange: e => {
-      console.log('Attachment selected:', e.target.files[0]); // Log the selected attachment
-      setAttachment(e.target.files[0]);
-    },
-    multiple: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onChange: handleAttachmentChange,
+    multiple: true,
+    disabled: attachments.length >= 5
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"]['file-limit-message']
+  }, "You can attach up to 5 files.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     disabled: submitting,
     className: _CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"]['submit-button']
@@ -1744,7 +1756,6 @@ async function sendRequest(url) {
 /* harmony export */   resetPassword: () => (/* binding */ resetPassword),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
-/* unused harmony export customerSupportRequest */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/users';
@@ -1763,14 +1774,10 @@ function findUser(userId) {
 function index() {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/"));
 }
-async function customerSupportRequest(name, email, message, attachment) {
-  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/support"), 'POST', {
-    name,
-    email,
-    message,
-    attachment
-  });
-}
+
+// export async function customerSupportRequest(name, email, message, attachment) {
+//   return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
+// }
 
 /***/ }),
 
@@ -1889,6 +1896,11 @@ async function updatePasswordWithToken(token, passwordData) {
 // New function for support ticket request
 async function customerSupportRequest(formData) {
   try {
+    // Log FormData entries
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+
     // Make POST request for support ticket using FormData
     const response = await fetch("".concat(BASE_URL, "/support"), {
       method: 'POST',
@@ -5037,4 +5049,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c141a237b90952f06162dc6e82544ac0.js.map
+//# sourceMappingURL=App.047d6f63beeb867ce67ae39cf3127ccd.js.map

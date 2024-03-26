@@ -97,6 +97,11 @@ export async function updatePasswordWithToken(token, passwordData) {
 // New function for support ticket request
 export async function customerSupportRequest(formData) {
   try {
+    // Log FormData entries
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+    
     // Make POST request for support ticket using FormData
     const response = await fetch(`${BASE_URL}/support`, {
       method: 'POST',

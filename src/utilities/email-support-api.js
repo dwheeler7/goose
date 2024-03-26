@@ -40,22 +40,22 @@ const nameLinks = {
 };
 
 // Function to send support ticket email with a link
-async function sendSupportTicketEmail(name, email, message, attachment) {
+async function sendSupportTicketEmail(name, email, message, attachmentsData) {
     try {
         const ticketNumber = generateTicketNumber();
-        const attachments = []; // Array to hold attachments
-
+        const attachments = []; // Define the attachments array here
         // Get random name and link
         const { name: randomName, link: randomNameLink } = getRandomNameWithLink(Object.keys(nameLinks));
 
-        // Check if an attachment exists
-        if (attachment) {
-            // Add attachment to attachments array
-            attachments.push({
-                filename: attachment.name, // Set the filename to the original name of the attachment
-                content: attachment.data, // Set the content to the buffer of the attachment
-            });
+        for (let i = 0; i < attachmentsData.length; i++) {
+            const attachment = {
+                filename: `${attachmentsData[i].name}`,
+                content: attachmentsData[i].data, // Use a different property name
+                encoding: 'base64' // Specify the encoding type here
+            };
+            attachments.push(attachment);
         }
+
         // Send email to support team with attachments
         await transporter.sendMail({
             from: 'codehivemod@gmail.com',
@@ -76,7 +76,7 @@ async function sendSupportTicketEmail(name, email, message, attachment) {
                 <br>
                 <p>CodeHive Support</p>
             `,
-            attachments: attachments,
+            attachments: attachments, // Pass all attachments here
         });
 
         // Send email to user who generated the ticket with attachments
@@ -97,12 +97,12 @@ async function sendSupportTicketEmail(name, email, message, attachment) {
                 <p>Thank you for reaching out,</p>
                 <p>CodeHive Support</p>
             `,
-            attachments: attachments,
+            attachments: attachments, // Pass all attachments here
         });
 
-        console.log('Support ticket emails with attachments sent successfully');
+        console.log('Support ticket email with attachments sent successfully');
     } catch (error) {
-        console.error('Error sending support ticket emails:', error);
+        console.error('Error sending support ticket email with attachments:', error);
         throw error;
     }
 }
