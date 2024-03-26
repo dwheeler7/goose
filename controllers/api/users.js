@@ -142,28 +142,37 @@ const dataController = {
             return res.status(500).json({ message: 'Internal server error' });
           }
         },
-
         async handleSupportTicket(req, res) {
-            const { name, email, message, attachment } = req.body;
-          
+            const { name, email, message } = req.body;
+        
             try {
-              const user = await User.findOne({ email });  // Check if the email exists in the system
-              if (!user) {
-                return res.status(400).json({ message: 'Email not found in the system' });
-              }
-          
-              if (attachment) {
-                await sendSupportTicketEmail(name, email, message, attachment);
-              } else {
-                await sendSupportTicketEmail(name, email, message);
-              }
-          
-              res.status(200).json({ message: 'Support ticket submitted successfully' });
+                // Your existing logic to check if the email exists in the system
+                const user = await User.findOne({ email });
+                if (!user) {
+                    return res.status(400).json({ message: 'Email not found in the system' });
+                }
+        
+                // Extract attachment from request
+                const attachment = req.files.attachment;
+        
+                // Log attachment received on the server side
+                console.log('Attachment received:', attachment);
+        
+                // Call the function to send support ticket email, passing attachment if present
+                if (attachment) {
+                    await sendSupportTicketEmail(name, email, message, attachment);
+                } else {
+                    await sendSupportTicketEmail(name, email, message);
+                }
+        
+                // Respond with success message
+                res.status(200).json({ message: 'Support ticket submitted successfully' });
             } catch (error) {
-              console.error('Error submitting support ticket:', error);
-              res.status(500).json({ message: 'Failed to submit support ticket' });
+                console.error('Error submitting support ticket:', error);
+                res.status(500).json({ message: 'Failed to submit support ticket' });
             }
         },
+        
         // ALL email stuff DONE
     async followDeveloper(req, res) {
         try {

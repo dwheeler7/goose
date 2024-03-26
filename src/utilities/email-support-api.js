@@ -52,8 +52,8 @@ async function sendSupportTicketEmail(name, email, message, attachment) {
         if (attachment) {
             // Add attachment to attachments array
             attachments.push({
-                filename: attachment.originalname, // Set the filename to the original name of the attachment
-                content: attachment.buffer, // Set the content to the buffer of the attachment
+                filename: attachment.name, // Set the filename to the original name of the attachment
+                content: attachment.data, // Set the content to the buffer of the attachment
             });
         }
         // Send email to support team with attachments

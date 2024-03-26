@@ -14,10 +14,18 @@ export const SupportTicketForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-
+  
     try {
-      // Call customerSupportRequest function from usersService and pass attachment
-      await usersService.customerSupportRequest(name, email, message, attachment);
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('message', message);
+      formData.append('attachment', attachment);
+  
+      console.log('Form data:', formData);
+  
+      // Call customerSupportRequest function from usersService and pass formData
+      await usersService.customerSupportRequest(formData);
       setSubmitted(true); // Update submitted state if submission successful
     } catch (error) {
       console.error('Error submitting support ticket:', error);
@@ -62,7 +70,11 @@ export const SupportTicketForm = () => {
               type="file"
               id="attachment"
               accept=".jpg, .jpeg, .png"
-              onChange={(e) => setAttachment(e.target.files[0])} 
+              onChange={(e) => {
+                console.log('Attachment selected:', e.target.files[0]); // Log the selected attachment
+                setAttachment(e.target.files[0]);
+              }}
+              multiple
             />
           </div>
           <button type="submit" disabled={submitting} className={styles['submit-button']}>

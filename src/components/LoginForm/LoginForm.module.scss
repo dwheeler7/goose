@@ -32,6 +32,14 @@
   }
 }
 
+input:-webkit-autofill {
+  transition: background-color 0s 99999s;
+}
+
+input:-webkit-autofill:focus {
+  background-color: inherit !important;
+}
+
 .LoginForm {
   display: flex;
   flex-direction: column;
@@ -131,7 +139,7 @@ h4 {
   }
 
   .lost {
-    margin: 35px 0;
+    margin: 35px 2px;
     font-size: 0.85rem;
     color: #fff;
     display: flex;
