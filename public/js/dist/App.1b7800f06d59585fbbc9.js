@@ -115,8 +115,8 @@ function App() {
     path: "/profile/:userId",
     element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       user: user,
-      setUser: setUser,
-      posts: posts
+      setUser: setUser
+      // posts={posts}                                                              
     })
   }))));
 }
@@ -1428,7 +1428,10 @@ function ProfilePage(_ref) {
   // get posts of user from db
   const fetchProfilePosts = async () => {
     setIsLoadingPosts(true);
+    console.log('USer Id:', userId);
+    console.log('About to call API');
     const foundPosts = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_6__.getAllPostsByUser)(userId);
+    console.log(foundPosts);
     setProfilePosts(foundPosts);
     setIsLoadingPosts(false);
   };
@@ -1519,6 +1522,7 @@ function getAll() {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL);
 }
 function getAllByUser(userId) {
+  console.log('Post API', userId);
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/user/").concat(userId));
 }
 function getById(id) {
@@ -1560,7 +1564,6 @@ async function createPost(postData) {
   }
 }
 async function getAllPosts() {
-  console.log('getting all posts...');
   try {
     const postsData = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.getAll();
     if (!postsData) throw new Error('Could not get posts');
@@ -1572,7 +1575,9 @@ async function getAllPosts() {
 }
 async function getAllPostsByUser(userID) {
   try {
+    console.log(userID);
     const postsData = await _posts_api__WEBPACK_IMPORTED_MODULE_0__.getAllByUser(userID);
+    console.log(postsData);
     if (!postsData) throw new Error('Could not get posts');
     return postsData;
   } catch (err) {
@@ -4638,4 +4643,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.b6e638b7c928acdab731b01ef6e42afd.js.map
+//# sourceMappingURL=App.6651ee628c1ef1ab382f07033919cc2d.js.map

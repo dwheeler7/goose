@@ -96,7 +96,7 @@ export default function App() {
                     element={<ProfilePage 
                         user={user}                     
                         setUser={setUser}      
-                        posts={posts}                                                              
+                        // posts={posts}                                                              
                     />} />
                 </Routes>
             </div>
