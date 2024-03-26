@@ -416,9 +416,14 @@ function LikeBtn(_ref) {
     setLikesNum(getLikesNum());
     setLikedPostBool(getLikedPostBool());
   }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtnContainer
+  }, /*#__PURE__*/React.createElement("button", {
+    className: _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     onClick: handleClick
-  }, likedPostBool ? /*#__PURE__*/React.createElement("span", null, "Unlike") : /*#__PURE__*/React.createElement("span", null, "Like")), /*#__PURE__*/React.createElement("span", null, likesNum));
+  }, likedPostBool ? /*#__PURE__*/React.createElement("span", null, "Unlike") : /*#__PURE__*/React.createElement("span", null, "Like")), /*#__PURE__*/React.createElement("span", {
+    className: _LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].likesSum
+  }, likesNum)));
 }
 
 /***/ }),
@@ -679,12 +684,14 @@ function NavBar(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewPostForm.module.scss */ "./src/components/NewPostForm/NewPostForm.module.scss");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 function NewPostForm(_ref) {
@@ -718,7 +725,7 @@ function NewPostForm(_ref) {
     }
     try {
       if (!user) throw new Error('Cannot create a post when user is not logged in');
-      const createdPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_1__.createPost)(formData);
+      const createdPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.createPost)(formData);
       if (!createdPost) throw new Error('Could not create new post');
       await fetchPosts();
       setUseReadmeAsDescription(false);
@@ -739,41 +746,59 @@ function NewPostForm(_ref) {
     githubLink,
     image
   } = formData;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NewPostForm
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].heading
+  }, "Create a New Post"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NewPostFormContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Form,
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textInput,
     type: "text",
     name: "projectTitle",
     value: projectTitle,
     onChange: handleChange,
     placeholder: "Title"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textAreaInput,
     type: "text",
     name: "projectDescription",
     value: projectDescription,
     onChange: handleChange,
     placeholder: "Description"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].checkboxContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].checkInput,
+    type: "checkbox",
+    checked: useReadmeAsDescription,
+    onChange: e => setUseReadmeAsDescription(e.target.checked)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].label,
+    htmlFor: "useReadmeAsDescription"
+  }, "Use README as Description")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textInput,
     type: "text",
     name: "githubLink",
     value: githubLink,
     onChange: handleChange,
     placeholder: "Github link"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "checkbox",
-    checked: useReadmeAsDescription,
-    onChange: e => setUseReadmeAsDescription(e.target.checked)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "useReadmeAsDescription"
-  }, "Use README as Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textInput,
     type: "text",
     name: "image",
     value: image,
     onChange: handleChange,
     placeholder: "Image URL"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     type: "submit"
-  }, "Add project"))), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, error));
+  }, "Add project"))), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errorMsg
+  }, error));
 }
 
 /***/ }),
@@ -803,12 +828,28 @@ function Post(_ref) {
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].post
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, post.projectTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, post.projectDescription), user && !isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Post
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TitleImgContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectTitle
+  }, post.projectTitle), post.image === '' || post.image ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProjectImage,
+    src: post.image
+  }) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].projectDescription
+  }, post.projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
+  }, user && !isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
     post: post,
     user: user,
     setPost: setPost
-  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "Delete")) : null);
+  }) : null, user && isLoggedInUser ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Delete")) : null));
 }
 
 /***/ }),
@@ -1364,13 +1405,13 @@ function HomePage(_ref) {
     user
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "This is the HomePage"), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].HomePage
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    users: users
+  }), user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     fetchPosts: fetchPosts,
     user: user
-  })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_SearchUsersForm_SearchUsersForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    users: users
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     posts: posts,
     user: user
   }));
@@ -2239,62 +2280,34 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.J0M0F9EdoAVZrYUIX_F3 {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  list-style: none;
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
+___CSS_LOADER_EXPORT___.push([module.id, `.HQz_aJWGEJ_QTsm2PCvM {
+  position: relative;
 }
-
-.isNCXhZFl56IZEn46CO_ {
-  display: flex; /* Ensure list items are treated as flex items */
+.HQz_aJWGEJ_QTsm2PCvM .bkEyFKmi8gKCaQS4WJ6p {
+  width: 5rem;
 }
-
-.mW4uXcKR7ZVmnZ4OrVG8 {
+.HQz_aJWGEJ_QTsm2PCvM .bkEyFKmi8gKCaQS4WJ6p:hover {
+  background-color: green;
+}
+.HQz_aJWGEJ_QTsm2PCvM .nbZ6eV9LWt5Z4uODx8f7 {
+  position: absolute;
+  top: 0;
+  right: -0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: rgb(185, 228, 178);
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  cursor: pointer;
-}
-
-.F3DBs_qSY1joejs64BoN {
-  height: 35px;
-  width: 35px;
-}
-
-.G3K4UbdnJz8qf3coke7x {
-  width: 64px;
-  height: 40px;
-  border-radius: 40px;
-}
-
-button {
-  color: white;
-  width: 100%;
-  height: 40px;
-  border-radius: 40px;
-  background-color: rgb(87, 163, 115);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 600;
-  transition: all 0.4s ease;
-}
-
-button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}`, "",{"version":3,"sources":["webpack://./src/components/LikeBtn/LikeBtn.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,uBAAA,EAAA,wBAAA;EACA,mBAAA,EAAA,sBAAA;EACA,gBAAA;EACA,UAAA,EAAA,2BAAA;EACA,SAAA,EAAA,0BAAA;AACF;;AAEA;EACE,aAAA,EAAA,gDAAA;AACF;;AAEA;EACE,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,eAAA;AACF;;AAEA;EACE,YAAA;EACA,WAAA;AACF;;AAEA;EACE,WAAA;EACA,YAAA;EACA,mBAAA;AACF;;AAEA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AACF;;AAEA;EACE,0CAAA;AACF","sourcesContent":[".iconList {\n  display: flex;\n  justify-content: center; /* Center horizontally */\n  align-items: center; /* Center vertically */\n  list-style: none;\n  padding: 0; /* Remove default padding */\n  margin: 0; /* Remove default margin */\n}\n\n.iconItem {\n  display: flex; /* Ensure list items are treated as flex items */\n}\n\n.iconLink {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: none; \n  cursor: pointer; \n}\n\n.iconImage {\n  height: 35px;\n  width: 35px;\n}\n\n.iconContainer {\n  width: 64px;\n  height: 40px;\n  border-radius: 40px;\n}\n\nbutton {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/LikeBtn/LikeBtn.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;AACF;AAAE;EACE,WAAA;AAEJ;AADI;EACE,uBAAA;AAGN;AAAE;EACE,kBAAA;EACA,MAAA;EACA,cAAA;EACA,eAAA;EACA,iBAAA;EACA,oCAAA;EACA,aAAA;EACA,cAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAEJ","sourcesContent":[".LikeBtnContainer {\n  position: relative;\n  .button {\n    width: 5rem;\n    &:hover {\n      background-color: green;\n    }\n  }\n  .likesSum {\n    position: absolute;\n    top: 0;\n    right: -.5rem;\n    font-size: 1rem;\n    font-weight: bold;\n    background-color: rgb(185, 228, 178);\n    width: 1.3rem;\n    height: 1.3rem;\n    border-radius: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"iconList": `J0M0F9EdoAVZrYUIX_F3`,
-	"iconItem": `isNCXhZFl56IZEn46CO_`,
-	"iconLink": `mW4uXcKR7ZVmnZ4OrVG8`,
-	"iconImage": `F3DBs_qSY1joejs64BoN`,
-	"iconContainer": `G3K4UbdnJz8qf3coke7x`
+	"LikeBtnContainer": `HQz_aJWGEJ_QTsm2PCvM`,
+	"button": `bkEyFKmi8gKCaQS4WJ6p`,
+	"likesSum": `nbZ6eV9LWt5Z4uODx8f7`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2640,6 +2653,92 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/NewPostForm/NewPostForm.module.scss":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/NewPostForm/NewPostForm.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
+  width: 90%;
+  background-color: #7bbd86;
+  border: 0.1rem solid black;
+  border-radius: 0.5rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .q83xVIpdN9plzwBHguVi {
+  margin: 0 0 1rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX {
+  height: 2rem;
+  border-radius: 0;
+  border: 0.01rem solid black;
+  width: 80%;
+  margin: 0.1rem 0;
+  font-size: 1rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX:focus {
+  outline: 0.1rem solid green;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .DRQjw5t79oTsny9CdCMF {
+  height: 6rem;
+  border-radius: 0;
+  width: 80%;
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .DRQjw5t79oTsny9CdCMF:focus {
+  outline: 0.1rem solid green;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .cgJh9_cI3zRlHT3nHVWG {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .cgJh9_cI3zRlHT3nHVWG .GdWlXhkOK38PU0rT8j_A {
+  font-size: 1.5rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .jTc77r50RjSsdPdWZC0t {
+  margin-top: 1rem;
+}
+.wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .jTc77r50RjSsdPdWZC0t:hover {
+  color: black;
+}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,yBAAA;EACA,0BAAA;EACA,qBAAA;EACA,cAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,gBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AADQ;EACI,YAAA;EACA,gBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AADQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAGZ;AAFY;EACI,iBAAA;AAIhB;AADQ;EACI,gBAAA;AAGZ;AAFY;EACI,YAAA;AAIhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background-color: #7bbd86;\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 0 auto;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: 0;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: 0;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1.5rem;\n            }\n        }\n        .button {\n            margin-top: 1rem;\n            &:hover {\n                color: black;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"NewPostForm": `wekziSaaqwOLRFMJXHQ2`,
+	"heading": `q83xVIpdN9plzwBHguVi`,
+	"Form": `aJu0J6aP6lo4xM7cgqBJ`,
+	"textInput": `oIfat_Ocs4SldBNG2mHX`,
+	"textAreaInput": `DRQjw5t79oTsny9CdCMF`,
+	"checkboxContainer": `cgJh9_cI3zRlHT3nHVWG`,
+	"label": `GdWlXhkOK38PU0rT8j_A`,
+	"button": `jTc77r50RjSsdPdWZC0t`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Post/Post.module.scss":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/Post/Post.module.scss ***!
@@ -2660,8 +2759,9 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.kQzjKpTiHJLJ5WNNtTAD {
   width: 100%;
+  margin: 1rem 0;
   padding: 2rem;
-  min-height: 25vh;
+  min-height: 35vh;
   border: 0.1rem solid rgba(51, 86, 51, 0.3);
   border-radius: 20px;
   display: flex;
@@ -2670,43 +2770,48 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.kQzjKpTiHJLJ5WNNtTAD {
   color: black;
   box-shadow: 0 0 0.3rem var(--text-green);
 }
-
-.cxO_ngSGPeT7TF8HthZe {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--text-green);
-  letter-spacing: 1px;
-  padding-bottom: 0.5rem;
-}
-
-._ibScGpDo_0RxtdWctb4 {
-  font-size: 2.3rem;
-  color: black;
-  letter-spacing: 2px;
-  text-decoration: none;
-}
-
-.ycpCjprELliy8RQqWAsq {
-  font-size: 1.5rem;
-  color: black;
-  padding-top: 8rem;
-  max-width: 75%;
-  letter-spacing: 2px;
-}
-
-.BHR4ILMA2bTJlnREoS18 {
+.kQzjKpTiHJLJ5WNNtTAD .Ejt48lsnoA4ZbmXQ9mEH {
   display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 30%;
+}
+.kQzjKpTiHJLJ5WNNtTAD .Ejt48lsnoA4ZbmXQ9mEH .GNEIaR8qK7NBA02JzXtR {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.kQzjKpTiHJLJ5WNNtTAD .TFpNeZbQzatEa_RWFlAg {
+  border: 1px solid grey;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 40%;
+  font-size: 1.2rem;
+  background-color: #f1f1f1;
+}
+.kQzjKpTiHJLJ5WNNtTAD .gIEF2c3lJWXfotyd8LAW {
+  width: 5rem;
+}
+.kQzjKpTiHJLJ5WNNtTAD .Tv1PiRERxjOLRorlaY3P {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  max-width: 100%;
-}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,aAAA;EACA,gBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,uBAAA;EACA,YAAA;EACA,wCAAA;AACJ;;AAEA;EACI,eAAA;EACA,iBAAA;EACA,wBAAA;EACA,mBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,qBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,cAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,eAAA;AACJ","sourcesContent":[".Post {\n    width: 100%;\n    padding: 2rem;\n    min-height: 25vh;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    display: flex;\n    justify-content: space-between;\n    background-color: white;\n    color: black;\n    box-shadow: 0 0 .3rem var(--text-green);\n}\n\n.title {\n    font-size: 3rem;\n    font-weight: bold;\n    color: var(--text-green);\n    letter-spacing: 1px;\n    padding-bottom: .5rem; \n}\n\n.user {\n    font-size: 2.3rem;\n    color: black;\n    letter-spacing: 2px;\n    text-decoration: none;\n}\n\n.description {\n    font-size: 1.5rem;\n    color: black;\n    padding-top: 8rem;\n    max-width: 75%;\n    letter-spacing: 2px;\n}\n\n.imageContainer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    max-width: 100%;\n}"],"sourceRoot":""}]);
+}
+.kQzjKpTiHJLJ5WNNtTAD .Tv1PiRERxjOLRorlaY3P .KKxm2e5dQLBmqHKANXwO {
+  width: 5rem;
+  margin: 1rem;
+}
+.kQzjKpTiHJLJ5WNNtTAD .Tv1PiRERxjOLRorlaY3P .KKxm2e5dQLBmqHKANXwO:hover {
+  background-color: green;
+}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,cAAA;EACA,aAAA;EACA,gBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,uBAAA;EACA,YAAA;EACA,wCAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,UAAA;AAER;AADQ;EACI,eAAA;EACA,mBAAA;AAGZ;AAAI;EACI,sBAAA;EACA,qBAAA;EACA,eAAA;EACA,UAAA;EACA,iBAAA;EACA,yBAAA;AAER;AAAI;EACI,WAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;AAER;AADQ;EACI,WAAA;EACA,YAAA;AAGZ;AAFY;EACI,uBAAA;AAIhB","sourcesContent":[".Post {\n    width: 100%;\n    margin: 1rem 0;\n    padding: 2rem;\n    min-height: 35vh;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    display: flex;\n    justify-content: space-between;\n    background-color: white;\n    color: black;\n    box-shadow: 0 0 .3rem var(--text-green);\n    .TitleImgContainer {\n        display: flex;\n        flex-direction: column;\n        justify-content: space-evenly;\n        width: 30%;\n        .projectTitle {\n            font-size: 2rem;\n            margin-bottom: 2rem;\n        }\n    }\n    .projectDescription {\n        border: 1px solid grey;\n        border-radius: .5rem;\n        padding: .5rem;\n        width: 40%;\n        font-size: 1.2rem;\n        background-color: #f1f1f1;\n    }\n    .LikeBtn {\n        width: 5rem;\n    }\n    .btnContainer {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        .button {\n            width: 5rem;\n            margin: 1rem;\n            &:hover {\n                background-color: green;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Post": `kQzjKpTiHJLJ5WNNtTAD`,
-	"title": `cxO_ngSGPeT7TF8HthZe`,
-	"user": `_ibScGpDo_0RxtdWctb4`,
-	"description": `ycpCjprELliy8RQqWAsq`,
-	"imageContainer": `BHR4ILMA2bTJlnREoS18`
+	"TitleImgContainer": `Ejt48lsnoA4ZbmXQ9mEH`,
+	"projectTitle": `GNEIaR8qK7NBA02JzXtR`,
+	"projectDescription": `TFpNeZbQzatEa_RWFlAg`,
+	"LikeBtn": `gIEF2c3lJWXfotyd8LAW`,
+	"btnContainer": `Tv1PiRERxjOLRorlaY3P`,
+	"button": `KKxm2e5dQLBmqHKANXwO`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2732,39 +2837,20 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.kzarDYEms6C4W3RidlsQ {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-content: center;
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 .xh5wRMlVK8Fl6xr_VBPV {
-  text-align: center;
-  font-size: 1.5rem;
-  color: #666;
-  padding: 20px;
-}
-
-.yLopBHUe2Ss7rTVZt2vz {
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-.yLopBHUe2Ss7rTVZt2vz:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,2DAAA;EACA,SAAA;EACA,aAAA;EACA,uBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,aAAA;AACJ;;AAGA;EACI,sBAAA;EACA,wCAAA;EACA,mBAAA;EACA,YAAA;EACA,cAAA;EACA,aAAA;EACA,gBAAA;EACA,mEAAA;AAAJ;AAEI;EACI,2BAAA;EACA,yCAAA;AAAR","sourcesContent":[".postList {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n    gap: 20px;\n    padding: 20px;\n    justify-content: center;\n}\n\n.emptyState {\n    text-align: center;\n    font-size: 1.5rem;\n    color: #666;\n    padding: 20px;\n}\n\n\n.post {\n    background-color: #fff;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n    border-radius: 10px;\n    width: 300px; \n    margin: 0 auto; \n    padding: 20px;\n    overflow: hidden;\n    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;\n\n    &:hover {\n        transform: translateY(-5px);\n        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);\n    }\n}"],"sourceRoot":""}]);
+  margin: 1rem;
+}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,UAAA;EACA,sBAAA;EACA,aAAA;EACA,cAAA;AACJ;;AAEA;EACI,YAAA;AACJ","sourcesContent":[".postList {\n    display: flex;\n    width: 90%;\n    flex-direction: column;\n    padding: 2rem;\n    margin: 0 auto;\n}\n\n.emptyState {\n    margin: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"postList": `kzarDYEms6C4W3RidlsQ`,
-	"emptyState": `xh5wRMlVK8Fl6xr_VBPV`,
-	"post": `yLopBHUe2Ss7rTVZt2vz`
+	"emptyState": `xh5wRMlVK8Fl6xr_VBPV`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2970,17 +3056,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes KiN27HiRvEoQXCiZZer1 {
     box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);
   }
 }
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #7bbd86, #16523c);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
 .O3kJQXyeVBVPoVbc0TQA {
   min-width: 30vh;
   max-width: 43.3vh;
@@ -3144,7 +3219,7 @@ option {
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE;IACE,iFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,qFAAA;EAFF;EAKA;IACE,uFAAA;EAHF;AACF;AAOA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AALF;;AAQA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iBAAA;EACA,kBAAA;EACA,gBAAA;EACA,kDAAA;AALF;AAOE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;AALJ;;AASA;EACE,kBAAA;EACA,cAAA;EACA,6BAAA;EACA,kBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,6BAAA;AANF;AAQE;EACE,oCAAA;AANJ;;AAUA;EACE,kBAAA;EACA,QAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;EACA,gCAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;AAPV;;AAUA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;EACE,kBAAA;EACA,yBAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;;EAEE,gBAAA;EACA,SAAA;AAPJ;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AAPF;;AAUA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAPF;;AAUA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAPF;;AAUA;EACI,0BAAA;EACA,eAAA;AAPJ;;AAUA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AAPF;;AAUA;EACE,0CAAA;AAPF;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPF;;AAUA;EACE,eAAA;AAPF;;AAUA;EACE,YAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,kBAAA;AAPF;;AAUA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAPF;;AAUA;EACE,0BAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,iBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAPF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\nbody {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #7bbd86, #16523c);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.boxc {\n  min-width: 30vh;\n  max-width: 43.3vh;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n  margin-left: auto;\n  margin-right: auto;\n  overflow: hidden; \n  animation: shine 5s infinite linear;\n\n  h1 {\n    font-size: 3rem; \n    color: #fff;\n    text-align: center;\n    padding-top: .64rem;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  border-bottom: 2px solid #fff;\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  width: 30vh;\n  border-bottom: 2px solid #fff;\n  \n  &:focus-within {\n    border-bottom-color: gold !important; \n  }\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  transform: translateY(-40%);\n  color: #fff;\n  font-size: 1.25rem; \n  pointer-events: none;\n  transition: all 0.3s ease-in-out;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.25rem;\n    background-color: #081C15; \n    border-radius: 2px;\n    color: #fff; \n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n  font-weight: bolder;\n  padding: 0;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 1.25rem;\n  color: #fff;\n  text-align: center;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.5rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE;IACE,iFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,qFAAA;EAFF;EAKA;IACE,uFAAA;EAHF;AACF;AAOA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iBAAA;EACA,kBAAA;EACA,gBAAA;EACA,kDAAA;AALF;AAOE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;AALJ;;AASA;EACE,kBAAA;EACA,cAAA;EACA,6BAAA;EACA,kBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,6BAAA;AANF;AAQE;EACE,oCAAA;AANJ;;AAUA;EACE,kBAAA;EACA,QAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;EACA,gCAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;AAPV;;AAUA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;EACE,kBAAA;EACA,yBAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;;EAEE,gBAAA;EACA,SAAA;AAPJ;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AAPF;;AAUA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAPF;;AAUA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAPF;;AAUA;EACI,0BAAA;EACA,eAAA;AAPJ;;AAUA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AAPF;;AAUA;EACE,0CAAA;AAPF;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPF;;AAUA;EACE,eAAA;AAPF;;AAUA;EACE,YAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,kBAAA;AAPF;;AAUA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAPF;;AAUA;EACE,0BAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,iBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAPF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.boxc {\n  min-width: 30vh;\n  max-width: 43.3vh;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n  margin-left: auto;\n  margin-right: auto;\n  overflow: hidden; \n  animation: shine 5s infinite linear;\n\n  h1 {\n    font-size: 3rem; \n    color: #fff;\n    text-align: center;\n    padding-top: .64rem;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  border-bottom: 2px solid #fff;\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  width: 30vh;\n  border-bottom: 2px solid #fff;\n  \n  &:focus-within {\n    border-bottom-color: gold !important; \n  }\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  transform: translateY(-40%);\n  color: #fff;\n  font-size: 1.25rem; \n  pointer-events: none;\n  transition: all 0.3s ease-in-out;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.25rem;\n    background-color: #081C15; \n    border-radius: 2px;\n    color: #fff; \n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n  font-weight: bolder;\n  padding: 0;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 1.25rem;\n  color: #fff;\n  text-align: center;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.5rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"boxc": `O3kJQXyeVBVPoVbc0TQA`,
@@ -3197,8 +3272,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
 }
 
 body {
-  background-color: var(--bg-color);
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,uDAAA;AACJ;;AAEA;EACI,iCAAA;AACJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: \"Inter Tight\", Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}"],"sourceRoot":""}]);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #7bbd86, #16523c);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,uDAAA;AACJ;;AAEA;EACI,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AACJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: \"Inter Tight\", Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    min-height: 100vh;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n  }"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -3276,106 +3358,16 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.CgjxyfEdobTkp_s1g1uU {
-  background-color: white;
-  padding: 20px;
-  border: none;
-}
-
-.dEySatDVVilAzS3bqI9Z {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2rem;
-}
-
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 2px solid rgb(58, 163, 49);
-  border-radius: 5px;
-  resize: none;
-}
-
-button {
-  padding: 10px;
-  background-color: rgb(250, 250, 250);
-  color: rgb(88, 85, 85);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: auto;
+___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
+  width: 95%;
+  height: 100%;
+  background-color: #f1f1f1;
   margin: 0 auto;
-}
-
-button:hover {
-  background-color: #6acf66;
-}
-
-.XPxNjc5GISdopuQ98rk6 {
-  margin-top: 20px;
-}
-
-.vCHNX8UaVIhE3i6IOusO {
-  background-color: white;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p {
-  color: black;
-}
-
-.vCHNX8UaVIhE3i6IOusO img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-._NMlzyl2SLslAiokZ3aS {
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-}
-
-.HPoDdNDxi0HMP2hrM9Ts {
-  color: black;
-  cursor: pointer;
-}
-
-.HPoDdNDxi0HMP2hrM9Ts:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .dEySatDVVilAzS3bqI9Z {
-    flex-direction: column;
-  }
-  button {
-    width: 100%;
-    margin-left: 0;
-  }
-  .CgjxyfEdobTkp_s1g1uU, .vCHNX8UaVIhE3i6IOusO, ._NMlzyl2SLslAiokZ3aS {
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  .vCHNX8UaVIhE3i6IOusO h3, .vCHNX8UaVIhE3i6IOusO p, .HPoDdNDxi0HMP2hrM9Ts {
-    font-size: smaller;
-  }
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,aAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,kCAAA;EACA,kBAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,yBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AACJ;;AAEA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AACJ;;AAEA;EACI,YAAA;EACA,eAAA;AACJ;;AAEA;EACI,0BAAA;AACJ;;AAGA;EACI;IACI,sBAAA;EAAN;EAGE;IACI,WAAA;IACA,cAAA;EADN;EAKE;IACI,aAAA;IACA,mBAAA;EAHN;EAOE;IACI,kBAAA;EALN;AACF","sourcesContent":[".homePage {\n    background-color: white;\n    padding: 20px;\n    border: none;    \n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid rgb(58, 163, 49);\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border: none;\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color: #6acf66;\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}"],"sourceRoot":""}]);
+  padding: 1rem 0;
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,YAAA;EACA,yBAAA;EACA,cAAA;EACA,eAAA;AACJ","sourcesContent":[".HomePage {\n    width: 95%;\n    height: 100%;\n    background-color: #f1f1f1;\n    margin: 0 auto;\n    padding: 1rem 0;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"homePage": `CgjxyfEdobTkp_s1g1uU`,
-	"form": `dEySatDVVilAzS3bqI9Z`,
-	"postList": `XPxNjc5GISdopuQ98rk6`,
-	"post": `vCHNX8UaVIhE3i6IOusO`,
-	"userList": `_NMlzyl2SLslAiokZ3aS`,
-	"user": `HPoDdNDxi0HMP2hrM9Ts`
+	"HomePage": `luBJirBC3AbIwQNsEypk`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3746,8 +3738,11 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /*!****************************************************!*\
   !*** ./src/components/LikeBtn/LikeBtn.module.scss ***!
   \****************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
@@ -3787,7 +3782,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 
-       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_LikeBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3894,6 +3889,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/NewPostForm/NewPostForm.module.scss":
+/*!************************************************************!*\
+  !*** ./src/components/NewPostForm/NewPostForm.module.scss ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./NewPostForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/NewPostForm/NewPostForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -4637,4 +4685,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.a2cb203c8b2c84153015695afad36307.js.map
+//# sourceMappingURL=App.da6c53822d1416ac641644678b26d97a.js.map

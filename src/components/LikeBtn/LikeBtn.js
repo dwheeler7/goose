@@ -45,8 +45,10 @@ export default function LikeBtn({ post, user, setPost }) {
 
   return (
     <>    
-    <button onClick={handleClick}>{likedPostBool ? <span>Unlike</span> : <span>Like</span>}</button>
-    <span>{likesNum}</span>
+    <div className={styles.LikeBtnContainer}>
+      <button className={styles.button} onClick={handleClick}>{likedPostBool ? <span>Unlike</span> : <span>Like</span>}</button>
+      <span className={styles.likesSum}>{likesNum}</span>
+    </div>
     </>
 
   );
