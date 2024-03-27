@@ -2,7 +2,7 @@ import React from 'react';
 import ForgotPasswordForm from '../../components/ForgotPasswordForm/ForgotPasswordForm'; // Adjust the import path as needed
 import styles from './ForgotPassword.module.scss'; // Adjust the import path as needed
 
-export default function ForgotPasswordPage({ setUser }) {    
+export default function ForgotPassword({ setUser }) {    
   
     return (
       <div className={styles.container}>
