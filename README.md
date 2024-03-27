@@ -65,6 +65,10 @@
 
 ## Styling & Organization Phase: Integrating Design with Functional Components
 
+![Screenshot 2024-03-13 at 4 38 12 PM](https://github.com/dwheeler7/goose/assets/26417169/71b7fedf-6670-4df8-8d60-f45acd3e3440)
+![Screenshot 2024-03-12 at 7 02 26 PM](https://github.com/dwheeler7/goose/assets/26417169/9050b5c1-0257-4a77-a162-f411f1d848fa)
+
+
 **March 19-23: Begin Styling Integration**
 - Focus on applying consistent styling across the application.
 - Enhance user interfaces based on usability principles.
