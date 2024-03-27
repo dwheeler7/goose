@@ -16,7 +16,16 @@ const ensureHttps = (url) => {
 export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
   const [post, setPost] = useState(postData);
 
-  const isCurrentUserPost = post.user._id === user._id;
+  const fetchCurrentUser = () => {
+    if (user && (post.user._id === user._id)) {
+      return true
+    } else return false
+    
+  }
+  
+  const isCurrentUserPost = fetchCurrentUser()
+
+  // post.user._id === user._id;
 
   return (
     post ? (

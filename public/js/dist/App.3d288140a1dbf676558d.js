@@ -1047,6 +1047,7 @@ function NewPostForm(_ref) {
         image: '',
         projectDescription: ''
       });
+      window.location.reload();
     } catch (err) {
       setError(err.message);
     }
@@ -1137,7 +1138,6 @@ function NewPostForm(_ref) {
 
 
 
- // Import the MarkdownRenderer component
 
 const ensureHttps = url => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -1153,6 +1153,15 @@ function Post(_ref) {
     fetchPosts
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
+  const fetchCurrentUser = () => {
+    if (user && post.user._id === user._id) {
+      return true;
+    } else return false;
+  };
+  const isCurrentUserPost = fetchCurrentUser();
+
+  // post.user._id === user._id;
+
   return post ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Post
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1174,18 +1183,25 @@ function Post(_ref) {
     source: post.projectDescription
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
-    post: post,
-    user: user,
-    setPost: setPost
-  }), user && isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     post: post,
     setPost: setPost,
     fetchPosts: fetchPosts
+  })), user && isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
+    post: post,
+    setPost: setPost,
+    fetchPosts: fetchPosts
+  })), user && !isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
+    post: post,
+    user: user,
+    setPost: setPost
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: postData.githubLink ? ensureHttps(postData.githubLink) : '#',
     target: postData.githubLink ? '_blank' : null
@@ -1195,10 +1211,10 @@ function Post(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghImg,
     src: "https://i.imgur.com/F796Bnt.png"
-  }))))), user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }))))), !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     post: post,
     user: user
-  }))) : null;
+  })) : null;
 }
 
 /***/ }),
@@ -1239,7 +1255,7 @@ function PostList(_ref) {
   // If there are posts, render the list
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
-  }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, posts.slice().reverse().map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
     postData: postData,
     key: postData._id,
     isLoggedInUser: user && user._id === postData.user,
@@ -1403,10 +1419,12 @@ function SearchUserForm(_ref) {
     value: searchQuery,
     onChange: e => handleSearch(e.target.value),
     placeholder: "Search"
-  })), searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserList_UserList__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _SearchUsersForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].searchResults
+  }, searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserList_UserList__WEBPACK_IMPORTED_MODULE_1__["default"], {
     users: searchResults,
     onUserClick: handleUserClick
-  }));
+  })));
 }
 
 /***/ }),
@@ -1552,13 +1570,7 @@ function SignUpForm(_ref) {
     value: "developer"
   }, "Developer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "employer"
-  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "file",
-    accept: "image/*",
-    onChange: handlePictureChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     type: "submit",
     disabled: disable
@@ -1822,7 +1834,7 @@ function ProfilePage(_ref) {
   // get posts of user from db
   const fetchProfilePosts = async () => {
     setIsLoadingPosts(true);
-    console.log('USer Id:', userId);
+    console.log('User Id:', userId);
     console.log('About to call API');
     const foundPosts = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_6__.getAllPostsByUser)(userId);
     console.log(foundPosts);
@@ -1876,7 +1888,7 @@ function ProfilePage(_ref) {
     href: profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].portfolioLogo,
-    src: "https://i.imgur.com/FZvlk3y.png",
+    src: "https://cdn-icons-png.flaticon.com/128/3683/3683218.png",
     alt: "Portfolio"
   })))), profileUser.bio ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _ProfilePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userBio
@@ -1985,7 +1997,10 @@ const SettingsPage = _ref => {
     alt: "Profile"
   }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleSave
-  }, "Save Changes")));
+  }, "Save Changes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+    href: "/customer-support",
+    className: _SettingsPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].customerSupportLink
+  }, "Customer Support"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsPage);
 
@@ -2368,7 +2383,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.IMqMrT2eGOGeFiLbCAGg {
   width: 100vw;
-  height: 100%;
+  min-height: 100vh;
 }
 .IMqMrT2eGOGeFiLbCAGg .z1Y52ButKREXXJL8AqTW {
   position: fixed;
@@ -2411,7 +2426,7 @@ input:focus {
 label {
   font-size: 2.3rem;
   padding: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,YAAA;AACJ;AAAI;EACI,eAAA;EACA,MAAA;AAER;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    height: 100%;\n    .NavBar {\n        position: fixed;\n        top: 0;\n    }\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    height: 2.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 1rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,iBAAA;AACJ;AAAI;EACI,eAAA;EACA,MAAA;AAER;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    min-height: 100vh;\n    .NavBar {\n        position: fixed;\n        top: 0;\n    }\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    height: 2.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 1rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`,
@@ -2607,6 +2622,10 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.CWk_HHs9sL2udvAl3Opz {
   max-width: 400px;
   margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .CWk_HHs9sL2udvAl3Opz form {
   display: flex;
@@ -2671,7 +2690,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.CWk_HHs9sL2udvAl3Opz {
 .l1bGVOuMwmksV9RFIcKs:focus {
   border-color: #007bff;
   outline: none;
-}`, "",{"version":3,"sources":["webpack://./src/components/CustomerSupport/CustomerSupport.module.scss"],"names":[],"mappings":"AAEA;EACI,gBAAA;EACA,cAAA;AADJ;AAGI;EACE,aAAA;EACA,sBAAA;AADN;AAGM;;EAEE,WAAA;EACA,mBAAA;EACA,cAAA;EACA,YAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,kBAAA;EACA,YAAA;EACA,kCAAA;AADR;AAGQ;;EACE,qBAAA;EACA,aAAA;AAAV;AAGM;EACE,aAAA;AADR;AAIM;EACE,aAAA;EACA,yBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,eAAA;EACA,sCAAA;AAFR;AAIQ;EACE,yBAAA;AAFV;AAKQ;EACE,sBAAA;EACA,mBAAA;AAHV;AAOI;EACE,UAAA;EACA,kBAAA;EACA,mBAAA;AALN;AAOI;EACE,gBAAA;EACA,eAAA;EACA,mBAAA;AALN;;AASE;EACE,iBAAA;AANJ;;AASE;EACE,eAAA;AANJ;AAOI;EACE,qBAAA;EACA,aAAA;AALN","sourcesContent":["\n\n.support-ticket-form {\n    max-width: 400px;\n    margin: 0 auto;\n  \n    form {\n      display: flex;\n      flex-direction: column;\n  \n      input,\n      textarea {\n        width: 100%;\n        margin-bottom: 10px;\n        margin-left: 0;\n        padding: 8px;\n        background-color: rgb(240, 240, 240);\n        border: 2px solid #ccc;\n        border-radius: 4px;\n        font-size: 1.15rem;\n        color: black;\n        transition: border-color 0.3s ease;\n  \n        &:focus {\n          border-color: #007bff;\n          outline: none;\n        }\n      }\n      textarea {\n        height: 12rem;\n      }\n  \n      button {\n        padding: 10px;\n        background-color: #007bff;\n        color: #fff;\n        border: none;\n        border-radius: 4px;\n        font-size: 16px;\n        cursor: pointer;\n        transition: background-color 0.3s ease;\n  \n        &:hover {\n          background-color: #0056b3;\n        }\n  \n        &:disabled {\n          background-color: #ccc;\n          cursor: not-allowed;\n        }\n      }\n    }\n    .error-message {\n      color: red;\n      font-size: 1.25rem;\n      font-weight: bolder;\n    }\n    .success-message {\n      color: limegreen;\n      font-size: 3rem;\n      font-weight: bolder;\n    }\n  }\n  \n  .file-limit-message {\n    font-size: .90rem;\n  }\n\n  .attachment-input {\n    cursor: pointer;\n    &:focus {\n      border-color: #007bff;\n      outline: none;\n    }\n  }"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/CustomerSupport/CustomerSupport.module.scss"],"names":[],"mappings":"AAEA;EACI,gBAAA;EACA,cAAA;EACA,eAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AADJ;AAGI;EACE,aAAA;EACA,sBAAA;AADN;AAGM;;EAEE,WAAA;EACA,mBAAA;EACA,cAAA;EACA,YAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,kBAAA;EACA,YAAA;EACA,kCAAA;AADR;AAGQ;;EACE,qBAAA;EACA,aAAA;AAAV;AAGM;EACE,aAAA;AADR;AAIM;EACE,aAAA;EACA,yBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,eAAA;EACA,sCAAA;AAFR;AAIQ;EACE,yBAAA;AAFV;AAKQ;EACE,sBAAA;EACA,mBAAA;AAHV;AAOI;EACE,UAAA;EACA,kBAAA;EACA,mBAAA;AALN;AAOI;EACE,gBAAA;EACA,eAAA;EACA,mBAAA;AALN;;AASE;EACE,iBAAA;AANJ;;AASE;EACE,eAAA;AANJ;AAOI;EACE,qBAAA;EACA,aAAA;AALN","sourcesContent":["\n\n.support-ticket-form {\n    max-width: 400px;\n    margin: 0 auto;\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  \n    form {\n      display: flex;\n      flex-direction: column;\n  \n      input,\n      textarea {\n        width: 100%;\n        margin-bottom: 10px;\n        margin-left: 0;\n        padding: 8px;\n        background-color: rgb(240, 240, 240);\n        border: 2px solid #ccc;\n        border-radius: 4px;\n        font-size: 1.15rem;\n        color: black;\n        transition: border-color 0.3s ease;\n  \n        &:focus {\n          border-color: #007bff;\n          outline: none;\n        }\n      }\n      textarea {\n        height: 12rem;\n      }\n  \n      button {\n        padding: 10px;\n        background-color: #007bff;\n        color: #fff;\n        border: none;\n        border-radius: 4px;\n        font-size: 16px;\n        cursor: pointer;\n        transition: background-color 0.3s ease;\n  \n        &:hover {\n          background-color: #0056b3;\n        }\n  \n        &:disabled {\n          background-color: #ccc;\n          cursor: not-allowed;\n        }\n      }\n    }\n    .error-message {\n      color: red;\n      font-size: 1.25rem;\n      font-weight: bolder;\n    }\n    .success-message {\n      color: limegreen;\n      font-size: 3rem;\n      font-weight: bolder;\n    }\n  }\n  \n  .file-limit-message {\n    font-size: .90rem;\n  }\n\n  .attachment-input {\n    cursor: pointer;\n    &:focus {\n      border-color: #007bff;\n      outline: none;\n    }\n  }"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"support-ticket-form": `CWk_HHs9sL2udvAl3Opz`,
@@ -2916,19 +2935,20 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes Zc6uiYv2ixSANn506Sh4 {
   }
 }
 .IFrs_wH6ZfFHkHIS8B6M {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: transparent;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-bottom: 2px solid #ccc;
   box-shadow: none;
   min-width: 30vh;
   max-width: 70vh;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(to bottom right, #7bbd86, #1f644b);
+  border: 1px solid black;
   border-radius: 20px;
   padding: 2rem 3rem;
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none;
   user-select: none;
   overflow: hidden;
   animation: Zc6uiYv2ixSANn506Sh4 5s infinite linear;
@@ -3016,7 +3036,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes Zc6uiYv2ixSANn506Sh4 {
 }
 .IFrs_wH6ZfFHkHIS8B6M ._uR7x4NFZTbsc3UtpAtZ:hover {
   background-color: rgba(255, 255, 255, 0.5);
-}`, "",{"version":3,"sources":["webpack://./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAMA;EACI,iBAAA;EACA,kBAAA;EACA,6BAAA;EACA,6BAAA;EACA,gBAAA;EACA,eAAA;EACA,eAAA;EACA,0CAAA;EACA,mBAAA;EACA,kBAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;EACR,iBAAA;EACA,gBAAA;EACA,kDAAA;AAJJ;AAMI;EACE,eAAA;EACA,kBAAA;EACA,mBAAA;EACA,0BAAA;EACA,YAAA;AAJN;AAOI;EACE,mBAAA;AALN;AAOM;EACE,iBAAA;EACA,kBAAA;EACA,YAAA;AALR;AAQM;EACE,eAAA;EACA,uBAAA;EACA,YAAA;EACA,8BAAA;EACA,iBAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;EACA,yCAAA,EAAA,2CAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AANR;AASM;EACE,yBAAA,EAAA,wCAAA;AAPR;AAWI;EACE,cAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;AATN;AAYI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AAVN;AAaI;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;EACA,qBAAA;EACA,yBAAA;EACA,mBAAA;AAXN;AAaM;EACE,0CAAA;AAXR;AAeI;EACE,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,WAAA;EACA,yBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;AAbN;AAeM;EACE,0CAAA;AAbR","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.container {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: transparent;\n    border-bottom: 2px solid #ccc;\n    box-shadow: none;\n    min-width: 30vh;\n    max-width: 70vh;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    padding: 2rem 3rem;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n            user-select: none;\n    user-select: none;\n    overflow: hidden;\n    animation: shine 5s infinite linear;\n  \n    .title {\n      font-size: 2rem;\n      text-align: center;\n      margin-bottom: 20px;\n      font-family: \"Inter Tight\";\n      color: white;\n    }\n  \n    .formGroup {\n      margin-bottom: 20px;\n  \n      .label {\n        font-size: 1.2rem;\n        margin-bottom: 5px;\n        color: white;\n      }\n  \n      .input {\n        min-width: 30vw;\n        background: transparent;\n        border: none;\n        border-bottom: 1px solid white;\n        font-size: 1.2rem;\n        padding: 1rem;\n        border-radius: 0;\n        color: white;\n        transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */\n        width: 30vh;\n        font-weight: bolder;\n        padding: 0;\n      }\n  \n      .input:focus {\n        border-bottom-color: gold; /* Change border-bottom color on focus */\n      }\n    }\n  \n    .error {\n      color: #ff0000;\n      font-size: 1rem;\n      margin-top: 3px;\n      margin-left: 5px;\n    }\n  \n    .success {\n      color: #00cc00;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .button {\n      color: white;\n      width: 100%;\n      height: 40px;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      transition: all 0.4s ease;\n      margin-bottom: 1rem;\n    \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  \n    .link {\n      color: white;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      padding-top: .4rem;\n      padding-bottom: .4rem;\n      width: 100%;\n      transition: all 0.4s ease;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n  \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  }\n  "],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/ForgotPasswordForm/ForgotPasswordForm.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAMA;EACI,eAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,6BAAA;EACA,gBAAA;EACA,eAAA;EACA,eAAA;EACA,8DAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;EACR,gBAAA;EACA,kDAAA;AAJJ;AAMI;EACE,eAAA;EACA,kBAAA;EACA,mBAAA;EACA,0BAAA;EACA,YAAA;AAJN;AAOI;EACE,mBAAA;AALN;AAOM;EACE,iBAAA;EACA,kBAAA;EACA,YAAA;AALR;AAQM;EACE,eAAA;EACA,uBAAA;EACA,YAAA;EACA,8BAAA;EACA,iBAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;EACA,yCAAA,EAAA,2CAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AANR;AASM;EACE,yBAAA,EAAA,wCAAA;AAPR;AAWI;EACE,cAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;AATN;AAYI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AAVN;AAaI;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;EACA,qBAAA;EACA,yBAAA;EACA,mBAAA;AAXN;AAaM;EACE,0CAAA;AAXR;AAeI;EACE,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,WAAA;EACA,yBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;AAbN;AAeM;EACE,0CAAA;AAbR","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.container {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    border-bottom: 2px solid #ccc;\n    box-shadow: none;\n    min-width: 30vh;\n    max-width: 70vh;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: 1px solid black;\n    border-radius: 20px;\n    padding: 2rem 3rem;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n            user-select: none;\n    overflow: hidden;\n    animation: shine 5s infinite linear;\n  \n    .title {\n      font-size: 2rem;\n      text-align: center;\n      margin-bottom: 20px;\n      font-family: \"Inter Tight\";\n      color: white;\n    }\n  \n    .formGroup {\n      margin-bottom: 20px;\n  \n      .label {\n        font-size: 1.2rem;\n        margin-bottom: 5px;\n        color: white;\n      }\n  \n      .input {\n        min-width: 30vw;\n        background: transparent;\n        border: none;\n        border-bottom: 1px solid white;\n        font-size: 1.2rem;\n        padding: 1rem;\n        border-radius: 0;\n        color: white;\n        transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */\n        width: 30vh;\n        font-weight: bolder;\n        padding: 0;\n      }\n  \n      .input:focus {\n        border-bottom-color: gold; /* Change border-bottom color on focus */\n      }\n    }\n  \n    .error {\n      color: #ff0000;\n      font-size: 1rem;\n      margin-top: 3px;\n      margin-left: 5px;\n    }\n  \n    .success {\n      color: #00cc00;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .button {\n      color: white;\n      width: 100%;\n      height: 40px;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      transition: all 0.4s ease;\n      margin-bottom: 1rem;\n    \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  \n    .link {\n      color: white;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      padding-top: .4rem;\n      padding-bottom: .4rem;\n      width: 100%;\n      transition: all 0.4s ease;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n  \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  }\n  "],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"container": `IFrs_wH6ZfFHkHIS8B6M`,
@@ -3536,7 +3556,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes VLeMwo6zXkTSOx1NGU9o {
     width: 1.5rem;
     height: 1.5rem;
   }
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;EACA,aAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    z-index: 1000;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}"],"sourceRoot":""}]);
+}
+.Eyv3WRCw6Dxszqt5q6uk {
+  display: inline-block;
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;EACA,aAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF;AAMA;EACI,qBAAA;AAJJ","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    z-index: 1000;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}\n\n.linkName {\n    display: inline-block;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
@@ -3548,6 +3571,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"btnLogo": `J9UnnftTHXUkwLRjgCwj`,
 	"logSignup": `IVj3kljTpbWeopBe4tgh`,
 	"searchBar": `y9nMRtKLACz8uMKjMe86`,
+	"linkName": `Eyv3WRCw6Dxszqt5q6uk`,
 	"fadeIn": `VLeMwo6zXkTSOx1NGU9o`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -3578,7 +3602,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   background: linear-gradient(to bottom right, #7bbd86, #1f644b);
   border: 0.1rem solid rgba(51, 86, 51, 0.3);
   border-radius: 20px;
-  margin: 5rem auto 2rem;
+  margin: 0 auto 2rem;
   padding: 2rem;
   box-shadow: 0 0 0.3rem var(--text-green);
 }
@@ -3641,7 +3665,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   background-color: green;
   border: 1px solid black;
   color: white;
-}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0CAAA;EACA,mBAAA;EACA,sBAAA;EACA,aAAA;EACA,wCAAA;AACJ;AAAI;EACI,gBAAA;EACA,YAAA;EACA,8BAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    margin: 5rem auto 2rem;\n    padding: 2rem;\n    box-shadow: 0 0 .3rem var(--text-green);\n    .heading {\n        margin: 0 0 1rem;\n        color: white;\n        text-shadow: 1px 1px 2px black;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            &:hover {\n                background-color: green;\n                border: 1px solid black;\n                color: white;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0CAAA;EACA,mBAAA;EACA,mBAAA;EACA,aAAA;EACA,wCAAA;AACJ;AAAI;EACI,gBAAA;EACA,YAAA;EACA,8BAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    margin: 0 auto 2rem;\n    padding: 2rem;\n    box-shadow: 0 0 .3rem var(--text-green);\n    .heading {\n        margin: 0 0 1rem;\n        color: white;\n        text-shadow: 1px 1px 2px black;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            &:hover {\n                background-color: green;\n                border: 1px solid black;\n                color: white;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NewPostForm": `wekziSaaqwOLRFMJXHQ2`,
@@ -3930,9 +3954,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes WBWlcBCjwwKL4hZmRqIS {
   }
 }
 .YgECdOP6ynMaHqn_K8cT {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: transparent;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, #7bbd86, #1f644b);
+  border: 1px solid black;
   border-bottom: 2px solid #ccc;
   box-shadow: none;
   min-width: 30vh;
@@ -3942,7 +3969,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes WBWlcBCjwwKL4hZmRqIS {
   padding: 2rem 3rem;
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none;
   user-select: none;
   overflow: hidden;
   animation: WBWlcBCjwwKL4hZmRqIS 5s infinite linear;
@@ -4010,7 +4036,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes WBWlcBCjwwKL4hZmRqIS {
 }
 .YgECdOP6ynMaHqn_K8cT .fxZR2_j5SbykUaJYKkyH:hover {
   background-color: rgba(255, 255, 255, 0.5);
-}`, "",{"version":3,"sources":["webpack://./src/components/ResetPassword/ResetPassword.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAMA;EACI,iBAAA;EACA,kBAAA;EACA,6BAAA;EACA,6BAAA;EACA,gBAAA;EACA,eAAA;EACA,eAAA;EACA,0CAAA;EACA,mBAAA;EACA,kBAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;EACR,iBAAA;EACA,gBAAA;EACA,kDAAA;AAJJ;AAMI;EACE,eAAA;EACA,kBAAA;EACA,mBAAA;EACA,0BAAA;EACA,YAAA;AAJN;AAOI;EACE,mBAAA;AALN;AAOM;EACE,iBAAA;EACA,kBAAA;EACA,YAAA;AALR;AAQM;EACE,eAAA;EACA,uBAAA;EACA,YAAA;EACA,8BAAA;EACA,iBAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;EACA,yCAAA,EAAA,2CAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AANR;AASM;EACE,yBAAA,EAAA,wCAAA;AAPR;AAWI;EACE,cAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;AATN;AAYI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AAVN;AAaI;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;EACA,qBAAA;EACA,yBAAA;EACA,mBAAA;AAXN;AAaM;EACE,0CAAA;AAXR","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.container {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: transparent;\n    border-bottom: 2px solid #ccc;\n    box-shadow: none;\n    min-width: 30vh;\n    max-width: 70vh;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    padding: 2rem 3rem;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n            user-select: none;\n    user-select: none;\n    overflow: hidden;\n    animation: shine 5s infinite linear;\n  \n    h1 {\n      font-size: 2rem;\n      text-align: center;\n      margin-bottom: 20px;\n      font-family: \"Inter Tight\";\n      color: white;\n    }\n  \n    .formGroup {\n      margin-bottom: 20px;\n  \n      label {\n        font-size: 1.2rem;\n        margin-bottom: 5px;\n        color: white;\n      }\n  \n      input {\n        min-width: 30vw;\n        background: transparent;\n        border: none;\n        border-bottom: 1px solid white;\n        font-size: 1.2rem;\n        padding: 1rem;\n        border-radius: 0;\n        color: white;\n        transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */\n        width: 30vh;\n        font-weight: bolder;\n        padding: 0;\n      }\n  \n      input:focus {\n        border-bottom-color: gold; /* Change border-bottom color on focus */\n      }\n    }\n  \n    .error {\n      color: #ff0000;\n      font-size: 1rem;\n      margin-top: 3px;\n      margin-left: 5px;\n    }\n  \n    .success {\n      color: #00cc00;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .button {\n      color: white;\n      width: 100%;\n      height: 40px;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      transition: all 0.4s ease;\n      margin-bottom: 1rem;\n    \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  }\n  "],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/ResetPassword/ResetPassword.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAMA;EACI,eAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,8DAAA;EACA,uBAAA;EACA,6BAAA;EACA,gBAAA;EACA,eAAA;EACA,eAAA;EACA,0CAAA;EACA,mBAAA;EACA,kBAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;EACR,gBAAA;EACA,kDAAA;AAJJ;AAMI;EACE,eAAA;EACA,kBAAA;EACA,mBAAA;EACA,0BAAA;EACA,YAAA;AAJN;AAOI;EACE,mBAAA;AALN;AAOM;EACE,iBAAA;EACA,kBAAA;EACA,YAAA;AALR;AAQM;EACE,eAAA;EACA,uBAAA;EACA,YAAA;EACA,8BAAA;EACA,iBAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;EACA,yCAAA,EAAA,2CAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AANR;AASM;EACE,yBAAA,EAAA,wCAAA;AAPR;AAWI;EACE,cAAA;EACA,eAAA;EACA,eAAA;EACA,gBAAA;AATN;AAYI;EACE,cAAA;EACA,eAAA;EACA,eAAA;AAVN;AAaI;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,oBAAA;EACA,mBAAA;EACA,uBAAA;EACA,qBAAA;EACA,yBAAA;EACA,mBAAA;AAXN;AAaM;EACE,0CAAA;AAXR","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n.container {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: 1px solid black;\n    border-bottom: 2px solid #ccc;\n    box-shadow: none;\n    min-width: 30vh;\n    max-width: 70vh;\n    border: 2px solid rgba(255, 255, 255, 0.5);\n    border-radius: 20px;\n    padding: 2rem 3rem;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n            user-select: none;\n    overflow: hidden;\n    animation: shine 5s infinite linear;\n  \n    h1 {\n      font-size: 2rem;\n      text-align: center;\n      margin-bottom: 20px;\n      font-family: \"Inter Tight\";\n      color: white;\n    }\n  \n    .formGroup {\n      margin-bottom: 20px;\n  \n      label {\n        font-size: 1.2rem;\n        margin-bottom: 5px;\n        color: white;\n      }\n  \n      input {\n        min-width: 30vw;\n        background: transparent;\n        border: none;\n        border-bottom: 1px solid white;\n        font-size: 1.2rem;\n        padding: 1rem;\n        border-radius: 0;\n        color: white;\n        transition: border-bottom-color 0.3s ease; /* Add transition for border-bottom color */\n        width: 30vh;\n        font-weight: bolder;\n        padding: 0;\n      }\n  \n      input:focus {\n        border-bottom-color: gold; /* Change border-bottom color on focus */\n      }\n    }\n  \n    .error {\n      color: #ff0000;\n      font-size: 1rem;\n      margin-top: 3px;\n      margin-left: 5px;\n    }\n  \n    .success {\n      color: #00cc00;\n      font-size: 1rem;\n      margin-top: 5px;\n    }\n  \n    .button {\n      color: white;\n      width: 100%;\n      height: 40px;\n      border-radius: 40px;\n      background-color: rgb(87, 163, 115);\n      border: none;\n      outline: none;\n      cursor: pointer;\n      font-size: 1.25rem;\n      font-weight: 600;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      transition: all 0.4s ease;\n      margin-bottom: 1rem;\n    \n      &:hover {\n        background-color: rgba(255, 255, 255, 0.5);\n      }\n    }\n  }\n  "],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"container": `YgECdOP6ynMaHqn_K8cT`,
@@ -4045,10 +4071,15 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.nyTmzuFbpzDJU7AD8sUf:focus {
   border: 0.1rem solid green;
-}`, "",{"version":3,"sources":["webpack://./src/components/SearchUsersForm/SearchUsersForm.module.scss"],"names":[],"mappings":"AAAA;EACI,0BAAA;AACJ","sourcesContent":[".Search:focus {\n    border: .1rem solid green;\n}"],"sourceRoot":""}]);
+}
+
+.kG1ND3Uu9x2v9bb5X08w {
+  cursor: pointer;
+}`, "",{"version":3,"sources":["webpack://./src/components/SearchUsersForm/SearchUsersForm.module.scss"],"names":[],"mappings":"AAAA;EACI,0BAAA;AACJ;;AAEA;EACI,eAAA;AACJ","sourcesContent":[".Search:focus {\n    border: .1rem solid green;\n}\n\n.searchResults {\n    cursor: pointer;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"Search": `nyTmzuFbpzDJU7AD8sUf`
+	"Search": `nyTmzuFbpzDJU7AD8sUf`,
+	"searchResults": `kG1ND3Uu9x2v9bb5X08w`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4411,7 +4442,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   height: 100%;
   background-color: white;
   margin: 2vh auto;
-  padding: 1rem 0;
+  padding-top: 100px;
 }
 .luBJirBC3AbIwQNsEypk .CgjxyfEdobTkp_s1g1uU {
   padding: 20px;
@@ -4494,7 +4525,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   .luBJirBC3AbIwQNsEypk .vCHNX8UaVIhE3i6IOusO h3, .luBJirBC3AbIwQNsEypk .vCHNX8UaVIhE3i6IOusO p, .luBJirBC3AbIwQNsEypk .HPoDdNDxi0HMP2hrM9Ts {
     font-size: smaller;
   }
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,gBAAA;EACA,eAAA;AAAJ;AACA;EACI,aAAA;EACA,YAAA;AACJ;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,kBAAA;EACA,YAAA;AADJ;AAIA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,WAAA;EACA,cAAA;AAFJ;AAKA;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAHJ;AAMA;EACI,gBAAA;AAJJ;AAOA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AALJ;AAQA;EACI,YAAA;AANJ;AASA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAPJ;AAUA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AARJ;AAWA;EACI,YAAA;EACA,eAAA;AATJ;AAYA;EACI,0BAAA;AAVJ;AAcA;EACI;IACI,sBAAA;EAZN;EAeE;IACI,WAAA;IACA,cAAA;EAbN;EAiBE;IACI,aAAA;IACA,mBAAA;EAfN;EAmBE;IACI,kBAAA;EAjBN;AACF","sourcesContent":["\n.HomePage {\n    width: 100%;\n    height: 100%;\n    background-color: white;\n    margin: 2vh auto;\n    padding: 1rem 0;\n.homePage {\n    padding: 20px;\n    border: none;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid black;\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color:rgb(87, 163, 115);\n    border: 1px solid black;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AACA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,gBAAA;EACA,kBAAA;AAAJ;AACA;EACI,aAAA;EACA,YAAA;AACJ;AAEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AAAJ;AAGA;EACI,WAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,kBAAA;EACA,YAAA;AADJ;AAIA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,WAAA;EACA,cAAA;AAFJ;AAKA;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAHJ;AAMA;EACI,gBAAA;AAJJ;AAOA;EACI,uBAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AALJ;AAQA;EACI,YAAA;AANJ;AASA;EACI,eAAA;EACA,YAAA;EACA,kBAAA;AAPJ;AAUA;EACI,uBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;EACA,gBAAA;AARJ;AAWA;EACI,YAAA;EACA,eAAA;AATJ;AAYA;EACI,0BAAA;AAVJ;AAcA;EACI;IACI,sBAAA;EAZN;EAeE;IACI,WAAA;IACA,cAAA;EAbN;EAiBE;IACI,aAAA;IACA,mBAAA;EAfN;EAmBE;IACI,kBAAA;EAjBN;AACF","sourcesContent":["\n.HomePage {\n    width: 100%;\n    height: 100%;\n    background-color: white;\n    margin: 2vh auto;\n    padding-top: 100px;\n.homePage {\n    padding: 20px;\n    border: none;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 2rem;\n}\n\ntextarea {\n    width: 100%;\n    padding: 10px;\n    margin-bottom: 10px;\n    border: 2px solid black;\n    border-radius: 5px;\n    resize: none;\n}\n\nbutton {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    width: auto; \n    margin: 0 auto; \n}\n\nbutton:hover {\n    background-color:rgb(87, 163, 115);\n    border: 1px solid black;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}\n\n.postList {\n    margin-top: 20px;\n}\n\n.post {\n    background-color: white;\n    border: 2px solid rgb(0, 0, 0);\n    border-radius: 10px;\n    padding: 20px;\n    margin-bottom: 20px;\n}\n\n.post h3, .post p {\n    color: black;\n}\n\n.post img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 5px;\n}\n\n.userList {\n    background-color: white;\n    border: 2px solid black;\n    border-radius: 10px;\n    padding: 20px;\n    margin-top: 20px;\n}\n\n.user {\n    color: black;\n    cursor: pointer;\n}\n\n.user:hover {\n    text-decoration: underline;\n}\n\n\n@media (max-width: 768px) {\n    .form {\n        flex-direction: column;\n    }\n\n    button {\n        width: 100%; \n        margin-left: 0;\n    }\n\n   \n    .homePage, .post, .userList {\n        padding: 10px;\n        margin-bottom: 10px;\n    }\n\n   \n    .post h3, .post p, .user {\n        font-size: smaller; \n    }\n}\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"HomePage": `luBJirBC3AbIwQNsEypk`,
@@ -4531,7 +4562,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   margin: 10vh auto 0;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 2rem 10rem;
   display: flex;
 }
@@ -4582,13 +4613,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   background-color: lightgrey;
   border-radius: 100%;
   width: 4rem;
-  padding: 1rem;
+  padding: 0.9rem;
   transition: 0.3s ease;
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
   filter: invert(100%);
   transition: 0.3s ease;
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,mBAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,8DAAA;EACA,aAAA;EACA,0CAAA;EACA,mBAAA;EACA,wCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 10vh auto 0;\n    width: 100%;\n    height: 100%;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background: linear-gradient(to bottom right, #7bbd86, #16523c);\n            padding: 2rem;\n            border: .1rem solid rgb(51, 86, 51, 0.3);\n            border-radius: 20px;\n            box-shadow: 0 0 .3rem var(--text-green);\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,mBAAA;EACA,WAAA;EACA,iBAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,8DAAA;EACA,aAAA;EACA,0CAAA;EACA,mBAAA;EACA,wCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,eAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 10vh auto 0;\n    width: 100%;\n    min-height: 100vh;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background: linear-gradient(to bottom right, #7bbd86, #16523c);\n            padding: 2rem;\n            border: .1rem solid rgb(51, 86, 51, 0.3);\n            border-radius: 20px;\n            box-shadow: 0 0 .3rem var(--text-green);\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: .9rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
@@ -4646,7 +4677,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes c1Qez6OSS0nHpXwiLCAY {
   margin: 10rem auto 0;
   padding: 3rem 2rem 3rem;
   text-align: center;
-  background: white;
+  background: linear-gradient(to bottom right, #7bbd86, #1f644b);
+  border: 1px solid black;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -4692,13 +4724,21 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes c1Qez6OSS0nHpXwiLCAY {
   border: 1px solid black;
   transform: scale(1.0002);
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
-}`, "",{"version":3,"sources":["webpack://./src/pages/SettingsPage/SettingsPage.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAKA;EACE,YAAA;AAHF;;AAKA;EACI,gBAAA;EACA,oBAAA;EACA,uBAAA;EACA,kBAAA;EACA,iBAAA;EACA,kBAAA;EACA,wCAAA;EACA,gBAAA;EACA,kDAAA;AAFJ;AAIG;EACG,iBAAA;EACA,mBAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;AAFN;AAKI;EACE,cAAA;EACA,eAAA;EACA,YAAA;AAHN;AAMI;;EAEE,WAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,uBAAA;EACA,uBAAA;EACA,SAAA;AAJN;AAOI;EACE,cAAA;EACA,gBAAA;EACA,kBAAA;AALN;AAQI;EACE,eAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,uBAAA;EACA,+BAAA;AANN;AASI;EACE,mCAAA;EACA,uBAAA;EACA,wBAAA;EACA,mDAAA;AAPN","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n.settingsPageContainer {\n  height: 88vh;\n}\n.settingsPage {\n    max-width: 30rem;\n    margin: 10rem auto 0;\n    padding: 3rem 2rem 3rem;\n    text-align: center;\n    background: white;\n    border-radius: 8px;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    overflow: hidden; \n    animation: shine 5s infinite linear;\n  \n   .editTitle {\n      font-size: 2.2rem;\n      margin-bottom: 20px;\n      color: black;\n      text-shadow: none;\n      text-align: center;\n    }\n  \n    label {\n      display: block;\n      font-size: 16px;\n      color: black;\n    }\n  \n    input[type=\"text\"],\n    input[type=\"file\"] {\n      width: 100%;\n      padding: 8px;\n      font-size: 16px;\n      border-radius: 4px;\n      border: 1px solid black;\n      background-color: white;\n      margin: 0;\n    }\n  \n    img {\n      max-width: 50%;\n      margin-top: 10px;\n      border-radius: 4px;\n    }\n  \n    button {\n      font-size: 16px;\n      border: none;\n      border-radius: 4px;\n      cursor: pointer;\n      border: 1px solid black;\n      transition: transform 0.3s ease;\n    }\n  \n    button:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n      transform: scale(1.0002);\n      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n    }\n  }\n"],"sourceRoot":""}]);
+}
+
+.XoxXnpiMZbyGVtptUq0Q {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}`, "",{"version":3,"sources":["webpack://./src/pages/SettingsPage/SettingsPage.module.scss"],"names":[],"mappings":"AAAA;EACE;IACE,iFAAA;EACF;EAEA;IACE,qFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,uFAAA;EAFF;AACF;AAKA;EACE,YAAA;AAHF;;AAKA;EACI,gBAAA;EACA,oBAAA;EACA,uBAAA;EACA,kBAAA;EACA,8DAAA;EACA,uBAAA;EACA,kBAAA;EACA,wCAAA;EACA,gBAAA;EACA,kDAAA;AAFJ;AAIG;EACG,iBAAA;EACA,mBAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;AAFN;AAKI;EACE,cAAA;EACA,eAAA;EACA,YAAA;AAHN;AAMI;;EAEE,WAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,uBAAA;EACA,uBAAA;EACA,SAAA;AAJN;AAOI;EACE,cAAA;EACA,gBAAA;EACA,kBAAA;AALN;AAQI;EACE,eAAA;EACA,YAAA;EACA,kBAAA;EACA,eAAA;EACA,uBAAA;EACA,+BAAA;AANN;AASI;EACE,mCAAA;EACA,uBAAA;EACA,wBAAA;EACA,mDAAA;AAPN;;AAWE;EACE,eAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AARJ","sourcesContent":["@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n.settingsPageContainer {\n  height: 88vh;\n}\n.settingsPage {\n    max-width: 30rem;\n    margin: 10rem auto 0;\n    padding: 3rem 2rem 3rem;\n    text-align: center;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: 1px solid black;\n    border-radius: 8px;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    overflow: hidden; \n    animation: shine 5s infinite linear;    \n  \n   .editTitle {\n      font-size: 2.2rem;\n      margin-bottom: 20px;\n      color: black;\n      text-shadow: none;\n      text-align: center;\n    }\n  \n    label {\n      display: block;\n      font-size: 16px;\n      color: black;\n    }\n  \n    input[type=\"text\"],\n    input[type=\"file\"] {\n      width: 100%;\n      padding: 8px;\n      font-size: 16px;\n      border-radius: 4px;\n      border: 1px solid black;\n      background-color: white;\n      margin: 0;\n    }\n  \n    img {\n      max-width: 50%;\n      margin-top: 10px;\n      border-radius: 4px;\n    }\n  \n    button {\n      font-size: 16px;\n      border: none;\n      border-radius: 4px;\n      cursor: pointer;\n      border: 1px solid black;\n      transition: transform 0.3s ease;\n    }\n  \n    button:hover {\n      background-color: rgb(87, 163, 115);\n      border: 1px solid black;\n      transform: scale(1.0002);\n      filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n    }\n  }\n\n  .customerSupportLink {\n    position: fixed;\n    top: 60%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"settingsPageContainer": `S5lhPTxhZBTPuvgc_Hei`,
 	"settingsPage": `thCg_3UQm0Dn3hMX99NQ`,
 	"shine": `c1Qez6OSS0nHpXwiLCAY`,
-	"editTitle": `eGXYe2I6MmqqeAmPBxqs`
+	"editTitle": `eGXYe2I6MmqqeAmPBxqs`,
+	"customerSupportLink": `XoxXnpiMZbyGVtptUq0Q`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6292,4 +6332,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.7e62ef913a4be1892dba606a4e78f164.js.map
+//# sourceMappingURL=App.3656da74370b3790e885f7ea4197a6ea.js.map
