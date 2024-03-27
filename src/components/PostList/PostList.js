@@ -17,7 +17,7 @@ export default function PostList({ posts, user, fetchPosts }) {
     // If there are posts, render the list
     return (
         <ul className={styles.postList}>            
-            {posts.map(postData => (
+            {posts.slice().reverse().map(postData => (
                 <Post                                   
                     postData={postData}
                     key={postData._id}                                               
