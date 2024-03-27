@@ -4,19 +4,26 @@ import { Link } from 'react-router-dom'
 function Footer({ user, setUser }) {
   return (
     <div className={styles.Footer}>
-        <div className={styles.listLogoContainer}>
+      <div className={styles.listLogoContainer}>
         <ul className={styles.ul}>
-            <Link to="/" className={`${styles.navItem} ${styles.home}`}>
+          <Link to="/" className={`${styles.navItem} ${styles.home}`}>
+            <li className={styles.listItem}>
+              Home
+            </li>
+          </Link>
+          {!user ? (
+            <>
+              <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
                 <li className={styles.listItem}>
-                    Home
+                  Login/Sign Up
                 </li>
-            </Link>
-            {!user ? (
-                <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
-                    <li className={styles.listItem}>
-                        Login/Sign Up
-                    </li>
-                </Link>
+              </Link>
+              <Link to="/customer-support" className={`${styles.navItem} ${styles.customerSupport}`}>
+                <li className={styles.listItem}>
+                  Customer Support
+                </li>
+              </Link>
+            </>
             ) : (
                 <>
                     {user && user._id && (
@@ -43,7 +50,9 @@ function Footer({ user, setUser }) {
                 </>
             )}
         </ul>
-        <img className={styles.logo} src="https://i.imgur.com/0w4BqIR.png" />
+        <Link to="/">
+          <img className={styles.logo} src="https://i.imgur.com/0w4BqIR.png" alt="logo" />
+        </Link>
         </div>
         <p className={styles.copy}>Goose Dev Hub © 2024</p>
     </div>

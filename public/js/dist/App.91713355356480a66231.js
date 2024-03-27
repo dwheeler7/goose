@@ -522,12 +522,17 @@ function Footer(_ref) {
     className: "".concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].navItem, " ").concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].home)
   }, /*#__PURE__*/React.createElement("li", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].listItem
-  }, "Home")), !user ? /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, "Home")), !user ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/auth",
     className: "".concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].navItem, " ").concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].login)
   }, /*#__PURE__*/React.createElement("li", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].listItem
-  }, "Login/Sign Up")) : /*#__PURE__*/React.createElement(React.Fragment, null, user && user._id && /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, "Login/Sign Up")), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/customer-support",
+    className: "".concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].navItem, " ").concat(_Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].customerSupport)
+  }, /*#__PURE__*/React.createElement("li", {
+    className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].listItem
+  }, "Customer Support"))) : /*#__PURE__*/React.createElement(React.Fragment, null, user && user._id && /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     to: "/profile/".concat(user._id),
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].navItem
   }, /*#__PURE__*/React.createElement("li", {
@@ -546,10 +551,13 @@ function Footer(_ref) {
     }
   }, /*#__PURE__*/React.createElement("li", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].listItem
-  }, "Logout")))), /*#__PURE__*/React.createElement("img", {
+  }, "Logout")))), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/"
+  }, /*#__PURE__*/React.createElement("img", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].logo,
-    src: "https://i.imgur.com/0w4BqIR.png"
-  })), /*#__PURE__*/React.createElement("p", {
+    src: "https://i.imgur.com/0w4BqIR.png",
+    alt: "logo"
+  }))), /*#__PURE__*/React.createElement("p", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].copy
   }, "Goose Dev Hub \xA9 2024"));
 }
@@ -6332,4 +6340,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3656da74370b3790e885f7ea4197a6ea.js.map
+//# sourceMappingURL=App.777829d70e478e8794d551b4dd416c36.js.map
