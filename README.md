@@ -1,5 +1,48 @@
-# Project Plan
-
+## Project-Plan
+[Project-Plan](#project-plan)
+  * [Pre-Development Phase (1st Day)](#pre-development-phase-1st-day)
+  * [Development Phase I: Building Core Features](#development-phase-i-building-core-features)
+  * [Styling & Organization Phase: Integrating Design with Functional Components](#styling--organization-phase-integrating-design-with-functional-components)
+  * [Testing & Refinements Phase](#testing--refinements-phase)
+  * [March 26: Final Preparations](#march-26-final-preparations)
+  * [Presentation Day](#presentation-day)
+- [API-Documentation](#api-documentation)
+  * [Installation](#installation)
+      - [npm i nodemailer (used for sending emails out in the utilities/email files)](#npm-i-nodemailer-used-for-sending-emails-out-in-the-utilitiesemail-files)
+      - [npm i express-fileupload (used for attachments/files encoded in base64.)](#npm-i-express-fileupload-used-for-attachmentsfiles-encoded-in-base64)
+      - [npm i @octokit/rest (Used for Github API.)](#npm-i-octokitrest-used-for-github-api)
+      - [npm i react-markdown (Renders markdown in react files.)](#npm-i-react-markdown-renders-markdown-in-react-files)
+      - [npm i axios (Allows to make HTTP request from nodeJS.)](#npm-i-axios-allows-to-make-http-request-from-nodejs)
+      - [npm i fileUpload (used for attachments)](#npm-i-fileupload-used-for-attachments)
+  * [Users](#users)
+    + [Create User](#create-user)
+    + [User Login](#user-login)
+  * [Nodemailer must be installed](#nodemailer-must-be-installed)
+      - [npm i nodemailer](#npm-i-nodemailer)
+      - [in your own .env file replace GMAIL=(GMAIL LOGIN GOES HERE)](#in-your-own-env-file-replace-gmailgmail-login-goes-here)
+      - [Create a gmail app pass in security settings to then replace GMAILPASS=(APP PASS KEY IN HERE) in .env.](#create-a-gmail-app-pass-in-security-settings-to-then-replace-gmailpassapp-pass-key-in-here-in-env)
+    + [User Password Reset](#user-password-reset)
+    + [User Password Reset](#user-password-reset-1)
+    + [Utilities/email-api.js](#utilitiesemail-apijs)
+    + [Customer Support](#customer-support)
+    + [Utilities/email-support-api.js](#utilitiesemail-support-apijs)
+    + [Get User Profile](#get-user-profile)
+    + [Update User Profile](#update-user-profile)
+    + [Check Token](#check-token)
+    + [Follow a User](#follow-a-user)
+      - [Example Request](#example-request)
+      - [Example Response](#example-response)
+    + [Unfollow a User](#unfollow-a-user)
+      - [Example Request](#example-request-1)
+      - [Example Response](#example-response-1)
+  * [Posts](#posts)
+    + [Create Post](#create-post)
+    + [Get All Posts](#get-all-posts)
+    + [Get Post by ID](#get-post-by-id)
+    + [Update Post](#update-post)
+    + [Delete Post](#delete-post)
+    + [Like Post](#like-post)
+    + [Unlike Post](#unlike-post)
 ## Pre-Development Phase (1st Day)
 
 **March 9: Setup and Planning**
@@ -59,7 +102,15 @@
 - Showcase the application's features with a focus on the enhanced user experience.
 - Explain the motivation behind the app and encourage classmates to sign up.
 
-# API Documentation
+# API-Documentation
+
+## Installation
+1. #### npm i nodemailer (used for sending emails out in the utilities/email files)
+2. #### npm i express-fileupload (used for attachments/files encoded in base64.)
+3. #### npm i @octokit/rest (Used for Github API.)
+4. #### npm i react-markdown (Renders markdown in react files.)
+5. #### npm i axios (Allows to make HTTP request from nodeJS.)
+6. #### npm i fileUpload (used for attachments)
 
 ## Users
 
@@ -116,15 +167,15 @@ Authenticate an existing user.
   - Status Code: `200 OK`
   - Body: JSON object containing the authenticated user and authentication token (same format as the "Create User" response)
 
-
-
+<img src="public/img/Login.png" alt="Login" width="350px" style="border-radius: 10px;">
+<img src="public/img/Signup.png" alt="SignUp" width="293px" style="border-radius: 10px;">
 
 ## Nodemailer must be installed
 1. #### npm i nodemailer
 2. #### in your own .env file replace GMAIL=(GMAIL LOGIN GOES HERE)
 3. #### Create a gmail app pass in security settings to then replace GMAILPASS=(APP PASS KEY IN HERE) in .env.
 ##
-### User Password Reset  
+### User Password Reset 
 Authenticate an existing user.
    **Request**
   - Method: `POST`
@@ -140,6 +191,8 @@ Authenticate an existing user.
   - Status Code: `200 OK`
   - Body: JSON object containing Password reset successful. Check your email for the temporary password and token
 
+<img src="public/img/forgotpass.png" alt="SignUp" width="500px" style="border-radius: 10px;">
+
 ### User Password Reset  
    **Request**
   - Method: `PUT`
@@ -154,6 +207,31 @@ Authenticate an existing user.
   - Status Code: `200 OK`
   - Body: JSON object containing Password updated successfully.
 
+### Utilities/email-api.js 
+Is used for the email function nodemailer used.
+
+### Customer Support
+   **Request**
+  - Method: `POST`
+  - Endpoint: `/api/users/support`
+  - Headers: None
+  - Body:
+    - `name`: Your name sent
+    - `email` (required/must be in the db): Email sent to the support email and to user who inputed an email.
+    - `message`: Whatever message you want added
+    - `attachments`: (can add around 5 attachments)
+
+- **Response**
+  - A email sent using the npm package nodemailer
+  - Status Code: `200 OK`
+  - Body: JSON object containing Password updated successfully.
+
+  <img src="public/img/customersupport.png" alt="SignUp" width="293px" style="border-radius: 10px;">
+
+### Utilities/email-support-api.js 
+Is used for the email function nodemailer used.
+
+##
 ### Get User Profile
 
 Retrieve user profile information by ID.
