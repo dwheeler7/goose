@@ -1084,6 +1084,9 @@ function Post(_ref) {
     fetchPosts
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
+
+  // Determine if the logged-in user is the creator of the post
+  const isCreator = user && post.user === user.username;
   return post ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Post
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1100,12 +1103,14 @@ function Post(_ref) {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].projectDescription
   }, post.projectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, user && !isLoggedInUser && !isCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
     post: post,
     user: user,
     setPost: setPost
-  }), user && isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }), user && isLoggedInUser && !isCreator && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].likeCount
+  }, post.likes.length, " ", post.likes.length === 1 ? 'like' : 'likes'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
@@ -5842,4 +5847,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.9d326baba33e6af9b3fe2eede0b4e2a3.js.map
+//# sourceMappingURL=App.cc8ccc73a21ae2ab68a323fd141b1713.js.map

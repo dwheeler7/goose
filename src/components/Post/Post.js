@@ -7,6 +7,9 @@ import CommentForm from '../CommentForm/CommentForm';
 export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
     const [post, setPost] = useState(postData);
 
+    // Determine if the logged-in user is the creator of the post
+    const isCreator = user && post.user === user.username;
+
     return (
         post ? (
             <li className={styles.Post}>
@@ -18,9 +21,10 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
                     </div>
                     <p className={styles.projectDescription}>{post.projectDescription}</p>
                     <div className={styles.btnContainer}>
-                        {user && !isLoggedInUser && <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} />}
-                        {user && isLoggedInUser && (
+                        {user && !isLoggedInUser && !isCreator && <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} />}
+                        {user && isLoggedInUser && !isCreator && (
                             <>
+                                <span className={styles.likeCount}>{post.likes.length} {post.likes.length === 1 ? 'like' : 'likes'}</span>
                                 <button className={styles.button}>Edit</button>
                                 <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
                             </>
@@ -37,3 +41,4 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
         ) : null
     );
 }
+
