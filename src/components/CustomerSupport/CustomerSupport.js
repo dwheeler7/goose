@@ -71,7 +71,7 @@ export const SupportTicketForm = () => {
             className={styles['input-field']}
           />
           <textarea
-            placeholder="Your Message (You can paste images here)"
+            placeholder="Your Message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
@@ -86,6 +86,7 @@ export const SupportTicketForm = () => {
               onChange={handleAttachmentChange}
               multiple
               disabled={attachments.length >= 5}
+              className={styles['attachment-input']}
             />
             <p className={styles['file-limit-message']}>
               You can attach up to 5 files.
