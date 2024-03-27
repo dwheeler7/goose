@@ -946,7 +946,7 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].listItem
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logSignup,
-    src: "https://cdn-icons-png.flaticon.com/128/10015/10015437.png",
+    src: "https://cdn-icons-png.flaticon.com/128/10405/10405578.png",
     alt: "Log/Signup"
   }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, user && user._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/profile/".concat(user._id),
@@ -6292,4 +6292,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c0861c157bee24d852522817c82940b1.js.map
+//# sourceMappingURL=App.7e62ef913a4be1892dba606a4e78f164.js.map
