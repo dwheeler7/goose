@@ -22,6 +22,7 @@
 /* harmony import */ var _components_ResetPassword_ResetPassword__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ResetPassword/ResetPassword */ "./src/components/ResetPassword/ResetPassword.js");
 /* harmony import */ var _pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/ProfilePage/ProfilePage */ "./src/pages/ProfilePage/ProfilePage.js");
 /* harmony import */ var _components_Footer_Footer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Footer/Footer */ "./src/components/Footer/Footer.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utilities/posts-service */ "./src/utilities/posts-service.js");
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _components_CustomerSupport_CustomerSupport__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/CustomerSupport/CustomerSupport */ "./src/components/CustomerSupport/CustomerSupport.js");
 /* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
@@ -39,9 +40,11 @@
 
 
 
+
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_11__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_12__.useLocation)();
   const shouldNotDisplayNavBar = !['/auth', '/auth/forgot-password'].includes(location.pathname);
   const updateUser = async userData => {
@@ -68,6 +71,29 @@ function App() {
       return null;
     }
   };
+  const fetchPosts = async () => {
+    console.log('fetch posts use effect...');
+    try {
+      const postsData = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_13__.getAllPosts)();
+      setPosts(postsData);
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
+  const fetchUsers = async () => {
+    try {
+      const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_11__.indexUsers)();
+      setUsers(foundUsers);
+    } catch (error) {
+      console.error('Error finding users', error);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchPosts();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchUsers();
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_10__["default"].App
   }, shouldNotDisplayNavBar && /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -80,6 +106,8 @@ function App() {
     element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       user: user,
       setUser: setUser,
+      posts: posts,
+      fetchPosts: fetchPosts,
       users: users,
       setUsers: setUsers
     })
@@ -107,7 +135,8 @@ function App() {
     path: "/profile/:userId",
     element: /*#__PURE__*/React.createElement(_pages_ProfilePage_ProfilePage__WEBPACK_IMPORTED_MODULE_7__["default"], {
       user: user,
-      setUser: setUser
+      setUser: setUser,
+      posts: posts
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     path: "/settings",
@@ -1720,7 +1749,7 @@ function AuthPage(_ref) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ForgotPassword)
+/* harmony export */   "default": () => (/* binding */ ForgotPasswordPage)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -1730,7 +1759,7 @@ function AuthPage(_ref) {
  // Adjust the import path as needed
  // Adjust the import path as needed
 
-function ForgotPassword(_ref) {
+function ForgotPasswordPage(_ref) {
   let {
     setUser
   } = _ref;
@@ -1759,43 +1788,16 @@ function ForgotPassword(_ref) {
 /* harmony import */ var _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomePage.module.scss */ "./src/pages/HomePage/HomePage.module.scss");
 /* harmony import */ var _components_PostList_PostList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/PostList/PostList */ "./src/components/PostList/PostList.js");
 /* harmony import */ var _components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/NewPostForm/NewPostForm */ "./src/components/NewPostForm/NewPostForm.js");
-/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
-
-
 
 
 
 
 function HomePage(_ref) {
   let {
-    user,
-    setUsers
+    posts,
+    fetchPosts,
+    user
   } = _ref;
-  const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const fetchPosts = async () => {
-    console.log('fetch posts use effect...');
-    try {
-      const postsData = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_4__.getAllPosts)();
-      setPosts(postsData);
-    } catch (error) {
-      console.error('There was an error!', error);
-    }
-  };
-  const fetchUsers = async () => {
-    try {
-      const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.indexUsers)();
-      setUsers(foundUsers);
-    } catch (error) {
-      console.error('Error finding users', error);
-    }
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchPosts();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchUsers();
-  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].HomePage
   }, user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NewPostForm_NewPostForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -6480,8 +6482,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-<<<<<<<< HEAD:public/js/dist/App.ec955b113be92640dd89.js
 //# sourceMappingURL=App.3e710e403e0b73fc01b95bc11517751a.js.map
-========
-//# sourceMappingURL=App.2a3b2d3fcba0246c58e573d719b2a702.js.map
->>>>>>>> dev:public/js/dist/App.a7d3da73d4b545c9f906.js
