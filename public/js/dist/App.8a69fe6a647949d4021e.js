@@ -1552,13 +1552,7 @@ function SignUpForm(_ref) {
     value: "developer"
   }, "Developer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
     value: "employer"
-  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].inputbox
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "file",
-    accept: "image/*",
-    onChange: handlePictureChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "Employer"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     type: "submit",
     disabled: disable
@@ -6292,4 +6286,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c0861c157bee24d852522817c82940b1.js.map
+//# sourceMappingURL=App.bdf0a5c5612762bee670b1b1642f9842.js.map
