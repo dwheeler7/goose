@@ -88,8 +88,7 @@ const SettingsPage = ({ user, updateUser, setUser }) => {
                 <br />
                 <button onClick={handleSave}>Save Changes</button>
                 
-            </div>
-            <a href="/customer-support" className={styles.customerSupportLink}>Customer Support</a>
+            </div>            
         </div>
     );
 };
