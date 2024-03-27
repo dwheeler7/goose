@@ -3,8 +3,9 @@
   .button {
     width: 5rem;
     &:hover {
-      background-color: rgb(87, 163, 115);
+      background-color: green;
       border: 1px solid black;
+      color: white;
     }
   }
   .likesSum {

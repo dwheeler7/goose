@@ -19,6 +19,18 @@
   }
 }
 
+/* Body styles */
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #7bbd86, #16523c);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .boxc {
   min-width: 30vh;
   max-width: 43.3vh;
