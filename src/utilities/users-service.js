@@ -1,4 +1,5 @@
 import * as usersAPI  from './users-api';
+const BASE_URL = '/api/users';
 
 export async function signUp(userData) {
   const token = await usersAPI.signUp(userData);
@@ -103,11 +104,24 @@ export async function updatePasswordWithToken(token, passwordData) {
 }
 
 // New function for support ticket request
-export async function customerSupportRequest(name, email, message, attachment) {
+export async function customerSupportRequest(formData) {
   try {
-    // Make POST request for support ticket
-    await usersAPI.customerSupportRequest(name, email, message, attachment);
-    return true; // Support ticket request successful
+    // Log FormData entries
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+    
+    // Make POST request for support ticket using FormData
+    const response = await fetch(`${BASE_URL}/support`, {
+      method: 'POST',
+      body: formData, // Pass formData directly as the body
+    });
+
+    if (response.ok) {
+      return true; // Support ticket request successful
+    } else {
+      throw new Error('Failed to submit support ticket');
+    }
   } catch (error) {
     console.error('Support Ticket Request Error:', error);
     throw new Error('Failed to submit support ticket.');

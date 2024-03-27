@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { dataController, apiController } = require('../../controllers/api/users'); 
 const ensureLoggedIn = require('../../config/ensureLoggedIn'); 
+const fileUpload = require('express-fileupload'); // for fileupload
 
 // Import User model
 const User = require('../../models/User');
@@ -22,7 +23,8 @@ router.post('/login', dataController.loginUser, apiController.authenticate);
 router.post('/reset-password', dataController.resetPassword);
 router.put('/reset-password/:token', dataController.updatePasswordWithToken);
 //Email Support router 
-router.post('/support', dataController.handleSupportTicket);
+router.post('/support', fileUpload(), dataController.handleSupportTicket);
+
 
 // GET /api/users/check-token
 router.get('/check-token', ensureLoggedIn, (req, res) => {

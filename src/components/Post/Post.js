@@ -4,6 +4,7 @@ import styles from './Post.module.scss';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import DeleteBtn from '../DeleteBtn/DeleteBtn';
 import CommentForm from '../CommentForm/CommentForm';
+import MarkdownRenderer from '../MarkdownRenderer/MarkdownRenderer'; // Import the MarkdownRenderer component
 
 export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
     const [post, setPost] = useState(postData);
