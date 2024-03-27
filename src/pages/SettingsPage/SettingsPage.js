@@ -77,15 +77,15 @@ const SettingsPage = ({ user, updateUser, setUser }) => {
                     />
                 </label>
                 <br />
-                <label>
+                {/* <label>
                     Change Profile Photo:
                     <input
                         type="file"
                         onChange={handleFileChange}
                     />
                 </label>
-                {picture && <img src={picture} alt="Profile" />} {/* Render profile picture if available */}
-                <br />
+                {picture && <img src={picture} alt="Profile" />} 
+                <br /> */}
                 <button onClick={handleSave}>Save Changes</button>
                 
             </div>            
