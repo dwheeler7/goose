@@ -1137,7 +1137,6 @@ function NewPostForm(_ref) {
 
 
 
- // Import the MarkdownRenderer component
 
 const ensureHttps = url => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -1153,6 +1152,7 @@ function Post(_ref) {
     fetchPosts
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
+  const isCurrentUserPost = post.user._id === user._id;
   return post ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Post
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1174,18 +1174,18 @@ function Post(_ref) {
     source: post.projectDescription
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
-    post: post,
-    user: user,
-    setPost: setPost
-  }), user && isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, user && isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     post: post,
     setPost: setPost,
     fetchPosts: fetchPosts
+  })), user && !isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
+    post: post,
+    user: user,
+    setPost: setPost
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: postData.githubLink ? ensureHttps(postData.githubLink) : '#',
     target: postData.githubLink ? '_blank' : null
@@ -1195,10 +1195,10 @@ function Post(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ghImg,
     src: "https://i.imgur.com/F796Bnt.png"
-  }))))), user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }))))), !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CommentForm_CommentForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
     post: post,
     user: user
-  }))) : null;
+  })) : null;
 }
 
 /***/ }),
@@ -6292,4 +6292,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c0861c157bee24d852522817c82940b1.js.map
+//# sourceMappingURL=App.9415440c11deff41d64759c7befda209.js.map
