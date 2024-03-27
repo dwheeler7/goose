@@ -1,5 +1,5 @@
 .ProfilePage {
-    margin: 5vh auto 0;
+    margin: 10vh auto 0;
     width: 100%;
     height: 100%;
     padding: 2rem 10rem;
@@ -15,10 +15,10 @@
             width: 90%;
             max-height: 40rem;
             background: linear-gradient(to bottom right, #7bbd86, #16523c);
-            border-radius: .5rem;
             padding: 2rem;
-            border: .1rem solid green;
-            box-shadow: 0 0 .3rem darkgreen;
+            border: .1rem solid rgb(51, 86, 51, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 0 .3rem var(--text-green);
             .imgContainer {
                 display: flex;
                 flex-direction: column;
