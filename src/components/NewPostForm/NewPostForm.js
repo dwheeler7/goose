@@ -36,6 +36,7 @@ export default function NewPostForm({ fetchPosts, user }) {
         image: '',
         projectDescription: '',
       })
+      window.location.reload()
     } catch (err) {
       setError(err.message);
     }

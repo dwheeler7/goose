@@ -1047,6 +1047,7 @@ function NewPostForm(_ref) {
         image: '',
         projectDescription: ''
       });
+      window.location.reload();
     } catch (err) {
       setError(err.message);
     }
@@ -1239,7 +1240,7 @@ function PostList(_ref) {
   // If there are posts, render the list
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _PostList_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].postList
-  }, posts.map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, posts.slice().reverse().map(postData => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Post_Post__WEBPACK_IMPORTED_MODULE_2__["default"], {
     postData: postData,
     key: postData._id,
     isLoggedInUser: user && user._id === postData.user,
@@ -2368,7 +2369,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.IMqMrT2eGOGeFiLbCAGg {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
 }
 .IMqMrT2eGOGeFiLbCAGg .z1Y52ButKREXXJL8AqTW {
   position: fixed;
@@ -2411,7 +2412,7 @@ input:focus {
 label {
   font-size: 2.3rem;
   padding: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,YAAA;AACJ;AAAI;EACI,eAAA;EACA,MAAA;AAER;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    height: 100%;\n    .NavBar {\n        position: fixed;\n        top: 0;\n    }\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    height: 2.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 1rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,aAAA;AACJ;AAAI;EACI,eAAA;EACA,MAAA;AAER;;AAEA;EACI,gBAAA;EACA,uBAAA;EACA,8BAAA;AACJ;;AAEA;EACI,cAAA;EACA,uBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,cAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,aAAA;EACA,yBAAA;AACJ;;AAEA;EACI,aAAA;EACA,qCAAA;AACJ;;AAEA;EACI,iBAAA;EACA,aAAA;AACJ","sourcesContent":[".App {\n    width: 100vw;\n    height: 100vh;\n    .NavBar {\n        position: fixed;\n        top: 0;\n    }\n}\n\nh1 {\n    font-size: 7vmin;\n    color: var(--text-dark);\n    text-shadow: 1px 1px 2px black;\n}\n\nh2 {\n    font-size: 2vw;\n    color: var(--text-dark);\n}\n\nh3 {\n    font-size: 1.3vw;\n}\n\np {\n    font-size: .8vw;\n}\n\ninput {\n    height: 2.5rem;\n    border-radius: 1rem;\n    margin-left: 1rem;\n    font-size: 1rem;\n    padding: 1rem;\n    color: var(--input-color);\n}\n\ninput:focus {\n    outline: none;\n    box-shadow: 0 0 1rem var(--btn-color);\n}\n\nlabel {\n    font-size: 2.3rem;\n    padding: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`,
@@ -6292,4 +6293,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c0861c157bee24d852522817c82940b1.js.map
+//# sourceMappingURL=App.ad1d9e8de66a231d654bcab1558092c1.js.map
