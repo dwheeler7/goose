@@ -2798,10 +2798,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.n58utOoGOui0H9E8hTMP {
   border-radius: 0.5rem;
   margin-bottom: 2rem;
   padding: 2rem;
-  border: 0.1rem solid green;
-  box-shadow: 0 0 0.3rem darkgreen;
+  border: 0.1rem solid rgba(51, 86, 51, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 0 0.3rem var(--text-green);
   margin: 2rem 0 2rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/FollowList/FollowList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,gBAAA;EACA,8DAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,0BAAA;EACA,gCAAA;EACA,mBAAA;AACJ","sourcesContent":[".FollowList {\n    display: flex;\n    flex-direction: column;\n    width: 90%;\n    min-height: 5rem;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    border-radius: .5rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n    border: .1rem solid green;\n    box-shadow: 0 0 .3rem darkgreen;\n    margin: 2rem 0 2rem;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/FollowList/FollowList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;EACA,UAAA;EACA,gBAAA;EACA,8DAAA;EACA,qBAAA;EACA,mBAAA;EACA,aAAA;EACA,0CAAA;EACA,mBAAA;EACA,wCAAA;EACA,mBAAA;AACJ","sourcesContent":[".FollowList {\n    display: flex;\n    flex-direction: column;\n    width: 90%;\n    min-height: 5rem;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    border-radius: .5rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    box-shadow: 0 0 .3rem var(--text-green);\n    margin: 2rem 0 2rem;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"FollowList": `n58utOoGOui0H9E8hTMP`
@@ -3357,7 +3358,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.oP7WGK6YTvUk8qU_0Vnh {
   font-family: Arial, sans-serif;
   font-size: 16px;
-  height: 15vh;
+  height: 30vh;
   line-height: 1.6;
   color: #333;
   max-height: 50vh;
@@ -3409,7 +3410,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.oP7WGK6YTvUk8qU_0Vnh {
 }
 .oP7WGK6YTvUk8qU_0Vnh li {
   margin-left: 20px;
-}`, "",{"version":3,"sources":["webpack://./src/components/MarkdownRenderer/MarkdownRenderer.module.scss"],"names":[],"mappings":"AAEA;EACI,8BAAA;EACA,eAAA;EACA,YAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,gBAAA;EACA,aAAA;EACA,kBAAA;EACA,0CAAA;EACA,UAAA;AADJ;AAII;EACI,aAAA;EACA,mBAAA;AAFR;AAKI;EACI,eAAA;AAHR;AAMI;EACI,eAAA;AAJR;AAOI;EACI,eAAA;AALR;AASI;EACI,mBAAA;AAPR;AAWI;EACI,cAAA;EACA,qBAAA;AATR;AAaI;EACI,4BAAA;EACA,aAAA;EACA,kBAAA;EACA,gBAAA;AAXR;AAcI;EACI,oCAAA;EACA,WAAA,EAAA,oBAAA;EACA,8CAAA,EAAA,gCAAA;AAZR;AAgBI;EACI,yBAAA;EACA,gBAAA;EACA,kBAAA;EACA,qCAAA;AAdR;AAkBI;EACI,mBAAA;AAhBR;AAmBI;EACI,iBAAA;AAjBR","sourcesContent":["// MarkdownRenderer.module.scss\n\n.markdownContainer {\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n    height: 15vh;\n    line-height: 1.6;\n    color: #333;\n    max-height: 50vh;\n    overflow-y: auto;\n    padding: 1rem;\n    border-radius: 5px;\n    background-color: rgba(150, 202, 158, 0.6);\n    width: 45%;\n\n    // Style headings\n    h1, h2, h3, h4, h5, h6 {\n        margin-top: 0;\n        margin-bottom: 10px;\n    }\n\n    h1 {\n        font-size: 28px;\n    }\n\n    h2 {\n        font-size: 24px;\n    }\n\n    h3 {\n        font-size: 20px;\n    }\n\n    // Style paragraphs\n    p {\n        margin-bottom: 10px;\n    }\n\n    // Style links\n    a {\n        color: #007bff;\n        text-decoration: none;\n    }\n\n    // Style code blocks\n    pre {\n        background-color: lightgreen;\n        padding: 10px;\n        border-radius: 5px;\n        overflow-x: auto;\n    }\n\n    .json {\n        /* JSON syntax highlighting styles */\n        color: #000; /* JSON text color */\n        font-family: 'Courier New', Courier, monospace; /* Use monospace font for JSON */\n    }\n\n    // Style inline code\n    code {\n        background-color: #f4f4f4;\n        padding: 2px 4px;\n        border-radius: 4px;\n        font-family: 'Courier New', monospace;\n    }\n\n    // Style lists\n    ul, ol {\n        margin-bottom: 10px;\n    }\n\n    li {\n        margin-left: 20px;\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/MarkdownRenderer/MarkdownRenderer.module.scss"],"names":[],"mappings":"AAEA;EACI,8BAAA;EACA,eAAA;EACA,YAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,gBAAA;EACA,aAAA;EACA,kBAAA;EACA,0CAAA;EACA,UAAA;AADJ;AAII;EACI,aAAA;EACA,mBAAA;AAFR;AAKI;EACI,eAAA;AAHR;AAMI;EACI,eAAA;AAJR;AAOI;EACI,eAAA;AALR;AASI;EACI,mBAAA;AAPR;AAWI;EACI,cAAA;EACA,qBAAA;AATR;AAaI;EACI,4BAAA;EACA,aAAA;EACA,kBAAA;EACA,gBAAA;AAXR;AAcI;EACI,oCAAA;EACA,WAAA,EAAA,oBAAA;EACA,8CAAA,EAAA,gCAAA;AAZR;AAgBI;EACI,yBAAA;EACA,gBAAA;EACA,kBAAA;EACA,qCAAA;AAdR;AAkBI;EACI,mBAAA;AAhBR;AAmBI;EACI,iBAAA;AAjBR","sourcesContent":["// MarkdownRenderer.module.scss\n\n.markdownContainer {\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n    height: 30vh;\n    line-height: 1.6;\n    color: #333;\n    max-height: 50vh;\n    overflow-y: auto;\n    padding: 1rem;\n    border-radius: 5px;\n    background-color: rgba(150, 202, 158, 0.6);\n    width: 45%;\n\n    // Style headings\n    h1, h2, h3, h4, h5, h6 {\n        margin-top: 0;\n        margin-bottom: 10px;\n    }\n\n    h1 {\n        font-size: 28px;\n    }\n\n    h2 {\n        font-size: 24px;\n    }\n\n    h3 {\n        font-size: 20px;\n    }\n\n    // Style paragraphs\n    p {\n        margin-bottom: 10px;\n    }\n\n    // Style links\n    a {\n        color: #007bff;\n        text-decoration: none;\n    }\n\n    // Style code blocks\n    pre {\n        background-color: lightgreen;\n        padding: 10px;\n        border-radius: 5px;\n        overflow-x: auto;\n    }\n\n    .json {\n        /* JSON syntax highlighting styles */\n        color: #000; /* JSON text color */\n        font-family: 'Courier New', Courier, monospace; /* Use monospace font for JSON */\n    }\n\n    // Style inline code\n    code {\n        background-color: #f4f4f4;\n        padding: 2px 4px;\n        border-radius: 4px;\n        font-family: 'Courier New', monospace;\n    }\n\n    // Style lists\n    ul, ol {\n        margin-bottom: 10px;\n    }\n\n    li {\n        margin-left: 20px;\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"markdownContainer": `oP7WGK6YTvUk8qU_0Vnh`,
@@ -3575,10 +3576,11 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   width: 90%;
   background: linear-gradient(to bottom right, #7bbd86, #1f644b);
-  border: 0.1rem solid black;
-  border-radius: 0.5rem;
+  border: 0.1rem solid rgba(51, 86, 51, 0.3);
+  border-radius: 20px;
   margin: 5rem auto 2rem;
   padding: 2rem;
+  box-shadow: 0 0 0.3rem var(--text-green);
 }
 .wekziSaaqwOLRFMJXHQ2 .q83xVIpdN9plzwBHguVi {
   margin: 0 0 1rem;
@@ -3639,7 +3641,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   background-color: green;
   border: 1px solid black;
   color: white;
-}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0BAAA;EACA,qBAAA;EACA,sBAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;EACA,YAAA;EACA,8BAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 5rem auto 2rem;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n        color: white;\n        text-shadow: 1px 1px 2px black;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            &:hover {\n                background-color: green;\n                border: 1px solid black;\n                color: white;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0CAAA;EACA,mBAAA;EACA,sBAAA;EACA,aAAA;EACA,wCAAA;AACJ;AAAI;EACI,gBAAA;EACA,YAAA;EACA,8BAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    margin: 5rem auto 2rem;\n    padding: 2rem;\n    box-shadow: 0 0 .3rem var(--text-green);\n    .heading {\n        margin: 0 0 1rem;\n        color: white;\n        text-shadow: 1px 1px 2px black;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            &:hover {\n                background-color: green;\n                border: 1px solid black;\n                color: white;\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NewPostForm": `wekziSaaqwOLRFMJXHQ2`,
@@ -3846,8 +3848,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.kzarDYEms6C4W3RidlsQ {
   display: flex;
   width: 90%;
   flex-direction: column;
-  margin: 5rem auto;
-}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,UAAA;EACA,sBAAA;EACA,iBAAA;AACJ","sourcesContent":[".postList {\n    display: flex;\n    width: 90%;\n    flex-direction: column;\n    margin: 5rem auto;\n}"],"sourceRoot":""}]);
+  margin: 0 auto;
+}`, "",{"version":3,"sources":["webpack://./src/components/PostList/PostList.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,UAAA;EACA,sBAAA;EACA,cAAA;AACJ","sourcesContent":[".postList {\n    display: flex;\n    width: 90%;\n    flex-direction: column;\n    margin: 0 auto;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"postList": `kzarDYEms6C4W3RidlsQ`
@@ -4527,7 +4529,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
-  margin: 5vh auto 0;
+  margin: 10vh auto 0;
   width: 100%;
   height: 100%;
   padding: 2rem 10rem;
@@ -4545,10 +4547,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
   width: 90%;
   max-height: 40rem;
   background: linear-gradient(to bottom right, #7bbd86, #16523c);
-  border-radius: 0.5rem;
   padding: 2rem;
-  border: 0.1rem solid green;
-  box-shadow: 0 0 0.3rem darkgreen;
+  border: 0.1rem solid rgba(51, 86, 51, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 0 0.3rem var(--text-green);
 }
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .syKW9dLz4EwS_wpHk6_0 {
   display: flex;
@@ -4586,7 +4588,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.z1XFB0qbBjHblp8c_F5M {
 .z1XFB0qbBjHblp8c_F5M .Fn3Y8z6cyE3sFTgZXhsg .C3y4TdU4vKMpvL4_wj8H .LG29adQOef4sgu1x7iuH .f9PniY17HdeQBxVJqbhw:hover {
   filter: invert(100%);
   transition: 0.3s ease;
-}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,8DAAA;EACA,qBAAA;EACA,aAAA;EACA,0BAAA;EACA,gCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 5vh auto 0;\n    width: 100%;\n    height: 100%;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background: linear-gradient(to bottom right, #7bbd86, #16523c);\n            border-radius: .5rem;\n            padding: 2rem;\n            border: .1rem solid green;\n            box-shadow: 0 0 .3rem darkgreen;\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ProfilePage/ProfilePage.module.scss"],"names":[],"mappings":"AAAA;EACI,mBAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,aAAA;AACJ;AAAI;EACI,UAAA;EACA,iBAAA;AAER;AADQ;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,mBAAA;EACA,UAAA;EACA,iBAAA;EACA,8DAAA;EACA,aAAA;EACA,0CAAA;EACA,mBAAA;EACA,wCAAA;AAGZ;AAFY;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAIhB;AAFY;EACI,YAAA;AAIhB;AAFY;EACI,YAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;AAIhB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB;AAHgB;EACI,2BAAA;EACA,mBAAA;EACA,WAAA;EACA,aAAA;EACA,qBAAA;AAKpB;AAJoB;EACI,oBAAA;EACA,qBAAA;AAMxB","sourcesContent":[".ProfilePage {\n    margin: 10vh auto 0;\n    width: 100%;\n    height: 100%;\n    padding: 2rem 10rem;\n    display: flex;\n    .topContainer {\n        width: 60%;\n        max-height: 50rem;\n        .userContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: space-around;\n            align-items: center;\n            width: 90%;\n            max-height: 40rem;\n            background: linear-gradient(to bottom right, #7bbd86, #16523c);\n            padding: 2rem;\n            border: .1rem solid rgb(51, 86, 51, 0.3);\n            border-radius: 20px;\n            box-shadow: 0 0 .3rem var(--text-green);\n            .imgContainer {\n                display: flex;\n                flex-direction: column;\n                justify-content: center;\n                align-items: center;\n                width: 15rem;\n            }\n            .userBio {\n                color: black;\n            }\n            .userLinks {\n                width: 15rem;\n                display: flex;\n                justify-content: space-evenly;\n                margin-bottom: 1.5rem;\n                .ghLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n                .portfolioLogo {\n                    background-color: lightgrey;\n                    border-radius: 100%;\n                    width: 4rem;\n                    padding: 1rem;\n                    transition: .3s ease;\n                    &:hover {\n                        filter: invert(100%);\n                        transition: .3s ease;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProfilePage": `z1XFB0qbBjHblp8c_F5M`,
@@ -6290,4 +6292,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.22db8e42ed789dae213ebe49053d5260.js.map
+//# sourceMappingURL=App.c0861c157bee24d852522817c82940b1.js.map
