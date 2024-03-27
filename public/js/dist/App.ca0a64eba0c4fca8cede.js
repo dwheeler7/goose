@@ -1403,10 +1403,12 @@ function SearchUserForm(_ref) {
     value: searchQuery,
     onChange: e => handleSearch(e.target.value),
     placeholder: "Search"
-  })), searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserList_UserList__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _SearchUsersForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].searchResults
+  }, searchResults.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserList_UserList__WEBPACK_IMPORTED_MODULE_1__["default"], {
     users: searchResults,
     onUserClick: handleUserClick
-  }));
+  })));
 }
 
 /***/ }),
@@ -3530,7 +3532,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes VLeMwo6zXkTSOx1NGU9o {
     width: 1.5rem;
     height: 1.5rem;
   }
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;EACA,aAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    z-index: 1000;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}"],"sourceRoot":""}]);
+}
+.Eyv3WRCw6Dxszqt5q6uk {
+  display: inline-block;
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;EACA,aAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF;AAMA;EACI,qBAAA;AAJJ","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    z-index: 1000;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}\n\n.linkName {\n    display: inline-block;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
@@ -3542,6 +3547,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"btnLogo": `J9UnnftTHXUkwLRjgCwj`,
 	"logSignup": `IVj3kljTpbWeopBe4tgh`,
 	"searchBar": `y9nMRtKLACz8uMKjMe86`,
+	"linkName": `Eyv3WRCw6Dxszqt5q6uk`,
 	"fadeIn": `VLeMwo6zXkTSOx1NGU9o`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -4039,10 +4045,15 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.nyTmzuFbpzDJU7AD8sUf:focus {
   border: 0.1rem solid green;
-}`, "",{"version":3,"sources":["webpack://./src/components/SearchUsersForm/SearchUsersForm.module.scss"],"names":[],"mappings":"AAAA;EACI,0BAAA;AACJ","sourcesContent":[".Search:focus {\n    border: .1rem solid green;\n}"],"sourceRoot":""}]);
+}
+
+.kG1ND3Uu9x2v9bb5X08w {
+  cursor: pointer;
+}`, "",{"version":3,"sources":["webpack://./src/components/SearchUsersForm/SearchUsersForm.module.scss"],"names":[],"mappings":"AAAA;EACI,0BAAA;AACJ;;AAEA;EACI,eAAA;AACJ","sourcesContent":[".Search:focus {\n    border: .1rem solid green;\n}\n\n.searchResults {\n    cursor: pointer;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"Search": `nyTmzuFbpzDJU7AD8sUf`
+	"Search": `nyTmzuFbpzDJU7AD8sUf`,
+	"searchResults": `kG1ND3Uu9x2v9bb5X08w`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6286,4 +6297,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.bdf0a5c5612762bee670b1b1642f9842.js.map
+//# sourceMappingURL=App.b538fc9f7bbd806c2d6567df80c8c188.js.map
