@@ -148,6 +148,7 @@ function Button(_ref) {
     handleClick
   } = _ref;
   return /*#__PURE__*/React.createElement("button", {
+    className: _Button_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].button,
     onClick: handleClick
   }, value);
 }
@@ -367,8 +368,10 @@ const SupportTicketForm = () => {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Button_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Button/Button */ "./src/components/Button/Button.js");
-/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _utilities_posts_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/posts-service */ "./src/utilities/posts-service.js");
+/* harmony import */ var _DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeleteBtn.module.scss */ "./src/components/DeleteBtn/DeleteBtn.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 
 
@@ -380,14 +383,15 @@ function DeleteBtn(_ref) {
   // handle click
   const handleClick = async e => {
     try {
-      const deletedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.deletePost)(post._id);
-      if (!_utilities_posts_service__WEBPACK_IMPORTED_MODULE_2__.deletePost) throw new Error('Could not delete post');
+      const deletedPost = await (0,_utilities_posts_service__WEBPACK_IMPORTED_MODULE_3__.deletePost)(post._id);
+      if (!_utilities_posts_service__WEBPACK_IMPORTED_MODULE_3__.deletePost) throw new Error('Could not delete post');
       setPost('');
     } catch (err) {
       console.log("error");
     }
   };
   return /*#__PURE__*/React.createElement(_Button_Button__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    className: _DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button,
     handleClick: handleClick,
     value: "Delete"
   });
@@ -864,7 +868,7 @@ const MarkdownRenderer = _ref => {
     source
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _MarkdownRenderer_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"]['markdown-container']
+    className: _MarkdownRenderer_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].markdownContainer
   }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_markdown__WEBPACK_IMPORTED_MODULE_2__.Markdown, null, source));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MarkdownRenderer);
@@ -1534,6 +1538,7 @@ function SignUpForm(_ref) {
     accept: "image/*",
     onChange: handlePictureChange
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     type: "submit",
     disabled: disable
   }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -2401,49 +2406,30 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.YmYKfusPOyIbyY4W_Qw5 {
-  margin: 1rem;
-  height: 4rem;
-  width: 10vw;
-  border: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.b_aG7bzo5aM2mIR7O3BA {
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-size: 2rem;
-  color: white;
-  background-color: rgb(87, 163, 115);
-  border-top-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+___CSS_LOADER_EXPORT___.push([module.id, `.b_aG7bzo5aM2mIR7O3BA {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(88, 85, 85);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid black;
+  height: 2.5rem;
+  font-size: 1rem;
+  width: 5rem;
+  margin: 0 auto;
 }
 
 .b_aG7bzo5aM2mIR7O3BA:hover {
-  cursor: pointer;
-}
-
-.du_jimamrCqrJeA6IThG {
-  position: absolute;
-  background-color: var(--btn-animation);
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  transition: transform 0.5s ease;
-}
-
-.YmYKfusPOyIbyY4W_Qw5:hover .du_jimamrCqrJeA6IThG {
-  transform: translateX(100%);
-  cursor: pointer;
-}`, "",{"version":3,"sources":["webpack://./src/components/Button/Button.module.scss"],"names":[],"mappings":"AACA;EACI,YAAA;EACA,YAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;EACA,YAAA;EACA,mCAAA;EACA,4BAAA;EACA,gCAAA;AAAJ;;AAGA;EACI,eAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,sCAAA;EACA,WAAA;EACA,YAAA;EACA,OAAA;EACA,MAAA;EACA,+BAAA;AAAJ;;AAGA;EACI,2BAAA;EACA,eAAA;AAAJ","sourcesContent":["\n.btnContainer {\n    margin: 1rem;\n    height: 4rem;\n    width: 10vw;\n    border: none;\n    position: relative;\n    overflow: hidden;\n}\n\n.button {\n    width: 100%;\n    height: 100%;\n    border: none;\n    font-size: 2rem;\n    color: white;\n    background-color: rgb(87, 163, 115);\n    border-top-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n}\n\n.button:hover {\n    cursor: pointer;\n}\n\n.btnAnimation {\n    position: absolute;\n    background-color: var(--btn-animation);\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    transition: transform 0.5s ease;\n}\n\n.btnContainer:hover .btnAnimation {\n    transform: translateX(100%);\n    cursor: pointer;\n}\n\n"],"sourceRoot":""}]);
+  background-color: green;
+  color: white;
+  border: none;
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}`, "",{"version":3,"sources":["webpack://./src/components/Button/Button.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,uBAAA;EACA,YAAA;EACA,YAAA;EACA,sBAAA;EACA,mDAAA;AACJ","sourcesContent":[".button {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    height: 2.5rem;\n    font-size: 1rem;\n    width: 5rem; \n    margin: 0 auto; \n}\n\n.button:hover {\n    background-color:green;\n    color: white;\n    border: none;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}\n\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"btnContainer": `YmYKfusPOyIbyY4W_Qw5`,
-	"button": `b_aG7bzo5aM2mIR7O3BA`,
-	"btnAnimation": `du_jimamrCqrJeA6IThG`
+	"button": `b_aG7bzo5aM2mIR7O3BA`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2661,6 +2647,53 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"success-message": `dmjQ_O5RCbXYtStXWxr0`,
 	"file-limit-message": `LwR00xdCLlyc1kzg7HPz`,
 	"attachment-input": `l1bGVOuMwmksV9RFIcKs`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/DeleteBtn/DeleteBtn.module.scss":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/DeleteBtn/DeleteBtn.module.scss ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.JbymGNmsiA17ORSrZ53g {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(88, 85, 85);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid black;
+  height: 2.5rem;
+  font-size: 1rem;
+  width: 5rem;
+  margin: 0 auto;
+}
+
+.JbymGNmsiA17ORSrZ53g:hover {
+  background-color: rgb(87, 163, 115);
+  border: 1px solid black;
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}`, "",{"version":3,"sources":["webpack://./src/components/DeleteBtn/DeleteBtn.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AACJ","sourcesContent":[".button {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    height: 2.5rem;\n    font-size: 1rem;\n    width: 5rem; \n    margin: 0 auto; \n}\n\n.button:hover {\n    background-color:rgb(87, 163, 115);\n    border: 1px solid black;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"button": `JbymGNmsiA17ORSrZ53g`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3289,65 +3322,65 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.lAlzy78jQu0wwQDaaBJm {
+___CSS_LOADER_EXPORT___.push([module.id, `.oP7WGK6YTvUk8qU_0Vnh {
   font-family: Arial, sans-serif;
   font-size: 16px;
+  height: 15vh;
   line-height: 1.6;
   color: #333;
   max-height: 50vh;
   overflow-y: auto;
   padding: 1rem;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: rgba(150, 202, 158, 0.6);
   width: 45%;
 }
-.lAlzy78jQu0wwQDaaBJm h1, .lAlzy78jQu0wwQDaaBJm h2, .lAlzy78jQu0wwQDaaBJm h3, .lAlzy78jQu0wwQDaaBJm h4, .lAlzy78jQu0wwQDaaBJm h5, .lAlzy78jQu0wwQDaaBJm h6 {
+.oP7WGK6YTvUk8qU_0Vnh h1, .oP7WGK6YTvUk8qU_0Vnh h2, .oP7WGK6YTvUk8qU_0Vnh h3, .oP7WGK6YTvUk8qU_0Vnh h4, .oP7WGK6YTvUk8qU_0Vnh h5, .oP7WGK6YTvUk8qU_0Vnh h6 {
   margin-top: 0;
   margin-bottom: 10px;
 }
-.lAlzy78jQu0wwQDaaBJm h1 {
+.oP7WGK6YTvUk8qU_0Vnh h1 {
   font-size: 28px;
 }
-.lAlzy78jQu0wwQDaaBJm h2 {
+.oP7WGK6YTvUk8qU_0Vnh h2 {
   font-size: 24px;
 }
-.lAlzy78jQu0wwQDaaBJm h3 {
+.oP7WGK6YTvUk8qU_0Vnh h3 {
   font-size: 20px;
 }
-.lAlzy78jQu0wwQDaaBJm p {
+.oP7WGK6YTvUk8qU_0Vnh p {
   margin-bottom: 10px;
 }
-.lAlzy78jQu0wwQDaaBJm a {
+.oP7WGK6YTvUk8qU_0Vnh a {
   color: #007bff;
   text-decoration: none;
 }
-.lAlzy78jQu0wwQDaaBJm pre {
+.oP7WGK6YTvUk8qU_0Vnh pre {
   background-color: lightgreen;
   padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
 }
-.lAlzy78jQu0wwQDaaBJm .o8yzhuIR3ei2USj6R_9k {
+.oP7WGK6YTvUk8qU_0Vnh .o8yzhuIR3ei2USj6R_9k {
   /* JSON syntax highlighting styles */
   color: #000; /* JSON text color */
   font-family: "Courier New", Courier, monospace; /* Use monospace font for JSON */
 }
-.lAlzy78jQu0wwQDaaBJm code {
+.oP7WGK6YTvUk8qU_0Vnh code {
   background-color: #f4f4f4;
   padding: 2px 4px;
   border-radius: 4px;
   font-family: "Courier New", monospace;
 }
-.lAlzy78jQu0wwQDaaBJm ul, .lAlzy78jQu0wwQDaaBJm ol {
+.oP7WGK6YTvUk8qU_0Vnh ul, .oP7WGK6YTvUk8qU_0Vnh ol {
   margin-bottom: 10px;
 }
-.lAlzy78jQu0wwQDaaBJm li {
+.oP7WGK6YTvUk8qU_0Vnh li {
   margin-left: 20px;
-}`, "",{"version":3,"sources":["webpack://./src/components/MarkdownRenderer/MarkdownRenderer.module.scss"],"names":[],"mappings":"AAEA;EACI,8BAAA;EACA,eAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,gBAAA;EACA,aAAA;EACA,sBAAA;EACA,kBAAA;EACA,yBAAA;EACA,UAAA;AADJ;AAII;EACI,aAAA;EACA,mBAAA;AAFR;AAKI;EACI,eAAA;AAHR;AAMI;EACI,eAAA;AAJR;AAOI;EACI,eAAA;AALR;AASI;EACI,mBAAA;AAPR;AAWI;EACI,cAAA;EACA,qBAAA;AATR;AAaI;EACI,4BAAA;EACA,aAAA;EACA,kBAAA;EACA,gBAAA;AAXR;AAcI;EACI,oCAAA;EACA,WAAA,EAAA,oBAAA;EACA,8CAAA,EAAA,gCAAA;AAZR;AAgBI;EACI,yBAAA;EACA,gBAAA;EACA,kBAAA;EACA,qCAAA;AAdR;AAkBI;EACI,mBAAA;AAhBR;AAmBI;EACI,iBAAA;AAjBR","sourcesContent":["// MarkdownRenderer.module.scss\n\n.markdown-container {\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n    line-height: 1.6;\n    color: #333;\n    max-height: 50vh;\n    overflow-y: auto;\n    padding: 1rem;\n    border: 1px solid #ccc;\n    border-radius: 5px;\n    background-color: #f9f9f9;\n    width: 45%;\n\n    // Style headings\n    h1, h2, h3, h4, h5, h6 {\n        margin-top: 0;\n        margin-bottom: 10px;\n    }\n\n    h1 {\n        font-size: 28px;\n    }\n\n    h2 {\n        font-size: 24px;\n    }\n\n    h3 {\n        font-size: 20px;\n    }\n\n    // Style paragraphs\n    p {\n        margin-bottom: 10px;\n    }\n\n    // Style links\n    a {\n        color: #007bff;\n        text-decoration: none;\n    }\n\n    // Style code blocks\n    pre {\n        background-color: lightgreen;\n        padding: 10px;\n        border-radius: 5px;\n        overflow-x: auto;\n    }\n\n    .json {\n        /* JSON syntax highlighting styles */\n        color: #000; /* JSON text color */\n        font-family: 'Courier New', Courier, monospace; /* Use monospace font for JSON */\n    }\n\n    // Style inline code\n    code {\n        background-color: #f4f4f4;\n        padding: 2px 4px;\n        border-radius: 4px;\n        font-family: 'Courier New', monospace;\n    }\n\n    // Style lists\n    ul, ol {\n        margin-bottom: 10px;\n    }\n\n    li {\n        margin-left: 20px;\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/MarkdownRenderer/MarkdownRenderer.module.scss"],"names":[],"mappings":"AAEA;EACI,8BAAA;EACA,eAAA;EACA,YAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,gBAAA;EACA,aAAA;EACA,kBAAA;EACA,0CAAA;EACA,UAAA;AADJ;AAII;EACI,aAAA;EACA,mBAAA;AAFR;AAKI;EACI,eAAA;AAHR;AAMI;EACI,eAAA;AAJR;AAOI;EACI,eAAA;AALR;AASI;EACI,mBAAA;AAPR;AAWI;EACI,cAAA;EACA,qBAAA;AATR;AAaI;EACI,4BAAA;EACA,aAAA;EACA,kBAAA;EACA,gBAAA;AAXR;AAcI;EACI,oCAAA;EACA,WAAA,EAAA,oBAAA;EACA,8CAAA,EAAA,gCAAA;AAZR;AAgBI;EACI,yBAAA;EACA,gBAAA;EACA,kBAAA;EACA,qCAAA;AAdR;AAkBI;EACI,mBAAA;AAhBR;AAmBI;EACI,iBAAA;AAjBR","sourcesContent":["// MarkdownRenderer.module.scss\n\n.markdownContainer {\n    font-family: Arial, sans-serif;\n    font-size: 16px;\n    height: 15vh;\n    line-height: 1.6;\n    color: #333;\n    max-height: 50vh;\n    overflow-y: auto;\n    padding: 1rem;\n    border-radius: 5px;\n    background-color: rgba(150, 202, 158, 0.6);\n    width: 45%;\n\n    // Style headings\n    h1, h2, h3, h4, h5, h6 {\n        margin-top: 0;\n        margin-bottom: 10px;\n    }\n\n    h1 {\n        font-size: 28px;\n    }\n\n    h2 {\n        font-size: 24px;\n    }\n\n    h3 {\n        font-size: 20px;\n    }\n\n    // Style paragraphs\n    p {\n        margin-bottom: 10px;\n    }\n\n    // Style links\n    a {\n        color: #007bff;\n        text-decoration: none;\n    }\n\n    // Style code blocks\n    pre {\n        background-color: lightgreen;\n        padding: 10px;\n        border-radius: 5px;\n        overflow-x: auto;\n    }\n\n    .json {\n        /* JSON syntax highlighting styles */\n        color: #000; /* JSON text color */\n        font-family: 'Courier New', Courier, monospace; /* Use monospace font for JSON */\n    }\n\n    // Style inline code\n    code {\n        background-color: #f4f4f4;\n        padding: 2px 4px;\n        border-radius: 4px;\n        font-family: 'Courier New', monospace;\n    }\n\n    // Style lists\n    ul, ol {\n        margin-bottom: 10px;\n    }\n\n    li {\n        margin-left: 20px;\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"markdown-container": `lAlzy78jQu0wwQDaaBJm`,
+	"markdownContainer": `oP7WGK6YTvUk8qU_0Vnh`,
 	"json": `o8yzhuIR3ei2USj6R_9k`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -3709,10 +3742,35 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.kQzjKpTiHJLJ5WNNtTAD {
   margin: 1rem;
 }
 
-.kQzjKpTiHJLJ5WNNtTAD .zLlpgp3sQPJxkTwNEeQZ .Tv1PiRERxjOLRorlaY3P .KKxm2e5dQLBmqHKANXwO:hover {
+.KKxm2e5dQLBmqHKANXwO {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(88, 85, 85);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid black;
+  height: 2.5rem;
+  font-size: 1rem;
+  width: 5rem;
+  margin: 0 auto;
+}
+
+.KKxm2e5dQLBmqHKANXwO:hover {
   background-color: green;
   color: white;
-}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,gBAAA;EACA,aAAA;EACA,gBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,8DAAA;EACA,YAAA;EACA,wCAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,UAAA;AACJ;;AAEA;EACI,eAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;AACJ;;AAEA;EACI,qBAAA;EACA,YAAA;EACA,qBAAA;EACA,eAAA;AACJ;AAAI;EACI,qBAAA;EACA,gBAAA;AAER;;AAEA;EACI,qBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,UAAA;EACA,gBAAA;EACA,iBAAA;EACA,0CAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;EACI,iBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;AAAI;EACI,uBAAA;AAER;;AAEA;EACI,WAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;AACJ;;AAEA;EACI,uBAAA;EACA,YAAA;AACJ","sourcesContent":[".Post {\n    width: 100%;\n    margin: 0 0 1rem;\n    padding: 2rem;\n    min-height: 35vh;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    color: black;\n    box-shadow: 0 0 .3rem var(--text-green);\n}\n\n.Post .postContent {\n    display: flex;\n    justify-content: space-between;\n    margin-bottom: 2rem;\n}\n\n.Post .postContent .TitleImgContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    width: 30%;\n}\n\n.Post .postContent .TitleImgContainer .projectTitle {\n    font-size: 2rem;\n    margin-bottom: 2rem;\n}\n\n.TitleImgContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n}\n\n.userName {\n    text-decoration: none;\n    color: white;\n    transition: .3s ease;\n    max-width: 5rem;\n    &:hover {\n        transition: .3s ease;\n        color: darkgreen;\n    }\n}\n\n.ProjectImage {\n    border-radius: .5rem;\n    margin-top: 1rem;\n}\n\n.Post .postContent .projectDescription {\n    border-radius: .5rem;\n    padding: 1rem;\n    width: 40%;\n    min-height: 20vh;\n    font-size: 1.2rem;\n    background-color: rgb(165, 214, 173, .4);\n}\n\n.Post .postContent .ghBtn {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.Post .postContent .ghBtn .ghImg {\n    width: 3rem;\n}\n\n.Post .postContent .ghBtn:hover .ghImg {\n    filter: invert(1);\n}\n\n.ghBtn {\n    width: 5rem;\n    &:hover {\n        border: 1px solid black;\n    }\n}\n\n.Post .postContent .LikeBtn {\n    width: 5rem;\n}\n\n.Post .postContent .btnContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}\n\n.Post .postContent .btnContainer .button {\n    min-width: 5rem;\n    margin: 1rem;\n}\n\n.Post .postContent .btnContainer .button:hover {\n    background-color: green;\n    color: white;\n}"],"sourceRoot":""}]);
+  border: none;
+  transform: scale(1.01);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.Tv1PiRERxjOLRorlaY3P {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}`, "",{"version":3,"sources":["webpack://./src/components/Post/Post.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,gBAAA;EACA,aAAA;EACA,gBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,8DAAA;EACA,YAAA;EACA,wCAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,UAAA;AACJ;;AAEA;EACI,eAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;AACJ;;AAEA;EACI,qBAAA;EACA,YAAA;EACA,qBAAA;EACA,eAAA;AACJ;AAAI;EACI,qBAAA;EACA,gBAAA;AAER;;AAEA;EACI,qBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,UAAA;EACA,gBAAA;EACA,iBAAA;EACA,0CAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;EACI,iBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;AAAI;EACI,uBAAA;AAER;;AAEA;EACI,WAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,eAAA;EACA,YAAA;AACJ;;AAEA;EACI,aAAA;EACA,oCAAA;EACA,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,sCAAA;EACA,uBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,cAAA;AACJ;;AAEA;EACI,uBAAA;EACA,YAAA;EACA,YAAA;EACA,sBAAA;EACA,mDAAA;AACJ;;AAGA;EACI,YAAA;EACA,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAAJ","sourcesContent":[".Post {\n    width: 100%;\n    margin: 0 0 1rem;\n    padding: 2rem;\n    min-height: 35vh;\n    border: .1rem solid rgb(51, 86, 51, 0.3);\n    border-radius: 20px;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    color: black;\n    box-shadow: 0 0 .3rem var(--text-green);\n}\n\n.Post .postContent {\n    display: flex;\n    justify-content: space-between;\n    margin-bottom: 2rem;\n}\n\n.Post .postContent .TitleImgContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    width: 30%;\n}\n\n.Post .postContent .TitleImgContainer .projectTitle {\n    font-size: 2rem;\n    margin-bottom: 2rem;\n}\n\n.TitleImgContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n}\n\n.userName {\n    text-decoration: none;\n    color: white;\n    transition: .3s ease;\n    max-width: 5rem;\n    &:hover {\n        transition: .3s ease;\n        color: darkgreen;\n    }\n}\n\n.ProjectImage {\n    border-radius: .5rem;\n    margin-top: 1rem;\n}\n\n.Post .postContent .projectDescription {\n    border-radius: .5rem;\n    padding: 1rem;\n    width: 40%;\n    min-height: 20vh;\n    font-size: 1.2rem;\n    background-color: rgb(165, 214, 173, .4);\n}\n\n.Post .postContent .ghBtn {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.Post .postContent .ghBtn .ghImg {\n    width: 3rem;\n}\n\n.Post .postContent .ghBtn:hover .ghImg {\n    filter: invert(1);\n}\n\n.ghBtn {\n    width: 5rem;\n    &:hover {\n        border: 1px solid black;\n    }\n}\n\n.Post .postContent .LikeBtn {\n    width: 5rem;\n}\n\n.Post .postContent .btnContainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}\n\n.Post .postContent .btnContainer .button {\n    min-width: 5rem;\n    margin: 1rem;\n}\n\n.button {\n    padding: 10px;\n    background-color: rgb(250, 250, 250);\n    color: rgb(88, 85, 85);\n    border-radius: 5px;\n    cursor: pointer;\n    transition: background-color 0.3s ease;\n    border: 1px solid black;\n    height: 2.5rem;\n    font-size: 1rem;\n    width: 5rem; \n    margin: 0 auto; \n}\n\n.button:hover {\n    background-color:green;\n    color: white;\n    border: none;\n    transform: scale(1.01);\n    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n}\n\n\n.btnContainer {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Post": `kQzjKpTiHJLJ5WNNtTAD`,
@@ -4110,7 +4168,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes KiN27HiRvEoQXCiZZer1 {
   cursor: pointer;
 }
 
-button {
+.xyMV8WMo_VF047TUcQck {
   color: white;
   width: 100%;
   height: 40px;
@@ -4124,7 +4182,7 @@ button {
   transition: all 0.4s ease;
 }
 
-button:hover {
+.xyMV8WMo_VF047TUcQck:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -4170,7 +4228,7 @@ option {
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc;
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE;IACE,iFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,qFAAA;EAFF;EAKA;IACE,uFAAA;EAHF;AACF;AAOA,gBAAA;AACA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AALF;;AAQA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iBAAA;EACA,kBAAA;EACA,gBAAA;EACA,kDAAA;AALF;AAOE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;AALJ;;AASA;EACE,kBAAA;EACA,cAAA;EACA,6BAAA;EACA,kBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,6BAAA;AANF;AAQE;EACE,oCAAA;AANJ;;AAUA;EACE,kBAAA;EACA,QAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;EACA,gCAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;AAPV;;AAUA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;EACE,kBAAA;EACA,yBAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;;EAEE,gBAAA;EACA,SAAA;AAPJ;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AAPF;;AAUA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAPF;;AAUA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAPF;;AAUA;EACI,0BAAA;EACA,eAAA;AAPJ;;AAUA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AAPF;;AAUA;EACE,0CAAA;AAPF;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPF;;AAUA;EACE,eAAA;AAPF;;AAUA;EACE,YAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,kBAAA;AAPF;;AAUA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAPF;;AAUA;EACE,0BAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,iBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAPF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n/* Body styles */\n.body {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #7bbd86, #16523c);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.boxc {\n  min-width: 30vh;\n  max-width: 43.3vh;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n  margin-left: auto;\n  margin-right: auto;\n  overflow: hidden; \n  animation: shine 5s infinite linear;\n\n  h1 {\n    font-size: 3rem; \n    color: #fff;\n    text-align: center;\n    padding-top: .64rem;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  border-bottom: 2px solid #fff;\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  width: 30vh;\n  border-bottom: 2px solid #fff;\n  \n  &:focus-within {\n    border-bottom-color: gold !important; \n  }\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  transform: translateY(-40%);\n  color: #fff;\n  font-size: 1.25rem; \n  pointer-events: none;\n  transition: all 0.3s ease-in-out;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.25rem;\n    background-color: #081C15; \n    border-radius: 2px;\n    color: #fff; \n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n  font-weight: bolder;\n  padding: 0;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\nbutton {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\nbutton:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 1.25rem;\n  color: #fff;\n  text-align: center;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.5rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAEA;EACE;IACE,iFAAA;EAAF;EAGA;IACE,qFAAA;EADF;EAIA;IACE,qFAAA;EAFF;EAKA;IACE,uFAAA;EAHF;AACF;AAOA,gBAAA;AACA;EACE,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AALF;;AAQA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;EACA,0CAAA;EACA,mBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iBAAA;EACA,kBAAA;EACA,gBAAA;EACA,kDAAA;AALF;AAOE;EACE,eAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;AALJ;;AASA;EACE,kBAAA;EACA,cAAA;EACA,6BAAA;EACA,kBAAA;EACA,cAAA;EACA,eAAA;EACA,WAAA;EACA,6BAAA;AANF;AAQE;EACE,oCAAA;AANJ;;AAUA;EACE,kBAAA;EACA,QAAA;EACA,2BAAA;EACA,WAAA;EACA,kBAAA;EACA,oBAAA;EACA,gCAAA;EACA,yBAAA;EACG,sBAAA;EACK,iBAAA;AAPV;;AAUA;EACI,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;EACE,kBAAA;EACA,yBAAA;EACA,kBAAA;EACA,WAAA;AAPJ;;AAUE;;EAEE,gBAAA;EACA,SAAA;AAPJ;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;EACA,mBAAA;EACA,UAAA;AAPF;;AAUA;EACE,gBAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;AAPF;;AAUA;EACE,WAAA;EACA,qBAAA;EACA,gBAAA;AAPF;;AAUA;EACI,0BAAA;EACA,eAAA;AAPJ;;AAUA;EACE,YAAA;EACA,WAAA;EACA,YAAA;EACA,mBAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;EACA,eAAA;EACA,kBAAA;EACA,gBAAA;EACA,yBAAA;AAPF;;AAUA;EACE,0CAAA;AAPF;;AAUA;EACE,WAAA;EACA,YAAA;EACA,uBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,WAAA;AAPF;;AAUA;EACE,eAAA;AAPF;;AAUA;EACE,YAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,kBAAA;AAPF;;AAUA;EACE,qBAAA;EACA,WAAA;EACA,gBAAA;AAPF;;AAUA;EACE,0BAAA;AAPF;;AAUA;EACE,kBAAA;EACA,WAAA;EACA,QAAA;EACA,iBAAA;EACA,2BAAA;EACA,eAAA;EACA,WAAA;AAPF","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');\n\n@keyframes shine {\n  0%, 100% {\n    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  25% {\n    box-shadow: 1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset 1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  50% {\n    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.2), \n                inset 0 1px 2px 1px rgba(0, 0, 0, 0.2);\n  }\n  75% {\n    box-shadow: -1px 0 10px 1px rgba(0, 0, 0, 0.2), \n                inset -1px 0 2px 1px rgba(0, 0, 0, 0.2);\n  }\n}\n\n/* Body styles */\n.body {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: linear-gradient(to bottom right, #7bbd86, #16523c);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.boxc {\n  min-width: 30vh;\n  max-width: 43.3vh;\n  position: relative;\n  border: 2px solid rgba(255, 255, 255, 0.5);\n  border-radius: 20px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 2rem 3rem;\n  margin-left: auto;\n  margin-right: auto;\n  overflow: hidden; \n  animation: shine 5s infinite linear;\n\n  h1 {\n    font-size: 3rem; \n    color: #fff;\n    text-align: center;\n    padding-top: .64rem;\n  }\n}\n\n.inputbox {\n  position: relative;\n  margin: 30px 0;\n  border-bottom: 2px solid #fff;\n  position: relative;\n  margin: 30px 0;\n  min-width: 30vh;\n  width: 30vh;\n  border-bottom: 2px solid #fff;\n  \n  &:focus-within {\n    border-bottom-color: gold !important; \n  }\n}\n\n.inputbox label {\n  position: absolute;\n  top: 50%;\n  transform: translateY(-40%);\n  color: #fff;\n  font-size: 1.25rem; \n  pointer-events: none;\n  transition: all 0.3s ease-in-out;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n.inputbox select {\n    width: 100%;\n    height: 80px;\n    background: transparent;\n    border: none;\n    outline: none;\n    font-size: 1.25rem;\n    color: #fff;\n  }\n  \n  .inputbox select option {\n    font-size: 1.25rem;\n    background-color: #081C15; \n    border-radius: 2px;\n    color: #fff; \n  }\n\n  .inputbox input:focus ~ label,\n  .inputbox input:valid ~ label {\n    color: lightgray;\n    top: -5px;\n  }\n  \n.inputbox input {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n  font-weight: bolder;\n  padding: 0;\n}\n\n.login {\n  margin-top: 20px; \n  font-size: 0.85rem;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n}\n\n.login p a {\n  color: #fff;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.login p:hover {\n    text-decoration: underline;\n    cursor: pointer;\n}\n\n.button {\n  color: white;\n  width: 100%;\n  height: 40px;\n  border-radius: 40px;\n  background-color: rgb(87, 163, 115);\n  border: none;\n  outline: none;\n  cursor: pointer;\n  font-size: 1.25rem;\n  font-weight: 600;\n  transition: all 0.4s ease;\n}\n\n.button:hover {\n  background-color: rgba(255, 255, 255, 0.5);\n}\n\n.inputbox select {\n  width: 100%;\n  height: 60px;\n  background: transparent;\n  border: none;\n  outline: none;\n  font-size: 1.25rem;\n  color: #fff;\n}\n\nselect:hover {\n  cursor: pointer;\n}\n\noption {\n  color: black;\n}\n\n.register {\n  font-size: 1.25rem;\n  color: #fff;\n  text-align: center;\n}\n\n.register p a {\n  text-decoration: none;\n  color: #fff;\n  font-weight: 600;\n}\n\n.register p a:hover {\n  text-decoration: underline;\n}\n\n.showPasswordIcon {\n  position: absolute;\n  right: 10px;\n  top: 50%;\n  font-size: 1.5rem;\n  transform: translateY(-50%);\n  cursor: pointer;\n  color: #ccc;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"body": `xCrr_Bbs2iSq5QC2RUqr`,
@@ -4178,6 +4236,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"shine": `KiN27HiRvEoQXCiZZer1`,
 	"inputbox": `G5WQETTTkTlRpPef5KUY`,
 	"login": `emIz9U5VSVFVmZPhEvKw`,
+	"button": `xyMV8WMo_VF047TUcQck`,
 	"register": `JtQI_Hm4R0_7b5aQ1Jdw`,
 	"showPasswordIcon": `XEq2Dm2tfurQtGWxCT44`
 };
@@ -4662,8 +4721,11 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /*!**************************************************!*\
   !*** ./src/components/Button/Button.module.scss ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
@@ -4703,7 +4765,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 
-       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_Button_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -4810,6 +4872,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CustomerSupport_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/DeleteBtn/DeleteBtn.module.scss":
+/*!********************************************************!*\
+  !*** ./src/components/DeleteBtn/DeleteBtn.module.scss ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./DeleteBtn.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/DeleteBtn/DeleteBtn.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_DeleteBtn_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -6136,4 +6251,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.1dd0f837bd5d8207b8ed5bb0e65d444a.js.map
+//# sourceMappingURL=App.195e8979b4eb904cca7f987df76fdbe9.js.map
