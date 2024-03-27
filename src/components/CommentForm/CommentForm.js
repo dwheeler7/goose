@@ -56,7 +56,9 @@ export default function CommentForm({ post, user }) {
 
 	return (
 		<div className={styles.commentContainer}>
-			<ul className={styles.commentList}>
+      {
+        comments ? 
+        <ul className={styles.commentList}>
 				{comments && comments.map((comment) => (
 					<li key={comment.id} className={styles.commentItem}>
 						<a href="" className={styles.commentUser}>
@@ -65,15 +67,17 @@ export default function CommentForm({ post, user }) {
 						<p className={styles.comment}>{comment.text}</p>
 					</li>
 				))}
-			</ul>
-			<form className={styles.inputComment} onSubmit={handleSubmit}>
+			</ul> : null
+      }
+			<form className={styles.form} onSubmit={handleSubmit}>
 				<input
+          className={styles.textInput}
 					type="text"
 					value={newComment}
 					onChange={(e) => setNewComment(e.target.value)}
 					placeholder="Add a comment"
 				/>
-				<button className={styles.submitBtn} type="submit">Submit</button>
+				<button className={styles.button} type="submit">Submit</button>
 			</form>
 		</div>
 	)

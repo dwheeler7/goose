@@ -34,22 +34,18 @@
 
 .LoginForm {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-
-}
-
-/* Body styles */
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  height: 110vh;
+  width: 100%;
   background: linear-gradient(to bottom right, #7bbd86, #16523c);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.form {
+  width: 100%;
 }
 
 h4 {
@@ -67,7 +63,7 @@ h4 {
     border-bottom-color: gold !important; /* Change border color on focus */
   }
 
-  label {
+  .label {
     position: absolute;
     top: 50%;
     left: 5px;

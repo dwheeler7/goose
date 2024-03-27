@@ -30,9 +30,6 @@ input:-webkit-autofill {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #7bbd86, #16523c);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    height: 100%;
+    background-color: white;
   }

@@ -1,52 +1,105 @@
 .Post {
     width: 100%;
-    margin: 1rem 0;
+    margin: 0 0 1rem;
     padding: 2rem;
     min-height: 35vh;
-    border: .1rem solid black;
-    border-radius: 8px;
+    border: .1rem solid rgb(51, 86, 51, 0.3);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(to bottom right, #7bbd86, #16523c);
+    color: black;
+    box-shadow: 0 0 .3rem var(--text-green);
+}
+
+.Post .postContent {
     display: flex;
     justify-content: space-between;
-    color: black;
-    background: linear-gradient(to bottom right, #7bbd86, #16523c);
+    margin-bottom: 2rem;
+}
 
-    .TitleImgContainer {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        width: 30%;
-        padding-right: 1.5rem;
-        .projectTitle {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-        .ProjectImage {
-            border: 1px solid black;
-            border-radius: .5rem;
-        }
+.Post .postContent .TitleImgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 30%;
+}
+
+.Post .postContent .TitleImgContainer .projectTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.TitleImgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.userName {
+    text-decoration: none;
+    color: white;
+    transition: .3s ease;
+    max-width: 5rem;
+    &:hover {
+        transition: .3s ease;
+        color: darkgreen;
     }
-    .projectDescription {
+}
+
+.ProjectImage {
+    border-radius: .5rem;
+    margin-top: 1rem;
+}
+
+.Post .postContent .projectDescription {
+    border-radius: .5rem;
+    padding: 1rem;
+    width: 40%;
+    min-height: 20vh;
+    font-size: 1.2rem;
+    background-color: rgb(165, 214, 173, .4);
+}
+
+.Post .postContent .ghBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Post .postContent .ghBtn .ghImg {
+    width: 3rem;
+}
+
+.Post .postContent .ghBtn:hover .ghImg {
+    filter: invert(1);
+}
+
+.ghBtn {
+    width: 5rem;
+    &:hover {
         border: 1px solid black;
-        border-radius: .5rem;
-        padding: .5rem;
-        width: 40%;
-        font-size: 1.1rem;
-        background-color: white;
     }
-    .LikeBtn {
-        width: 5rem;
-    }
-    .btnContainer {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        .button {
-            width: 5rem;
-            margin: 1rem;
-            &:hover {
-                background-color: rgb(87, 163, 115);
-                border: 1px solid black;
-              }
-        }
-    }
+}
+
+.Post .postContent .LikeBtn {
+    width: 5rem;
+}
+
+.Post .postContent .btnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Post .postContent .btnContainer .button {
+    min-width: 5rem;
+    margin: 1rem;
+}
+
+.Post .postContent .btnContainer .button:hover {
+    background-color: green;
+    color: white;
 }

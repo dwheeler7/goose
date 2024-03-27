@@ -58,7 +58,7 @@ async function create(req, res, next) {
 // Read
 async function index(_, res) {
     try {
-        const posts = await Post.find({}).populate("likes");
+        const posts = await Post.find({}).populate("likes user");
         res.locals.data.posts = posts;        
         res.json(posts);
     } catch (error) {

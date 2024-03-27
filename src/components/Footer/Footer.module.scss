@@ -1,0 +1,39 @@
+.Footer {
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 12vh;
+    border-top: .1rem solid lightgrey;
+    .listLogoContainer {
+        width: 100%;
+        padding: 2rem 5vw 0;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        .logo {
+            width: 12rem;
+        }
+        .ul {
+            list-style-type: none;
+            font-size: .8rem;
+            .navItem {
+                text-decoration: none;
+                color: grey;
+                transition: .3s ease;
+                &:hover {
+                    transition: .3s ease;
+                    font-weight: bold;
+                    color: green;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .copy {
+        font-size: .7rem;
+        margin-bottom: .3rem;
+    }
+}

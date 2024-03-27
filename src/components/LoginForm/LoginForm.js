@@ -72,13 +72,13 @@ export default function LoginForm({ setUser, setShowLogin }) {
   return (
     <div className={styles.LoginForm}>
       <div className={styles.boxc}>
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        <form className={styles.form} autoComplete="off" onSubmit={handleSubmit}>
           <div className={styles.title}>
             <h1>DevHive</h1>
           </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
             <input type="text" name="email" value={credentials.email} onChange={handleChange} required />
-            <label>Email</label>
+            <label className={styles.label}>Email</label>
             {errors.email && <span className={styles.errorSign}>❌{errors.email}</span>}
           </div>
           <div className={`${styles.inputbox} ${styles.inputFilled}`}>
@@ -89,7 +89,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
               onChange={handleChange} 
               required 
             />
-            <label>Password</label>
+            <label className={styles.label}>Password</label>
             <span 
               className={styles.showPasswordIcon} 
               onClick={() => setShowPassword(!showPassword)}
@@ -99,7 +99,7 @@ export default function LoginForm({ setUser, setShowLogin }) {
             {errors.password && <span className={styles.errorSign}>❌{errors.password}</span>}
           </div>
           <div className={styles.lost}>
-            <label>
+            <label className={styles.label}>
               <input type="checkbox" checked={rememberMe} onChange={handleRememberMeChange} />
               Remember Me
             </label>

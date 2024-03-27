@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserList from "../UserList/UserList";
 import { useNavigate } from 'react-router-dom';
+import styles from './SearchUsersForm.module.scss'
 
 export default function SearchUserForm({ users }) {
     const [searchQuery, setSearchQuery] = useState('')
@@ -26,6 +27,7 @@ export default function SearchUserForm({ users }) {
         <>
         <div>
             <input
+                className={styles.Search}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}

@@ -3,7 +3,7 @@ import styles from './HomePage.module.scss';
 import PostList from '../../components/PostList/PostList';
 import NewPostForm from '../../components/NewPostForm/NewPostForm';
 
-export default function HomePage({ posts, fetchPosts, users, user }) {                
+export default function HomePage({ posts, fetchPosts, user }) {                
     return (
         <div className={styles.HomePage}>            
             {

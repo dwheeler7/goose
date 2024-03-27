@@ -9,34 +9,40 @@
 
 
 .Nav {
+    height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     left: 0;
-    height: none;
     width: 100%;
     padding: 0 1rem;
-    background: linear-gradient(to bottom right, #7bbd86, #216b50);
-    border-bottom: .25rem solid black;
-}
-
-input {
-    border: .09rem solid black;
-}
-
-.searchBar {
-    padding: 10px;
-    animation: fadeIn 1s ease-out;
-    transition: transform 0.3s ease;
-
-    &:hover {
-        transform: scale(1.01);
-        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px lightgrey;
+    .innerNav {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+    input {
+        border: .1rem solid lightgrey;
+        border-radius: .5rem;
+        min-width: 30vw; /* Adjust width as needed */
     }
 }
 
+.logo {
+    flex-shrink: 0; /* Prevent the logo from shrinking */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 9vw;
+    margin: 0 auto; /* Center the logo horizontally */
+}
 .ul {
     display: flex;
     align-items: center;
@@ -48,34 +54,35 @@ input {
     align-items: center;
     padding: 0 1rem;
     text-decoration: none;
-    animation: fadeIn 1s ease-out;
-    transition: transform 0.3s ease;
-
+    transition: .3s ease;
     &:hover {
-        transform: scale(1.1);
-        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+        cursor: pointer;
+        transform: scale(1.2);
+        transition: .3s ease;
     }
+}
 
-    .listItem {
-        display: flex;
-        align-items: center;
+.navItem .listItem {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+}
 
-        .btnLogo {
-            width: 2rem; 
-            height: 2rem; 
-            margin-right: 0.5rem;
-        }
+.navItem .listItem .btnLogo {
+    width: 2rem; 
+    height: 2rem; 
+    margin-right: 0.5rem;
+}
 
-        .logSignup {
-            width: 32px;
-            height: 32px;
-        }
-    }
+.navItem .listItem .logSignup {
+    width: 32px;
+    height: 32px;
 }
 
 @media (max-width: 768px) {
     .Nav {
         flex-direction: column;
+        align-items: flex-start; /* Align items to the start for vertical layout */
 
         .searchBar,
         .ul {
@@ -83,12 +90,12 @@ input {
         }
     }
 
-    .navItem {
-        .listItem {
-            .btnLogo {
-                width: 1.5rem; 
-                height: 1.5rem;
-            }
-        }
+    input {
+        width: 100%; /* Make the search bar occupy full width */
+    }
+
+    .navItem .listItem .btnLogo {
+        width: 1.5rem; 
+        height: 1.5rem;
     }
 }
