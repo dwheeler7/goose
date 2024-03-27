@@ -2019,13 +2019,7 @@ const SettingsPage = _ref => {
     type: "text",
     value: gitHubLink,
     onChange: e => setGitHubLink(e.target.value)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Change Profile Photo:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "file",
-    onChange: handleFileChange
-  })), picture && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: picture,
-    alt: "Profile"
-  }), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleSave
   }, "Save Changes")));
 };
@@ -6482,4 +6476,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3e710e403e0b73fc01b95bc11517751a.js.map
+//# sourceMappingURL=App.7e5b16d4cf9087add86384a66847c512.js.map
