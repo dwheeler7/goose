@@ -87,14 +87,7 @@ export default function SignUpForm({ setUser, setShowLogin }) {
               <option value="developer">Developer</option>
               <option value="employer">Employer</option>
             </select>
-          </div>
-          <div className={styles.inputbox}>
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handlePictureChange} 
-            />
-          </div>
+          </div>          
           <button className={styles.button} type="submit" disabled={disable}>Sign Up</button>
           <div className={styles.login}>
             <p onClick={() => setShowLogin(true)} className={styles.loginLink}>Already have an account? Log In</p>
