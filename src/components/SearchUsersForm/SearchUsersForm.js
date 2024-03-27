@@ -29,7 +29,7 @@ export default function SearchUserForm({ users }) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search for users"
+                placeholder="Search"
             />                    
         </div>
         {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}

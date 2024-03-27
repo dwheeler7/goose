@@ -1,48 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './LikeBtn.module.scss';
+import { likePost, unlikePost } from '../../utilities/posts-service';
 
-export default function LikeBtn() {
-  const [clicked, setClicked] = useState(false);
+export default function LikeBtn({ post, user, setPost }) {
+  // state for number of likes  
+  const [likesNum, setLikesNum] = useState();
+  const [likedPostBool, setLikedPostBool] = useState(getLikedPostBool());
 
-  const handleClick = () => {
-    // Toggle the clicked state
-    setClicked(!clicked);
-    // Call handleLike function
-    handleLike();
-  };
+  // helper function to get likes num
+  const getLikesNum = () => post.likes.length;
 
-  const handleLike = async () => {
+  // helper function to determine whether user liked post
+  function getLikedPostBool() {
+    // return post.likes.some(userLike => userLike === user._id);
+    return post.likes.some(userLike => userLike._id === user._id || userLike === user._id)
+  }
+
+  // handle click
+  const handleClick = async e => {
+    e.preventDefault();
     try {
-      // Here you can perform the logic for like/unlike
-      if (clicked) {
-        // Unlike the post
-        await unlikePost();
+      let updatedPost;
+      if (likedPostBool) {
+        updatedPost = await unlikePost(post._id);
       } else {
-        // Like the post
-        await likePost();
+        updatedPost = await likePost(post._id);
       }
-    } catch (error) {
-      console.error('Error:', error);
+      setPost(updatedPost);      
+    } catch(err) {
+      console.error(err);
     }
   };
 
+  // use effect to update likesNum and likedPostBool
+  useEffect(() => {
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());    
+  }, [post]);
+
+  useEffect(() => {
+    setLikesNum(getLikesNum());
+    setLikedPostBool(getLikedPostBool());
+  }, []);
+
   return (
-    <section>
-      <ul className={styles.iconList}>
-        <li className={styles.iconItem}>
-          <button
-            className={`${styles.iconLink} ${clicked ? styles.clicked : ''}`}
-            onClick={handleClick}
-          >
-            <div className={styles.iconContainer}>
-              <img 
-                src="https://cdn-icons-png.flaticon.com/128/4674/4674399.png" 
-                alt="Like" 
-                className={styles.iconImage}/>
-            </div>
-          </button>
-        </li>
-      </ul>
-    </section>
+    <>    
+    <div className={styles.LikeBtnContainer}>
+      <button className={styles.button} onClick={handleClick}>{likedPostBool ? <span>Unlike</span> : <span>Like</span>}</button>
+      <span className={styles.likesSum}>{likesNum}</span>
+    </div>
+    </>
+
   );
 }

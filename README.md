@@ -471,6 +471,18 @@ Retrieve all posts.
     ]
     ```
 
+### Index posts by user
+Retrieves all posts created by a specific user. Used for profile pages.
+
+- **Request**
+  - Method: `GET`
+  - Endpoint: `/api/posts/user/:userId`
+  - Headers: None
+
+- **Response**
+  - Status Code: `200 OK`
+  - Body: JSON array containing all posts
+
 ### Get Post by ID
 
 Retrieve a specific post by its ID.
