@@ -23,7 +23,9 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
     
   // }
   
-  const isCurrentUserPost = post.user._id === user._id
+  // console.log(post.user._id)
+  // console.log(user._id)
+  // const isCurrentUserPost = post.user._id === user._id
 
   // post.user._id === user._id;
 
@@ -43,21 +45,21 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
           <MarkdownRenderer source={post.projectDescription} />
           <div className={styles.btnContainer}>
             {
-                isCurrentUserPost && (
-                    <>
-                        <span>{post.likes.length} Likes</span>
-                        <button className={styles.button}>Edit</button>
-                        <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
-                    </>
-                )
-            }
-            {user && isLoggedInUser && !isCurrentUserPost && (
+                // user && (
+                //     <>
+                //         <span>{post.likes.length} Likes</span>
+                //         <button className={styles.button}>Edit</button>
+                //         <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
+                //     </>
+                // )
+            }            
+            {user && isLoggedInUser && (
               <>
                 <span>{post.likes.length} Likes</span>                
                 <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
               </>
             )}
-            {user && !isLoggedInUser && !isCurrentUserPost && (
+            {user && !isLoggedInUser && (
               <>
                 <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} />
               </>

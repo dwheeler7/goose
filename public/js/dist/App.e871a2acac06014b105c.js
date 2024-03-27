@@ -1178,7 +1178,9 @@ function Post(_ref) {
 
   // }
 
-  const isCurrentUserPost = post.user._id === user._id;
+  // console.log(post.user._id)
+  // console.log(user._id)
+  // const isCurrentUserPost = post.user._id === user._id
 
   // post.user._id === user._id;
 
@@ -1203,19 +1205,12 @@ function Post(_ref) {
     source: post.projectDescription
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
-  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, user && isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
     post: post,
     setPost: setPost,
     fetchPosts: fetchPosts
-  })), user && isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
-    post: post,
-    setPost: setPost,
-    fetchPosts: fetchPosts
-  })), user && !isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  })), user && !isLoggedInUser && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LikeBtn_LikeBtn__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LikeBtn,
     post: post,
     user: user,
@@ -6479,4 +6474,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.8729ea79033a6dcfde3f24c6eecd2c43.js.map
+//# sourceMappingURL=App.10efa333835f4789da3575d3d13bbe56.js.map
