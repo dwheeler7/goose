@@ -87,7 +87,9 @@ const SettingsPage = ({ user, updateUser, setUser }) => {
                 {picture && <img src={picture} alt="Profile" />} {/* Render profile picture if available */}
                 <br />
                 <button onClick={handleSave}>Save Changes</button>
+                
             </div>
+            <a href="/customer-support" className={styles.customerSupportLink}>Customer Support</a>
         </div>
     );
 };
