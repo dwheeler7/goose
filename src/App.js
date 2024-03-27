@@ -7,6 +7,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import SettingsPage from './pages/SettingsPage/SettingsPage'
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
+import Footer from './components/Footer/Footer';
 import { getAllPosts } from './utilities/posts-service'
 import { indexUsers, getUser } from './utilities/users-service'
 import { CustomerSupport, SupportTicketForm } from './components/CustomerSupport/CustomerSupport';
@@ -86,7 +87,9 @@ export default function App() {
                     <Route path='/profile/:userId' element={<ProfilePage user={user} setUser={setUser} posts={posts} />} />
                     <Route path='/settings' element={<SettingsPage user={user} updateUser={updateUser} setUser={setUser} />} />
                 </Routes>
+                {shouldNotDisplayNavBar && (
+                    <Footer />)}
             </div>
         </>
     );
-} app.js
+}
