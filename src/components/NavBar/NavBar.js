@@ -23,7 +23,7 @@ export default function NavBar({ user, setUser, users }) {
                     {!user ? (
                         <Link to="/auth" className={`${styles.navItem} ${styles.login}`}>
                             <li className={styles.listItem}>
-                                <img className={styles.logSignup} src="https://cdn-icons-png.flaticon.com/128/10015/10015437.png" alt="Log/Signup" />
+                                <img className={styles.logSignup} src="https://cdn-icons-png.flaticon.com/128/10405/10405578.png" alt="Log/Signup" />
                             </li>
                         </Link>
                     ) : (
