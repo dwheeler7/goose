@@ -42,5 +42,6 @@ router.post('/follow', ensureLoggedIn, dataController.followDeveloper);
 // POST /api/users/unfollow
 router.post('/unfollow', ensureLoggedIn, dataController.unfollowDeveloper);
 
+router.put('/:id', ensureLoggedIn, dataController.updateUser);
 
 module.exports = router;
