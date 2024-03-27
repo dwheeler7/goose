@@ -67,7 +67,7 @@ export default function CommentForm({ post, user }) {
 					onChange={(e) => setNewComment(e.target.value)}
 					placeholder="Add a comment"
 				/>
-				<button className={styles.submitBtn} type="submit">Submit</button>
+				<button className={styles.button} type="submit">Submit</button>
 			</form>
 		</div>
 	)

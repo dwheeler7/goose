@@ -12,7 +12,7 @@ const UserList = ({ users, onUserClick }) => {
         const key = user._id || user.username || index; // Use id, username, or index as the key
         return (
           <div key={key} onClick={() => handleUserClick(user)}>
-            <User user={user} />
+            <User user={user} userType={user.userType} /> 
           </div>
         );
       })}

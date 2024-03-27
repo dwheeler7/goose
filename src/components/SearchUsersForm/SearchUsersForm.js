@@ -23,20 +23,30 @@ export default function SearchUserForm({ users }) {
         navigate(`/profile/${user._id}`)
     }
 
+    const handleInputBlur = () => {
+        setTimeout(() => {
+            setSearchQuery('');
+            setSearchResults([]);
+        }, 125); // add time interval so u can click on a user quick enough
+    }
+
     return (
         <>
-        <div>
-            <input
+         <div>
+         <input
                 className={styles.Search}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
+                onBlur={handleInputBlur}
                 placeholder="Search"
-            />                    
+            />                   
         </div>
-        <div className={styles.searchResults} >
-        {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
-        </div>
+        {searchResults.length > 0 && (
+            <div className={styles.SearchResults}>
+                <UserList users={searchResults} onUserClick={handleUserClick} />
+            </div>
+        )}
         </>
     )
 }

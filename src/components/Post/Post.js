@@ -53,8 +53,7 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
             }
             {user && isLoggedInUser && !isCurrentUserPost && (
               <>
-                <span>{post.likes.length} Likes</span>
-                <button className={styles.button}>Edit</button>
+                <span>{post.likes.length} Likes</span>                
                 <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
               </>
             )}

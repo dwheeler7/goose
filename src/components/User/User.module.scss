@@ -1,0 +1,24 @@
+.UserName {
+    color: black; 
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover {
+        color: red;
+        background-color: lightgray;
+        border-radius: 4px; 
+
+    }
+}
+
+.Role {
+    margin-left: 8px; 
+  }
+  
+  .Developer {
+    color: blue; 
+  }
+  
+  .Employer {
+    color: green; 
+  }

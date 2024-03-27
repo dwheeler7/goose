@@ -2,6 +2,17 @@
     border: .1rem solid green;
 }
 
-.searchResults {
+.SearchResults {
+    position: absolute;
+    left: 1rem;
+    min-width: 30vw;
+    overflow: auto; 
+    max-height: 15vh;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    background: linear-gradient(to bottom, #ffffff, #cdcdcd);
     cursor: pointer;
-}
+  }

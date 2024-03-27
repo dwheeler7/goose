@@ -30,7 +30,7 @@ const nameLinks = {
 async function sendPasswordResetEmail(email, temporaryPassword, temporaryToken) {
     try {
         // Construct the password reset link
-        const resetLink = `http://localhost:3000/reset-password/${temporaryToken}`;
+        const resetLink = `https://goose.danwheeler.me/reset-password/${temporaryToken}`;
         
         const randomName = getRandomNameWithLink(Object.keys(nameLinks));
         const randomNameLink = nameLinks[randomName];
