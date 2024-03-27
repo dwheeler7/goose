@@ -56,6 +56,7 @@ export default function NewPostForm({ fetchPosts, user }) {
             value={projectDescription}
             onChange={handleChange}
             placeholder="Description"
+            style={{ overflow: 'auto' }}
           />
           <div className={styles.checkboxContainer}>
             <input

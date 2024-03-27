@@ -946,7 +946,10 @@ function NewPostForm(_ref) {
     name: "projectDescription",
     value: projectDescription,
     onChange: handleChange,
-    placeholder: "Description"
+    placeholder: "Description",
+    style: {
+      overflow: 'auto'
+    }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NewPostForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].checkboxContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
@@ -3183,7 +3186,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   font-size: 1rem;
 }
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX:focus {
-  outline: 0.1rem solid green;
+  outline: 0.1rem solid #1f644b;
 }
 .wekziSaaqwOLRFMJXHQ2 .aJu0J6aP6lo4xM7cgqBJ .oIfat_Ocs4SldBNG2mHX:hover {
   transform: scale(1.0005);
@@ -3221,7 +3224,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.wekziSaaqwOLRFMJXHQ2 {
   border: 1px solid black;
   transform: scale(1.01);
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
-}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0BAAA;EACA,qBAAA;EACA,cAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,gBAAA;AAEZ;AADY;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 0 auto;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            margin-top: 1rem;\n            &:hover {\n                background-color: rgb(87, 163, 115);\n                border: 1px solid black;\n                transform: scale(1.01);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n              }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NewPostForm/NewPostForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,8DAAA;EACA,0BAAA;EACA,qBAAA;EACA,cAAA;EACA,aAAA;AACJ;AAAI;EACI,gBAAA;AAER;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,YAAA;EACA,qBAAA;EACA,2BAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AAGZ;AAFY;EACI,6BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AADQ;EACI,YAAA;EACA,qBAAA;EACA,UAAA;EACA,SAAA;EACA,oBAAA;EACA,eAAA;EACA,2BAAA;AAGZ;AAFY;EACI,2BAAA;AAIhB;AAFY;EACI,wBAAA;EACA,mDAAA;AAIhB;AAAQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAEZ;AADY;EACI,eAAA;AAGhB;AAAQ;EACI,gBAAA;AAEZ;AADY;EACI,mCAAA;EACA,uBAAA;EACA,sBAAA;EACA,mDAAA;AAGhB","sourcesContent":[".NewPostForm {\n    width: 90%;\n    background: linear-gradient(to bottom right, #7bbd86, #1f644b);\n    border: .1rem solid black;\n    border-radius: .5rem;\n    margin: 0 auto;\n    padding: 2rem;\n    .heading {\n        margin: 0 0 1rem;\n    }\n    .Form {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        .textInput {\n            height: 2rem;\n            border-radius: .2rem;\n            border: .01rem solid black;\n            width: 80%;\n            margin: .1rem 0;\n            font-size: 1rem;\n            &:focus {\n                outline: .1rem solid #1f644b;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n        }\n        .textAreaInput {\n            height: 6rem;\n            border-radius: .2rem;\n            width: 80%;\n            margin: 0;\n            padding: .5rem 1rem;\n            font-size: 1rem;\n            border: .01rem solid black;\n            &:focus {\n                outline: .1rem solid green;\n            }\n            &:hover {\n                transform: scale(1.0005);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n            }\n\n        }\n        .checkboxContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            .label {\n                font-size: 1rem;\n            }\n        }\n        .button {\n            margin-top: 1rem;\n            &:hover {\n                background-color: rgb(87, 163, 115);\n                border: 1px solid black;\n                transform: scale(1.01);\n                filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));\n              }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NewPostForm": `wekziSaaqwOLRFMJXHQ2`,
@@ -3781,15 +3784,7 @@ input:-webkit-autofill {
 
 input:-webkit-autofill:focus {
   background-color: inherit !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #7bbd86, #16523c);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,uDAAA;AACJ;;AAEA;EACI,iCAAA;AACJ;;AAEA;EACI,8CAAA;EACA,sCAAA;AACJ;;AAEE;EACE,oCAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,iBAAA;EACA,8DAAA;EACA,4BAAA;EACA,2BAAA;EACA,sBAAA;AACJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: \"Inter Tight\", Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}\n\ninput:-webkit-autofill {\n    -webkit-transition: background-color 0s 99999s;\n    transition: background-color 0s 99999s;\n  }\n  \n  input:-webkit-autofill:focus {\n    background-color: inherit !important;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    min-height: 100vh;\n    background: linear-gradient(to bottom right, #7bbd86, #16523c);\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n  }"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAEA;EACI,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;EACA,SAAA;EACA,UAAA;EACA,uDAAA;AACJ;;AAEA;EACI,iCAAA;AACJ;;AAEA;EACI,8CAAA;EACA,sCAAA;AACJ;;AAEE;EACE,oCAAA;AACJ","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');\n@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Galdeano&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Buginese&family=Sulphur+Point:wght@300;400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');\n:root {\n    --heading-color: rgb(78, 91, 49);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    font-family: \"Inter Tight\", Verdana, Tahoma, sans-serif;\n}\n\nbody {\n    background-color: var(--bg-color);\n}\n\ninput:-webkit-autofill {\n    -webkit-transition: background-color 0s 99999s;\n    transition: background-color 0s 99999s;\n  }\n  \n  input:-webkit-autofill:focus {\n    background-color: inherit !important;\n  }"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -5532,4 +5527,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.f0caeb064de253f263a26823b42189a7.js.map
+//# sourceMappingURL=App.bc105af94444462047c12e2183ab2be9.js.map
