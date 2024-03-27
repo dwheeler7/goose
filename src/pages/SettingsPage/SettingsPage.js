@@ -77,6 +77,15 @@ const SettingsPage = ({ user, updateUser, setUser }) => {
                     />
                 </label>
                 <br />
+                <label>
+                    Profile Photo
+                    <input
+                        type="text"
+                        value={picture}
+                        onChange={(e) => setPicture(e.target.value)}
+                    />
+                </label>
+                <br />
                 {/* <label>
                     Change Profile Photo:
                     <input

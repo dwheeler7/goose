@@ -2017,6 +2017,10 @@ const SettingsPage = _ref => {
     type: "text",
     value: gitHubLink,
     onChange: e => setGitHubLink(e.target.value)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "Profile Photo", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    value: picture,
+    onChange: e => setPicture(e.target.value)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleSave
   }, "Save Changes")));
@@ -6474,4 +6478,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.10efa333835f4789da3575d3d13bbe56.js.map
+//# sourceMappingURL=App.ab022b6c45f40c7f82803fc21df61b35.js.map
