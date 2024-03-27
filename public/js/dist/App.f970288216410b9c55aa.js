@@ -1170,12 +1170,15 @@ function Post(_ref) {
     fetchPosts
   } = _ref;
   const [post, setPost] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(postData);
-  const fetchCurrentUser = () => {
-    if (user && post.user._id === user._id) {
-      return true;
-    } else return false;
-  };
-  const isCurrentUserPost = fetchCurrentUser();
+
+  // const fetchCurrentUser = () => {
+  //   if (user && (post.user._id === user._id)) {
+  //     return true
+  //   } else return false
+
+  // }
+
+  const isCurrentUserPost = post.user._id === user._id;
 
   // post.user._id === user._id;
 
@@ -6476,4 +6479,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.7e5b16d4cf9087add86384a66847c512.js.map
+//# sourceMappingURL=App.8729ea79033a6dcfde3f24c6eecd2c43.js.map
