@@ -43,7 +43,7 @@ function Footer({ user, setUser }) {
                 </>
             )}
         </ul>
-        <img className={styles.logo} src="https://i.imgur.com/xbSgxlf.png" />
+        <img className={styles.logo} src="https://i.imgur.com/0w4BqIR.png" />
         </div>
         <p className={styles.copy}>Goose Dev Hub © 2024</p>
     </div>

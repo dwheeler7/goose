@@ -1,29 +1,22 @@
 import styles from './CommentForm.module.scss';
 import { useState, useEffect } from 'react';
-import Post from '../Post/Post';
 
 export default function CommentForm({ post, user }) {
   const [newComment, setNewComment] = useState('');
-  const [comments, setComments] = useState([]);
-  const [postId, setPostId] = useState('');
-  const [userId, setUserId] = useState('');
-
-  const fetchComments = async () => {
+  const [comments, setComments] = useState(null);
+    // console.log(user)
+  const foundPost = async () => {
     try {
-      const response = await fetch('/api/comments', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await fetch(`/api/posts/${post._id}`)
       const data = await response.json();
-      setComments(data.comments);
+      setComments(data.comments)
     } catch (error) {
       console.error('There was an error!', error);
     }
   };
 
   useEffect(() => {
-    fetchComments();
+    foundPost();
   }, []);
 
     const handleSubmit = async (e) => {
@@ -37,8 +30,8 @@ export default function CommentForm({ post, user }) {
             },
             body: JSON.stringify({
               content: newComment,
-              post: postId,
-              user: userId
+              post: post._id,
+              user: user._id
             })
           });
       
@@ -47,7 +40,7 @@ export default function CommentForm({ post, user }) {
           }
       
           const data = await response.json();
-          setComments([...comments, data.comment]);
+          setComments([...comments, data]);
           setNewComment('');
         } catch (error) {
           console.error('There was an error.', error);
@@ -56,20 +49,17 @@ export default function CommentForm({ post, user }) {
 
 	return (
 		<div className={styles.commentContainer}>
-      {
-        comments ? 
-        <ul className={styles.commentList}>
+			<ul className={styles.commentList}>
 				{comments && comments.map((comment) => (
-					<li key={comment.id} className={styles.commentItem}>
+					<li key={comment._id} className={styles.commentItem}>
 						<a href="" className={styles.commentUser}>
 							{comment.user}
 						</a>
-						<p className={styles.comment}>{comment.text}</p>
+						<p className={styles.comment}>{comment.content}</p>
 					</li>
 				))}
-			</ul> : null
-      }
-			<form className={styles.form} onSubmit={handleSubmit}>
+			</ul>
+			<form className={styles.inputComment} onSubmit={handleSubmit}>
 				<input
           className={styles.textInput}
 					type="text"
@@ -77,7 +67,7 @@ export default function CommentForm({ post, user }) {
 					onChange={(e) => setNewComment(e.target.value)}
 					placeholder="Add a comment"
 				/>
-				<button className={styles.button} type="submit">Submit</button>
+				<button className={styles.submitBtn} type="submit">Submit</button>
 			</form>
 		</div>
 	)
