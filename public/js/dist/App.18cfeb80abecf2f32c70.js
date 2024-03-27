@@ -1174,7 +1174,14 @@ function Post(_ref) {
     source: post.projectDescription
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].btnContainer
-  }, user && isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
+    post: post,
+    setPost: setPost,
+    fetchPosts: fetchPosts
+  })), user && isLoggedInUser && !isCurrentUserPost && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, post.likes.length, " Likes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_DeleteBtn_DeleteBtn__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: _Post_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button,
@@ -6292,4 +6299,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.9415440c11deff41d64759c7befda209.js.map
+//# sourceMappingURL=App.3ddd312c6187cd9b5d6a371d34cee95c.js.map

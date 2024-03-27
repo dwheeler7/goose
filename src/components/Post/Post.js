@@ -33,6 +33,15 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
           </div>
           <MarkdownRenderer source={post.projectDescription} />
           <div className={styles.btnContainer}>
+            {
+                isCurrentUserPost && (
+                    <>
+                        <span>{post.likes.length} Likes</span>
+                        <button className={styles.button}>Edit</button>
+                        <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
+                    </>
+                )
+            }
             {user && isLoggedInUser && !isCurrentUserPost && (
               <>
                 <span>{post.likes.length} Likes</span>
