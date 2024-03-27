@@ -47,45 +47,47 @@ const SettingsPage = ({ user, updateUser, setUser }) => {
     };
     // JSX returned by the component
     return (
-        <div className={styles.settingsPage}>
-            <h1 className={styles.editTitle}>Edit User Profile</h1>
-            <label>
-                Username
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                User Bio
-                <input
-                    type="text"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                GitHub Link
-                <input
-                    type="text"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                Change Profile Photo:
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                />
-            </label>
-            {picture && <img src={picture} alt="Profile" />} {/* Render profile picture if available */}
-            <br />
-            <button onClick={handleSave}>Save Changes</button>
+        <div className={styles.settingsPageContainer}>
+            <div className={styles.settingsPage}>
+                <h1 className={styles.editTitle}>Edit User Profile</h1>
+                <label>
+                    Username
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </label>
+                <br />
+                <label>
+                    User Bio
+                    <input
+                        type="text"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                    />
+                </label>
+                <br />
+                <label>
+                    GitHub Link
+                    <input
+                        type="text"
+                        value={gitHubLink}
+                        onChange={(e) => setGitHubLink(e.target.value)}
+                    />
+                </label>
+                <br />
+                <label>
+                    Change Profile Photo:
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                    />
+                </label>
+                {picture && <img src={picture} alt="Profile" />} {/* Render profile picture if available */}
+                <br />
+                <button onClick={handleSave}>Save Changes</button>
+            </div>
         </div>
     );
 };
