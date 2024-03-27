@@ -20,7 +20,7 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
                         </div>
                         {post.image && <img className={styles.ProjectImage} src={post.image} alt="Project" />}
                     </div>
-                    <p className={styles.projectDescription}>{post.projectDescription}</p>
+                    <MarkdownRenderer source={post.projectDescription} />                
                     <div className={styles.btnContainer}>
                         {user && !isLoggedInUser && <LikeBtn className={styles.LikeBtn} post={post} user={user} setPost={setPost} />}
                         {user && isLoggedInUser && (
