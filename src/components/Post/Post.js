@@ -6,6 +6,13 @@ import DeleteBtn from '../DeleteBtn/DeleteBtn';
 import CommentForm from '../CommentForm/CommentForm';
 import MarkdownRenderer from '../MarkdownRenderer/MarkdownRenderer'; // Import the MarkdownRenderer component
 
+const ensureHttps = (url) => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return 'https://' + url;
+    }
+    return url;
+  };
+
 export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
     const [post, setPost] = useState(postData);
 
@@ -29,7 +36,11 @@ export default function Post({ postData, isLoggedInUser, user, fetchPosts }) {
                                 <DeleteBtn className={styles.button} post={post} setPost={setPost} fetchPosts={fetchPosts} />
                             </>
                         )}
-                        <button className={`${styles.button} ${styles.ghBtn}`} src={postData.githubLink ? postData.githubLink : '#'} target={postData.githubLink ? "_blank" : null}><img className={styles.ghImg} src="https://i.imgur.com/F796Bnt.png"/></button>
+                        <a 
+                        href={postData.githubLink ? ensureHttps(postData.githubLink) : '#'}
+                        target={postData.githubLink ? '_blank' : null}>
+                            <button className={`${styles.button} ${styles.ghBtn}`} target={postData.githubLink ? "_blank" : null}><img className={styles.ghImg} src="https://i.imgur.com/F796Bnt.png"/></button>
+                        </a>
                     </div>
                 </div>
                 {user && !isLoggedInUser && (
