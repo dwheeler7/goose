@@ -34,7 +34,9 @@ export default function SearchUserForm({ users }) {
                 placeholder="Search"
             />                    
         </div>
+        <div className={styles.searchResults} >
         {searchResults.length > 0 && <UserList users={searchResults} onUserClick={handleUserClick} />}
+        </div>
         </>
     )
 }

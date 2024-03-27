@@ -30,7 +30,7 @@ export default function ProfilePage({ user }) {
   // get posts of user from db
   const fetchProfilePosts = async () => {
     setIsLoadingPosts(true);
-    console.log('USer Id:', userId)
+    console.log('User Id:', userId)
     console.log('About to call API')
     const foundPosts = await getAllPostsByUser(userId);
     console.log(foundPosts)
@@ -83,7 +83,7 @@ export default function ProfilePage({ user }) {
                     className={styles.portfolioLink}
                     href={profileUser.portfolioLink ? ensureHttps(profileUser.portfolioLink) : '#'}
                   >
-                    <img className={styles.portfolioLogo} src="https://i.imgur.com/FZvlk3y.png" alt="Portfolio" />
+                    <img className={styles.portfolioLogo} src="https://cdn-icons-png.flaticon.com/128/3683/3683218.png" alt="Portfolio" />
                   </a>
                 </div>
               </div>
