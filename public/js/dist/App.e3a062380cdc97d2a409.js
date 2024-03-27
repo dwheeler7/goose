@@ -167,9 +167,7 @@ function Button(_ref) {
 /* harmony import */ var _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommentForm.module.scss */ "./src/components/CommentForm/CommentForm.module.scss");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Post/Post */ "./src/components/Post/Post.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
 
 
 function CommentForm(_ref) {
@@ -178,16 +176,11 @@ function CommentForm(_ref) {
     user
   } = _ref;
   const [newComment, setNewComment] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const [comments, setComments] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-  const [postId, setPostId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const [userId, setUserId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const fetchComments = async () => {
+  const [comments, setComments] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  // console.log(user)
+  const foundPost = async () => {
     try {
-      const response = await fetch('/api/comments', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await fetch("/api/posts/".concat(post._id));
       const data = await response.json();
       setComments(data.comments);
     } catch (error) {
@@ -195,7 +188,7 @@ function CommentForm(_ref) {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    fetchComments();
+    foundPost();
   }, []);
   const handleSubmit = async e => {
     e.preventDefault();
@@ -207,15 +200,15 @@ function CommentForm(_ref) {
         },
         body: JSON.stringify({
           content: newComment,
-          post: postId,
-          user: userId
+          post: post._id,
+          user: user._id
         })
       });
       if (!response.ok) {
         throw new Error('HTTP error ' + response.status);
       }
       const data = await response.json();
-      setComments([...comments, data.comment]);
+      setComments([...comments, data]);
       setNewComment('');
     } catch (error) {
       console.error('There was an error.', error);
@@ -223,18 +216,18 @@ function CommentForm(_ref) {
   };
   return /*#__PURE__*/React.createElement("div", {
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentContainer
-  }, comments ? /*#__PURE__*/React.createElement("ul", {
+  }, /*#__PURE__*/React.createElement("ul", {
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentList
   }, comments && comments.map(comment => /*#__PURE__*/React.createElement("li", {
-    key: comment.id,
+    key: comment._id,
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentItem
   }, /*#__PURE__*/React.createElement("a", {
     href: "",
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].commentUser
   }, comment.user), /*#__PURE__*/React.createElement("p", {
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].comment
-  }, comment.text)))) : null, /*#__PURE__*/React.createElement("form", {
-    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].form,
+  }, comment.content)))), /*#__PURE__*/React.createElement("form", {
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].inputComment,
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("input", {
     className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].textInput,
@@ -243,7 +236,7 @@ function CommentForm(_ref) {
     onChange: e => setNewComment(e.target.value),
     placeholder: "Add a comment"
   }), /*#__PURE__*/React.createElement("button", {
-    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].button,
+    className: _CommentForm_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].submitBtn,
     type: "submit"
   }, "Submit")));
 }
@@ -535,7 +528,7 @@ function Footer(_ref) {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].listItem
   }, "Logout")))), /*#__PURE__*/React.createElement("img", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].logo,
-    src: "https://i.imgur.com/xbSgxlf.png"
+    src: "https://i.imgur.com/0w4BqIR.png"
   })), /*#__PURE__*/React.createElement("p", {
     className: _Footer_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].copy
   }, "Goose Dev Hub \xA9 2024"));
@@ -914,7 +907,7 @@ function NavBar(_ref) {
     users: users
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logo,
-    src: "https://i.imgur.com/xbSgxlf.png"
+    src: "https://i.imgur.com/0w4BqIR.png"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ul
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
@@ -2475,7 +2468,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.TjvmHHxvXBzh3dA9l3uX {
   color: var(--text-green);
   letter-spacing: 2px;
   text-align: center;
-  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
 }
 
 .u7gcbFha0mhQrN61_EUl {
@@ -2487,7 +2479,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.TjvmHHxvXBzh3dA9l3uX {
   max-height: 250px;
   max-width: 200px;
   overflow-y: auto;
-  border-bottom: 0.1rem solid rgba(51, 86, 51, 0.3);
 }
 
 .wTphI4l8tJf73C8Mdcjt {
@@ -2536,7 +2527,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.TjvmHHxvXBzh3dA9l3uX {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
-}`, "",{"version":3,"sources":["webpack://./src/components/CommentForm/CommentForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;EACA,mBAAA;AACJ;AAAI;EACI,WAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGZ;;AAEA;EACI,eAAA;EACA,wBAAA;EACA,mBAAA;EACA,kBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,iBAAA;EACA,gBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,UAAA;EACA,kBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AACJ;;AAEA;EACI,kBAAA;EACA,UAAA;EACA,aAAA;EACA,8BAAA;EACA,qBAAA;AACJ;AAAI;EACI,0BAAA;AAER;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ","sourcesContent":[".commentContainer {\n    max-width: 100%;\n    border-radius: 20px;\n    .button {\n        width: 5rem;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        &:hover {\n            background-color: green;\n            border: 1px solid black;\n            color: white;\n        }\n    }\n}\n\n.commentTitle {\n    font-size: 2rem;\n    color: var(--text-green);\n    letter-spacing: 2px;\n    text-align: center;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: 2rem;\n    max-height: 250px;\n    max-width: 200px;\n    overflow-y: auto;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.form {\n    width: 90%;\n    text-align: center;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 3rem;\n}\n\n.textInput {\n    margin-right: 1rem;\n    width: 90%;\n    outline: none;\n    border: .1rem solid lightgrey;\n    border-radius: .5rem;\n    &:focus {\n        border: .1rem solid green;\n    }\n}\n\n.commentUser {\n    font-size: 1.2rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/CommentForm/CommentForm.module.scss"],"names":[],"mappings":"AAAA;EACI,eAAA;EACA,mBAAA;AACJ;AAAI;EACI,WAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAER;AADQ;EACI,uBAAA;EACA,uBAAA;EACA,YAAA;AAGZ;;AAEA;EACI,eAAA;EACA,wBAAA;EACA,mBAAA;EACA,kBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,iBAAA;EACA,gBAAA;EACA,gBAAA;AACJ;;AAEA;EACI,UAAA;EACA,kBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AACJ;;AAEA;EACI,kBAAA;EACA,UAAA;EACA,aAAA;EACA,8BAAA;EACA,qBAAA;AACJ;AAAI;EACI,0BAAA;AAER;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,iBAAA;EACA,mBAAA;EACA,qBAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ;;AAEA;EACI,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,iBAAA;EACA,gBAAA;EACA,iDAAA;AACJ;;AAEA;EACI,qBAAA;EACA,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,sBAAA;AACJ","sourcesContent":[".commentContainer {\n    max-width: 100%;\n    border-radius: 20px;\n    .button {\n        width: 5rem;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        &:hover {\n            background-color: green;\n            border: 1px solid black;\n            color: white;\n        }\n    }\n}\n\n.commentTitle {\n    font-size: 2rem;\n    color: var(--text-green);\n    letter-spacing: 2px;\n    text-align: center;\n}\n\n.commentList {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    padding-top: 2rem;\n    max-height: 250px;\n    max-width: 200px;\n    overflow-y: auto;\n}\n\n.form {\n    width: 90%;\n    text-align: center;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 3rem;\n}\n\n.textInput {\n    margin-right: 1rem;\n    width: 90%;\n    outline: none;\n    border: .1rem solid lightgrey;\n    border-radius: .5rem;\n    &:focus {\n        border: .1rem solid green;\n    }\n}\n\n.commentUser {\n    font-size: 1.2rem;\n    color: black;\n    font-weight: bold;\n    letter-spacing: 2px;\n    text-decoration: none;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}\n\n.commentItem {\n    font-size: 1.5rem;\n    color: black;\n    letter-spacing: 1px;\n    padding-top: 1rem;\n    list-style: none;\n    border-bottom: .1rem solid rgb(51, 86, 51, 0.3);\n}\n\n.comment {\n    display: inline-block;\n    padding: 1rem;\n    overflow-wrap: break-word;\n    word-wrap: break-word;\n    word-break: break-word;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"commentContainer": `TjvmHHxvXBzh3dA9l3uX`,
@@ -3426,6 +3417,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes VLeMwo6zXkTSOx1NGU9o {
   padding: 0 1rem;
   background-color: #ffffff;
   box-shadow: 0 2px 8px lightgrey;
+  z-index: 1000;
 }
 .SLZXaJInmBusSKJAiC7A .Yzgk56lCq7Zq2IQkbBwB {
   width: 100%;
@@ -3502,7 +3494,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `@keyframes VLeMwo6zXkTSOx1NGU9o {
     width: 1.5rem;
     height: 1.5rem;
   }
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI;IACI,UAAA;EACN;EACE;IACI,UAAA;EACN;AACF;AAGA;EACI,WAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;EACA,+BAAA;EACA,aAAA;AADJ;AAEI;EACI,WAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,kBAAA;AAAR;AAEI;EACI,8BAAA;EACA,qBAAA;EACA,eAAA,EAAA,2BAAA;AAAR;;AAIA;EACI,cAAA,EAAA,oCAAA;EACA,kBAAA;EACA,SAAA;EACA,2BAAA;EACA,UAAA;EACA,cAAA,EAAA,iCAAA;AADJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,gBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,eAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;AACI;EACI,eAAA;EACA,qBAAA;EACA,qBAAA;AACR;;AAGA;EACI,aAAA;EACA,mBAAA;EACA,0CAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,WAAA;EACA,YAAA;AAAJ;;AAGA;EACI;IACI,sBAAA;IACA,uBAAA,EAAA,iDAAA;EAAN;EAEM;;IAEI,WAAA;EAAV;EAIE;IACI,WAAA,EAAA,0CAAA;EAFN;EAKE;IACI,aAAA;IACA,cAAA;EAHN;AACF","sourcesContent":["@keyframes fadeIn {\n    from {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n\n\n.Nav {\n    height: 8vh;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 0 1rem;\n    background-color: #ffffff;\n    box-shadow: 0 2px 8px lightgrey;\n    z-index: 1000;\n    .innerNav {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        position: relative;\n    }\n    input {\n        border: .1rem solid lightgrey;\n        border-radius: .5rem;\n        min-width: 30vw; /* Adjust width as needed */\n    }\n}\n\n.logo {\n    flex-shrink: 0; /* Prevent the logo from shrinking */\n    position: absolute;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 9vw;\n    margin: 0 auto; /* Center the logo horizontally */\n}\n.ul {\n    display: flex;\n    align-items: center;\n    list-style: none;\n}\n\n.navItem {\n    display: flex;\n    align-items: center;\n    padding: 0 1rem;\n    text-decoration: none;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.2);\n        transition: .3s ease;\n    }\n}\n\n.navItem .listItem {\n    display: flex;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n.navItem .listItem .btnLogo {\n    width: 2rem; \n    height: 2rem; \n    margin-right: 0.5rem;\n}\n\n.navItem .listItem .logSignup {\n    width: 32px;\n    height: 32px;\n}\n\n@media (max-width: 768px) {\n    .Nav {\n        flex-direction: column;\n        align-items: flex-start; /* Align items to the start for vertical layout */\n\n        .searchBar,\n        .ul {\n            width: 100%; \n        }\n    }\n\n    input {\n        width: 100%; /* Make the search bar occupy full width */\n    }\n\n    .navItem .listItem .btnLogo {\n        width: 1.5rem; \n        height: 1.5rem;\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Nav": `SLZXaJInmBusSKJAiC7A`,
@@ -6251,4 +6243,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.195e8979b4eb904cca7f987df76fdbe9.js.map
+//# sourceMappingURL=App.ef7508fdc949e633d8036c0e762e17bb.js.map

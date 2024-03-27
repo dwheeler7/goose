@@ -13,7 +13,7 @@ export default function NavBar({ user, setUser, users }) {
                 <div className={styles.searchBar}>
                     <SearchUsersForm className={styles.search} users={users} />
                 </div>
-                <img className={styles.logo} src="https://i.imgur.com/xbSgxlf.png" />
+                <img className={styles.logo} src="https://i.imgur.com/0w4BqIR.png" />
                 <ul className={styles.ul}>
                     <Link to="/" className={`${styles.navItem} ${styles.home}`}>
                         <li className={styles.listItem}>
